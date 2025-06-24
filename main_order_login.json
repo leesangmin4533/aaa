@@ -1,0 +1,6 @@
+{
+  "url": "https://example.com/login",
+  "id_selector": "#loginId",
+  "password_selector": "#loginPw",
+  "submit_selector": "button[type=submit]"
+}
