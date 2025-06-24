@@ -22,3 +22,4 @@ The script checks for `structure/login_structure.json`. If it does not exist, it
 
 On Mondays the script navigates to **매출분석 > 중분류별 매출 구성비** using `navigate_sales_ratio.py` after closing any login pop‑ups.
 Data extracted by future features will be stored under the `sales_analysis` directory.
+If an error occurs during automation, screenshots and the DOM are saved in the `logs` directory.

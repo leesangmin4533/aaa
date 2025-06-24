@@ -4,6 +4,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import traceback
 
 from navigate_sales_ratio import navigate_sales_ratio
 
@@ -20,6 +21,7 @@ def load_login_structure():
 
 POPUP_CLOSE_SELECTORS = [
     "//*[contains(text(), '닫기')]",
+    "//*[normalize-space()='닫기']",
     "button.close",
     "div.popup .close",
     "[id*=close]",
@@ -27,9 +29,10 @@ POPUP_CLOSE_SELECTORS = [
 ]
 
 
-def close_popups(driver, max_loops=2):
+def close_popups(driver, min_loops=2, max_loops=5):
     """Close any popups that may appear after login."""
-    for _ in range(max_loops):
+    loops = 0
+    while loops < max_loops:
         closed_any = False
         for selector in POPUP_CLOSE_SELECTORS:
             try:
@@ -45,7 +48,8 @@ def close_popups(driver, max_loops=2):
                         pass
             except Exception:
                 pass
-        if not closed_any:
+        loops += 1
+        if not closed_any and loops >= min_loops:
             break
 
 
@@ -54,6 +58,19 @@ def extract_sales_data():
     os.makedirs('sales_analysis', exist_ok=True)
     with open(os.path.join('sales_analysis', 'data.txt'), 'w') as f:
         f.write('placeholder')
+
+
+def save_error_logs(driver, exc):
+    """Save screenshot, DOM and log message when an error occurs."""
+    os.makedirs('logs', exist_ok=True)
+    driver.save_screenshot(os.path.join('logs', 'error.png'))
+    with open(os.path.join('logs', 'error_dom.html'), 'w', encoding='utf-8') as f:
+        f.write(driver.page_source)
+    with open(os.path.join('logs', 'error.log'), 'w', encoding='utf-8') as f:
+        f.write(
+            '자동화 수행 중 오류 발생. 스크린샷 및 DOM 저장됨.\n' +
+            ''.join(traceback.format_exception_only(type(exc), exc))
+        )
 
 
 def main():
@@ -66,28 +83,33 @@ def main():
     cfg = load_login_structure()
 
     driver = webdriver.Chrome()
-    driver.get(cfg['url'])
+    try:
+        driver.get(cfg['url'])
 
-    id_field = driver.find_element(By.CSS_SELECTOR, cfg['id_selector'])
-    id_field.send_keys(login_id)
+        id_field = driver.find_element(By.CSS_SELECTOR, cfg['id_selector'])
+        id_field.send_keys(login_id)
 
-    pw_field = driver.find_element(By.CSS_SELECTOR, cfg['password_selector'])
-    pw_field.send_keys(login_pw)
+        pw_field = driver.find_element(By.CSS_SELECTOR, cfg['password_selector'])
+        pw_field.send_keys(login_pw)
 
-    submit_btn = driver.find_element(By.CSS_SELECTOR, cfg['submit_selector'])
-    submit_btn.click()
+        submit_btn = driver.find_element(By.CSS_SELECTOR, cfg['submit_selector'])
+        submit_btn.click()
 
-    # Ensure all popups are closed before proceeding
-    close_popups(driver)
+        # Ensure all popups are closed before proceeding
+        close_popups(driver)
 
-    if datetime.now().weekday() == 0:
-        navigate_sales_ratio(driver)
-        extract_sales_data()
+        if datetime.now().weekday() == 0:
+            navigate_sales_ratio(driver)
+            extract_sales_data()
 
-    # Placeholder for data extraction logic after navigation
-    # Data should be saved under sales_analysis
+        # Placeholder for data extraction logic after navigation
+        # Data should be saved under sales_analysis
 
-    driver.quit()
+    except Exception as exc:
+        save_error_logs(driver, exc)
+        raise
+    finally:
+        driver.quit()
 
 
 if __name__ == '__main__':
