@@ -3,6 +3,7 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 from dotenv import load_dotenv
 
 URL = "https://store.bgfretail.com/websrc/deploy/index.html"
@@ -32,6 +33,9 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
         # sufficient on some slow environments. Execute a small JavaScript
         # snippet that evaluates when the targeted element becomes available
         # in the DOM and only then continue to locate it by XPath.
+        WebDriverWait(driver, 20).until(
+            lambda d: len(d.find_elements(By.CLASS_NAME, "nexainput")) >= 2
+        )
         inputs = driver.find_elements(By.CLASS_NAME, "nexainput")
         driver.execute_script(
             "arguments[0].value = arguments[1];",
