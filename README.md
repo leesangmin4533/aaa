@@ -19,9 +19,9 @@ This project automates login and navigation for the BGF Retail store site using 
    ```
 
 `crawl/login_structure.py` refreshes `structure/login_structure.json` on every
-run by parsing the login page. Generic selectors are used if the page cannot be
-fetched, ensuring the login process always starts with an up‑to‑date structure
-file.
+run by opening the login page with Selenium and locating the input fields. The
+script falls back to generic selectors when the page cannot be accessed so the
+login process always starts with an up‑to‑date structure file.
 
 After logging in, the script loops through multiple heuristic selectors to close
 any pop‑ups. At least two passes are made so sequential pop‑ups are also

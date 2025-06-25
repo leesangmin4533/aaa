@@ -1,45 +1,51 @@
 import os
 import json
-from typing import Optional
-
-import requests
-from bs4 import BeautifulSoup
-
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 URL = "https://store.bgfretail.com/websrc/deploy/index.html"
 
 
-def _detect_selector(soup: BeautifulSoup, query: str, fallback: str) -> str:
-    """Return a CSS selector for the first element matching ``query``."""
-    element = soup.select_one(query)
-    if not element:
-        return fallback
-    if element.get("id"):
-        return f"#{element['id']}"
-    if element.get("name"):
-        return f"{element.name}[name='{element['name']}']"
-    if element.get("class"):
-        return f".{element.get('class')[0]}"
-    return fallback
-
-
 def create_login_structure() -> None:
-    """Create ``login_structure.json`` by parsing the login page."""
+    """Create ``login_structure.json`` by inspecting the live login page."""
     os.makedirs("structure", exist_ok=True)
-    id_selector: str = "input[type='text']"
-    password_selector: str = "input[type='password']"
-    submit_selector: str = "button"
 
+    id_selector = "input[type='text']"
+    password_selector = "input[type='password']"
+    submit_selector = "button[type='submit']"
+
+    driver = None
     try:
-        resp = requests.get(URL, timeout=10)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
-        id_selector = _detect_selector(soup, id_selector, id_selector)
-        password_selector = _detect_selector(soup, password_selector, password_selector)
-        submit_selector = _detect_selector(soup, submit_selector, submit_selector)
+        driver = webdriver.Chrome()
+        driver.get(URL)
+
+        try:
+            elem = driver.find_element(By.ID, "input_id")
+            elem_id = elem.get_attribute("id")
+            if elem_id:
+                id_selector = f"#{elem_id}"
+        except Exception:
+            pass
+
+        try:
+            elem = driver.find_element(By.ID, "input_pw")
+            elem_id = elem.get_attribute("id")
+            if elem_id:
+                password_selector = f"#{elem_id}"
+        except Exception:
+            pass
+
+        try:
+            driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+            submit_selector = "button[type='submit']"
+        except Exception:
+            pass
     except Exception:
-        # Fallback to generic selectors when the page cannot be fetched
+        # Fallback to generic selectors when the browser cannot access the page
         pass
+    finally:
+        if driver:
+            driver.quit()
 
     cfg = {
         "url": URL,
