@@ -4,6 +4,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 from navigate_sales_ratio import navigate_sales_ratio
 
@@ -96,12 +97,18 @@ def main():
     # for compatibility with future changes to the page structure.
     id_field = driver.find_element(By.XPATH, cfg['id_xpath'])
     id_field.send_keys(login_id)
+    id_field.send_keys(Keys.ENTER)
 
     pw_field = driver.find_element(By.XPATH, cfg['password_xpath'])
     pw_field.send_keys(login_pw)
+    pw_field.send_keys(Keys.ENTER)
 
+    # fallback to clicking the login button in case ENTER is ignored
     submit_btn = driver.find_element(By.XPATH, cfg['submit_xpath'])
-    submit_btn.click()
+    try:
+        submit_btn.click()
+    except Exception:
+        pass
 
     # Ensure all popups are closed before proceeding
     popups_closed = close_popups(driver)

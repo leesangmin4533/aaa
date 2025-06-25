@@ -30,6 +30,10 @@ The script waits for the XPath elements to appear using `WebDriverWait` before
 recording them. Both files are recreated each run so the automation always uses
 the latest page structure.
 
+During normal execution the login credentials are entered using the sequence
+"ID → Enter → Password → Enter". A final button click is attempted only as a
+fallback if the Enter key does not submit the form.
+
 After logging in, the script loops through multiple heuristic selectors to close
 any pop‑ups. At least two passes are made so sequential pop‑ups are also
 captured before moving on to menu navigation. The routine checks for remaining
