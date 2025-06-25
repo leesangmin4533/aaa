@@ -2,7 +2,6 @@ import os
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from dotenv import load_dotenv
 
@@ -42,15 +41,13 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
             inputs[0],
             login_id,
         )
-        inputs[0].send_keys(Keys.ENTER)
         driver.execute_script(
             "arguments[0].value = arguments[1];",
             inputs[1],
             login_pw,
         )
-        inputs[1].send_keys(Keys.ENTER)
-        submit_btn = driver.find_element(By.XPATH, XPATHS["submit_xpath"])
-        submit_btn.click()
+        login_btn = driver.find_element(By.XPATH, "//div[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.btn_login:icontext']")
+        login_btn.click()
     except Exception as exc:
         if fail_on_missing:
             raise RuntimeError("Required login element not found") from exc
