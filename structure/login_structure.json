@@ -2,5 +2,5 @@
   "url": "https://store.bgfretail.com/websrc/deploy/index.html",
   "id_selector": "input[type='text']",
   "password_selector": "input[type='password']",
-  "submit_selector": "button"
+  "submit_selector": "button[type='submit']"
 }
