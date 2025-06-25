@@ -1,0 +1,32 @@
+{
+  "name": "login_xpath_bgfretail",
+  "description": "BGF 리테일 웹사이트에 XPath 기반으로 로그인하는 자동화 명령",
+  "steps": [
+    {
+      "action": "navigate",
+      "target": "https://store.bgfretail.com/websrc/deploy/index.html"
+    },
+    {
+      "action": "wait_for_element",
+      "method": "xpath",
+      "selector": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']"
+    },
+    {
+      "action": "input",
+      "method": "xpath",
+      "selector": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']",
+      "value": "${LOGIN_ID}"
+    },
+    {
+      "action": "input",
+      "method": "xpath",
+      "selector": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw:input']",
+      "value": "${LOGIN_PW}"
+    },
+    {
+      "action": "click",
+      "method": "xpath",
+      "selector": "//div[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.btn_login:iconElement']"
+    }
+  ]
+}
