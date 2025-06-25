@@ -24,6 +24,11 @@ any of the required elements cannot be found the script raises an error so the
 process stops immediately. This guarantees that the login structure in use is
 always valid and up to date.
 
+For environments that require XPath selectors, `crawl/login_structure_xpath.py`
+performs the same validation and writes `structure/login_structure_xpath.json`.
+Both files are recreated each run so the automation always uses the latest page
+structure.
+
 After logging in, the script loops through multiple heuristic selectors to close
 any pop‑ups. At least two passes are made so sequential pop‑ups are also
 captured before moving on to menu navigation. The routine checks for remaining
