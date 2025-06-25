@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
 
 URL = "https://store.bgfretail.com/websrc/deploy/index.html"
 
@@ -17,6 +18,10 @@ XPATHS = {
 def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
     """Create ``login_structure_xpath.json`` by validating known XPaths."""
     os.makedirs("structure", exist_ok=True)
+
+    load_dotenv()
+    login_id = os.getenv("LOGIN_ID")
+    login_pw = os.getenv("LOGIN_PW")
 
     driver = None
     try:
@@ -33,13 +38,17 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
                 "return !!document.getElementById('mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input')"
             )
         )
-        id_elem = driver.find_element(By.XPATH, XPATHS["id_xpath"])
         WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, XPATHS["password_xpath"]))
+            lambda d: len(d.find_elements(By.CLASS_NAME, "nexainput")) >= 2
         )
+        inputs = driver.find_elements(By.CLASS_NAME, "nexainput")
+        inputs[0].send_keys(login_id)
+        inputs[1].send_keys(login_pw)
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, XPATHS["submit_xpath"]))
         )
+        submit_btn = driver.find_element(By.XPATH, XPATHS["submit_xpath"])
+        submit_btn.click()
     except Exception as exc:
         if fail_on_missing:
             raise RuntimeError("Required login element not found") from exc
