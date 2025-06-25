@@ -2,6 +2,8 @@ import os
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 URL = "https://store.bgfretail.com/websrc/deploy/index.html"
 
@@ -21,11 +23,17 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
         driver = webdriver.Chrome()
         driver.get(URL)
 
-        # Ensure elements exist on the page. If any lookup fails an exception is
-        # raised so the caller can abort the workflow early.
-        driver.find_element(By.XPATH, XPATHS["id_xpath"])
-        driver.find_element(By.XPATH, XPATHS["password_xpath"])
-        driver.find_element(By.XPATH, XPATHS["submit_xpath"])
+        # Wait for required elements to appear. If any lookup fails an
+        # exception is raised so the caller can abort the workflow early.
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, XPATHS["id_xpath"]))
+        )
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, XPATHS["password_xpath"]))
+        )
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, XPATHS["submit_xpath"]))
+        )
     except Exception as exc:
         if fail_on_missing:
             raise RuntimeError("Required login element not found") from exc

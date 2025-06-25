@@ -26,8 +26,9 @@ always valid and up to date.
 
 For environments that require XPath selectors, `crawl/login_structure_xpath.py`
 performs the same validation and writes `structure/login_structure_xpath.json`.
-Both files are recreated each run so the automation always uses the latest page
-structure.
+The script waits for the XPath elements to appear using `WebDriverWait` before
+recording them. Both files are recreated each run so the automation always uses
+the latest page structure.
 
 After logging in, the script loops through multiple heuristic selectors to close
 any pop‑ups. At least two passes are made so sequential pop‑ups are also
