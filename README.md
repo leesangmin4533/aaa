@@ -19,13 +19,15 @@ This project automates login and navigation for the BGF Retail store site using 
    ```
 
 `crawl/login_structure.py` refreshes `structure/login_structure.json` on every
-run by opening the login page with Selenium and locating the input fields. The
-script falls back to generic selectors when the page cannot be accessed so the
-login process always starts with an up‑to‑date structure file.
+run by opening the login page with Selenium and locating the input fields. When
+any of the required elements cannot be found the script raises an error so the
+process stops immediately. This guarantees that the login structure in use is
+always valid and up to date.
 
 After logging in, the script loops through multiple heuristic selectors to close
 any pop‑ups. At least two passes are made so sequential pop‑ups are also
-captured before moving on to menu navigation.
+captured before moving on to menu navigation. The routine checks for remaining
+close buttons after the loops and will abort if a pop‑up cannot be dismissed.
 
 On Mondays the script navigates to **매출분석 > 중분류별 매출 구성비** using `navigate_sales_ratio.py` after closing any login pop‑ups.
 Data extracted by future features will be stored under the `sales_analysis` directory.
