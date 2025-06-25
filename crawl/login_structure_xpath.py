@@ -25,13 +25,13 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
 
         # Wait for required elements to appear. If any lookup fails an
         # exception is raised so the caller can abort the workflow early.
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, XPATHS["id_xpath"]))
         )
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, XPATHS["password_xpath"]))
         )
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, XPATHS["submit_xpath"]))
         )
     except Exception as exc:
