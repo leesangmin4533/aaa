@@ -11,14 +11,25 @@ from navigate_sales_ratio import navigate_sales_ratio
 def load_login_structure():
     """Always recreate the login structure before loading it."""
     from crawl.login_structure import create_login_structure
+    from crawl.login_structure_xpath import create_login_structure_xpath
 
     # Refresh the login structure on every run. If any required login element
     # cannot be found an exception is raised and the program aborts.
     create_login_structure(fail_on_missing=True)
+    create_login_structure_xpath(fail_on_missing=True)
 
     path = os.path.join('structure', 'login_structure.json')
     with open(path) as f:
-        return json.load(f)
+        cfg = json.load(f)
+
+    xpath_path = os.path.join('structure', 'login_structure_xpath.json')
+    with open(xpath_path, 'r', encoding='utf-8') as f:
+        xpath_cfg = json.load(f)
+
+    # Merge the two configs; CSS selectors are kept for backward compatibility
+    # while XPath selectors are used for interaction.
+    cfg.update(xpath_cfg)
+    return cfg
 
 
 POPUP_CLOSE_SELECTORS = [
@@ -90,13 +101,15 @@ def main():
     driver = webdriver.Chrome()
     driver.get(cfg['url'])
 
-    id_field = driver.find_element(By.CSS_SELECTOR, cfg['id_selector'])
+    # Use XPath selectors for interaction while keeping CSS selectors available
+    # for compatibility with future changes to the page structure.
+    id_field = driver.find_element(By.XPATH, cfg['id_xpath'])
     id_field.send_keys(login_id)
 
-    pw_field = driver.find_element(By.CSS_SELECTOR, cfg['password_selector'])
+    pw_field = driver.find_element(By.XPATH, cfg['password_xpath'])
     pw_field.send_keys(login_pw)
 
-    submit_btn = driver.find_element(By.CSS_SELECTOR, cfg['submit_selector'])
+    submit_btn = driver.find_element(By.XPATH, cfg['submit_xpath'])
     submit_btn.click()
 
     # Ensure all popups are closed before proceeding

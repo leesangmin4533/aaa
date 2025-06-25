@@ -1,0 +1,6 @@
+{
+  "url": "https://store.bgfretail.com/websrc/deploy/index.html",
+  "id_xpath": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']",
+  "password_xpath": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw:input']",
+  "submit_xpath": "//div[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.btn_login:iconElement']"
+}
