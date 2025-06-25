@@ -18,7 +18,10 @@ This project automates login and navigation for the BGF Retail store site using 
    python main.py
    ```
 
-The script checks for `structure/login_structure.json`. If it does not exist, it will be created automatically via `crawl/login_structure.py`, which attempts to parse the login page and determine form selectors automatically. Generic selectors are used if the page cannot be fetched.
+`crawl/login_structure.py` refreshes `structure/login_structure.json` every time the
+script runs by parsing the login page. Generic selectors are used if the page
+cannot be fetched, ensuring the login process always starts with an up‑to‑date
+structure file.
 
 On Mondays the script navigates to **매출분석 > 중분류별 매출 구성비** using `navigate_sales_ratio.py` after closing any login pop‑ups.
 Data extracted by future features will be stored under the `sales_analysis` directory.

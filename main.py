@@ -9,11 +9,13 @@ from navigate_sales_ratio import navigate_sales_ratio
 
 
 def load_login_structure():
-    """Load login structure file or create it using the crawler."""
+    """Always recreate the login structure before loading it."""
+    from crawl.login_structure import create_login_structure
+
+    # Refresh the login structure on every run
+    create_login_structure()
+
     path = os.path.join('structure', 'login_structure.json')
-    if not os.path.exists(path):
-        from crawl.login_structure import create_login_structure
-        create_login_structure()
     with open(path) as f:
         return json.load(f)
 
