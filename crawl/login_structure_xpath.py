@@ -2,8 +2,7 @@ import os
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from dotenv import load_dotenv
 
 URL = "https://store.bgfretail.com/websrc/deploy/index.html"
@@ -33,28 +32,19 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
         # sufficient on some slow environments. Execute a small JavaScript
         # snippet that evaluates when the targeted element becomes available
         # in the DOM and only then continue to locate it by XPath.
-        WebDriverWait(driver, 20).until(
-            lambda d: d.execute_script(
-                "return !!document.getElementById('mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input')"
-            )
-        )
-        WebDriverWait(driver, 20).until(
-            lambda d: len(d.find_elements(By.CLASS_NAME, "nexainput")) >= 2
-        )
         inputs = driver.find_elements(By.CLASS_NAME, "nexainput")
         driver.execute_script(
             "arguments[0].value = arguments[1];",
             inputs[0],
             login_id,
         )
+        inputs[0].send_keys(Keys.ENTER)
         driver.execute_script(
             "arguments[0].value = arguments[1];",
             inputs[1],
             login_pw,
         )
-        WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, XPATHS["submit_xpath"]))
-        )
+        inputs[1].send_keys(Keys.ENTER)
         submit_btn = driver.find_element(By.XPATH, XPATHS["submit_xpath"])
         submit_btn.click()
     except Exception as exc:
