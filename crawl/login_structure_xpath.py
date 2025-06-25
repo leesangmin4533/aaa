@@ -23,11 +23,17 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
         driver = webdriver.Chrome()
         driver.get(URL)
 
-        # Wait for required elements to appear. If any lookup fails an
-        # exception is raised so the caller can abort the workflow early.
+        # Wait until the Nexacro-based login form is fully rendered. The SPA
+        # may load elements dynamically so the usual presence check is not
+        # sufficient on some slow environments. Execute a small JavaScript
+        # snippet that evaluates when the targeted element becomes available
+        # in the DOM and only then continue to locate it by XPath.
         WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, XPATHS["id_xpath"]))
+            lambda d: d.execute_script(
+                "return !!document.getElementById('mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input')"
+            )
         )
+        id_elem = driver.find_element(By.XPATH, XPATHS["id_xpath"])
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, XPATHS["password_xpath"]))
         )
