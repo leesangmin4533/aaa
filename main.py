@@ -4,7 +4,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 
 from navigate_sales_ratio import navigate_sales_ratio
 
@@ -95,15 +95,21 @@ def main():
 
     # Use XPath selectors for interaction while keeping CSS selectors available
     # for compatibility with future changes to the page structure.
-    id_field = driver.find_element(By.XPATH, cfg['id_xpath'])
-    id_field.send_keys(login_id)
-    id_field.send_keys(Keys.ENTER)
+    WebDriverWait(driver, 20).until(
+        lambda d: len(d.find_elements(By.CLASS_NAME, "nexainput")) >= 2
+    )
+    inputs = driver.find_elements(By.CLASS_NAME, "nexainput")
+    driver.execute_script(
+        "arguments[0].value = arguments[1];",
+        inputs[0],
+        login_id,
+    )
+    driver.execute_script(
+        "arguments[0].value = arguments[1];",
+        inputs[1],
+        login_pw,
+    )
 
-    pw_field = driver.find_element(By.XPATH, cfg['password_xpath'])
-    pw_field.send_keys(login_pw)
-    pw_field.send_keys(Keys.ENTER)
-
-    # fallback to clicking the login button in case ENTER is ignored
     submit_btn = driver.find_element(By.XPATH, cfg['submit_xpath'])
     try:
         submit_btn.click()
