@@ -9,26 +9,17 @@ from navigate_sales_ratio import navigate_sales_ratio
 
 
 def load_login_structure():
-    """Always recreate the login structure before loading it."""
-    from crawl.login_structure import create_login_structure
+    """Recreate and load the XPath-based login structure."""
     from crawl.login_structure_xpath import create_login_structure_xpath
 
     # Refresh the login structure on every run. If any required login element
     # cannot be found an exception is raised and the program aborts.
-    create_login_structure(fail_on_missing=True)
     create_login_structure_xpath(fail_on_missing=True)
-
-    path = os.path.join('structure', 'login_structure.json')
-    with open(path) as f:
-        cfg = json.load(f)
 
     xpath_path = os.path.join('structure', 'login_structure_xpath.json')
     with open(xpath_path, 'r', encoding='utf-8') as f:
-        xpath_cfg = json.load(f)
+        cfg = json.load(f)
 
-    # Merge the two configs; CSS selectors are kept for backward compatibility
-    # while XPath selectors are used for interaction.
-    cfg.update(xpath_cfg)
     return cfg
 
 
