@@ -1,0 +1,37 @@
+{
+  "name": "login_xpath_with_enter_sequence",
+  "description": "BGF리테일 로그인 시 아이디 → 엔터 → 비밀번호 → 엔터 순으로 강제 입력 수행",
+  "steps": [
+    {
+      "action": "navigate",
+      "target": "https://store.bgfretail.com/websrc/deploy/index.html"
+    },
+    {
+      "action": "wait_for_element",
+      "method": "class_name",
+      "selector": "nexainput"
+    },
+    {
+      "action": "script",
+      "code": "document.getElementsByClassName('nexainput')[0].value = '46513';"
+    },
+    {
+      "action": "send_keys",
+      "method": "class_name",
+      "selector": "nexainput",
+      "index": 0,
+      "keys": "ENTER"
+    },
+    {
+      "action": "script",
+      "code": "document.getElementsByClassName('nexainput')[1].value = '1113';"
+    },
+    {
+      "action": "send_keys",
+      "method": "class_name",
+      "selector": "nexainput",
+      "index": 1,
+      "keys": "ENTER"
+    }
+  ]
+}
