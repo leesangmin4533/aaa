@@ -1,13 +1,6 @@
 {
   "url": "https://store.bgfretail.com/websrc/deploy/index.html",
-<<<<<<< HEAD
-  "id_selector": "#input_id",
-  "password_selector": "#input_pw",
-  "submit_selector": "button[type=submit]"
-}
-=======
   "id_selector": "input[type='text']",
   "password_selector": "input[type='password']",
   "submit_selector": "button"
 }
->>>>>>> c55bc508f521fa3f2f587abe243e9d7f9a556990
