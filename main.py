@@ -12,8 +12,9 @@ def load_login_structure():
     """Always recreate the login structure before loading it."""
     from crawl.login_structure import create_login_structure
 
-    # Refresh the login structure on every run
-    create_login_structure()
+    # Refresh the login structure on every run. If any required login element
+    # cannot be found an exception is raised and the program aborts.
+    create_login_structure(fail_on_missing=True)
 
     path = os.path.join('structure', 'login_structure.json')
     with open(path) as f:
@@ -54,6 +55,18 @@ def close_popups(driver, min_loops: int = 2, max_loops: int = 5) -> bool:
                 pass
         if not closed_any and i >= (min_loops - 1):
             break
+
+    # Verify no close buttons remain
+    for selector in POPUP_CLOSE_SELECTORS:
+        try:
+            if selector.startswith('//'):
+                if driver.find_elements(By.XPATH, selector):
+                    return False
+            else:
+                if driver.find_elements(By.CSS_SELECTOR, selector):
+                    return False
+        except Exception:
+            pass
 
     return True
 

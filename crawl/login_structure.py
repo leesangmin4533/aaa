@@ -6,43 +6,33 @@ from selenium.webdriver.common.by import By
 URL = "https://store.bgfretail.com/websrc/deploy/index.html"
 
 
-def create_login_structure() -> None:
-    """Create ``login_structure.json`` by inspecting the live login page."""
-    os.makedirs("structure", exist_ok=True)
+def create_login_structure(fail_on_missing: bool = True) -> None:
+    """Create ``login_structure.json`` by inspecting the live login page.
 
-    id_selector = "input[type='text']"
-    password_selector = "input[type='password']"
-    submit_selector = "button[type='submit']"
+    If ``fail_on_missing`` is ``True`` and any required element cannot be
+    located, a ``RuntimeError`` is raised so the caller can abort the
+    workflow.
+    """
+    os.makedirs("structure", exist_ok=True)
 
     driver = None
     try:
         driver = webdriver.Chrome()
         driver.get(URL)
 
-        try:
-            elem = driver.find_element(By.ID, "input_id")
-            elem_id = elem.get_attribute("id")
-            if elem_id:
-                id_selector = f"#{elem_id}"
-        except Exception:
-            pass
+        id_elem = driver.find_element(By.ID, "input_id")
+        id_attr = id_elem.get_attribute("id") or "input_id"
+        id_selector = f"#{id_attr}"
 
-        try:
-            elem = driver.find_element(By.ID, "input_pw")
-            elem_id = elem.get_attribute("id")
-            if elem_id:
-                password_selector = f"#{elem_id}"
-        except Exception:
-            pass
+        pw_elem = driver.find_element(By.ID, "input_pw")
+        pw_attr = pw_elem.get_attribute("id") or "input_pw"
+        password_selector = f"#{pw_attr}"
 
-        try:
-            driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
-            submit_selector = "button[type='submit']"
-        except Exception:
-            pass
-    except Exception:
-        # Fallback to generic selectors when the browser cannot access the page
-        pass
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+        submit_selector = "button[type='submit']"
+    except Exception as exc:
+        if fail_on_missing:
+            raise RuntimeError("Required login element not found") from exc
     finally:
         if driver:
             driver.quit()
