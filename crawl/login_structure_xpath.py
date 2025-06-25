@@ -42,8 +42,16 @@ def create_login_structure_xpath(fail_on_missing: bool = True) -> None:
             lambda d: len(d.find_elements(By.CLASS_NAME, "nexainput")) >= 2
         )
         inputs = driver.find_elements(By.CLASS_NAME, "nexainput")
-        inputs[0].send_keys(login_id)
-        inputs[1].send_keys(login_pw)
+        driver.execute_script(
+            "arguments[0].value = arguments[1];",
+            inputs[0],
+            login_id,
+        )
+        driver.execute_script(
+            "arguments[0].value = arguments[1];",
+            inputs[1],
+            login_pw,
+        )
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, XPATHS["submit_xpath"]))
         )
