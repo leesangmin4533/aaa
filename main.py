@@ -29,9 +29,14 @@ POPUP_CLOSE_SELECTORS = [
 ]
 
 
-def close_popups(driver, max_loops=2):
-    """Close any popups that may appear after login."""
-    for _ in range(max_loops):
+def close_popups(driver, min_loops: int = 2, max_loops: int = 5) -> bool:
+    """Close any popups that may appear after login.
+
+    The function runs at least ``min_loops`` iterations to catch popups that
+    might appear after the first one is closed. It stops early only after
+    ``min_loops`` attempts when no additional popups are detected.
+    """
+    for i in range(max_loops):
         closed_any = False
         for selector in POPUP_CLOSE_SELECTORS:
             try:
@@ -47,8 +52,10 @@ def close_popups(driver, max_loops=2):
                         pass
             except Exception:
                 pass
-        if not closed_any:
+        if not closed_any and i >= (min_loops - 1):
             break
+
+    return True
 
 
 def extract_sales_data():
@@ -80,9 +87,9 @@ def main():
     submit_btn.click()
 
     # Ensure all popups are closed before proceeding
-    close_popups(driver)
+    popups_closed = close_popups(driver)
 
-    if datetime.now().weekday() == 0:
+    if popups_closed and datetime.now().weekday() == 0:
         navigate_sales_ratio(driver)
         extract_sales_data()
 
