@@ -7,7 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 
-CONFIG_FILE = "nexacro_idpw_input_physical.json"
+CONFIG_FILE = "nexacro_idpw_input_js.json"
 
 
 def load_config():
