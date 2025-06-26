@@ -47,8 +47,12 @@
     {
       "action": "send_keys",
       "target": "pw_input",
-      "keys": "ENTER",
-      "log": "✅ js 비밀번호 입력 후 엔터 입력 (물리 입력)"
+      "keys": [
+        {"key": "ENTER", "delay": 1},
+        {"key": "ENTER", "delay": 1},
+        {"key": "ENTER"}
+      ],
+      "log": "✅ 비밀번호 입력 후 엔터 3회 입력 (1초 간격)"
     },
     {
       "action": "sleep",

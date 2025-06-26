@@ -49,14 +49,33 @@ def main():
     cfg = load_config()
     steps = cfg["steps"]
     driver = webdriver.Chrome()
-    elements = {}
+    driver.get(url)
 
-    for step in steps:
-        try:
-            run_step(driver, step, elements)
-        except Exception as e:
-            print(f"❌ Step 실패: {step.get('action')} → {e}")
-            break
+    # Wait until the Nexacro inputs are available
+    wait_cfg = cfg["steps"][1]
+    if wait_cfg.get("action") == "wait_elements_count":
+        WebDriverWait(driver, wait_cfg.get("timeout", 20)).until(
+            lambda d: len(d.find_elements(By.CLASS_NAME, wait_cfg["value"])) >= wait_cfg["count"]
+        )
+
+    try:
+        id_input = driver.find_element(By.XPATH, id_xpath)
+        driver.execute_script(id_js_code, id_input)
+        print("\u2705 ID 입력 완료 (JavaScript 방식)")
+
+        if pw_xpath:
+            pw_input = driver.find_element(By.XPATH, pw_xpath)
+            if pw_js_code:
+                driver.execute_script(pw_js_code, pw_input)
+            print("\u2705 비밀번호 입력 완료")
+
+            actions = ActionChains(driver)
+            actions.move_to_element(pw_input).click().send_keys(Keys.ENTER).perform()
+            print("\u2705 py 비밀번호 입력 후 엔터 입력 (물리 입력)")
+
+        time.sleep(cfg["steps"][-1].get("seconds", 2))
+    except Exception as e:
+        print(f"Failed to input credentials: {e}")
 
     input("⏸ 로그인 화면 유지. Enter 키를 누르면 종료됩니다...")
     driver.quit()
