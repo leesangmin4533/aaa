@@ -41,3 +41,7 @@ close buttons after the loops and will abort if a pop‑up cannot be dismissed.
 
 On Mondays the script navigates to **매출분석 > 중분류별 매출 구성비** using `navigate_sales_ratio.py` after closing any login pop‑ups.
 Data extracted by future features will be stored under the `sales_analysis` directory.
+
+`wait_click_login.json` provides a minimal example showing how to wait up to
+ten seconds for the login button to appear before clicking it. The snippet can
+be adapted to other actions that require an explicit wait-and-click sequence.
