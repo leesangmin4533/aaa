@@ -50,6 +50,20 @@
       "message": "✅ 비밀번호 입력 및 엔터 완료"
     },
     {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.btn_login:icontext']",
+      "as": "login_btn"
+    },
+    {
+      "action": "click",
+      "target": "login_btn"
+    },
+    {
+      "action": "log",
+      "message": "✅ 로그인 버튼 클릭 완료"
+    },
+    {
       "action": "sleep",
       "seconds": 2
     }
