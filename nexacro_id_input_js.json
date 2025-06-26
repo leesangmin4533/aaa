@@ -1,0 +1,37 @@
+{
+  "name": "넥사크로_ID_입력_JS",
+  "description": "넥사크로 기반 페이지에서 ID 입력 필드를 XPath로 찾고, JavaScript로 강제 입력 수행",
+  "exclusive": true,
+  "steps": [
+    {
+      "action": "open_url",
+      "value": "https://store.bgfretail.com/websrc/deploy/index.html"
+    },
+    {
+      "action": "wait_elements_count",
+      "by": "class_name",
+      "value": "nexainput",
+      "count": 2,
+      "timeout": 20
+    },
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']",
+      "as": "id_input"
+    },
+    {
+      "action": "script",
+      "code": "arguments[0].value = '46513';",
+      "target": "id_input"
+    },
+    {
+      "action": "log",
+      "message": "✅ ID 입력 완료 (JavaScript 방식)"
+    },
+    {
+      "action": "sleep",
+      "seconds": 2
+    }
+  ]
+}
