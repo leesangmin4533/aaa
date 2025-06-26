@@ -1,5 +1,6 @@
 import os
 import json
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -22,6 +23,7 @@ def main():
         id_input = driver.find_element(By.XPATH, xpath_path)
         id_input.clear()
         id_input.send_keys("46513")
+        time.sleep(1)
     except Exception:
         pass
     input("Login screen displayed. Press Enter to exit...")
