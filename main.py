@@ -44,6 +44,14 @@ def main():
             pw_input.send_keys("\ue007")
             print("\u2705 비밀번호 입력 및 엔터 완료")
 
+            try:
+                login_btn_xpath = cfg["steps"][10]["value"]
+                login_btn = driver.find_element(By.XPATH, login_btn_xpath)
+                driver.execute_script("arguments[0].click();", login_btn)
+                print("✅ 로그인 버튼 클릭 완료")
+            except Exception as e:
+                print(f"❌ 로그인 버튼 클릭 실패: {e}")
+
         time.sleep(cfg["steps"][-1].get("seconds", 2))
     except Exception as e:
         print(f"Failed to input credentials: {e}")
