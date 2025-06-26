@@ -71,7 +71,7 @@ def main():
             pw_input = driver.find_element(By.XPATH, pw_xpath)
             if pw_js_code:
                 driver.execute_script(pw_js_code, pw_input)
-            pw_input.send_keys("\ue007")
+            print("\u2705 비밀번호 입력 완료")
             print("\u2705 비밀번호 입력 및 엔터 완료")
 
             try:
