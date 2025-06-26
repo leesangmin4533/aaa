@@ -72,7 +72,6 @@ def main():
             if pw_js_code:
                 driver.execute_script(pw_js_code, pw_input)
             print("\u2705 비밀번호 입력 완료")
-            print("\u2705 비밀번호 입력 및 엔터 완료")
 
             try:
                 click_login_button(driver, cfg)

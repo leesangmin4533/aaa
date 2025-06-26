@@ -41,13 +41,8 @@
       "target": "pw_input"
     },
     {
-      "action": "send_keys",
-      "target": "pw_input",
-      "keys": "ENTER"
-    },
-    {
       "action": "log",
-      "message": "✅ 비밀번호 입력 및 엔터 완료"
+      "message": "✅ 비밀번호 입력 완료"
     },
     {
       "action": "find_element",
