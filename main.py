@@ -30,7 +30,7 @@ def main():
     # Wait a few seconds so the window does not close immediately after
     # submitting the prompt.
     time.sleep(3)
-    driver.quit()7
+    driver.quit()
 
 
 if __name__ == '__main__':
