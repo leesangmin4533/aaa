@@ -1,0 +1,59 @@
+{
+  "name": "넥사크로_IDPW_입력_JS",
+  "description": "넥사크로 기반 페이지에서 ID, PW 입력 필드를 XPath로 찾고, JavaScript로 각각 강제 입력 후 엔터 키 입력",
+  "exclusive": true,
+  "steps": [
+    {
+      "action": "open_url",
+      "value": "https://store.bgfretail.com/websrc/deploy/index.html"
+    },
+    {
+      "action": "wait_elements_count",
+      "by": "class_name",
+      "value": "nexainput",
+      "count": 2,
+      "timeout": 20
+    },
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']",
+      "as": "id_input"
+    },
+    {
+      "action": "script",
+      "code": "arguments[0].value = '46513';",
+      "target": "id_input"
+    },
+    {
+      "action": "log",
+      "message": "✅ ID 입력 완료 (JavaScript 방식)"
+    },
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw:input']",
+      "as": "pw_input"
+    },
+    {
+      "action": "script",
+      "code": "arguments[0].value = '1113';",
+      "target": "pw_input"
+    },
+    {
+      "action": "send_keys",
+      "target": "pw_input",
+      "keys": "ENTER"
+    },
+    {
+      "action": "log",
+      "message": "✅ 비밀번호 입력 및 엔터 완료"
+    },
+    {
+      "action": "sleep",
+      "seconds": 2
+    }
+  ],
+  "id_xpath": "//*[@id=\"mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input\"]",
+  "pw_xpath": "//*[@id=\"mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw:input\"]"
+}
