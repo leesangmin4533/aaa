@@ -1,0 +1,22 @@
+{
+  "name": "로그인화면_진입후_3초대기",
+  "description": "기존 동작은 모두 제거하고, 로그인 페이지 접속 후 필드가 표시되면 3초간 대기만 수행",
+  "exclusive": true,
+  "steps": [
+    {
+      "action": "open_url",
+      "value": "https://store.bgfretail.com/websrc/deploy/index.html"
+    },
+    {
+      "action": "wait_elements_count",
+      "by": "class_name",
+      "value": "nexainput",
+      "count": 2,
+      "timeout": 20
+    },
+    {
+      "action": "sleep",
+      "seconds": 3
+    }
+  ]
+}
