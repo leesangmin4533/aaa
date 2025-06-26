@@ -14,6 +14,36 @@ def load_config():
         return json.load(f)
 
 
+
+def click_login_button(driver, cfg):
+    """Force-click the login button using JavaScript."""
+    login_btn_step = next(
+        (step for step in cfg["steps"] if step.get("as") == "login_btn"),
+        None,
+    )
+    if not login_btn_step:
+        raise ValueError("login_btn step not found")
+    login_btn_xpath = login_btn_step["value"]
+    login_btn = driver.find_element(By.XPATH, login_btn_xpath)
+
+    script_step = next(
+        (
+            step
+            for step in cfg["steps"]
+            if step.get("target") == "login_btn" and step.get("action") == "script"
+        ),
+        None,
+    )
+    script_code = (
+        script_step.get("code")
+        if script_step
+        else "arguments[0].scrollIntoView(); arguments[0].click();"
+    )
+
+    driver.execute_script(script_code, login_btn)
+    print("✅ 로그인 버튼 JS 강제 클릭 완료")
+
+
 def main():
     cfg = load_config()
     url = cfg["steps"][0]["value"]
@@ -45,23 +75,7 @@ def main():
             print("\u2705 비밀번호 입력 및 엔터 완료")
 
             try:
-                login_btn_step = next(
-                    (step for step in cfg["steps"] if step.get("as") == "login_btn"),
-                    None,
-                )
-                if not login_btn_step:
-                    raise ValueError("login_btn step not found")
-                login_btn_xpath = login_btn_step["value"]
-                login_btn = driver.find_element(By.XPATH, login_btn_xpath)
-
-                script_step = next(
-                    (step for step in cfg["steps"] if step.get("target") == "login_btn" and step.get("action") == "script"),
-                    None,
-                )
-                script_code = script_step.get("code") if script_step else "arguments[0].scrollIntoView(); arguments[0].click();"
-
-                driver.execute_script(script_code, login_btn)
-                print("✅ 로그인 버튼 JS 강제 클릭 완료")
+                click_login_button(driver, cfg)
             except Exception as e:
                 print(f"❌ 로그인 버튼 클릭 실패: {e}")
 
