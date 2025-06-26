@@ -3,6 +3,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 
 CONFIG_FILE = "nexacro_idpw_input_js.json"
@@ -73,10 +75,9 @@ def main():
                 driver.execute_script(pw_js_code, pw_input)
             print("\u2705 비밀번호 입력 완료")
 
-            try:
-                click_login_button(driver, cfg)
-            except Exception as e:
-                print(f"❌ 로그인 버튼 클릭 실패: {e}")
+            actions = ActionChains(driver)
+            actions.move_to_element(pw_input).click().send_keys(Keys.ENTER).perform()
+            print("\u2705 py 비밀번호 입력 후 엔터 입력 (물리 입력)")
 
         time.sleep(cfg["steps"][-1].get("seconds", 2))
     except Exception as e:
