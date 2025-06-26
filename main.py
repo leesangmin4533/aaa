@@ -41,7 +41,7 @@ def click_login_button(driver, cfg):
     )
 
     driver.execute_script(script_code, login_btn)
-    print("✅ 로그인 버튼 JS 강제 클릭 완료")
+    print("✅ 로그인 버튼 클릭 완료")
 
 
 def main():
