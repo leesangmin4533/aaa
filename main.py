@@ -76,8 +76,12 @@ def main():
             print("\u2705 비밀번호 입력 완료")
 
             actions = ActionChains(driver)
-            actions.move_to_element(pw_input).click().send_keys(Keys.ENTER).perform()
-            print("\u2705 py 비밀번호 입력 후 엔터 입력 (물리 입력)")
+            actions.move_to_element(pw_input).click().perform()
+            for _ in range(3):
+                actions = ActionChains(driver)
+                actions.send_keys(Keys.ENTER).perform()
+                time.sleep(1)
+            print("\u2705 py 비밀번호 입력 후 엔터 3회 입력 (1초 간격)")
 
         time.sleep(cfg["steps"][-1].get("seconds", 2))
     except Exception as e:
