@@ -13,6 +13,11 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
    python main.py
    ```
 
+To launch the mid-category sales automation after logging in, run:
+```bash
+python modules/sales_analysis/run_mid_category_sales.py
+```
+
 
 The structure files in the `structure` directory describe the XPath selectors
 used for automation. If the login page changes, regenerate these JSON files to
