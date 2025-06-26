@@ -9,12 +9,12 @@
     {
       "action": "wait_for_element",
       "method": "xpath",
-      "selector": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']"
+      "selector": "/html/body/div/div/div/div[1]/div/div/div[1]/div/div/div/div[1]/div/div[5]/input"
     },
     {
       "action": "input",
       "method": "xpath",
-      "selector": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']",
+      "selector": "/html/body/div/div/div/div[1]/div/div/div[1]/div/div/div/div[1]/div/div[5]/input",
       "value": "${LOGIN_ID}"
     },
     {
