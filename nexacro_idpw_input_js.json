@@ -45,23 +45,10 @@
       "message": "✅ 비밀번호 입력 완료"
     },
     {
-      "action": "find_element",
-      "by": "xpath",
-      "value": "//*[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.btn_login']",
-      "as": "login_btn"
-    },
-    {
-      "action": "script",
-      "code": "arguments[0].scrollIntoView(); arguments[0].click();",
-      "target": "login_btn"
-    },
-    {
-      "action": "log",
-      "message": "✅ 로그인 버튼 클릭 완료"
-    },
-    {
-      "action": "log",
-      "message": "✅ XPath 및 클릭 메시지 정리 완료"
+      "action": "send_keys",
+      "target": "pw_input",
+      "keys": "ENTER",
+      "log": "✅ js 비밀번호 입력 후 엔터 입력 (물리 입력)"
     },
     {
       "action": "sleep",
