@@ -4,7 +4,7 @@ from login_runner import run_login
 
 def main():
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")  # Best practice: headless mode
+    # options.add_argument("--headless=new")  # 브라우저 안 뜨는 원인 → 제거
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
