@@ -33,5 +33,6 @@
       "action": "sleep",
       "seconds": 2
     }
-  ]
+  ],
+  "id_xpath": "//*[@id=\"mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input\"]"
 }
