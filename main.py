@@ -4,8 +4,7 @@ from login_runner import run_login
 
 def main():
     options = webdriver.ChromeOptions()
-    # Headless mode intentionally removed for visual debugging
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")  # Best practice: headless mode
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
