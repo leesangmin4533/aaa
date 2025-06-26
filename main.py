@@ -46,6 +46,11 @@ def run_step(driver, step, elements, env):
     elif action == "send_keys":
         elem = elements[step["target"]]
         keys = step["keys"]
+
+        # \u2705 \ubcc0\uc218 \ud070\uc791 \ucc98\ub9ac
+        if isinstance(keys, str):
+            keys = env.get(keys.strip("${}"), keys)
+
         if isinstance(keys, list):
             for item in keys:
                 k = item["key"]
