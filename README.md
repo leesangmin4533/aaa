@@ -22,6 +22,7 @@ keep the stored selectors valid.
 ten seconds for the login button to appear before clicking it. The snippet can
 be adapted to other actions that require an explicit wait-and-click sequence.
 
-The `nexacro_idpw_input_physical.json` configuration showcases the same login
-flow as the JavaScript version but relies solely on Selenium's ``send_keys``
-to enter the credentials.
+`nexacro_idpw_input_js.json` demonstrates variable substitution for the
+credentials and sends the Enter key three times after typing the password.
+`nexacro_idpw_input_physical.json` performs a similar sequence but includes
+explicit clicks on each field before typing.
