@@ -18,7 +18,6 @@ def main():
     driver = webdriver.Chrome()
     driver.get(url)
     # Automatically fill the ID field using the latest XPath configuration.
-    xpath_path = "/html/body/div/div/div/div[1]/div/div/div[1]/div/div/div/div[1]/div/div[5]/input"
     try:
         id_input = driver.find_element(By.XPATH, xpath_path)
         id_input.clear()
