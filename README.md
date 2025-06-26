@@ -21,3 +21,7 @@ keep the stored selectors valid.
 `wait_click_login.json` provides a minimal example showing how to wait up to
 ten seconds for the login button to appear before clicking it. The snippet can
 be adapted to other actions that require an explicit wait-and-click sequence.
+
+The `nexacro_idpw_input_physical.json` configuration showcases the same login
+flow as the JavaScript version but relies solely on Selenium's ``send_keys``
+to enter the credentials.
