@@ -27,6 +27,9 @@ def main():
     except Exception:
         pass
     input("Login screen displayed. Press Enter to exit...")
+    # Wait a few seconds so the window does not close immediately after
+    # submitting the prompt.
+    time.sleep(5)
     driver.quit()
 
 
