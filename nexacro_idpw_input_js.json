@@ -1,6 +1,6 @@
 {
   "name": "넥사크로_IDPW_입력_JS",
-  "description": "넥사크로 기반 페이지에서 ID, PW 입력 필드를 XPath로 찾고, JavaScript로 각각 강제 입력 후 엔터 키 입력",
+  "description": "넥사크로 기반 페이지에서 ID, PW 입력 필드를 XPath로 찾고, `send_keys` 로 값을 입력한 뒤 엔터 키를 세 번 보내는 예제",
   "exclusive": true,
   "steps": [
     {
@@ -21,13 +21,10 @@
       "as": "id_input"
     },
     {
-      "action": "script",
-      "code": "arguments[0].value = '46513';",
-      "target": "id_input"
-    },
-    {
-      "action": "log",
-      "message": "✅ ID 입력 완료 (JavaScript 방식)"
+      "action": "send_keys",
+      "target": "id_input",
+      "keys": "${LOGIN_ID}",
+      "log": "✅ ID 입력 완료"
     },
     {
       "action": "find_element",
@@ -36,13 +33,10 @@
       "as": "pw_input"
     },
     {
-      "action": "script",
-      "code": "arguments[0].value = '1113';",
-      "target": "pw_input"
-    },
-    {
-      "action": "log",
-      "message": "✅ 비밀번호 입력 완료"
+      "action": "send_keys",
+      "target": "pw_input",
+      "keys": "${LOGIN_PW}",
+      "log": "✅ 비밀번호 입력 완료"
     },
     {
       "action": "send_keys",
