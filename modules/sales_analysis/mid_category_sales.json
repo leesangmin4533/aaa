@@ -1,0 +1,26 @@
+{
+  "steps": [
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext']/div",
+      "as": "salesAnalysisMenu"
+    },
+    {
+      "action": "click",
+      "target": "salesAnalysisMenu",
+      "log": "✅ Clicked Sales Analysis menu"
+    },
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text']",
+      "as": "midCategorySales"
+    },
+    {
+      "action": "click",
+      "target": "midCategorySales",
+      "log": "✅ Clicked Mid-category Sales Composition"
+    }
+  ]
+}
