@@ -56,12 +56,13 @@
       "as": "login_btn"
     },
     {
-      "action": "click",
+      "action": "script",
+      "code": "arguments[0].scrollIntoView(); arguments[0].click();",
       "target": "login_btn"
     },
     {
       "action": "log",
-      "message": "✅ 로그인 버튼 클릭 완료"
+      "message": "✅ 로그인 버튼 JS 강제 클릭 완료"
     },
     {
       "action": "sleep",
