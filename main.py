@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from dotenv import load_dotenv
 import os
 
-CONFIG_FILE = "nexacro_idpw_input_js.json"
+CONFIG_FILE = "login_sequence.json"
 
 
 def load_config():
@@ -48,9 +48,6 @@ def run_step(driver, step, elements, env):
         keys = step["keys"]
 
         # \u2705 \ubcc0\uc218 \ud070\uc791 \ucc98\ub9ac
-        if isinstance(keys, str):
-            keys = env.get(keys.strip("${}"), keys)
-
         if isinstance(keys, list):
             for item in keys:
                 k = item["key"]
@@ -61,7 +58,9 @@ def run_step(driver, step, elements, env):
                 if "delay" in item:
                     time.sleep(item["delay"])
         else:
-            elem.send_keys(keys)
+            if isinstance(keys, str):
+                keys = env.get(keys.strip("${}"), keys)
+            ActionChains(driver).move_to_element(elem).click().send_keys(keys).perform()
 
     elif action == "script":
         code = step["code"]
