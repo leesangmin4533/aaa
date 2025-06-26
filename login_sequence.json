@@ -2,84 +2,16 @@
   "name": "넥사크로 로그인 자동화",
   "description": "ID/PW 입력 후 엔터 2회로 로그인 처리",
   "steps": [
-    {
-      "action": "open_url",
-      "value": "https://store.bgfretail.com/websrc/deploy/index.html"
-    },
-    {
-      "action": "wait_elements_count",
-      "by": "class_name",
-      "value": "nexainput",
-      "count": 2,
-      "timeout": 20,
-      "log": "✅ 로그인 입력 필드 렌더링 완료 대기"
-    },
-    {
-      "action": "wait_elements_count",
-      "by": "class_name",
-      "value": "nexainput",
-      "count": 2,
-      "timeout": 20
-    },
-    {
-      "action": "find_element",
-      "by": "xpath",
-      "value": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']",
-      "as": "id_input"
-    },
-    {
-      "action": "script",
-      "target": "id_input",
-      "code": "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });",
-      "log": "🔍 id_input 요소 뷰포트로 스크롤"
-    },
-    {
-      "action": "send_keys",
-      "target": "id_input",
-      "keys": "${LOGIN_ID}",
-      "log": "✅ ID 입력 완료"
-    },
-    {
-      "action": "find_element",
-      "by": "xpath",
-      "value": "//*[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw:input']",
-      "as": "pw_input"
-    },
-    {
-      "action": "script",
-      "target": "pw_input",
-      "code": "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });",
-      "log": "🔍 pw_input 요소 뷰포트로 스크롤"
-    },
-    {
-      "action": "send_keys",
-      "target": "pw_input",
-      "keys": "${LOGIN_PW}",
-      "log": "✅ 비밀번호 입력 완료"
-    },
-    {
-      "action": "script",
-      "target": "pw_input",
-      "code": "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });",
-      "log": "🔍 pw_input 요소 뷰포트로 스크롤"
-    },
-    {
-      "action": "send_keys",
-      "target": "pw_input",
-      "keys": [
-        {
-          "key": "ENTER",
-          "delay": 1
-        },
-        {
-          "key": "ENTER"
-        }
-      ],
-      "log": "✅ 엔터 2회 입력"
-    },
-    {
-      "action": "sleep",
-      "seconds": 2
-    }
+    {"action": "open_url", "value": "https://store.bgfretail.com/websrc/deploy/index.html"},
+    {"action": "wait_elements_count", "by": "class_name", "value": "nexainput", "count": 2, "timeout": 20},
+    {"action": "find_element", "by": "xpath", "value": "//input[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_id:input']", "as": "id_input"},
+    {"action": "send_keys", "target": "id_input", "keys": "${LOGIN_ID}", "log": "✅ ID 입력 완료"},
+    {"action": "find_element", "by": "xpath", "value": "//*[@id='mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw:input']", "as": "pw_input"},
+    {"action": "send_keys", "target": "pw_input", "keys": "${LOGIN_PW}", "log": "✅ 비밀번호 입력 완료"},
+    {"action": "send_keys", "target": "pw_input", "keys": [
+      {"key": "ENTER", "delay": 1},
+      {"key": "ENTER"}
+    ], "log": "✅ 엔터 2회 입력"},
+    {"action": "sleep", "seconds": 2}
   ]
 }
