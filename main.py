@@ -20,8 +20,8 @@ def run_sales_analysis(driver):
         log = step.get("log")
 
         if action == "navigate_menu":
-            driver.find_element(By.XPATH, "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext']").click()  # 매출분석
-            driver.find_element(By.XPATH, "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB011_M0:icontext']").click()  # 중분류별 매출 구성
+            driver.find_element(By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext"]/div').click()  # 매출분석
+            driver.find_element(By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text"]').click()  # 중분류별 매출 구성비
         elif action == "click":
             driver.find_element("xpath", step["target_xpath"]).click()
         elif action == "extract_network_response":
