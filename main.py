@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from login_runner import run_login
 import json
 
@@ -19,8 +20,8 @@ def run_sales_analysis(driver):
         log = step.get("log")
 
         if action == "navigate_menu":
-            # 메뉴 클릭 동작은 별도 구현 필요
-            continue
+            driver.find_element(By.XPATH, "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext']").click()  # 매출분석
+            driver.find_element(By.XPATH, "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB011_M0:icontext']").click()  # 중분류별 매출 구성
         elif action == "click":
             driver.find_element("xpath", step["target_xpath"]).click()
         elif action == "extract_network_response":
