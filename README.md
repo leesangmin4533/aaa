@@ -46,3 +46,23 @@ Generate the commands:
 python snippet_to_json.py sample_snippet.json commands_output.json
 ```
 
+
+## Quick Inventory Command Generation
+
+Use `snippet_to_command.py` when you have a list of element IDs and need to build
+an automation sequence quickly. The script reads a snippet file containing
+`id목록` and creates a command JSON following simple rules:
+
+- IDs starting with `btn_` get a `click` step after locating the element.
+- IDs starting with `edt_` or `txt_` include a `send_keys` placeholder.
+- All other IDs only generate a `find_element` step.
+
+Example:
+```bash
+python snippet_to_command.py modules/inventory/inventory_list_snippet.json \
+    modules/inventory/inventory_list_cmd.json
+```
+Run the resulting automation:
+```bash
+python modules/inventory/run_inventory_list.py
+```
