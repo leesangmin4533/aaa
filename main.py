@@ -4,7 +4,7 @@ import json
 
 
 def run_sales_analysis(driver):
-    with open("modules/sales_analysis/mid_category_sales.json", "r", encoding="utf-8") as f:
+    with open("modules/sales_analysis/mid_category_sales_cmd.json", "r", encoding="utf-8") as f:
         steps = json.load(f)["steps"]
     env = load_env()
     elements = {}

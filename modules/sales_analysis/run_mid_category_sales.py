@@ -21,4 +21,4 @@ def run_script(config_path):
 
 
 if __name__ == "__main__":
-    run_script("modules/sales_analysis/mid_category_sales.json")
+    run_script("modules/sales_analysis/mid_category_sales_cmd.json")
