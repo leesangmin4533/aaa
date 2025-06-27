@@ -8,13 +8,18 @@
       "action": "navigate_menu",
       "menu_path": ["매출분석", "중분류별 매출 구성"]
     },
-    {
-      "action": "click",
-      "target_xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
-      "log": "✅ 중분류 코드 001 클릭"
-    },
-    {
-      "action": "extract_network_response",
+      {
+        "action": "click",
+        "target_xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
+        "log": "✅ 중분류 코드 001 클릭"
+      },
+      {
+        "action": "click",
+        "target_xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text']",
+        "log": "✅ 중분류 코드 001 클릭 완료"
+      },
+      {
+        "action": "extract_network_response",
       "match": "selDetailSearch",
       "save_to": "output/category_001_detail.txt",
       "log": "✅ selDetailSearch 응답 SSV 저장 완료"
