@@ -67,20 +67,25 @@ def run_step(driver, step, elements, env):
             i = 0
             while True:
                 path = f"{prefix}{i}{suffix}"
+                print(f"🔍 시도 중인 XPath: {path}")
                 try:
                     elem = driver.find_element(By.XPATH, path)
+                    print(f"✅ 텍스트 발견: {elem.text.strip()}")
                     results.append(elem.text.strip())
                     i += 1
-                except Exception:
+                except Exception as e:
+                    print(f"❌ 텍스트 없음 @ {path} → {e}")
                     break
         else:
             for i in range(row_count):
                 path = f"{prefix}{i}{suffix}"
+                print(f"🔍 시도 중인 XPath: {path}")
                 try:
                     elem = driver.find_element(By.XPATH, path)
+                    print(f"✅ 텍스트 발견: {elem.text.strip()}")
                     results.append(elem.text.strip())
                 except Exception as e:
-                    print(f"❌ extract_texts row {i} → {e}")
+                    print(f"❌ 텍스트 없음 @ {path} → {e}")
                     break
         outfile = step.get("save_to")
         if outfile:
