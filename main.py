@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from login_runner import run_login, run_step, load_env
 import json
 
@@ -19,13 +18,12 @@ def run_sales_analysis(driver):
 
 def main():
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")  # 브라우저 안 뜨는 원인 → 제거
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
+    options.add_argument("--headless=new")  # headless 환경에서 실행 가능
 
-    service = Service(executable_path="C:/chromedriver-win32/chromedriver.exe")
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(options=options)  # ✅ 자동 드라이버 탐색
     run_login(driver)
     run_sales_analysis(driver)
 
