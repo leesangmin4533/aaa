@@ -57,6 +57,25 @@ def run_step(driver, step, elements, env):
         driver.execute_script(code, elements[step["target"]])
     elif action == "sleep":
         time.sleep(step["seconds"])
+    elif action == "extract_texts":
+        src = step["from"]
+        prefix = src["xpath_prefix"]
+        suffix = src["xpath_suffix"]
+        row_count = step.get("rows", 0)
+        results = []
+        for i in range(row_count):
+            path = f"{prefix}{i}{suffix}"
+            try:
+                elem = driver.find_element(By.XPATH, path)
+                results.append(elem.text.strip())
+            except Exception as e:
+                print(f"❌ extract_texts row {i} → {e}")
+                break
+        outfile = step.get("save_to")
+        if outfile:
+            os.makedirs(os.path.dirname(outfile), exist_ok=True)
+            with open(outfile, "w", encoding="utf-8") as f:
+                f.write("\n".join(results))
     elif action == "log":
         print(step["message"])
     else:
