@@ -1,9 +1,0 @@
-{
-  "module": "sales_analysis",
-  "task": "parse_ssv_response",
-  "target_dataset": "dsDetail",
-  "output_fields": ["ITEM_CD", "ITEM_NM", "STOCK_QTY"],
-  "filters": {
-    "STOCK_QTY": "0"
-  }
-}
