@@ -5,7 +5,7 @@ import json
 
 def run_sales_analysis(driver):
     # 디버깅용 명령문 경로로 변경됨
-    with open("mid_category_sales_cmd_debug.json", "r", encoding="utf-8") as f:
+    with open("modules/sales_analysis/mid_category_sales_cmd_debug.json", "r", encoding="utf-8") as f:
         steps = json.load(f)["steps"]
     env = load_env()
     elements = {}
