@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from login_runner import run_login
 import json
 
@@ -20,8 +22,21 @@ def run_sales_analysis(driver):
         log = step.get("log")
 
         if action == "navigate_menu":
-            driver.find_element(By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext"]/div').click()  # 매출분석
-            driver.find_element(By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text"]').click()  # 중분류별 매출 구성비
+            # 매출분석 메뉴 클릭
+            driver.find_element(By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext"]/div').click()
+
+            # 중분류 구성비 메뉴가 나타날 때까지 최대 5초 대기
+            WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text"]'))
+            )
+
+            # 중분류 구성비 메뉴 클릭
+            driver.find_element(By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text"]').click()
+
+            # 중분류 셀 로딩 대기
+            WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"]'))
+            )
         elif action == "click":
             driver.find_element("xpath", step["target_xpath"]).click()
         elif action == "extract_network_response":
