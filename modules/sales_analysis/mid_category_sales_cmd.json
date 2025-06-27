@@ -44,12 +44,12 @@
     {
       "action": "extract_texts",
       "from": {
-        "xpath_prefix": "//*[@id=\"mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdDetail.body\"]",
-        "xpath_suffix": ""
+        "xpath_prefix": "//*[@id=\"mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdDetail.body.gridrow_",
+        "xpath_suffix": ".cell_0_1:text\"]"
       },
-      "rows": 1,
+      "rows": "auto",
       "save_to": "output/category_001_detail.txt",
-      "log": "✅ 상세 텍스트 저장 완료"
+      "log": "✅ gdDetail 반복 행 텍스트 자동 추출 완료"
     }
   ]
 }
