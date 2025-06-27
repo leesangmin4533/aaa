@@ -14,7 +14,7 @@
     {
       "action": "find_element",
       "by": "xpath",
-      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text']",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0']",
       "as": "midCategorySales"
     },
     {
@@ -25,7 +25,7 @@
     {
       "action": "wait_elements_count",
       "by": "xpath",
-      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text']",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
       "count": 1,
       "timeout": 10,
       "log": "✅ Waited for mid-category row to load"
@@ -33,7 +33,7 @@
     {
       "action": "find_element",
       "by": "xpath",
-      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text']",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
       "as": "category001"
     },
     {
@@ -45,7 +45,7 @@
       "action": "extract_texts",
       "from": {
         "xpath_prefix": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div3.form.gdList2.body.gridrow_",
-        "xpath_suffix": ".cell_0_0:text"
+        "xpath_suffix": ".cell_0_0']"
       },
       "rows": 20,
       "save_to": "output/category_001_detail.txt",
