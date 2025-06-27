@@ -1,0 +1,60 @@
+{
+  "module": "sales_analysis",
+  "task": "extract_and_trace",
+  "steps": [
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext']/div",
+      "as": "salesAnalysisMenu",
+      "log": "🔍 매출분석 메뉴 요소 찾음"
+    },
+    {
+      "action": "click",
+      "target": "salesAnalysisMenu",
+      "log": "✅ 매출분석 메뉴 클릭 완료"
+    },
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text']",
+      "as": "midCategorySales",
+      "log": "🔍 중분류별 매출 메뉴 요소 찾음"
+    },
+    {
+      "action": "click",
+      "target": "midCategorySales",
+      "log": "✅ 중분류별 매출 메뉴 클릭 완료"
+    },
+    {
+      "action": "wait_elements_count",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
+      "count": 1,
+      "timeout": 10,
+      "log": "⏳ 첫 중분류 셀 로딩 대기 성공"
+    },
+    {
+      "action": "find_element",
+      "by": "xpath",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
+      "as": "category001",
+      "log": "🔍 001 중분류 셀 찾음"
+    },
+    {
+      "action": "click",
+      "target": "category001",
+      "log": "✅ 중분류 코드 001 클릭 완료"
+    },
+    {
+      "action": "extract_texts",
+      "from": {
+        "xpath_prefix": "//*[@id=\"mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdDetail.body.gridrow_",
+        "xpath_suffix": ".cell_0_1:text\"]"
+      },
+      "rows": "auto",
+      "save_to": "output/category_001_detail.txt",
+      "log": "📦 gdDetail 반복행 텍스트 추출 완료 → category_001_detail.txt"
+    }
+  ]
+}
