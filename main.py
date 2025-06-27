@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from login_runner import run_login, run_step, load_env
 import json
 
@@ -23,7 +24,8 @@ def main():
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
 
-    driver = webdriver.Chrome(options=options)
+    service = Service(executable_path="C:/chromedriver-win32/chromedriver.exe")
+    driver = webdriver.Chrome(service=service, options=options)
     run_login(driver)
     run_sales_analysis(driver)
 
