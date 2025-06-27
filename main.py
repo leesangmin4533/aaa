@@ -30,7 +30,7 @@ def run_sales_analysis(driver):
         elif action == "extract_network_response":
             extract_ssv_from_cdp(driver, keyword=step["match"], save_to=step["save_to"])
         elif action == "parse_ssv":
-            from parse_and_save import parse_ssv, save_filtered_rows
+            from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
             with open(step["input"], "r", encoding="utf-8") as f:
                 rows = parse_ssv(f.read())
             save_filtered_rows(
