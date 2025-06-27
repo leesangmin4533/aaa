@@ -19,6 +19,10 @@
         "log": "✅ 중분류 코드 001 클릭 완료"
       },
       {
+        "action": "sleep",
+        "seconds": 1.5
+      },
+      {
         "action": "extract_network_response",
       "match": "selDetailSearch",
       "save_to": "output/category_001_detail.txt",
