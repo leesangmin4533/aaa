@@ -44,12 +44,12 @@
     {
       "action": "extract_texts",
       "from": {
-      "xpath_prefix": "/html/body/div/div[1]/div/div[3]/div/div[3]/div/div[10]/div/div/div[1]/div/div[2]/div/div[3]/div/div[2]/div/div[1]/div/div[3]/div[",
-      "xpath_suffix": "]/div[1]"
+        "xpath_prefix": "//*[@id=\"mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdDetail.body\"]",
+        "xpath_suffix": ""
       },
-      "rows": "auto",
+      "rows": 1,
       "save_to": "output/category_001_detail.txt",
-      "log": "✅ 전체 상세 항목을 텍스트 파일로 저장 완료"
+      "log": "✅ 상세 텍스트 저장 완료"
     }
   ]
 }
