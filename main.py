@@ -63,13 +63,19 @@ def run_sales_analysis(driver):
 
 
 def main():
+    from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
     options = webdriver.ChromeOptions()
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
+    options.add_argument("--remote-debugging-port=9222")
     # options.add_argument("--headless=new")  # headless 환경에서 실행 가능
 
-    driver = webdriver.Chrome(options=options)  # ✅ 자동 드라이버 탐색
+    caps = DesiredCapabilities.CHROME.copy()
+    caps["goog:loggingPrefs"] = {"performance": "ALL"}
+
+    driver = webdriver.Chrome(options=options, desired_capabilities=caps)  # ✅ 자동 드라이버 탐색
     run_login(driver)
     run_sales_analysis(driver)
 
