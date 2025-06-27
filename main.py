@@ -42,6 +42,9 @@ def run_sales_analysis(driver):
             )
         elif action == "click":
             driver.find_element("xpath", step["target_xpath"]).click()
+        elif action == "sleep":
+            # Allow pauses between actions when server responses are required
+            time.sleep(step.get("seconds", 1))
         elif action == "extract_network_response":
             extract_ssv_from_cdp(driver, keyword=step["match"], save_to=step["save_to"])
         elif action == "parse_ssv":
