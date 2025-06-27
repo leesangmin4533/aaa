@@ -1,4 +1,4 @@
-from parse_and_save import parse_ssv
+from modules.data_parser.parse_and_save import parse_ssv
 
 
 def test_parse_ssv_basic():

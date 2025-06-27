@@ -31,7 +31,7 @@ def main():
     run_login(driver)
     run_sales_analysis(driver)
 
-    from parse_and_save import parse_ssv, save_filtered_rows
+    from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
     from pathlib import Path
 
     ssv_path = "output/category_001_detail.txt"

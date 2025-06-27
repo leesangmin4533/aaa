@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 import time
 
 from ssv_listener import extract_ssv_from_cdp
-from parse_and_save import parse_ssv, save_filtered_rows
+from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 from pathlib import Path
 
 
