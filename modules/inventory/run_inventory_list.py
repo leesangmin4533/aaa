@@ -7,8 +7,13 @@ def run_script(config_path):
     with open(config_path, "r", encoding="utf-8") as f:
         steps = json.load(f)["steps"]
     env = load_env()
+    from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
     options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(options=options)
+    options.add_argument("--remote-debugging-port=9222")
+    caps = DesiredCapabilities.CHROME.copy()
+    caps["goog:loggingPrefs"] = {"performance": "ALL"}
+    driver = webdriver.Chrome(options=options, desired_capabilities=caps)
     elements = {}
     for step in steps:
         try:
