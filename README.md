@@ -17,6 +17,8 @@ To launch the mid-category sales automation after logging in, run:
 ```bash
 python modules/sales_analysis/run_mid_category_sales.py
 ```
+The command sequence used by this script is stored in
+`modules/sales_analysis/mid_category_sales_cmd.json`.
 
 
 The structure files in the `structure` directory describe the XPath selectors
