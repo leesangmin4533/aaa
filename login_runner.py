@@ -63,14 +63,25 @@ def run_step(driver, step, elements, env):
         suffix = src["xpath_suffix"]
         row_count = step.get("rows", 0)
         results = []
-        for i in range(row_count):
-            path = f"{prefix}{i}{suffix}"
-            try:
-                elem = driver.find_element(By.XPATH, path)
-                results.append(elem.text.strip())
-            except Exception as e:
-                print(f"❌ extract_texts row {i} → {e}")
-                break
+        if isinstance(row_count, str) and row_count == "auto":
+            i = 0
+            while True:
+                path = f"{prefix}{i}{suffix}"
+                try:
+                    elem = driver.find_element(By.XPATH, path)
+                    results.append(elem.text.strip())
+                    i += 1
+                except Exception:
+                    break
+        else:
+            for i in range(row_count):
+                path = f"{prefix}{i}{suffix}"
+                try:
+                    elem = driver.find_element(By.XPATH, path)
+                    results.append(elem.text.strip())
+                except Exception as e:
+                    print(f"❌ extract_texts row {i} → {e}")
+                    break
         outfile = step.get("save_to")
         if outfile:
             os.makedirs(os.path.dirname(outfile), exist_ok=True)
