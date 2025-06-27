@@ -1,0 +1,1 @@
+SSV:UTF-8ErrorCode:string=0ErrorMsg:string=xm_tid:string=6965214604497192924Dataset:dsDetail_RowType_ORD_YMD:string(0)ITEM_CD:string(13)ITEM_NM:string(36)SALE_QTY:bigdecimal(0)ORD_QTY:bigdecimal(0)BUY_QTY:bigdecimal(0)DISUSE_QTY:bigdecimal(0)STOCK_QTY:bigdecimal(0)N8801771031802도)한끼만족함박앤치킨110
