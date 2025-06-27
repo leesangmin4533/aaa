@@ -30,7 +30,12 @@ def run_sales_analysis(driver):
             from parse_and_save import parse_ssv, save_filtered_rows
             with open(step["input"], "r", encoding="utf-8") as f:
                 rows = parse_ssv(f.read())
-            save_filtered_rows(rows, step["save_to"], step["fields"])
+            save_filtered_rows(
+                rows,
+                step["save_to"],
+                fields=step.get("fields"),
+                filter_dict=step.get("filter"),
+            )
 
         if log:
             print(log)

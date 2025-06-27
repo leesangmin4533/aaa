@@ -2,6 +2,19 @@ from pathlib import Path
 
 
 def parse_ssv(ssv_text):
+    """Parse a Nexacro SSV string into a list of row dictionaries.
+
+    Parameters
+    ----------
+    ssv_text : str
+        Raw SSV text captured from the network.
+
+    Returns
+    -------
+    list[dict]
+        Parsed rows with column names as keys.
+    """
+
     blocks = ssv_text.split("\x1e")
     header_line = next(line for line in blocks if "ITEM_CD" in line)
     col_names = [x.split(":")[0] for x in header_line.split("\x1f")[1:]]
@@ -15,8 +28,34 @@ def parse_ssv(ssv_text):
     return result
 
 
-def save_filtered_rows(rows, path, fields=["ITEM_CD", "ITEM_NM", "STOCK_QTY"]):
-    filtered = [r for r in rows if r.get("STOCK_QTY", "").strip() == "0"]
+def save_filtered_rows(rows, path, fields=None, filter_dict=None):
+    """Save filtered rows to a text file.
+
+    Parameters
+    ----------
+    rows : list[dict]
+        Parsed dataset rows.
+    path : str
+        Output path for the filtered text file.
+    fields : list[str], optional
+        Column names to write, defaults to ``["ITEM_CD", "ITEM_NM", "STOCK_QTY"]``.
+    filter_dict : dict[str, str], optional
+        Conditions for filtering rows, where each key/value pair must match the
+        corresponding column exactly.
+    """
+
+    if fields is None:
+        fields = ["ITEM_CD", "ITEM_NM", "STOCK_QTY"]
+
+    def row_matches(row):
+        if not filter_dict:
+            return True
+        for key, value in filter_dict.items():
+            if row.get(key, "").strip() != value:
+                return False
+        return True
+
+    filtered = [r for r in rows if row_matches(r)]
     lines = [", ".join(r.get(f, "") for f in fields) for r in filtered]
 
     Path(path).parent.mkdir(parents=True, exist_ok=True)
