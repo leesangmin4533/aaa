@@ -21,7 +21,7 @@ def main():
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
-    options.add_argument("--headless=new")  # headless 환경에서 실행 가능
+    # options.add_argument("--headless=new")  # headless 환경에서 실행 가능
 
     driver = webdriver.Chrome(options=options)  # ✅ 자동 드라이버 탐색
     run_login(driver)
