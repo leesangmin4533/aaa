@@ -27,6 +27,17 @@ def main():
     run_login(driver)
     run_sales_analysis(driver)
 
+    from parse_and_save import parse_ssv, save_filtered_rows
+    from pathlib import Path
+
+    ssv_path = "output/category_001_detail.txt"
+    out_path = "output/category_001_filtered.txt"
+    if Path(ssv_path).exists():
+        with open(ssv_path, "r", encoding="utf-8") as f:
+            rows = parse_ssv(f.read())
+        save_filtered_rows(rows, out_path)
+        print(f"✅ 필터링 완료: {out_path}")
+
     input("⏸ 로그인 화면 유지 중. Enter를 누르면 종료됩니다.")
     driver.quit()
 
