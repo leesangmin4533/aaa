@@ -9,7 +9,7 @@ from modules.common.popup_utils import close_popups, POPUP_CLOSE_SCRIPT
 
 class DummyDriver:
     def __init__(self):
-        self.execute_script = Mock(return_value=0)
+        self.execute_script = Mock(return_value={"count": 0, "targets": []})
 
 
 def test_close_popups_executes_script():
