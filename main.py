@@ -110,8 +110,14 @@ def main():
 
         # ✅ 팝업 자동 닫기
         try:
-            closed_count = close_popups(driver)
-            log("popup", f"팝업 {closed_count}개 닫음")
+            popup_result = close_popups(driver)
+            if popup_result.get("detected"):
+                log("popup_detected", "블러 기반 팝업 감지")
+                if popup_result.get("closed"):
+                    log("popup_closed", f"팝업 닫힘: {popup_result.get('target')}")
+                else:
+                    log("popup_failed", f"닫기 실패: {popup_result.get('reason')}")
+                    input("수동 확인 후 Enter...")
         except Exception as e:
             logger.warning("팝업 닫기 중 예외 발생", exc_info=e)
     except Exception as e:
