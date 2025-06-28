@@ -3,7 +3,7 @@
     {
       "action": "find_element",
       "by": "xpath",
-      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext']/div",
+      "value": "//*[@id='mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0']",
       "as": "salesAnalysisMenu"
     },
     {
