@@ -1,6 +1,7 @@
 from modules.common.login import run_login
 from modules.common.driver import create_chrome_driver
 from modules.common.module_map import write_module_map
+from log_util import create_logger
 import json
 import time
 import logging
@@ -8,15 +9,13 @@ import logging
 MODULE_NAME = "main"
 
 
-def log(step: str, msg: str) -> None:
-    logger.info(f"[{MODULE_NAME} > {step}] {msg}")
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
+log = create_logger(MODULE_NAME)
 
 
 def run_sales_analysis(driver):
@@ -35,7 +34,7 @@ def run_sales_analysis(driver):
 
     for step in behavior:
         action = step.get("action")
-        log = step.get("log")
+        step_log = step.get("log")
         log("step_start", f"{action} 시작")
         
         if action == "navigate_menu":
@@ -59,8 +58,8 @@ def run_sales_analysis(driver):
                 filter_dict=step.get("filter"),
             )
         log("step_end", f"{action} 완료")
-        if log:
-            log("message", log)
+        if step_log:
+            log("message", step_log)
 
 
 def main():
