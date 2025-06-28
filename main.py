@@ -2,6 +2,7 @@ from modules.common.login import run_login
 from modules.common.driver import create_chrome_driver
 from modules.common.module_map import write_module_map
 from log_util import create_logger
+from popup_utils import close_popups
 import json
 import time
 import logging
@@ -106,6 +107,13 @@ def main():
     try:
         run_login(driver)
         log("login", "로그인 시퀀스 성공")
+
+        # ✅ 팝업 자동 닫기
+        try:
+            closed_count = close_popups(driver)
+            log("popup", f"팝업 {closed_count}개 닫음")
+        except Exception as e:
+            logger.warning("팝업 닫기 중 예외 발생", exc_info=e)
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > login] 로그인 시퀀스 실패")
         driver.quit()
