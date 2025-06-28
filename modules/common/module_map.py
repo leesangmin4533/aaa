@@ -29,14 +29,6 @@ MODULE_MAP = {
             "role": "매출분석 메뉴에서 중분류별 매출 구성 페이지까지 이동",
         },
         {
-            "module": "modules/sales_analysis/process_one_category.py",
-            "role": "단일 중분류 행을 클릭하고 텍스트 추출 후 SSV 응답을 저장·필터링함",
-        },
-        {
-            "module": "modules/sales_analysis/loop_all_categories.py",
-            "role": "모든 중분류 행을 순차적으로 탐색하며 process_one_category 실행",
-        },
-        {
             "module": "modules/data_parser/parse_and_save.py",
             "role": "네트워크로 받은 SSV 데이터를 파싱하고 조건에 맞는 행만 파일로 저장함",
         },
