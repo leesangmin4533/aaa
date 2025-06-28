@@ -9,7 +9,33 @@ return (function () {
 
   const allCloseCandidates = [];
 
-  // \ub9d0\uae30\uc801 \uad6c\uc870
+  // === 1. \ube14\ub7ec \uac78\ub9b0 \uc694\uc18c \uc6b0\uc120 \ud0d0\uc9c0
+  const blurredDivs = Array.from(document.querySelectorAll('div')).filter(div => {
+    const style = window.getComputedStyle(div);
+    return style.filter.includes('blur') || style.backdropFilter.includes('blur');
+  });
+
+  blurredDivs.forEach(div => {
+    const buttons = div.querySelectorAll('button, a, div');
+    buttons.forEach(btn => {
+      const txt = btn.innerText?.trim();
+      const isClickable =
+        btn.onclick ||
+        btn.getAttribute('role') === 'button' ||
+        /btn|nexabutton/.test(btn.className);
+      const key = btn.id || btn.outerHTML.slice(0, 100);
+      if (
+        isClickable &&
+        /(\ub2eb\uae30|\ud655\uc778|\ub2e4\uc2dc \ubcf4\uc9c0 \uc54a\uae30)/.test(txt) &&
+        !clickedKeys.has(key)
+      ) {
+        allCloseCandidates.push(btn);
+        clickedKeys.add(key);
+      }
+    });
+  });
+
+  // === 2. \uba85\uc2dc\uc801 \uad6c\uc870 STCM230_P1
   const popupAList = Array.from(document.querySelectorAll('[id*="STCM230_P1"]'));
   popupAList.forEach(popup => {
     const closeBtn = popup.querySelector('[id$="btnClose"]');
@@ -22,7 +48,7 @@ return (function () {
     }
   });
 
-  // \uc77c\ubc18 \uad6c\uc870
+  // === 3. \uc77c\ubc18 \ud328\ud134 \uad6c\uc870
   const popupBList = Array.from(document.querySelectorAll('div')).filter(div => {
     const style = window.getComputedStyle(div);
     return (
@@ -43,7 +69,6 @@ return (function () {
         btn.onclick ||
         btn.getAttribute('role') === 'button' ||
         /btn|nexabutton/.test(btn.className);
-
       const key = btn.id || btn.outerHTML.slice(0, 100);
       if (
         isClickable &&
@@ -56,6 +81,7 @@ return (function () {
     });
   });
 
+  // === \ud074\ub9ad \uc2e4\ud589
   allCloseCandidates.forEach(btn => {
     try {
       btn.click();
@@ -66,10 +92,7 @@ return (function () {
     }
   });
 
-  return {
-    count: closed,
-    targets: closedIds
-  };
+  return { count: closed, targets: closedIds };
 })();
 """
 
