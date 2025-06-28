@@ -28,13 +28,17 @@ return (function() {
   });
 
   popupBList.forEach(div => {
-    const closeBtn = div.querySelector('button, div, a');
-    if (closeBtn && /닫기|확인/.test(closeBtn.innerText)) {
-      console.log('닫기 대상:', closeBtn.innerText, closeBtn.id, closeBtn.className);
-      closeBtn.click();
+    const buttons = Array.from(div.querySelectorAll('button, a, div')).filter(el => {
+      const txt = el.innerText.trim();
+      const isClickable = el.onclick || el.getAttribute('role') === 'button' || el.className.includes('btn') || el.className.includes('nexabutton');
+      return isClickable && /(닫기|확인|다시 보지 않기)/.test(txt);
+    });
+
+    buttons.forEach(btn => {
+      btn.click();
       closed++;
-      closedIds.push(closeBtn.innerText + ' / ' + (closeBtn.id || '[no-id]'));
-    }
+      closedIds.push(`${btn.innerText} / ${btn.id || '[no-id]'}`);
+    });
   });
 
   return { count: closed, targets: closedIds };
