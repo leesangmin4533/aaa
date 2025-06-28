@@ -108,6 +108,9 @@ def main():
         run_login(driver)
         log("login", "로그인 시퀀스 성공")
 
+        # ✨ 두 번째 팝업이 뜰 시간 확보
+        time.sleep(1.2)
+
         # ✅ 팝업 자동 닫기
         try:
             popup_result = close_popups(driver)
@@ -116,11 +119,11 @@ def main():
                 json.dumps(popup_result.get("debug", []), indent=2, ensure_ascii=False),
             )
             if popup_result.get("detected"):
-                log("popup_detected", "블러 기반 팝업 감지")
+                log("popup_detected", "팝업 감지됨")
                 if popup_result.get("closed"):
                     log("popup_closed", f"팝업 닫힘: {popup_result.get('target')}")
                 else:
-                    log("popup_failed", f"닫기 실패: {popup_result.get('reason')}")
+                    log("popup_failed", f"팝업 닫기 실패: {popup_result.get('reason')}")
                     input("수동 확인 후 Enter...")
         except Exception as e:
             logger.warning("팝업 닫기 중 예외 발생", exc_info=e)
