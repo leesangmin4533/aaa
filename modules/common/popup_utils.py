@@ -3,80 +3,68 @@
 
 POPUP_CLOSE_SCRIPT = """
 return (function () {
-  let closed = 0;
-  const clickedKeys = new Set();
-  const closedIds = [];
+  const result = {
+    detected: false,
+    closed: false,
+    reason: "",
+    target: null
+  };
 
-  const allCloseCandidates = [];
-
-  // \ub9d0\uae30\uc801 \uad6c\uc870
-  const popupAList = Array.from(document.querySelectorAll('[id*="STCM230_P1"]'));
-  popupAList.forEach(popup => {
-    const closeBtn = popup.querySelector('[id$="btnClose"]');
-    if (closeBtn) {
-      const key = closeBtn.id || closeBtn.outerHTML.slice(0, 100);
-      if (!clickedKeys.has(key)) {
-        allCloseCandidates.push(closeBtn);
-        clickedKeys.add(key);
-      }
-    }
+  // 1. \ube14\ub7ec \uc694\uc18c \uac10\uc9c0
+  const allDivs = Array.from(document.querySelectorAll('div'));
+  const blurred = allDivs.find(div => {
+    const style = window.getComputedStyle(div);
+    return style.filter.includes('blur') || style.backdropFilter.includes('blur');
   });
 
-  // \uc77c\ubc18 \uad6c\uc870
-  const popupBList = Array.from(document.querySelectorAll('div')).filter(div => {
+  if (!blurred) {
+    result.reason = '\ube14\ub7ec \uc5c6\uc74c';
+    return result;
+  }
+
+  // \ube14\ub7ec\uac00 \uac10\uc9c0\ub418\uba74 \uc77c\uc2dc \uc911\ub2e8 \uc870\uac74 \ub9dd\uc131
+  result.detected = true;
+
+  // 2. \ud31d\uc5c5 \ubd84\uc11d
+  const popupCandidates = allDivs.filter(div => {
     const style = window.getComputedStyle(div);
     return (
+      style.position === 'fixed' &&
+      parseInt(style.zIndex || '0') > 1000 &&
       style.display !== 'none' &&
-      style.visibility !== 'hidden' &&
-      style.opacity !== '0' &&
-      (style.position === 'fixed' || style.position === 'absolute') &&
-      div.offsetWidth > 300 &&
-      div.offsetHeight > 200
+      style.visibility !== 'hidden'
     );
   });
 
-  popupBList.forEach(div => {
-    const buttons = div.querySelectorAll('button, a, div');
-    buttons.forEach(btn => {
-      const txt = btn.innerText?.trim();
+  for (let popup of popupCandidates) {
+    const buttons = popup.querySelectorAll('button, div, a');
+    for (let btn of buttons) {
+      const text = btn.innerText?.trim();
       const isClickable =
         btn.onclick ||
         btn.getAttribute('role') === 'button' ||
         /btn|nexabutton/.test(btn.className);
-
-      const key = btn.id || btn.outerHTML.slice(0, 100);
-      if (
-        isClickable &&
-        /(\ub2eb\uae30|\ud655\uc778|\ub2e4\uc2dc \ubcf4\uc9c0 \uc54a\uae30)/.test(txt) &&
-        !clickedKeys.has(key)
-      ) {
-        allCloseCandidates.push(btn);
-        clickedKeys.add(key);
+      if (isClickable && /(\ub2eb\uae30|\ud655\uc778|\ub2e4\uc2dc \ubcf4\uc9c0 \uc54a\uae30)/.test(text)) {
+        try {
+          btn.click();
+          result.closed = true;
+          result.target = text + ' / ' + (btn.id || '[no-id]');
+          return result;
+        } catch (e) {
+          result.reason = '\ubc84\ud2bc \ud074\ub9ad \uc2e4\ud328';
+          return result;
+        }
       }
-    });
-  });
-
-  allCloseCandidates.forEach(btn => {
-    try {
-      btn.click();
-      closed++;
-      closedIds.push(`${btn.innerText || '[no-text]'} / ${btn.id || '[no-id]'}`);
-    } catch (e) {
-      closedIds.push(`[\uc2e4\ud328] ${btn.innerText || '[no-text]'} / ${btn.id || '[no-id]'}`);
     }
-  });
+  }
 
-  return {
-    count: closed,
-    targets: closedIds
-  };
+  result.reason = '\ud31d\uc5c5 \ubc84\ud2bc \uc5c6\uc74c';
+  return result;
 })();
 """
 
 
 def close_popups(driver):
-    """Execute JavaScript in ``driver`` to close known pop-ups and log results."""
+    """Execute JavaScript in ``driver`` to detect and close blur-based pop-ups."""
 
-    result = driver.execute_script(POPUP_CLOSE_SCRIPT)
-    print("닫기 시도 대상:", result)
-    return result.get("count", 0)
+    return driver.execute_script(POPUP_CLOSE_SCRIPT)

@@ -9,12 +9,12 @@ from modules.common.popup_utils import close_popups, POPUP_CLOSE_SCRIPT
 
 class DummyDriver:
     def __init__(self):
-        self.execute_script = Mock(return_value={"count": 0, "targets": []})
+        self.execute_script = Mock(return_value={"detected": False})
 
 
 def test_close_popups_executes_script():
     driver = DummyDriver()
     result = close_popups(driver)
     driver.execute_script.assert_called_once_with(POPUP_CLOSE_SCRIPT)
-    assert result == 0
+    assert result == {"detected": False}
 
