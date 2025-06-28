@@ -7,16 +7,30 @@ return (function () {
     detected: false,
     closed: false,
     reason: "",
-    target: null
+    target: null,
+    debug: []
   };
 
   // 1. \ud31d\uc5c5 \ud3ec\ud568 \uac10\uc9c0 (z-index+fixed+\ud06c\uae30)
-  const allDivs = Array.from(document.querySelectorAll('div'));
+  const allDivs = Array.from(document.querySelectorAll('*'));
+  allDivs.forEach(div => {
+    const style = window.getComputedStyle(div);
+    result.debug.push({
+      id: div.id,
+      z: style.zIndex,
+      pos: style.position,
+      w: div.offsetWidth,
+      h: div.offsetHeight,
+      vis: style.visibility,
+      disp: style.display
+    });
+  });
+
   const popupCandidates = allDivs.filter(div => {
     const style = window.getComputedStyle(div);
     return (
       style.position === 'fixed' &&
-      parseInt(style.zIndex || '0') > 1000 &&
+      parseInt(style.zIndex || '0') > 500 &&
       div.offsetWidth > 300 &&
       div.offsetHeight > 200 &&
       style.display !== 'none' &&

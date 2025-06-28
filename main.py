@@ -111,6 +111,10 @@ def main():
         # ✅ 팝업 자동 닫기
         try:
             popup_result = close_popups(driver)
+            print(
+                "팝업 디버그 정보:",
+                json.dumps(popup_result.get("debug", []), indent=2, ensure_ascii=False),
+            )
             if popup_result.get("detected"):
                 log("popup_detected", "블러 기반 팝업 감지")
                 if popup_result.get("closed"):
