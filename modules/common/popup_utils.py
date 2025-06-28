@@ -2,23 +2,22 @@
 
 
 POPUP_CLOSE_SCRIPT = """
-return (function() {
+return (function () {
   let closed = 0;
-  let closedIds = [];
+  let closedIds = new Set();
 
-  // Case A: explicit structure containing STCM230_P1
+  const allCloseCandidates = [];
+
+  // \ub9d0\uae30\uc801 \uad6c\uc870 A
   const popupAList = Array.from(document.querySelectorAll('[id*="STCM230_P1"]'));
   popupAList.forEach(popup => {
     const closeBtn = popup.querySelector('[id$="btnClose"]');
     if (closeBtn) {
-      console.log('닫기 대상:', closeBtn.innerText, closeBtn.id, closeBtn.className);
-      closeBtn.click();
-      closed++;
-      closedIds.push(closeBtn.id || '[no-id]');
+      allCloseCandidates.push(closeBtn);
     }
   });
 
-  // Case B: generic pattern based structure
+  // \uc77c\ubc18 \uad6c\uc870 B
   const popupBList = Array.from(document.querySelectorAll('div')).filter(div => {
     const style = window.getComputedStyle(div);
     const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
@@ -27,39 +26,40 @@ return (function() {
     return isVisible && isCentered && isLarge;
   });
 
-  const clickedIds = new Set();
-
   popupBList.forEach(div => {
-    const buttons = Array.from(div.querySelectorAll('button, a, div')).filter(el => {
-      const txt = el.innerText.trim();
-      const isClickable =
-        typeof el.onclick === 'function' ||
-        /nexabutton/i.test(el.className);
-
-      const isUnique = el.id && !clickedIds.has(el.id);
-
-      return isClickable && isUnique && /(닫기|확인|다시 보지 않기)/.test(txt);
-    });
-
+    const buttons = div.querySelectorAll('button, a, div');
     buttons.forEach(btn => {
-      try {
-        btn.click();
-        if (typeof btn.onclick === 'function') {
-          btn.onclick();
-        } else {
-          const evt = new MouseEvent('click', { bubbles: true, cancelable: true });
-          btn.dispatchEvent(evt);
-        }
-        clickedIds.add(btn.id);
-        closed++;
-        closedIds.push(`${btn.innerText} / ${btn.id || '[no-id]'}`);
-      } catch (e) {
-        closedIds.push(`[실패] ${btn.innerText} / ${btn.id || '[no-id]'}`);
+      const txt = btn.innerText?.trim();
+      const isClickable =
+        btn.onclick ||
+        btn.getAttribute('role') === 'button' ||
+        /btn|nexabutton/.test(btn.className);
+
+      const btnId = btn.id || btn.getAttribute('name') || btn.outerHTML.slice(0, 60);
+      if (
+        isClickable &&
+        /(\ub2eb\uae30|\ud655\uc778|\ub2e4\uc2dc \ubcf4\uc9c0 \uc54a\uae30)/.test(txt) &&
+        !closedIds.has(btnId)
+      ) {
+        allCloseCandidates.push(btn);
+        closedIds.add(btnId);
       }
     });
   });
 
-  return { count: closed, targets: closedIds };
+  const results = [];
+
+  allCloseCandidates.forEach(btn => {
+    try {
+      btn.click();
+      closed++;
+      results.push(`${btn.innerText} / ${btn.id || '[no-id]'}`);
+    } catch (e) {
+      results.push(`[\uc2e4\ud328] ${btn.innerText} / ${btn.id || '[no-id]'}`);
+    }
+  });
+
+  return { count: closed, targets: results };
 })();
 """
 
