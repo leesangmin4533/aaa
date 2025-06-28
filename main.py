@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 log = create_logger(MODULE_NAME)
 
 
-def run_sales_analysis(driver, config_path="modules/sales_analysis/loop_mid_categories.json"):
+def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click_loop.json"):
     """Execute sales analysis steps defined in a JSON config, supporting loops."""
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env

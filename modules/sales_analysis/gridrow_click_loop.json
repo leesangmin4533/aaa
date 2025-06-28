@@ -1,0 +1,25 @@
+{
+  "module": "sales_analysis",
+  "task": "gridrow_click_loop",
+  "loop": {
+    "index_var": "i",
+    "start": 1,
+    "until_missing_xpath": "//*[contains(@id, 'gridrow_${i}')]",
+    "steps": [
+      {
+        "action": "wait",
+        "target_xpath": "//*[contains(@id, 'gridrow_${i}')]",
+        "condition": "presence",
+        "timeout": 5
+      },
+      {
+        "action": "click",
+        "target_xpath": "//*[contains(@id, 'gridrow_${i}.cell_0_0.text')]"
+      },
+      {
+        "action": "sleep",
+        "seconds": 0.2
+      }
+    ]
+  }
+}
