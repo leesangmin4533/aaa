@@ -77,6 +77,9 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     env = load_env()
     variables = {}
 
+    for step in config.get("behavior", []):
+        execute_step(step, variables)
+
     if "loop" in config:
         loop = config["loop"]
         index_var = loop.get("index_var", "i")
@@ -92,9 +95,6 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
                 driver.find_element(By.XPATH, check_xpath)
             except Exception:
                 break
-    else:
-        for step in config.get("behavior", []):
-            execute_step(step, variables)
 
 
 def main():
