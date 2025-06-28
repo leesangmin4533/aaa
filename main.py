@@ -1,5 +1,5 @@
-from selenium import webdriver
 from modules.common.login import run_login
+from modules.common.driver import create_chrome_driver
 import json
 import time
 
@@ -45,16 +45,7 @@ def run_sales_analysis(driver):
 
 
 def main():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--remote-debugging-port=9222")
-    # options.add_argument("--headless=new")  # headless 환경에서 실행 가능
-
-    options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
-
-    driver = webdriver.Chrome(options=options)  # ✅ 자동 드라이버 탐색
+    driver = create_chrome_driver()  # ✅ 자동 드라이버 탐색
     run_login(driver)
     run_sales_analysis(driver)
 

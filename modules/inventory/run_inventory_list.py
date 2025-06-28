@@ -1,6 +1,6 @@
 import json
-from selenium import webdriver
 from modules.common.login import run_step, load_env
+from modules.common.driver import create_chrome_driver
 
 
 def run_script(config_path):
@@ -8,10 +8,7 @@ def run_script(config_path):
         steps = json.load(f)["steps"]
     env = load_env()
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("--remote-debugging-port=9222")
-    options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
-    driver = webdriver.Chrome(options=options)
+    driver = create_chrome_driver()
     elements = {}
     for step in steps:
         try:
