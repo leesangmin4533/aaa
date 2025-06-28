@@ -1,0 +1,24 @@
+{
+  "module": "sales_analysis",
+  "action": "click_code_001_and_wait_detail",
+  "description": "중분류별 매출 구성비 > 코드 001 셀을 물리 클릭하고 상세 항목 로딩까지 대기",
+  "steps": [
+    {
+      "type": "wait",
+      "xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
+      "condition": "presence",
+      "timeout": 10
+    },
+    {
+      "type": "click",
+      "xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
+      "method": "javascript"
+    },
+    {
+      "type": "wait",
+      "xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdListSub.body.gridrow_0.cell_0_0']",
+      "condition": "presence",
+      "timeout": 10
+    }
+  ]
+}
