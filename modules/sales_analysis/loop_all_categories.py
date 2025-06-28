@@ -1,5 +1,5 @@
 from selenium import webdriver
-from login_runner import run_login
+from modules.common.login import run_login
 
 from modules.sales_analysis.navigate_to_mid_category import navigate_to_mid_category_sales
 from modules.sales_analysis.process_one_category import process_one_category

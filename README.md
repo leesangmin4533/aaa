@@ -35,7 +35,7 @@ includes explicit clicks on each field before typing.
 
 ## Generating Commands from Snippet Data
 
-Use `snippet_to_json.py` to convert DOM snippet results into a JSON command sequence. The input file must contain an `id목록` array with element IDs. If a value includes a tag after a colon (e.g. `btn_search:button`), an extra click step is inserted for buttons.
+Use `modules/common/snippet_utils.py` in **json** mode to convert DOM snippet results into a JSON command sequence. The input file must contain an `id목록` array with element IDs. If a value includes a tag after a colon (e.g. `btn_search:button`), an extra click step is inserted for buttons.
 
 Example:
 ```json
@@ -44,14 +44,14 @@ Example:
 
 Generate the commands:
 ```bash
-python snippet_to_json.py sample_snippet.json commands_output.json
+python -m modules.common.snippet_utils json sample_snippet.json commands_output.json
 ```
 
 
 ## Quick Inventory Command Generation
 
-Use `snippet_to_command.py` when you have a list of element IDs and need to build
-an automation sequence quickly. The script reads a snippet file containing
+Use the same script in **command** mode when you have a list of element IDs and need to build
+an automation sequence quickly. It reads a snippet file containing
 `id목록` and creates a command JSON following simple rules:
 
 - IDs starting with `btn_` get a `click` step after locating the element.
@@ -60,7 +60,7 @@ an automation sequence quickly. The script reads a snippet file containing
 
 Example:
 ```bash
-python snippet_to_command.py modules/inventory/inventory_list_snippet.json \
+python -m modules.common.snippet_utils command modules/inventory/inventory_list_snippet.json \
     modules/inventory/inventory_list_cmd.json
 ```
 Run the resulting automation:

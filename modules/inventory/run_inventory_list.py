@@ -1,6 +1,6 @@
 import json
 from selenium import webdriver
-from login_runner import run_step, load_env
+from modules.common.login import run_step, load_env
 
 
 def run_script(config_path):
