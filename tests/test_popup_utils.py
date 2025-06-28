@@ -44,17 +44,14 @@ def test_close_popups_closes_popup():
         call(By.CSS_SELECTOR, "div[id*='STZZ120_P0']"),
         call(By.CSS_SELECTOR, "div[id*='STCM230_P1']"),
     ]
-    popup.find_elements.assert_called_once_with(
-        By.XPATH,
-        ".//div[contains(text(), '닫기') and contains(@class, 'btn')]",
-    )
+    popup.find_elements.assert_called_once_with(By.XPATH, ".//div[text()='닫기']")
     close_btn.click.assert_called_once()
 
     assert result == {
         "detected": True,
         "closed": True,
         "target": "popup_STCM230_P1",
-        "reason": None,
+        "reason": "STCM230_P1 텍스트기반 닫기 성공",
     }
 
 
