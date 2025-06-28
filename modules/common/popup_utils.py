@@ -27,18 +27,16 @@ return (function() {
     return isVisible && isCentered && isLarge;
   });
 
-  let clicked = new Set();
+  const clickedIds = new Set();
 
   popupBList.forEach(div => {
     const buttons = Array.from(div.querySelectorAll('button, a, div')).filter(el => {
       const txt = el.innerText.trim();
       const isClickable =
-        el.onclick ||
-        el.getAttribute('role') === 'button' ||
-        /btn/i.test(el.className) ||
+        typeof el.onclick === 'function' ||
         /nexabutton/i.test(el.className);
 
-      const isUnique = !clicked.has(el);
+      const isUnique = el.id && !clickedIds.has(el.id);
 
       return isClickable && isUnique && /(닫기|확인|다시 보지 않기)/.test(txt);
     });
@@ -46,7 +44,13 @@ return (function() {
     buttons.forEach(btn => {
       try {
         btn.click();
-        clicked.add(btn);
+        if (typeof btn.onclick === 'function') {
+          btn.onclick();
+        } else {
+          const evt = new MouseEvent('click', { bubbles: true, cancelable: true });
+          btn.dispatchEvent(evt);
+        }
+        clickedIds.add(btn.id);
         closed++;
         closedIds.push(`${btn.innerText} / ${btn.id || '[no-id]'}`);
       } catch (e) {
