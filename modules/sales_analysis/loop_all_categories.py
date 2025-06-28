@@ -1,11 +1,13 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from modules.common.login import run_login
 from modules.sales_analysis.navigate_to_mid_category import (
     navigate_to_mid_category_sales,
 )
 from modules.sales_analysis.process_one_category import process_one_category
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 def main() -> None:
@@ -26,10 +28,14 @@ def main() -> None:
         xpath = (
             f"//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_{index}.cell_0_0']"
         )
+        print(f"🔍 {index:03d}번 row 검사 중...")
         try:
-            driver.find_element(By.XPATH, xpath)
-        except NoSuchElementException:
-            print(f"⛔ gridrow_{index} 존재하지 않음 — 루프 종료")
+            # Wait up to 2 seconds for the row element to appear
+            WebDriverWait(driver, 2).until(
+                EC.presence_of_element_located((By.XPATH, xpath))
+            )
+        except TimeoutException:
+            print(f"⛔ gridrow_{index} 존재하지 않음 또는 로딩되지 않음 — 루프 종료")
             break
 
         try:
