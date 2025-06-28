@@ -35,6 +35,29 @@ def close_popups(driver: WebDriver) -> dict:
         "reason": None,
     }
 
+    # 0. Always present first popup (STZZ120_P0)
+    try:
+        fixed_popups = driver.find_elements(By.CSS_SELECTOR, "div[id*='STZZ120_P0']")
+        for fixed in fixed_popups:
+            if fixed.is_displayed():
+                close_btn = fixed.find_element(By.XPATH, ".//div[contains(@id, 'btn_close')]")
+                close_btn.click()
+                result.update({
+                    "detected": True,
+                    "closed": True,
+                    "target": fixed.get_attribute("id"),
+                    "reason": "고정 팝업 STZZ120_P0 닫기 성공",
+                })
+                return result
+    except Exception as e:
+        result.update({
+            "detected": True,
+            "closed": False,
+            "target": "STZZ120_P0",
+            "reason": f"STZZ120_P0 닫기 실패: {e}",
+        })
+        return result
+
     # 1. Wait briefly for the pop-up to render after login
     sleep(1.0)
 
