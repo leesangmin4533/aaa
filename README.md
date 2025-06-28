@@ -12,6 +12,8 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
    ```bash
    python main.py
    ```
+   The script now also generates `module_map_main.json` summarizing the roles of
+   key modules whenever it is executed.
 
 The mid-category sales automation is now executed directly from `main.py` using
 `modules/sales_analysis/mid_category_sales_ssv.json` to capture the dataset.

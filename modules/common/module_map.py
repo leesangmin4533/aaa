@@ -1,0 +1,55 @@
+import json
+
+MODULE_MAP = {
+    "name": "module_map_main",
+    "description": "main.py 기준 자동화 흐름에 따른 전체 모듈 역할 정의",
+    "structure": [
+        {
+            "module": "main.py",
+            "role": "자동화 실행 진입점. 크롬 드라이버를 생성하고 로그인 후 sales_analysis JSON 시나리오를 수행함",
+        },
+        {
+            "module": "modules/common/driver.py",
+            "role": "공통 크롬 드라이버 옵션을 적용하여 WebDriver 인스턴스를 생성함",
+        },
+        {
+            "module": "modules/common/login.py",
+            "role": "JSON 정의된 스텝을 읽어 로그인 시퀀스를 실행하고 각 단계별 동작을 처리함",
+        },
+        {
+            "module": "modules/common/network.py",
+            "role": "CDP 로그에서 특정 키워드 응답을 감지해 본문을 저장하는 기능 제공",
+        },
+        {
+            "module": "modules/common/snippet_utils.py",
+            "role": "DOM 스니펫 결과를 JSON 명령으로 변환하거나 ID 규칙에 따라 명령을 생성하는 CLI 도구 제공",
+        },
+        {
+            "module": "modules/sales_analysis/navigate_to_mid_category.py",
+            "role": "매출분석 메뉴에서 중분류별 매출 구성 페이지까지 이동",
+        },
+        {
+            "module": "modules/sales_analysis/process_one_category.py",
+            "role": "단일 중분류 행을 클릭하고 텍스트 추출 후 SSV 응답을 저장·필터링함",
+        },
+        {
+            "module": "modules/sales_analysis/loop_all_categories.py",
+            "role": "모든 중분류 행을 순차적으로 탐색하며 process_one_category 실행",
+        },
+        {
+            "module": "modules/data_parser/parse_and_save.py",
+            "role": "네트워크로 받은 SSV 데이터를 파싱하고 조건에 맞는 행만 파일로 저장함",
+        },
+        {
+            "module": "modules/inventory/run_inventory_list.py",
+            "role": "별도 JSON 설정을 읽어 재고 목록 자동화를 수행하는 스크립트",
+        },
+    ],
+    "output": "module_map_main.json",
+}
+
+
+def write_module_map(path: str = MODULE_MAP["output"]):
+    """Write the module map JSON to the given path."""
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(MODULE_MAP, f, indent=2, ensure_ascii=False)
