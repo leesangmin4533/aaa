@@ -14,7 +14,7 @@
       },
       {
         "action": "click",
-        "target_xpath": "//*[contains(@id, 'gridrow_${i}.cell_0_0.text')]"
+        "target_xpath": "//*[contains(@id, 'gridrow_${i}.cell_0_0')]"
       },
       {
         "action": "sleep",
