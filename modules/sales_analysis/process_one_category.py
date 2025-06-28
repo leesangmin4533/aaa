@@ -18,18 +18,19 @@ CATEGORY_CELL = (
 TEXT_SUFFIX = ":text"  # 텍스트 요소 ID에 사용될 suffix
 
 
-def process_one_category(driver, index: int) -> bool:
-    """Handle one mid-category row with click + separate text extraction."""
+def process_one_category(driver, index: int, already_clicked: bool = False) -> bool:
+    """Handle one mid-category row with optional click and data extraction."""
 
     code = f"{index:03d}"
     try:
         log("start", f"중분류 {code} 처리 시작")
         xpath = CATEGORY_CELL.format(i=index)
 
-        # ✅ 실제 클릭은 기능 요소에서 수행
-        log("click_row", f"중분류 {code} 클릭")
-        driver.find_element(By.XPATH, xpath).click()
-        time.sleep(0.3)
+        if not already_clicked:
+            # ✅ 실제 클릭은 기능 요소에서 수행
+            log("click_row", f"중분류 {code} 클릭")
+            driver.find_element(By.XPATH, xpath).click()
+            time.sleep(0.3)
 
         # ✅ 텍스트 추출은 별도
         try:
