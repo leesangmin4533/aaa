@@ -14,8 +14,8 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
    ```
    The script now also generates `module_map_main.json` summarizing the roles of
    key modules whenever it is executed.
-   It also detects blur-based pop-up dialogs and attempts to close them
-   automatically.
+   It also detects pop-up dialogs using z-index and size rules and attempts to
+   close them automatically.
 
 The mid-category sales automation is now executed directly from `main.py` using
 `modules/sales_analysis/loop_mid_categories.json`. This declarative file loops
