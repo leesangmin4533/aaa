@@ -26,7 +26,10 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     """Execute sales analysis steps defined in a JSON config, supporting loops."""
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env
-    from modules.sales_analysis.navigate_to_mid_category import navigate_to_mid_category_sales
+    from modules.sales_analysis.navigate_to_mid_category import (
+        navigate_to_mid_category_sales,
+        click_codes_in_order,
+    )
     from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
     def substitute(value: str, variables: dict) -> str:
@@ -66,6 +69,10 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
                 fields=step.get("fields"),
                 filter_dict=step.get("filter"),
             )
+        elif action == "click_codes_in_order":
+            start = step.get("start", 1)
+            end = step.get("end", 900)
+            click_codes_in_order(driver, start=start, end=end)
         log("step_end", f"{action} 완료")
         if step_log:
             log("message", step_log)
