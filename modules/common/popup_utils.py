@@ -10,31 +10,26 @@ return (function () {
     target: null
   };
 
-  // 1. \ube14\ub7ec \uc694\uc18c \uac10\uc9c0
+  // 1. \ud31d\uc5c5 \ud3ec\ud568 \uac10\uc9c0 (z-index+fixed+\ud06c\uae30)
   const allDivs = Array.from(document.querySelectorAll('div'));
-  const blurred = allDivs.find(div => {
-    const style = window.getComputedStyle(div);
-    return style.filter.includes('blur') || style.backdropFilter.includes('blur');
-  });
-
-  if (!blurred) {
-    result.reason = '\ube14\ub7ec \uc5c6\uc74c';
-    return result;
-  }
-
-  // \ube14\ub7ec\uac00 \uac10\uc9c0\ub418\uba74 \uc77c\uc2dc \uc911\ub2e8 \uc870\uac74 \ub9dd\uc131
-  result.detected = true;
-
-  // 2. \ud31d\uc5c5 \ubd84\uc11d
   const popupCandidates = allDivs.filter(div => {
     const style = window.getComputedStyle(div);
     return (
       style.position === 'fixed' &&
       parseInt(style.zIndex || '0') > 1000 &&
+      div.offsetWidth > 300 &&
+      div.offsetHeight > 200 &&
       style.display !== 'none' &&
       style.visibility !== 'hidden'
     );
   });
+
+  if (popupCandidates.length === 0) {
+    result.reason = '\ud31d\uc5c5 \uc5c6\uc74c';
+    return result;
+  }
+
+  result.detected = true;
 
   for (let popup of popupCandidates) {
     const buttons = popup.querySelectorAll('button, div, a');
@@ -65,6 +60,7 @@ return (function () {
 
 
 def close_popups(driver):
-    """Execute JavaScript in ``driver`` to detect and close blur-based pop-ups."""
+    """Execute JavaScript in ``driver`` to detect and close pop-ups using z-index
+    and size-based criteria."""
 
     return driver.execute_script(POPUP_CLOSE_SCRIPT)
