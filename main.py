@@ -83,14 +83,15 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/loop_mid_cate
         i = loop.get("start", 0)
         while True:
             variables[index_var] = i
+            for step in loop["steps"]:
+                execute_step(step, variables)
+            i += 1
+            variables[index_var] = i
             check_xpath = substitute(loop["until_missing_xpath"], variables)
             try:
                 driver.find_element(By.XPATH, check_xpath)
             except Exception:
                 break
-            for step in loop["steps"]:
-                execute_step(step, variables)
-            i += 1
     else:
         for step in config.get("behavior", []):
             execute_step(step, variables)
