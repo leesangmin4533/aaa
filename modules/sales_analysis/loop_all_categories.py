@@ -17,6 +17,29 @@ def log(step: str, msg: str) -> None:
     print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
 
 
+def click_row_and_wait_detail(driver, index: int) -> None:
+    """Click the given row using JavaScript and wait for detail grid to load."""
+
+    row_xpath = (
+        f"//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_{index}.cell_0_0']"
+    )
+    detail_xpath = (
+        "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdListSub.body.gridrow_0.cell_0_0']"
+    )
+
+    log("wait_row", f"gridrow_{index} 등장 대기")
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, row_xpath))
+    )
+    element = driver.find_element(By.XPATH, row_xpath)
+    log("click_row", f"gridrow_{index} 클릭")
+    driver.execute_script("arguments[0].click();", element)
+    log("wait_detail", "상세 로딩 대기")
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, detail_xpath))
+    )
+
+
 def main() -> None:
     """Run automation across mid-category rows based on visible gridrows."""
     driver = create_chrome_driver()
@@ -39,7 +62,8 @@ def main() -> None:
             break
 
         try:
-            success = process_one_category(driver, index)
+            click_row_and_wait_detail(driver, index)
+            success = process_one_category(driver, index, already_clicked=True)
             if not success:
                 log("row_fail", f"중분류 {index:03d} 처리 실패 — 다음 항목으로 계속")
         except Exception as e:
