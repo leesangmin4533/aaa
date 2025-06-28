@@ -16,10 +16,10 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
    key modules whenever it is executed.
 
 The mid-category sales automation is now executed directly from `main.py` using
-`modules/sales_analysis/mid_category_sales_ssv.json` to capture the dataset.
-After downloading the SSV response, `modules/data_parser/parse_and_save.py`
-parses the data and stores rows with zero stock quantity in
-`output/category_001_filtered.txt`.
+`modules/sales_analysis/loop_mid_categories.json`. This declarative file loops
+over each visible mid-category row, downloads the SSV response and saves
+filtered rows with zero stock quantity such as
+`output/category_000_filtered.txt`.
 
 
 The structure files in the `structure` directory describe the XPath selectors

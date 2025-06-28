@@ -5,6 +5,9 @@ from log_util import create_logger
 import json
 import time
 import logging
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 MODULE_NAME = "main"
 
@@ -18,48 +21,78 @@ logger = logging.getLogger(__name__)
 log = create_logger(MODULE_NAME)
 
 
-def run_sales_analysis(driver):
-    """Execute sales analysis steps defined in mid_category_sales_ssv.json."""
+def run_sales_analysis(driver, config_path="modules/sales_analysis/loop_mid_categories.json"):
+    """Execute sales analysis steps defined in a JSON config, supporting loops."""
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env
+    from modules.sales_analysis.navigate_to_mid_category import navigate_to_mid_category_sales
+    from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
-    log("run_sales_analysis", "진입")
-    with open(
-        "modules/sales_analysis/mid_category_sales_ssv.json", "r", encoding="utf-8"
-    ) as f:
-        behavior = json.load(f)["behavior"]
+    def substitute(value: str, variables: dict) -> str:
+        for k, v in variables.items():
+            value = value.replace(f"${{{k}}}", str(v))
+        return value
 
-    env = load_env()
-    elements = {}
-
-    for step in behavior:
+    def execute_step(step: dict, variables: dict) -> None:
         action = step.get("action")
         step_log = step.get("log")
         log("step_start", f"{action} 시작")
-        
+
         if action == "navigate_menu":
-            from modules.sales_analysis.navigate_to_mid_category import navigate_to_mid_category_sales
             navigate_to_mid_category_sales(driver)
         elif action == "click":
-            driver.find_element("xpath", step["target_xpath"]).click()
+            driver.find_element(By.XPATH, substitute(step["target_xpath"], variables)).click()
+        elif action == "wait":
+            xpath = substitute(step["target_xpath"], variables)
+            if step.get("condition") == "presence":
+                WebDriverWait(driver, step.get("timeout", 10)).until(
+                    EC.presence_of_element_located((By.XPATH, xpath))
+                )
         elif action == "sleep":
-            # Allow pauses between actions when server responses are required
             time.sleep(step.get("seconds", 1))
         elif action == "extract_network_response":
-            extract_ssv_from_cdp(driver, keyword=step["match"], save_to=step["save_to"])
+            extract_ssv_from_cdp(
+                driver,
+                keyword=step["match"],
+                save_to=substitute(step["save_to"], variables),
+            )
         elif action == "parse_ssv":
-            from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
-            with open(step["input"], "r", encoding="utf-8") as f:
+            with open(substitute(step["input"], variables), "r", encoding="utf-8") as f:
                 rows = parse_ssv(f.read())
             save_filtered_rows(
                 rows,
-                step["save_to"],
+                substitute(step["save_to"], variables),
                 fields=step.get("fields"),
                 filter_dict=step.get("filter"),
             )
         log("step_end", f"{action} 완료")
         if step_log:
             log("message", step_log)
+
+    log("run_sales_analysis", "진입")
+    with open(config_path, "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+    env = load_env()
+    variables = {}
+
+    if "loop" in config:
+        loop = config["loop"]
+        index_var = loop.get("index_var", "i")
+        i = loop.get("start", 0)
+        while True:
+            variables[index_var] = i
+            check_xpath = substitute(loop["until_missing_xpath"], variables)
+            try:
+                driver.find_element(By.XPATH, check_xpath)
+            except Exception:
+                break
+            for step in loop["steps"]:
+                execute_step(step, variables)
+            i += 1
+    else:
+        for step in config.get("behavior", []):
+            execute_step(step, variables)
 
 
 def main():
