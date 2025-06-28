@@ -1,13 +1,13 @@
 from selenium import webdriver
-from login_runner import run_login
+from modules.common.login import run_login
 import json
 import time
 
 
 def run_sales_analysis(driver):
     """Execute sales analysis steps defined in mid_category_sales_ssv.json."""
-    from ssv_listener import extract_ssv_from_cdp
-    from login_runner import load_env
+    from modules.common.network import extract_ssv_from_cdp
+    from modules.common.login import load_env
 
     with open("modules/sales_analysis/mid_category_sales_ssv.json", "r", encoding="utf-8") as f:
         behavior = json.load(f)["behavior"]
