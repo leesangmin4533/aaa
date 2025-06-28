@@ -27,17 +27,31 @@ return (function() {
     return isVisible && isCentered && isLarge;
   });
 
+  let clicked = new Set();
+
   popupBList.forEach(div => {
     const buttons = Array.from(div.querySelectorAll('button, a, div')).filter(el => {
       const txt = el.innerText.trim();
-      const isClickable = el.onclick || el.getAttribute('role') === 'button' || el.className.includes('btn') || el.className.includes('nexabutton');
-      return isClickable && /(닫기|확인|다시 보지 않기)/.test(txt);
+      const isClickable =
+        el.onclick ||
+        el.getAttribute('role') === 'button' ||
+        /btn/i.test(el.className) ||
+        /nexabutton/i.test(el.className);
+
+      const isUnique = !clicked.has(el);
+
+      return isClickable && isUnique && /(닫기|확인|다시 보지 않기)/.test(txt);
     });
 
     buttons.forEach(btn => {
-      btn.click();
-      closed++;
-      closedIds.push(`${btn.innerText} / ${btn.id || '[no-id]'}`);
+      try {
+        btn.click();
+        clicked.add(btn);
+        closed++;
+        closedIds.push(`${btn.innerText} / ${btn.id || '[no-id]'}`);
+      } catch (e) {
+        closedIds.push(`[실패] ${btn.innerText} / ${btn.id || '[no-id]'}`);
+      }
     });
   });
 
