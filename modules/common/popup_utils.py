@@ -1,80 +1,80 @@
 """Utilities for closing pop-up windows during automation."""
 
+from time import sleep
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
-POPUP_CLOSE_SCRIPT = """
-return (function () {
-  const result = {
-    detected: false,
-    closed: false,
-    reason: "",
-    target: null,
-    debug: []
-  };
 
-  // 1. \ud31d\uc5c5 \ud3ec\ud568 \uac10\uc9c0 (z-index+fixed+\ud06c\uae30)
-  const allDivs = Array.from(document.querySelectorAll('*'));
-  allDivs.forEach(div => {
-    const style = window.getComputedStyle(div);
-    result.debug.push({
-      id: div.id,
-      z: style.zIndex,
-      pos: style.position,
-      w: div.offsetWidth,
-      h: div.offsetHeight,
-      vis: style.visibility,
-      disp: style.display
-    });
-  });
+POPUP_CLOSE_SCRIPT = """"""
 
-  const popupCandidates = allDivs.filter(div => {
-    const style = window.getComputedStyle(div);
-    return (
-      style.position === 'fixed' &&
-      parseInt(style.zIndex || '0') > 500 &&
-      div.offsetWidth > 300 &&
-      div.offsetHeight > 200 &&
-      style.display !== 'none' &&
-      style.visibility !== 'hidden'
-    );
-  });
 
-  if (popupCandidates.length === 0) {
-    result.reason = '\ud31d\uc5c5 \uc5c6\uc74c';
-    return result;
-  }
+def close_popups(driver: WebDriver) -> dict:
+    """Detect and close login pop-ups using Selenium calls.
 
-  result.detected = true;
+    The function searches for ``div`` elements whose ``id`` contains
+    ``STCM230_P1``. If such a pop-up is visible, it looks for a descendant
+    ``div`` containing the text ``닫기`` and the class ``btn``. When found,
+    the button is clicked.
 
-  for (let popup of popupCandidates) {
-    const buttons = popup.querySelectorAll('button, div, a');
-    for (let btn of buttons) {
-      const text = btn.innerText?.trim();
-      const isClickable =
-        btn.onclick ||
-        btn.getAttribute('role') === 'button' ||
-        /btn|nexabutton/.test(btn.className);
-      if (isClickable && /(\ub2eb\uae30|\ud655\uc778|\ub2e4\uc2dc \ubcf4\uc9c0 \uc54a\uae30)/.test(text)) {
-        try {
-          btn.click();
-          result.closed = true;
-          result.target = text + ' / ' + (btn.id || '[no-id]');
-          return result;
-        } catch (e) {
-          result.reason = '\ubc84\ud2bc \ud074\ub9ad \uc2e4\ud328';
-          return result;
-        }
-      }
+    Parameters
+    ----------
+    driver:
+        Selenium WebDriver instance.
+
+    Returns
+    -------
+    dict
+        A dictionary with ``detected`` and ``closed`` flags, the ``target``
+        pop-up ``id`` and an optional ``reason`` when closing fails.
+    """
+
+    result = {
+        "detected": False,
+        "closed": False,
+        "target": None,
+        "reason": None,
     }
-  }
 
-  result.reason = '\ud31d\uc5c5 \ubc84\ud2bc \uc5c6\uc74c';
-  return result;
-})();
-"""
+    # 1. Wait briefly for the pop-up to render after login
+    sleep(1.0)
 
+    try:
+        popup_roots = driver.find_elements(By.CSS_SELECTOR, "div[id*='STCM230_P1']")
+    except Exception as e:  # Safety net if query itself fails
+        result["reason"] = str(e)
+        return result
 
-def close_popups(driver):
-    """Execute JavaScript in ``driver`` to detect and close pop-ups using z-index
-    and size-based criteria."""
+    for popup in popup_roots:
+        try:
+            if not popup.is_displayed():
+                continue
 
-    return driver.execute_script(POPUP_CLOSE_SCRIPT)
+            result["detected"] = True
+            result["target"] = popup.get_attribute("id")
+
+            close_btns = popup.find_elements(
+                By.XPATH,
+                ".//div[contains(text(), '닫기') and contains(@class, 'btn')]",
+            )
+            for btn in close_btns:
+                if not btn.is_displayed():
+                    continue
+                try:
+                    btn.click()
+                    result["closed"] = True
+                    return result
+                except Exception as e:
+                    result["reason"] = f"버튼 클릭 실패: {e}"
+                    return result
+
+        except Exception as e:  # Any issue while handling this popup
+            result["reason"] = f"팝업 처리 실패: {e}"
+            return result
+
+    # If we reach here, either no pop-up was detected or closing failed
+    if not result["detected"]:
+        result["reason"] = "팝업 없음"
+    else:
+        result["reason"] = "닫기 버튼 없음"
+
+    return result
