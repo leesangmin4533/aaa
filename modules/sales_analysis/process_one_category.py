@@ -5,6 +5,12 @@ from modules.common.network import extract_ssv_from_cdp
 from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 from pathlib import Path
 
+MODULE_NAME = "process_one_category"
+
+
+def log(step: str, msg: str) -> None:
+    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+
 
 CATEGORY_CELL = (
     "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_{i}.cell_{i}_0']"
@@ -17,11 +23,11 @@ def process_one_category(driver, index: int) -> bool:
 
     code = f"{index:03d}"
     try:
-        print(f"▶ 중분류 {code} 처리 시작")
+        log("start", f"중분류 {code} 처리 시작")
         xpath = CATEGORY_CELL.format(i=index)
 
         # ✅ 실제 클릭은 기능 요소에서 수행
-        print(f"🟡 중분류 {code} 클릭")
+        log("click_row", f"중분류 {code} 클릭")
         driver.find_element(By.XPATH, xpath).click()
         time.sleep(0.3)
 
@@ -29,9 +35,9 @@ def process_one_category(driver, index: int) -> bool:
         try:
             text_xpath = xpath + TEXT_SUFFIX
             mid_text = driver.find_element(By.XPATH, text_xpath).text.strip()
-            print(f"📌 중분류 텍스트: {mid_text}")
+            log("read_text", f"중분류 텍스트: {mid_text}")
         except Exception:
-            print(f"⚠ 중분류 텍스트 추출 실패 (무시하고 계속)")
+            log("read_text", "중분류 텍스트 추출 실패 (무시하고 계속)")
 
         time.sleep(1.5)
 
@@ -46,8 +52,8 @@ def process_one_category(driver, index: int) -> bool:
         out_path = f"output/category_{code}_filtered.txt"
         save_filtered_rows(rows, out_path, filter_dict={"STOCK_QTY": "0"})
 
-        print(f"✅ 중분류 {code} 처리 성공")
+        log("done", f"중분류 {code} 처리 성공")
         return True
     except Exception as e:
-        print(f"❌ 중분류 {code} 처리 중 예외 발생: {e}")
+        log("error", f"중분류 {code} 처리 중 예외 발생: {e}")
         return False

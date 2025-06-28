@@ -10,6 +10,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+MODULE_NAME = "loop_all_categories"
+
+
+def log(step: str, msg: str) -> None:
+    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+
 
 def main() -> None:
     """Run automation across mid-category rows based on visible gridrows."""
@@ -22,22 +28,22 @@ def main() -> None:
         xpath = (
             f"//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_{index}.cell_0_0']"
         )
-        print(f"🔍 {index:03d}번 row 검사 중...")
+        log("check_row", f"{index:03d}번 row 검사 중...")
         try:
             # Wait up to 2 seconds for the row element to appear
             WebDriverWait(driver, 2).until(
                 EC.presence_of_element_located((By.XPATH, xpath))
             )
         except TimeoutException:
-            print(f"⛔ gridrow_{index} 존재하지 않음 또는 로딩되지 않음 — 루프 종료")
+            log("no_row", f"gridrow_{index} 존재하지 않음 또는 로딩되지 않음 — 루프 종료")
             break
 
         try:
             success = process_one_category(driver, index)
             if not success:
-                print(f"⚠ 중분류 {index:03d} 처리 실패 — 다음 항목으로 계속")
+                log("row_fail", f"중분류 {index:03d} 처리 실패 — 다음 항목으로 계속")
         except Exception as e:
-            print(f"⚠ 예외 발생 (중분류 {index:03d}): {e}")
+            log("row_error", f"예외 발생 (중분류 {index:03d}): {e}")
         finally:
             index += 1
 
