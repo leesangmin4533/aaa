@@ -26,7 +26,7 @@ def main() -> None:
     index = 0
     while True:
         xpath = (
-            f"//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_{index}.cell_{index}_0']"
+            f"//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_{index}.cell_0_0']"
         )
         print(f"🔍 {index:03d}번 row 검사 중...")
         try:
