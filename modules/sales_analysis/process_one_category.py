@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 CATEGORY_CELL = (
-    "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_{i}.cell_0_0']"
+    "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_{i}.cell_{i}_0']"
 )
 
 
