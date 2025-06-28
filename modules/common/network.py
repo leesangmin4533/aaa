@@ -2,6 +2,12 @@ import json
 from pathlib import Path
 import time
 
+MODULE_NAME = "network"
+
+
+def log(step: str, msg: str) -> None:
+    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+
 
 def extract_ssv_from_cdp(driver, keyword: str, save_to: str) -> None:
     """
@@ -12,7 +18,7 @@ def extract_ssv_from_cdp(driver, keyword: str, save_to: str) -> None:
     try:
         driver.execute_cdp_cmd("Network.enable", {})
     except Exception:
-        print("\u274c CDP 네트워크 활성화 실패")
+        log("enable_cdp", "CDP 네트워크 활성화 실패")
         return
 
     matched_body = None
@@ -41,6 +47,6 @@ def extract_ssv_from_cdp(driver, keyword: str, save_to: str) -> None:
         Path(save_to).parent.mkdir(parents=True, exist_ok=True)
         with open(save_to, "w", encoding="utf-8") as f:
             f.write(matched_body)
-        print(f"\u2705 SSV 저장 완료: {save_to}")
+        log("save_ssv", f"SSV 저장 완료: {save_to}")
     else:
-        print(f"\u26a0\ufe0f 5초 내 selDetailSearch 응답 감지 실패: {keyword}")
+        log("wait_response", f"5초 내 selDetailSearch 응답 감지 실패: {keyword}")

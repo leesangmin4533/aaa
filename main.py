@@ -5,6 +5,12 @@ import json
 import time
 import logging
 
+MODULE_NAME = "main"
+
+
+def log(step: str, msg: str) -> None:
+    logger.info(f"[{MODULE_NAME} > {step}] {msg}")
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -18,7 +24,7 @@ def run_sales_analysis(driver):
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env
 
-    logger.info("진입: run_sales_analysis")
+    log("run_sales_analysis", "진입")
     with open(
         "modules/sales_analysis/mid_category_sales_ssv.json", "r", encoding="utf-8"
     ) as f:
@@ -30,7 +36,7 @@ def run_sales_analysis(driver):
     for step in behavior:
         action = step.get("action")
         log = step.get("log")
-        logger.info(f"진행: {action} 시작")
+        log("step_start", f"{action} 시작")
         
         if action == "navigate_menu":
             from modules.sales_analysis.navigate_to_mid_category import navigate_to_mid_category_sales
@@ -52,45 +58,45 @@ def run_sales_analysis(driver):
                 fields=step.get("fields"),
                 filter_dict=step.get("filter"),
             )
-        logger.info(f"결과: {action} 완료")
+        log("step_end", f"{action} 완료")
         if log:
-            logger.info(log)
+            log("message", log)
 
 
 def main():
-    logger.info("진입: main")
+    log("main", "진입")
 
-    logger.info("진행: Chrome 드라이버 생성")
+    log("create_driver", "Chrome 드라이버 생성")
     driver = create_chrome_driver()  # ✅ 자동 드라이버 탐색
-    logger.info("결과: Chrome 드라이버 생성 완료")
+    log("create_driver", "Chrome 드라이버 생성 완료")
 
-    logger.info("진행: 로그인 시퀀스")
+    log("login", "로그인 시퀀스")
     try:
         run_login(driver)
-        logger.info("결과: 로그인 시퀀스 성공")
+        log("login", "로그인 시퀀스 성공")
     except Exception as e:
-        logger.exception("결과: 로그인 시퀀스 실패")
+        logger.exception(f"[{MODULE_NAME} > login] 로그인 시퀀스 실패")
         driver.quit()
         raise
 
-    logger.info("진행: 매출 분석")
+    log("sales_analysis", "매출 분석")
     try:
         run_sales_analysis(driver)
-        logger.info("결과: 매출 분석 성공")
+        log("sales_analysis", "매출 분석 성공")
     except Exception as e:
-        logger.exception("결과: 매출 분석 실패")
+        logger.exception(f"[{MODULE_NAME} > sales_analysis] 매출 분석 실패")
         driver.quit()
         raise
 
-    logger.info("진행: 모듈 맵 저장")
+    log("module_map", "모듈 맵 저장")
     write_module_map()
-    logger.info("결과: 모듈 맵 저장 완료")
+    log("module_map", "모듈 맵 저장 완료")
 
     input("⏸ 로그인 화면 유지 중. Enter를 누르면 종료됩니다.")
 
-    logger.info("진행: 드라이버 종료")
+    log("quit", "드라이버 종료")
     driver.quit()
-    logger.info("결과: 드라이버 종료 완료")
+    log("quit", "드라이버 종료 완료")
 
 
 if __name__ == "__main__":

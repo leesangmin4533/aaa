@@ -2,6 +2,12 @@ import json
 import sys
 from pathlib import Path
 
+MODULE_NAME = "snippet_utils"
+
+
+def log(step: str, msg: str) -> None:
+    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+
 
 def load_snippet_ids(path: str) -> list[str]:
     """Load the id list from a snippet JSON file."""
@@ -84,7 +90,7 @@ def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv[1:]
     if len(argv) != 3 or argv[0] not in {"json", "command"}:
-        print(CLI_USAGE)
+        log("usage", CLI_USAGE)
         sys.exit(1)
 
     mode, input_path, output_path = argv
