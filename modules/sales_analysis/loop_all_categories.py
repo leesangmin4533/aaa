@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from modules.common.login import run_login
+from modules.common.driver import create_chrome_driver
 from modules.sales_analysis.navigate_to_mid_category import (
     navigate_to_mid_category_sales,
 )
@@ -12,14 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 def main() -> None:
     """Run automation across mid-category rows based on visible gridrows."""
-    options = webdriver.ChromeOptions()
-    options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--remote-debugging-port=9222")
-    options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
-
-    driver = webdriver.Chrome(options=options)
+    driver = create_chrome_driver()
     run_login(driver)
     navigate_to_mid_category_sales(driver)
 
