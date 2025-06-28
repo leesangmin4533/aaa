@@ -2,7 +2,7 @@
 
 
 POPUP_CLOSE_SCRIPT = """
-(function() {
+return (function() {
   let closed = 0;
   // Case A: explicit structure containing STCM230_P1
   const popupAList = Array.from(document.querySelectorAll('[id*="STCM230_P1"]'));
