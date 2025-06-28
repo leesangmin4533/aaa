@@ -12,9 +12,15 @@ def close_popups(driver: WebDriver) -> dict:
     """Detect and close login pop-ups using Selenium calls.
 
     The function searches for ``div`` elements whose ``id`` contains
-    ``STCM230_P1``. If such a pop-up is visible, it looks for a descendant
-    ``div`` containing the text ``닫기`` and the class ``btn``. When found,
-    the button is clicked.
+    ``STCM230_P1``. If such a pop-up is visible it tries two strategies to
+    locate the close button:
+
+    1. Search for a descendant ``div`` whose text is exactly ``닫기``.
+       When found, the element is clicked and the reason is set to
+       ``"STCM230_P1 텍스트기반 닫기 성공"``.
+    2. Fallback to searching for a descendant ``div`` containing the text
+       ``닫기`` and the class ``btn``. This maintains compatibility with the
+       previous behaviour.
 
     Parameters
     ----------
@@ -75,6 +81,23 @@ def close_popups(driver: WebDriver) -> dict:
             result["detected"] = True
             result["target"] = popup.get_attribute("id")
 
+            # 1-A. Exact text match strategy
+            text_match_btns = popup.find_elements(By.XPATH, ".//div[text()='닫기']")
+            for btn in text_match_btns:
+                if not btn.is_displayed():
+                    continue
+                try:
+                    btn.click()
+                    result.update({
+                        "closed": True,
+                        "reason": "STCM230_P1 텍스트기반 닫기 성공",
+                    })
+                    return result
+                except Exception as e:
+                    result["reason"] = f"버튼 클릭 실패: {e}"
+                    return result
+
+            # 1-B. Fallback previous strategy using class name
             close_btns = popup.find_elements(
                 By.XPATH,
                 ".//div[contains(text(), '닫기') and contains(@class, 'btn')]",
