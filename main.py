@@ -1,5 +1,6 @@
 from modules.common.login import run_login
 from modules.common.driver import create_chrome_driver
+from modules.common.module_map import write_module_map
 import json
 import time
 
@@ -48,6 +49,9 @@ def main():
     driver = create_chrome_driver()  # ✅ 자동 드라이버 탐색
     run_login(driver)
     run_sales_analysis(driver)
+
+    # Save a module map summary for reference when this script runs
+    write_module_map()
 
     input("⏸ 로그인 화면 유지 중. Enter를 누르면 종료됩니다.")
     driver.quit()
