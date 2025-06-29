@@ -61,6 +61,7 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
                 ".//div[contains(@id, 'cell_0_0') and contains(@id, ':text')]",
             )
             code = cell.text.strip()
+            log("scan_row", "실행", f"코드 추출값: {code}")
             if code.isdigit():
                 num = int(code)
                 if start <= num <= end:
