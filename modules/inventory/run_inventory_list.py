@@ -1,12 +1,12 @@
 import json
 from modules.common.login import run_step, load_env
 from modules.common.driver import create_chrome_driver
+from log_util import create_logger
 
 MODULE_NAME = "inventory_runner"
 
 
-def log(step: str, msg: str) -> None:
-    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+log = create_logger(MODULE_NAME)
 
 
 def run_script(config_path):
@@ -20,7 +20,7 @@ def run_script(config_path):
         try:
             run_step(driver, step, elements, env)
         except Exception as e:
-            log("step_fail", f"Step failed: {step.get('action')} → {e}")
+            log("step_fail", "오류", f"Step failed: {step.get('action')} → {e}")
             break
     input("⏸ Automation complete. Press Enter to exit.")
     driver.quit()

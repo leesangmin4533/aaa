@@ -6,12 +6,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from dotenv import load_dotenv
 import os
+from log_util import create_logger
 
 MODULE_NAME = "login"
 
 
-def log(step: str, msg: str) -> None:
-    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+log = create_logger(MODULE_NAME)
 
 
 def load_config(config_file):
@@ -72,25 +72,25 @@ def run_step(driver, step, elements, env):
             i = 0
             while True:
                 path = f"{prefix}{i}{suffix}"
-                log("extract_xpath", f"시도 중인 XPath: {path}")
+                log("extract_xpath", "실행", f"시도 중인 XPath: {path}")
                 try:
                     elem = driver.find_element(By.XPATH, path)
-                    log("extract_found", f"텍스트 발견: {elem.text.strip()}")
+                    log("extract_found", "실행", f"텍스트 발견: {elem.text.strip()}")
                     results.append(elem.text.strip())
                     i += 1
                 except Exception as e:
-                    log("extract_missing", f"텍스트 없음 @ {path} → {e}")
+                    log("extract_missing", "실행", f"텍스트 없음 @ {path} → {e}")
                     break
         else:
             for i in range(row_count):
                 path = f"{prefix}{i}{suffix}"
-                log("extract_xpath", f"시도 중인 XPath: {path}")
+                log("extract_xpath", "실행", f"시도 중인 XPath: {path}")
                 try:
                     elem = driver.find_element(By.XPATH, path)
-                    log("extract_found", f"텍스트 발견: {elem.text.strip()}")
+                    log("extract_found", "실행", f"텍스트 발견: {elem.text.strip()}")
                     results.append(elem.text.strip())
                 except Exception as e:
-                    log("extract_missing", f"텍스트 없음 @ {path} → {e}")
+                    log("extract_missing", "실행", f"텍스트 없음 @ {path} → {e}")
                     break
         outfile = step.get("save_to")
         if outfile:
@@ -98,12 +98,12 @@ def run_step(driver, step, elements, env):
             with open(outfile, "w", encoding="utf-8") as f:
                 f.write("\n".join(results))
     elif action == "log":
-        log("message", step["message"])
+        log("message", "실행", step["message"])
     else:
-        log("unknown", f"알 수 없는 action: {action}")
+        log("unknown", "오류", f"알 수 없는 action: {action}")
 
     if "log" in step:
-        log("step_log", step["log"])
+        log("step_log", "실행", step["log"])
 
 
 def run_login(driver, config_path="login_sequence.json"):
@@ -116,5 +116,5 @@ def run_login(driver, config_path="login_sequence.json"):
         try:
             run_step(driver, step, elements, env)
         except Exception as e:
-            log("step_fail", f"Step 실패: {step.get('action')} → {e}")
+            log("step_fail", "오류", f"Step 실패: {step.get('action')} → {e}")
             break

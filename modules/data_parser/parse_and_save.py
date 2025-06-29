@@ -1,10 +1,10 @@
 from pathlib import Path
+from log_util import create_logger
 
 MODULE_NAME = "parse_and_save"
 
 
-def log(step: str, msg: str) -> None:
-    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+log = create_logger(MODULE_NAME)
 
 
 def parse_ssv(ssv_text):
@@ -21,7 +21,7 @@ def parse_ssv(ssv_text):
         Parsed rows with column names as keys.
     """
 
-    log("parse_start", "SSV 파싱 시작")
+    log("parse_start", "진입", "SSV 파싱 시작")
     blocks = ssv_text.split("\x1e")
     header_line = next(line for line in blocks if "ITEM_CD" in line)
     col_names = [x.split(":")[0] for x in header_line.split("\x1f")[1:]]
@@ -32,7 +32,7 @@ def parse_ssv(ssv_text):
             values = line.split("\x1f")[1:]
             row = {col: values[i] if i < len(values) else "" for i, col in enumerate(col_names)}
             result.append(row)
-    log("parse_end", "SSV 파싱 완료")
+    log("parse_end", "완료", "SSV 파싱 완료")
     return result
 
 
@@ -63,11 +63,11 @@ def save_filtered_rows(rows, path, fields=None, filter_dict=None):
                 return False
         return True
 
-    log("filter", "행 필터링")
+    log("filter", "실행", "행 필터링")
     filtered = [r for r in rows if row_matches(r)]
     lines = [", ".join(r.get(f, "") for f in fields) for r in filtered]
 
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
-    log("save", f"필터링 결과 저장: {path}")
+    log("save", "완료", f"필터링 결과 저장: {path}")
