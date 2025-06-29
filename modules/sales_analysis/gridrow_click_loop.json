@@ -33,7 +33,7 @@
     },
     {
       "action": "wait",
-      "target_xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_0.cell_0_0']",
+      "target_xpath": "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0']",
       "condition": "presence",
       "timeout": 10
     },
