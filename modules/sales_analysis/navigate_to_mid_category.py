@@ -56,11 +56,14 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
         try:
             # ``row`` itself does not contain the ``:text`` div holding the
             # code string. Instead, Nexacro places that element as a sibling
-            # div with an id of ``{row_id}:text``. Retrieve the row id and
-            # combine it with ``:text`` to locate the proper element from the
-            # driver root.
+            # div whose id is based on the row id. Ensure the id references a
+            # cell element and append ``:text`` only if not already present.
             row_id = row.get_attribute("id")
-            cell = driver.find_element(By.ID, f"{row_id}:text")
+            if ".cell_" not in row_id:
+                continue
+
+            text_id = row_id if ":text" in row_id else f"{row_id}:text"
+            cell = driver.find_element(By.ID, text_id)
             code = cell.text.strip()
             log("scan_row", "실행", f"코드 추출값: {code}")
             if code.isdigit():
