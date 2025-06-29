@@ -63,24 +63,27 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
 def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     first_cell = MagicMock()
     first_cell.text = "001"
+    first_cell.get_attribute.return_value = "prefix.gridrow_0.cell_0_0:text"
+
+    cell1 = MagicMock()
+    cell1.text = "002"
+    cell2 = MagicMock()
+    cell2.text = "003"
+    cell3 = MagicMock()
+    cell3.text = "002"  # repeat to stop
+
+    calls = iter([cell1, cell2, cell3])
 
     driver = MagicMock()
 
     def find_element_side_effect(by, value):
         if by == By.XPATH:
             return first_cell
+        if by == By.ID:
+            return next(calls)
         raise AssertionError(f"Unexpected lookup: {value}")
 
     driver.find_element.side_effect = find_element_side_effect
-
-    active1 = MagicMock()
-    active1.text = "002"
-    active2 = MagicMock()
-    active2.text = "003"
-    active3 = MagicMock()
-    active3.text = "002"  # repeat to stop
-
-    active_iter = iter([active1, active2, active3])
 
     class DummyActions:
         def __init__(self, drv):
@@ -88,13 +91,7 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
         def send_keys(self, key):
             return self
         def perform(self):
-            try:
-                self.drv.switch_to.active_element = next(active_iter)
-            except StopIteration:
-                pass
-
-
-    driver.switch_to.active_element = first_cell
+            pass
 
     with patch(
         "modules.sales_analysis.navigate_to_mid_category.ActionChains",
@@ -103,9 +100,9 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
         click_codes_by_arrow(driver, delay=0, max_scrolls=5)
 
     assert first_cell.click.called
-    assert active1.click.called
-    assert active2.click.called
-    assert active3.click.called
+    assert cell1.click.called
+    assert cell2.click.called
+    assert cell3.click.called
 
     summary_found = any(
         "총 클릭: 3건" in rec.getMessage() for rec in caplog.records
