@@ -193,9 +193,11 @@ def click_codes_by_arrow(
 
         while attempt < 2:
             cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+            found_by_id = True
             try:
                 next_cell = driver.find_element(By.ID, cell_id)
             except Exception:
+                found_by_id = False
                 try:
                     next_cell = driver.switch_to.active_element
                 except Exception:
@@ -209,6 +211,8 @@ def click_codes_by_arrow(
                     next_cell,
                 )
                 next_cell.click()
+                if not found_by_id:
+                    raise Exception("clicked active element")
                 break
             except Exception as e:
                 attempt += 1
@@ -216,9 +220,10 @@ def click_codes_by_arrow(
                     log("click_code", "종료", f"셀 클릭 실패 또는 존재 안함: {e}")
                     return
                 time.sleep(retry_delay)
-                row_idx += 1
-                actions.send_keys(Keys.ARROW_DOWN).perform()
-                time.sleep(0.3)
+                try:
+                    actions.move_to_element(next_cell).click().perform()
+                except Exception:
+                    pass
 
         if not next_cell:
             break
