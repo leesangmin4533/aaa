@@ -5,7 +5,10 @@ import logging
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from modules.sales_analysis.navigate_to_mid_category import click_codes_in_order
+from modules.sales_analysis.navigate_to_mid_category import (
+    click_codes_in_order,
+    click_codes_by_arrow,
+)
 
 
 def test_click_codes_in_order_clicks_and_logs(caplog):
@@ -52,5 +55,60 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
     # verify summary log message
     summary_found = any(
         '전체 3 중 클릭 성공 2건, 없음 1건' in rec.getMessage() for rec in caplog.records
+    )
+    assert summary_found
+
+
+def test_click_codes_by_arrow_clicks_until_repeat(caplog):
+    row = MagicMock()
+    row.get_attribute.return_value = "row.cell"
+    first_cell = MagicMock()
+    first_cell.text = "001"
+
+    driver = MagicMock()
+    driver.find_elements.return_value = [row]
+
+    def find_element_side_effect(by, value):
+        if value == "row.cell:text":
+            return first_cell
+        raise AssertionError(f"Unexpected id lookup: {value}")
+
+    driver.find_element.side_effect = find_element_side_effect
+
+    active1 = MagicMock()
+    active1.text = "002"
+    active2 = MagicMock()
+    active2.text = "003"
+    active3 = MagicMock()
+    active3.text = "002"  # repeat to stop
+
+    active_iter = iter([active1, active2, active3])
+
+    class DummyActions:
+        def __init__(self, drv):
+            self.drv = drv
+        def send_keys(self, key):
+            return self
+        def perform(self):
+            try:
+                self.drv.switch_to.active_element = next(active_iter)
+            except StopIteration:
+                pass
+
+    driver.switch_to.active_element = first_cell
+
+    with patch(
+        "modules.sales_analysis.navigate_to_mid_category.ActionChains",
+        DummyActions,
+    ), caplog.at_level(logging.INFO):
+        click_codes_by_arrow(driver, delay=0, max_scrolls=5)
+
+    assert first_cell.click.called
+    assert active1.click.called
+    assert active2.click.called
+    assert not active3.click.called
+
+    summary_found = any(
+        "총 클릭: 3건" in rec.getMessage() for rec in caplog.records
     )
     assert summary_found

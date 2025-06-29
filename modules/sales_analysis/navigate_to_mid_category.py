@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 import time
 from log_util import create_logger
 
@@ -136,3 +138,71 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
 
     total = end - start + 1
     log("click_code", "실행", f"전체 {total} 중 클릭 성공 {click_success}건, 없음 {not_found_count}건")
+
+
+def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) -> None:
+    """Click mid-category codes using Arrow Down navigation.
+
+    Starting from code ``001``, this function moves the selection down one row at
+    a time using the keyboard. It clicks each numeric code encountered until a
+    previously visited code reappears or ``max_scrolls`` is reached.
+
+    Parameters
+    ----------
+    driver:
+        Selenium WebDriver instance currently on the mid-category sales page.
+    delay:
+        Seconds to wait after each click. Defaults to ``1.0``.
+    max_scrolls:
+        Maximum number of down-arrow key presses before giving up.
+    """
+
+    actions = ActionChains(driver)
+    visited = set()
+
+    gridrows = driver.find_elements(By.XPATH, "//div[contains(@id, 'gdList.body.gridrow')]")
+    found = False
+    for row in gridrows:
+        try:
+            row_id = row.get_attribute("id")
+            cell = driver.find_element(By.ID, f"{row_id}:text")
+            code = cell.text.strip()
+            if code == "001":
+                log("click_code", "실행", "코드 001 클릭")
+                cell.click()
+                visited.add("001")
+                time.sleep(delay)
+                found = True
+                break
+        except Exception:
+            continue
+
+    if not found:
+        log("click_code", "오류", "코드 001을 찾지 못함")
+        return
+
+    for _ in range(max_scrolls):
+        actions.send_keys(Keys.ARROW_DOWN).perform()
+        time.sleep(0.2)
+
+        try:
+            active = driver.switch_to.active_element
+            code = active.text.strip()
+
+            if not code or not code.isdigit():
+                continue
+
+            if code in visited:
+                log("click_code", "종료", f"코드 {code} 중복 → 종료")
+                break
+
+            log("click_code", "실행", f"코드 {code} 클릭")
+            active.click()
+            visited.add(code)
+            time.sleep(delay)
+
+        except Exception as e:
+            log("click_code", "오류", f"아래 이동 클릭 실패: {e}")
+            continue
+
+    log("click_code", "완료", f"총 클릭: {len(visited)}건")
