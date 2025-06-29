@@ -38,9 +38,8 @@
       "timeout": 10
     },
     {
-      "action": "click_codes_in_order",
-      "start": 1,
-      "end": 900
+      "action": "click_codes_by_arrow",
+      "delay": 1
     }
   ]
 }

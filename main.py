@@ -28,7 +28,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     from modules.common.login import load_env
     from modules.sales_analysis.navigate_to_mid_category import (
         navigate_to_mid_category_sales,
-        click_codes_in_order,
+        click_codes_by_arrow,
     )
     from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
@@ -69,10 +69,10 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
                 fields=step.get("fields"),
                 filter_dict=step.get("filter"),
             )
-        elif action == "click_codes_in_order":
-            start = step.get("start", 1)
-            end = step.get("end", 900)
-            click_codes_in_order(driver, start=start, end=end)
+        elif action == "click_codes_by_arrow":
+            start = step.get("start", 1)  # kept for backward compatibility
+            _ = start  # unused but reserved
+            click_codes_by_arrow(driver, delay=step.get("delay", 1))
         log("step_end", "완료", f"{action} 완료")
         if step_log:
             log("message", "실행", step_log)
