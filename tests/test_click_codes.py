@@ -39,6 +39,8 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
     row_log = any("총 행 수: 2" in rec.getMessage() for rec in caplog.records)
     assert row_log
 
-    # verify log message for missing code 2
-    msg_found = any('코드 002 없음' in rec.getMessage() for rec in caplog.records)
-    assert msg_found
+    # verify summary log message
+    summary_found = any(
+        '전체 3 중 클릭 성공 2건, 없음 1건' in rec.getMessage() for rec in caplog.records
+    )
+    assert summary_found

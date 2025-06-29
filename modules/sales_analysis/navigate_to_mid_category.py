@@ -71,14 +71,21 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
             log("scan_row", "오류", f"행에서 코드 셀 탐색 실패: {e}")
             continue
 
+    click_success = 0
+    not_found_count = 0
+
     for num in range(start, end + 1):
         cell = code_map.get(num)
         if cell:
             try:
                 log("click_code", "실행", f"코드 {num:03d} 클릭 중...")
                 WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+                click_success += 1
                 time.sleep(1.0)
             except Exception as e:
                 log("click_code", "오류", f"코드 {num:03d} 클릭 실패: {e}")
         else:
-            log("click_code", "실행", f"코드 {num:03d} 없음")
+            not_found_count += 1
+
+    total = end - start + 1
+    log("click_code", "실행", f"전체 {total} 중 클릭 성공 {click_success}건, 없음 {not_found_count}건")
