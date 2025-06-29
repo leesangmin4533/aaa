@@ -140,7 +140,12 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
     log("click_code", "실행", f"전체 {total} 중 클릭 성공 {click_success}건, 없음 {not_found_count}건")
 
 
-def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) -> None:
+def click_codes_by_arrow(
+    driver,
+    delay: float = 1.0,
+    max_scrolls: int = 1000,
+    retry_delay: float = 2.0,
+) -> None:
     """Click mid-category codes using Arrow Down navigation.
 
     Workflow
@@ -183,12 +188,22 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
         actions.send_keys(Keys.ARROW_DOWN).perform()
         time.sleep(0.3)
 
-        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+        attempt = 0
         next_cell = None
 
-        for attempt in range(3):
+        while attempt < 2:
+            cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
             try:
                 next_cell = driver.find_element(By.ID, cell_id)
+            except Exception:
+                try:
+                    next_cell = driver.switch_to.active_element
+                except Exception:
+                    next_cell = None
+
+            try:
+                if next_cell is None:
+                    raise Exception("cell missing")
                 driver.execute_script(
                     "arguments[0].scrollIntoView({block: 'center'});",
                     next_cell,
@@ -196,9 +211,12 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
                 next_cell.click()
                 break
             except Exception as e:
-                if attempt == 2:
+                attempt += 1
+                if attempt >= 2:
                     log("click_code", "종료", f"셀 클릭 실패 또는 존재 안함: {e}")
                     return
+                time.sleep(retry_delay)
+                row_idx += 1
                 actions.send_keys(Keys.ARROW_DOWN).perform()
                 time.sleep(0.3)
 
