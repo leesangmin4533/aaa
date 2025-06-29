@@ -170,9 +170,9 @@ def click_codes_by_arrow(
     """
 
     actions = ActionChains(driver)
-    visited = set()
-    cell_id = ""
-    code = ""
+    code_counts = {}
+    last_cell_id = ""
+    last_code = ""
     e = None
 
     try:
@@ -183,7 +183,9 @@ def click_codes_by_arrow(
         log("click_code", "실행", "코드 001 클릭")
         cell.click()
         first_id = cell.get_attribute("id") or ""
-        visited.add("001")
+        last_cell_id = first_id
+        last_code = "001"
+        code_counts[last_code] = code_counts.get(last_code, 0) + 1
         time.sleep(delay)
     except Exception:
         log("click_code", "오류", "코드 001을 찾지 못함")
@@ -191,11 +193,9 @@ def click_codes_by_arrow(
             "click_code",
             "최종 종료",
             {
-                "마지막 셀 ID": cell_id,
-                "마지막 시도 row_idx": 0,
-                "총 클릭 수": len(visited),
-                "중복 종료 여부": False,
-                "예외 발생 여부": None,
+                "마지막 코드": last_code,
+                "마지막 셀 ID": last_cell_id,
+                "코드 누적": code_counts,
             },
         )
         return
@@ -213,9 +213,9 @@ def click_codes_by_arrow(
 
         attempt = 0
         next_cell = None
+        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
 
         while attempt < 2:
-            cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
             found_by_id = True
             try:
                 next_cell = driver.find_element(By.ID, cell_id)
@@ -224,46 +224,19 @@ def click_codes_by_arrow(
                 try:
                     active = driver.switch_to.active_element
                     active_id = active.get_attribute("id") or ""
-                    if not active_id.startswith(prefix) or not active_id.endswith(":text"):
+                    if active_id.startswith(prefix) and active_id.endswith(":text"):
+                        next_cell = active
+                    else:
                         log(
                             "click_code",
                             "종료",
                             f"비정상 active_element 감지: {active_id}",
                         )
-                        try:
-                            next_cell = driver.find_element(By.ID, cell_id)
-                            log(
-                                "click_code",
-                                "실행",
-                                f"포커스 복구 시도: {cell_id}",
-                            )
-                            next_cell.click()
-                            log(
-                                "click_code",
-                                "완료",
-                                f"포커스 복구 성공: {cell_id}",
-                            )
-                            found_by_id = True
-                        except Exception as rec_err:
-                            log(
-                                "click_code",
-                                "오류",
-                                f"포커스 복구 실패: {rec_err}",
-                            )
-                            log(
-                                "click_code",
-                                "최종 종료",
-                                {
-                                    "마지막 셀 ID": cell_id,
-                                    "마지막 시도 row_idx": row_idx,
-                                    "총 클릭 수": len(visited),
-                                    "중복 종료 여부": False,
-                                    "예외 발생 여부": None,
-                                },
-                            )
-                            return
-                    else:
-                        next_cell = active
+                        next_cell = driver.find_element(By.ID, cell_id)
+                        log("click_code", "실행", f"포커스 복구 시도: {cell_id}")
+                        next_cell.click()
+                        log("click_code", "완료", f"포커스 복구 성공: {cell_id}")
+                        found_by_id = True
                 except Exception as err:
                     e = err
                     next_cell = None
@@ -279,94 +252,47 @@ def click_codes_by_arrow(
                 if not found_by_id:
                     raise Exception("clicked active element")
                 break
-            except Exception as e:
+            except Exception as click_err:
                 attempt += 1
                 if attempt >= 2:
-                    log(
-                        "debug",
-                        "종료 직전",
-                        {
-                            "예상 cell_id": cell_id,
-                            "row_idx": row_idx,
-                            "prefix": prefix,
-                            "active_id": try_or_none(
-                                lambda: driver.switch_to.active_element.get_attribute("id")
-                            ),
-                            "active_text": try_or_none(
-                                lambda: driver.switch_to.active_element.text.strip()
-                            ),
-                            "is_displayed": try_or_none(
-                                lambda: next_cell.is_displayed() if next_cell else None
-                            ),
-                            "is_enabled": try_or_none(
-                                lambda: next_cell.is_enabled() if next_cell else None
-                            ),
-                            "visited": list(visited)[-5:],
-                        },
-                    )
-                    log("click_code", "종료", f"셀 클릭 실패 또는 존재 안함: {e}")
-                    log(
-                        "click_code",
-                        "최종 종료",
-                        {
-                            "마지막 셀 ID": cell_id,
-                            "마지막 시도 row_idx": row_idx,
-                            "총 클릭 수": len(visited),
-                            "중복 종료 여부": False,
-                            "예외 발생 여부": str(e),
-                        },
-                    )
-                    return
+                    log("click_code", "종료", f"셀 클릭 실패: {click_err}")
+                    time.sleep(1)
+                    try:
+                        recovery = driver.find_element(By.ID, last_cell_id)
+                        recovery.click()
+                    except Exception as rec_err:
+                        log("click_code", "오류", f"재클릭 실패: {rec_err}")
+                    row_idx -= 1
+                    next_cell = None
+                    break
                 time.sleep(retry_delay)
-                try:
-                    backup_id = next_cell.get_attribute("id") if next_cell else ""
-                    if "gridrow" not in backup_id:
-                        log(
-                            "click_code",
-                            "종료",
-                            f"비정상 보조 셀 감지: {backup_id}",
-                        )
-                        log(
-                            "click_code",
-                            "최종 종료",
-                            {
-                                "마지막 셀 ID": cell_id,
-                                "마지막 시도 row_idx": row_idx,
-                                "총 클릭 수": len(visited),
-                                "중복 종료 여부": False,
-                                "예외 발생 여부": str(e) if e else None,
-                            },
-                        )
-                        return
-                    actions.move_to_element(next_cell).click().perform()
-                except Exception:
-                    pass
 
         if not next_cell:
-            break
+            continue
 
+        last_cell_id = cell_id
         code = next_cell.text.strip()
+        last_code = code
 
         if not code or not code.isdigit():
             continue
 
-        if code in visited:
-            log("click_code", "종료", f"코드 {code} 중복 → 종료")
-            break
-
+        code_counts[code] = code_counts.get(code, 0) + 1
         log("click_code", "실행", f"코드 {code} 클릭")
-        visited.add(code)
         time.sleep(delay)
 
-    log("click_code", "완료", f"총 클릭: {len(visited)}건")
+        if code_counts[code] >= 3:
+            log("click_code", "종료", f"코드 {code} 3회 이상 등장 → 종료")
+            break
+
+    total_clicks = sum(code_counts.values())
+    log("click_code", "완료", f"총 클릭: {total_clicks}건")
     log(
         "click_code",
         "최종 종료",
         {
-            "마지막 셀 ID": cell_id,
-            "마지막 시도 row_idx": row_idx,
-            "총 클릭 수": len(visited),
-            "중복 종료 여부": code in visited if 'code' in locals() else False,
-            "예외 발생 여부": str(e) if e else None,
+            "마지막 코드": last_code,
+            "마지막 셀 ID": last_cell_id,
+            "코드 누적": {k: code_counts[k] for k in list(code_counts)[-5:]},
         },
     )
