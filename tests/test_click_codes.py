@@ -11,12 +11,12 @@ from modules.sales_analysis.navigate_to_mid_category import click_codes_in_order
 def test_click_codes_in_order_clicks_and_logs(caplog):
     # create mock grid rows with ids that map to codes 1 and 3
     row1 = MagicMock()
-    row1.get_attribute.return_value = "row1"
+    row1.get_attribute.return_value = "row1.cell_0_0"
     cell1 = MagicMock()
     cell1.text = "1"
 
     row2 = MagicMock()
-    row2.get_attribute.return_value = "row2"
+    row2.get_attribute.return_value = "row2.cell_0_0"
     cell2 = MagicMock()
     cell2.text = "3"
 
@@ -24,9 +24,9 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
     driver.find_elements.return_value = [row1, row2]
 
     def find_element_side_effect(by, value):
-        if value == "row1:text":
+        if value == "row1.cell_0_0:text":
             return cell1
-        if value == "row2:text":
+        if value == "row2.cell_0_0:text":
             return cell2
         raise AssertionError(f"Unexpected id lookup: {value}")
 
