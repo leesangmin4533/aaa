@@ -63,7 +63,9 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
 def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     first_cell = MagicMock()
     first_cell.text = "001"
-    first_cell.get_attribute.return_value = "prefix.gridrow_0.cell_0_0:text"
+    first_cell.get_attribute.return_value = (
+        "prefix.gdList.body.gridrow_0.cell_0_0:text"
+    )
 
     cell1 = MagicMock()
     cell1.text = "002"
@@ -108,3 +110,56 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
         "총 클릭: 3건" in rec.getMessage() for rec in caplog.records
     )
     assert summary_found
+
+
+def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
+    first_cell = MagicMock()
+    first_cell.text = "001"
+    first_cell.get_attribute.return_value = (
+        "prefix.gdList.body.gridrow_0.cell_0_0:text"
+    )
+
+    cell1 = MagicMock()
+    cell1.text = "002"
+    cell2 = MagicMock()
+    cell2.text = "003"
+
+    call_counts = {"cell1": 0}
+
+    driver = MagicMock()
+
+    def find_element_side_effect(by, value):
+        if by == By.XPATH:
+            return first_cell
+        if by == By.ID:
+            if value == "prefix.gdList.body.gridrow_1.cell_1_0:text":
+                call_counts["cell1"] += 1
+                if call_counts["cell1"] == 1:
+                    raise Exception("not loaded")
+                return cell1
+            if value == "prefix.gdList.body.gridrow_2.cell_2_0:text":
+                return cell2
+        raise AssertionError(f"Unexpected lookup: {value}")
+
+    driver.find_element.side_effect = find_element_side_effect
+
+    class DummyActions:
+        def __init__(self, drv):
+            pass
+
+        def send_keys(self, key):
+            return self
+
+        def perform(self):
+            pass
+
+    with patch(
+        "modules.sales_analysis.navigate_to_mid_category.ActionChains",
+        DummyActions,
+    ), caplog.at_level(logging.INFO):
+        click_codes_by_arrow(driver, delay=0, max_scrolls=3)
+
+    assert call_counts["cell1"] == 2
+    assert first_cell.click.called
+    assert cell1.click.called
+    assert cell2.click.called

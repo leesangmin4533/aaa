@@ -184,25 +184,35 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
         time.sleep(0.2)
 
         cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+        next_cell = None
 
-        try:
-            next_cell = driver.find_element(By.ID, cell_id)
-            next_cell.click()
-            code = next_cell.text.strip()
-
-            if not code or not code.isdigit():
-                continue
-
-            if code in visited:
-                log("click_code", "종료", f"코드 {code} 중복 → 종료")
+        for attempt in range(2):
+            try:
+                next_cell = driver.find_element(By.ID, cell_id)
                 break
+            except Exception as e:
+                if attempt == 0:
+                    actions.send_keys(Keys.ARROW_DOWN).perform()
+                    time.sleep(0.2)
+                    continue
+                log("click_code", "종료", f"더 이상 셀 없음 또는 오류: {e}")
+                return
 
-            log("click_code", "실행", f"코드 {code} 클릭")
-            visited.add(code)
-            time.sleep(delay)
-
-        except Exception as e:
-            log("click_code", "종료", f"더 이상 셀 없음 또는 오류: {e}")
+        if not next_cell:
             break
+
+        next_cell.click()
+        code = next_cell.text.strip()
+
+        if not code or not code.isdigit():
+            continue
+
+        if code in visited:
+            log("click_code", "종료", f"코드 {code} 중복 → 종료")
+            break
+
+        log("click_code", "실행", f"코드 {code} 클릭")
+        visited.add(code)
+        time.sleep(delay)
 
     log("click_code", "완료", f"총 클릭: {len(visited)}건")
