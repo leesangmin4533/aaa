@@ -177,6 +177,7 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
 
         try:
             active = driver.switch_to.active_element
+            active.click()  # make sure each moved row is actually clicked
             code = active.text.strip()
 
             if not code or not code.isdigit():
