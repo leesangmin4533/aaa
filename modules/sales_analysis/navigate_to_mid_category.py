@@ -12,6 +12,15 @@ MODULE_NAME = "navigate_mid"
 log = create_logger(MODULE_NAME)
 
 
+def try_or_none(func):
+    """Return the result of ``func`` or ``None`` if it raises."""
+
+    try:
+        return func()
+    except Exception:
+        return None
+
+
 def navigate_to_mid_category_sales(driver):
     """Navigate to the '중분류별 매출 구성' page under sales analysis."""
     log("open_menu", "실행", "매출분석 메뉴 클릭")
@@ -217,6 +226,28 @@ def click_codes_by_arrow(
             except Exception as e:
                 attempt += 1
                 if attempt >= 2:
+                    log(
+                        "debug",
+                        "종료 직전",
+                        {
+                            "예상 cell_id": cell_id,
+                            "row_idx": row_idx,
+                            "prefix": prefix,
+                            "active_id": try_or_none(
+                                lambda: driver.switch_to.active_element.get_attribute("id")
+                            ),
+                            "active_text": try_or_none(
+                                lambda: driver.switch_to.active_element.text.strip()
+                            ),
+                            "is_displayed": try_or_none(
+                                lambda: next_cell.is_displayed() if next_cell else None
+                            ),
+                            "is_enabled": try_or_none(
+                                lambda: next_cell.is_enabled() if next_cell else None
+                            ),
+                            "visited": list(visited)[-5:],
+                        },
+                    )
                     log("click_code", "종료", f"셀 클릭 실패 또는 존재 안함: {e}")
                     return
                 time.sleep(retry_delay)
