@@ -54,16 +54,13 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
 
     for row in gridrows:
         try:
-            # Nexacro uses `:text` suffix for the inner text element. Searching
-            # for `cell_0_0.text` does not match this pattern, so look for any
-            # div whose id includes `cell_0_0` and ends with `:text`.
-            # ``ends-with`` is only available in Selenium 4+, so we use a
-            # ``substring`` expression that checks the last ``':text'``
-            # characters regardless of ID length.
-            cell = row.find_element(
-                By.XPATH,
-                ".//div[contains(@id, 'cell_0_0') and substring(@id, string-length(@id) - string-length(':text') + 1) = ':text']",
-            )
+            # ``row`` itself does not contain the ``:text`` div holding the
+            # code string. Instead, Nexacro places that element as a sibling
+            # div with an id of ``{row_id}:text``. Retrieve the row id and
+            # combine it with ``:text`` to locate the proper element from the
+            # driver root.
+            row_id = row.get_attribute("id")
+            cell = driver.find_element(By.ID, f"{row_id}:text")
             code = cell.text.strip()
             log("scan_row", "실행", f"코드 추출값: {code}")
             if code.isdigit():
