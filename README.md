@@ -21,7 +21,8 @@ The mid-category sales automation is now executed directly from `main.py` using
 `modules/sales_analysis/gridrow_click_loop.json`. The JSON navigates to the
 중분류별 매출 구성 페이지 and then uses an arrow-key based helper that starts
 at code `001` and moves down the grid clicking each code until a duplicate
-appears.
+appears. If a click fails, the helper waits two seconds and presses the down
+arrow once more before retrying. A second failure stops the loop.
 
 
 The structure files in the `structure` directory describe the XPath selectors
