@@ -49,30 +49,35 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
     from selenium.webdriver.common.by import By
 
     code_map = {}
+    valid_codes = []
+
     gridrows = driver.find_elements(By.XPATH, "//div[contains(@id, 'gdList.body.gridrow')]")
     log("scan_row", "실행", f"총 행 수: {len(gridrows)}")
 
     for row in gridrows:
         try:
-            # ``row`` itself does not contain the ``:text`` div holding the
-            # code string. Instead, Nexacro places that element as a sibling
-            # div whose id is based on the row id. Ensure the id references a
-            # cell element and append ``:text`` only if not already present.
             row_id = row.get_attribute("id")
-            if ".cell_" not in row_id:
+            if not row_id:
                 continue
-
-            text_id = row_id if ":text" in row_id else f"{row_id}:text"
-            cell = driver.find_element(By.ID, text_id)
+            cell = driver.find_element(By.ID, f"{row_id}:text")
             code = cell.text.strip()
-            log("scan_row", "실행", f"코드 추출값: {code}")
+
             if code.isdigit():
                 num = int(code)
                 if start <= num <= end:
                     code_map[num] = cell
-        except Exception as e:
-            log("scan_row", "오류", f"행에서 코드 셀 탐색 실패: {e}")
-            continue
+                    valid_codes.append(f"{num:03d}")
+        except Exception:
+            continue  # 무시하고 다음 행으로
+
+    if valid_codes:
+        log(
+            "scan_row",
+            "실행",
+            f"유효 코드 {len(valid_codes)}건 추출됨: {', '.join(valid_codes)}",
+        )
+    else:
+        log("scan_row", "실행", "유효 코드 없음")
 
     click_success = 0
     not_found_count = 0
