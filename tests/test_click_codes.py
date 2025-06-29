@@ -169,3 +169,57 @@ def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
     assert first_cell.click.called
     assert not cell1.click.called
     assert not cell2.click.called
+
+
+def test_click_codes_by_arrow_focus_recovery(caplog):
+    first_cell = MagicMock()
+    first_cell.text = "001"
+    first_cell.get_attribute.return_value = (
+        "prefix.gdList.body.gridrow_0.cell_0_0:text"
+    )
+
+    cell1 = MagicMock()
+    cell1.text = "002"
+
+    id_calls = {"cnt": 0}
+
+    driver = MagicMock()
+
+    def find_element_side_effect(by, value):
+        if by == By.XPATH:
+            return first_cell
+        if by == By.ID:
+            if value == "prefix.gdList.body.gridrow_1.cell_1_0:text":
+                id_calls["cnt"] += 1
+                if id_calls["cnt"] == 1:
+                    raise Exception("not ready")
+                return cell1
+        raise AssertionError(f"Unexpected lookup: {value}")
+
+    driver.find_element.side_effect = find_element_side_effect
+
+    invalid_el = MagicMock()
+    invalid_el.get_attribute.return_value = "mainframe"
+    driver.switch_to.active_element = invalid_el
+
+    class DummyActions:
+        def __init__(self, drv):
+            pass
+
+        def send_keys(self, key):
+            return self
+
+        def perform(self):
+            pass
+
+    with patch(
+        "modules.sales_analysis.navigate_to_mid_category.ActionChains",
+        DummyActions,
+    ), caplog.at_level(logging.INFO):
+        click_codes_by_arrow(driver, delay=0, max_scrolls=1, retry_delay=0)
+
+    assert cell1.click.called
+    recovery_logged = any(
+        "포커스 복구 성공" in rec.getMessage() for rec in caplog.records
+    )
+    assert recovery_logged

@@ -230,19 +230,40 @@ def click_codes_by_arrow(
                             "종료",
                             f"비정상 active_element 감지: {active_id}",
                         )
-                        log(
-                            "click_code",
-                            "최종 종료",
-                            {
-                                "마지막 셀 ID": cell_id,
-                                "마지막 시도 row_idx": row_idx,
-                                "총 클릭 수": len(visited),
-                                "중복 종료 여부": False,
-                                "예외 발생 여부": None,
-                            },
-                        )
-                        return
-                    next_cell = active
+                        try:
+                            next_cell = driver.find_element(By.ID, cell_id)
+                            log(
+                                "click_code",
+                                "실행",
+                                f"포커스 복구 시도: {cell_id}",
+                            )
+                            next_cell.click()
+                            log(
+                                "click_code",
+                                "완료",
+                                f"포커스 복구 성공: {cell_id}",
+                            )
+                            found_by_id = True
+                        except Exception as rec_err:
+                            log(
+                                "click_code",
+                                "오류",
+                                f"포커스 복구 실패: {rec_err}",
+                            )
+                            log(
+                                "click_code",
+                                "최종 종료",
+                                {
+                                    "마지막 셀 ID": cell_id,
+                                    "마지막 시도 row_idx": row_idx,
+                                    "총 클릭 수": len(visited),
+                                    "중복 종료 여부": False,
+                                    "예외 발생 여부": None,
+                                },
+                            )
+                            return
+                    else:
+                        next_cell = active
                 except Exception as err:
                     e = err
                     next_cell = None
