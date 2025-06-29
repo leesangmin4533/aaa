@@ -49,7 +49,7 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
     from selenium.webdriver.common.by import By
 
     code_map = {}
-    gridrows = driver.find_elements(By.XPATH, "//div[contains(@id, 'grdList.body.gridrow')]")
+    gridrows = driver.find_elements(By.XPATH, "//div[contains(@id, 'gdList.body.gridrow')]")
     log("scan_row", "실행", f"총 행 수: {len(gridrows)}")
 
     for row in gridrows:
