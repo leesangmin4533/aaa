@@ -40,7 +40,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     def execute_step(step: dict, variables: dict) -> None:
         action = step.get("action")
         step_log = step.get("log")
-        log("step_start", f"{action} 시작")
+        log("step_start", "진입", f"{action} 시작")
 
         if action == "navigate_menu":
             navigate_to_mid_category_sales(driver)
@@ -73,9 +73,9 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
             start = step.get("start", 1)
             end = step.get("end", 900)
             click_codes_in_order(driver, start=start, end=end)
-        log("step_end", f"{action} 완료")
+        log("step_end", "완료", f"{action} 완료")
         if step_log:
-            log("message", step_log)
+            log("message", "실행", step_log)
 
     log("run_sales_analysis", "진입")
     with open(config_path, "r", encoding="utf-8") as f:
@@ -107,14 +107,14 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
 def main():
     log("main", "진입")
 
-    log("create_driver", "Chrome 드라이버 생성")
+    log("create_driver", "실행", "Chrome 드라이버 생성")
     driver = create_chrome_driver()  # ✅ 자동 드라이버 탐색
-    log("create_driver", "Chrome 드라이버 생성 완료")
+    log("create_driver", "완료", "Chrome 드라이버 생성 완료")
 
-    log("login", "로그인 시퀀스")
+    log("login", "실행", "로그인 시퀀스")
     try:
         run_login(driver)
-        log("login", "로그인 시퀀스 성공")
+        log("login", "완료", "로그인 시퀀스 성공")
 
         # ✨ 두 번째 팝업이 뜰 시간 확보
         time.sleep(1.2)
@@ -127,11 +127,11 @@ def main():
                 json.dumps(popup_result.get("debug", []), indent=2, ensure_ascii=False),
             )
             if popup_result.get("detected"):
-                log("popup_detected", "팝업 감지됨")
+                log("popup_detected", "실행", "팝업 감지됨")
                 if popup_result.get("closed"):
-                    log("popup_closed", f"팝업 닫힘: {popup_result.get('target')}")
+                    log("popup_closed", "완료", f"팝업 닫힘: {popup_result.get('target')}")
                 else:
-                    log("popup_failed", f"팝업 닫기 실패: {popup_result.get('reason')}")
+                    log("popup_failed", "오류", f"팝업 닫기 실패: {popup_result.get('reason')}")
                     input("수동 확인 후 Enter...")
         except Exception as e:
             logger.warning("팝업 닫기 중 예외 발생", exc_info=e)
@@ -140,24 +140,24 @@ def main():
         driver.quit()
         raise
 
-    log("sales_analysis", "매출 분석")
+    log("sales_analysis", "실행", "매출 분석")
     try:
         run_sales_analysis(driver)
-        log("sales_analysis", "매출 분석 성공")
+        log("sales_analysis", "완료", "매출 분석 성공")
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > sales_analysis] 매출 분석 실패")
         driver.quit()
         raise
 
-    log("module_map", "모듈 맵 저장")
+    log("module_map", "실행", "모듈 맵 저장")
     write_module_map()
-    log("module_map", "모듈 맵 저장 완료")
+    log("module_map", "완료", "모듈 맵 저장 완료")
 
     input("⏸ 로그인 화면 유지 중. Enter를 누르면 종료됩니다.")
 
-    log("quit", "드라이버 종료")
+    log("quit", "실행", "드라이버 종료")
     driver.quit()
-    log("quit", "드라이버 종료 완료")
+    log("quit", "완료", "드라이버 종료 완료")
 
 
 if __name__ == "__main__":

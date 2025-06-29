@@ -1,12 +1,12 @@
 import json
 import sys
 from pathlib import Path
+from log_util import create_logger
 
 MODULE_NAME = "snippet_utils"
 
 
-def log(step: str, msg: str) -> None:
-    print(f"\u25b6 [{MODULE_NAME} > {step}] {msg}")
+log = create_logger(MODULE_NAME)
 
 
 def load_snippet_ids(path: str) -> list[str]:
@@ -90,7 +90,7 @@ def main(argv: list[str] | None = None) -> None:
     if argv is None:
         argv = sys.argv[1:]
     if len(argv) != 3 or argv[0] not in {"json", "command"}:
-        log("usage", CLI_USAGE)
+        log("usage", "진입", CLI_USAGE)
         sys.exit(1)
 
     mode, input_path, output_path = argv
