@@ -171,11 +171,14 @@ def click_codes_by_arrow(
 
     actions = ActionChains(driver)
     visited = set()
+    cell_id = ""
+    code = ""
+    e = None
 
     try:
         cell = driver.find_element(
             By.XPATH,
-            "//div[contains(@id,'gdList.body.gridrow') and contains(text(),'001')]"
+            "//div[contains(@id,'gdList.body.gridrow') and contains(text(),'001')]",
         )
         log("click_code", "실행", "코드 001 클릭")
         cell.click()
@@ -184,6 +187,17 @@ def click_codes_by_arrow(
         time.sleep(delay)
     except Exception:
         log("click_code", "오류", "코드 001을 찾지 못함")
+        log(
+            "click_code",
+            "최종 종료",
+            {
+                "마지막 셀 ID": cell_id,
+                "마지막 시도 row_idx": 0,
+                "총 클릭 수": len(visited),
+                "중복 종료 여부": False,
+                "예외 발생 여부": None,
+            },
+        )
         return
 
     import re
@@ -208,8 +222,29 @@ def click_codes_by_arrow(
             except Exception:
                 found_by_id = False
                 try:
-                    next_cell = driver.switch_to.active_element
-                except Exception:
+                    active = driver.switch_to.active_element
+                    active_id = active.get_attribute("id") or ""
+                    if not active_id.startswith(prefix) or not active_id.endswith(":text"):
+                        log(
+                            "click_code",
+                            "종료",
+                            f"비정상 active_element 감지: {active_id}",
+                        )
+                        log(
+                            "click_code",
+                            "최종 종료",
+                            {
+                                "마지막 셀 ID": cell_id,
+                                "마지막 시도 row_idx": row_idx,
+                                "총 클릭 수": len(visited),
+                                "중복 종료 여부": False,
+                                "예외 발생 여부": None,
+                            },
+                        )
+                        return
+                    next_cell = active
+                except Exception as err:
+                    e = err
                     next_cell = None
 
             try:
@@ -249,9 +284,39 @@ def click_codes_by_arrow(
                         },
                     )
                     log("click_code", "종료", f"셀 클릭 실패 또는 존재 안함: {e}")
+                    log(
+                        "click_code",
+                        "최종 종료",
+                        {
+                            "마지막 셀 ID": cell_id,
+                            "마지막 시도 row_idx": row_idx,
+                            "총 클릭 수": len(visited),
+                            "중복 종료 여부": False,
+                            "예외 발생 여부": str(e),
+                        },
+                    )
                     return
                 time.sleep(retry_delay)
                 try:
+                    backup_id = next_cell.get_attribute("id") if next_cell else ""
+                    if "gridrow" not in backup_id:
+                        log(
+                            "click_code",
+                            "종료",
+                            f"비정상 보조 셀 감지: {backup_id}",
+                        )
+                        log(
+                            "click_code",
+                            "최종 종료",
+                            {
+                                "마지막 셀 ID": cell_id,
+                                "마지막 시도 row_idx": row_idx,
+                                "총 클릭 수": len(visited),
+                                "중복 종료 여부": False,
+                                "예외 발생 여부": str(e) if e else None,
+                            },
+                        )
+                        return
                     actions.move_to_element(next_cell).click().perform()
                 except Exception:
                     pass
@@ -273,3 +338,14 @@ def click_codes_by_arrow(
         time.sleep(delay)
 
     log("click_code", "완료", f"총 클릭: {len(visited)}건")
+    log(
+        "click_code",
+        "최종 종료",
+        {
+            "마지막 셀 ID": cell_id,
+            "마지막 시도 row_idx": row_idx,
+            "총 클릭 수": len(visited),
+            "중복 종료 여부": code in visited if 'code' in locals() else False,
+            "예외 발생 여부": str(e) if e else None,
+        },
+    )
