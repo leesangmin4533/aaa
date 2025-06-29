@@ -9,19 +9,28 @@ from modules.sales_analysis.navigate_to_mid_category import click_codes_in_order
 
 
 def test_click_codes_in_order_clicks_and_logs(caplog):
-    # create mock grid rows with codes 1 and 3
+    # create mock grid rows with ids that map to codes 1 and 3
     row1 = MagicMock()
+    row1.get_attribute.return_value = "row1"
     cell1 = MagicMock()
     cell1.text = "1"
-    row1.find_element.return_value = cell1
 
     row2 = MagicMock()
+    row2.get_attribute.return_value = "row2"
     cell2 = MagicMock()
     cell2.text = "3"
-    row2.find_element.return_value = cell2
 
     driver = MagicMock()
     driver.find_elements.return_value = [row1, row2]
+
+    def find_element_side_effect(by, value):
+        if value == "row1:text":
+            return cell1
+        if value == "row2:text":
+            return cell2
+        raise AssertionError(f"Unexpected id lookup: {value}")
+
+    driver.find_element.side_effect = find_element_side_effect
 
     with patch('selenium.webdriver.support.ui.WebDriverWait') as MockWait, \
          patch('selenium.webdriver.support.expected_conditions.element_to_be_clickable') as mock_clickable:
