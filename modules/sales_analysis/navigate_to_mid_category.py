@@ -53,7 +53,13 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
 
     for row in gridrows:
         try:
-            cell = row.find_element(By.XPATH, ".//div[contains(@id, 'cell_0_0.text')]")
+            # Nexacro uses `:text` suffix for the inner text element. Searching
+            # for `cell_0_0.text` does not match this pattern, so look for any
+            # div whose id includes both `cell_0_0` and `:text`.
+            cell = row.find_element(
+                By.XPATH,
+                ".//div[contains(@id, 'cell_0_0') and contains(@id, ':text')]",
+            )
             code = cell.text.strip()
             if code.isdigit():
                 num = int(code)
