@@ -83,9 +83,14 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
             try:
                 log("click_code", "실행", f"코드 {num:03d} 클릭 중...")
                 # ✅ overlay disappears before attempting click
-                WebDriverWait(driver, 5).until_not(
-                    EC.presence_of_element_located((By.ID, "nexacontainer"))
-                )
+                try:
+                    overlay = driver.find_element(By.ID, "nexacontainer")
+                    if overlay.is_displayed():
+                        WebDriverWait(driver, 5).until_not(
+                            EC.presence_of_element_located((By.ID, "nexacontainer"))
+                        )
+                except Exception:
+                    pass
 
                 try:
                     WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
