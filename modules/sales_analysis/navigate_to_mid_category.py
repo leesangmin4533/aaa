@@ -154,6 +154,7 @@ def click_codes_by_arrow(
     delay: float = 1.0,
     max_scrolls: int = 1000,
     retry_delay: float = 2.0,
+    search_limit: int = 5,
 ) -> None:
     """Click mid-category codes using Arrow Down navigation.
 
@@ -174,6 +175,7 @@ def click_codes_by_arrow(
     last_cell_id = ""
     last_code = ""
     e = None
+    missing_attempts = 0
 
     try:
         cell = driver.find_element(
@@ -257,13 +259,45 @@ def click_codes_by_arrow(
                 if attempt >= 2:
                     log("click_code", "종료", f"셀 클릭 실패: {click_err}")
                     time.sleep(1)
+                    recovery_success = False
                     try:
                         recovery = driver.find_element(By.ID, last_cell_id)
                         recovery.click()
+                        recovery_success = True
                     except Exception as rec_err:
                         log("click_code", "오류", f"재클릭 실패: {rec_err}")
-                    row_idx -= 1
-                    next_cell = None
+
+                    if recovery_success:
+                        row_idx -= 1
+                        next_cell = None
+                        break
+
+                    search_loops = 0
+                    while search_loops < search_limit:
+                        actions.send_keys(Keys.ARROW_DOWN).perform()
+                        time.sleep(0.3)
+                        search_loops += 1
+                        row_idx += 1
+                        tmp_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+                        try:
+                            next_cell = driver.find_element(By.ID, tmp_id)
+                            cell_id = tmp_id
+                            break
+                        except Exception:
+                            continue
+
+                    if next_cell is None:
+                        missing_attempts += 1
+                        if missing_attempts >= search_limit:
+                            log(
+                                "click_code",
+                                "종료",
+                                f"예상 셀 탐색 실패 {missing_attempts}회",
+                            )
+                            return
+                        row_idx -= 1
+                    else:
+                        missing_attempts = 0
                     break
                 time.sleep(retry_delay)
 
@@ -287,6 +321,10 @@ def click_codes_by_arrow(
 
     total_clicks = sum(code_counts.values())
     log("click_code", "완료", f"총 클릭: {total_clicks}건")
+    active = try_or_none(lambda: driver.switch_to.active_element)
+    focus_id = try_or_none(lambda: active.get_attribute("id")) if active else ""
+    focus_text = try_or_none(lambda: active.text.strip()) if active else ""
+
     log(
         "click_code",
         "최종 종료",
@@ -294,5 +332,6 @@ def click_codes_by_arrow(
             "마지막 코드": last_code,
             "마지막 셀 ID": last_cell_id,
             "코드 누적": {k: code_counts[k] for k in list(code_counts)[-5:]},
+            "포커스": {"id": focus_id, "text": focus_text},
         },
     )
