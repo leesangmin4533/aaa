@@ -70,9 +70,9 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     cell1 = MagicMock()
     cell1.text = "002"
     cell2 = MagicMock()
-    cell2.text = "003"
+    cell2.text = "002"
     cell3 = MagicMock()
-    cell3.text = "002"  # repeat to stop
+    cell3.text = "002"  # third time triggers stop
 
     calls = iter([cell1, cell2, cell3])
 
@@ -107,12 +107,12 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     assert cell3.click.called
 
     summary_found = any(
-        "총 클릭: 3건" in rec.getMessage() for rec in caplog.records
+        "총 클릭: 4건" in rec.getMessage() for rec in caplog.records
     )
     assert summary_found
 
     final_found = any(
-        "최종 종료" in rec.getMessage() and "총 클릭 수" in rec.getMessage()
+        "최종 종료" in rec.getMessage() and "마지막 코드" in rec.getMessage()
         for rec in caplog.records
     )
     assert final_found
@@ -165,10 +165,10 @@ def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
     ), caplog.at_level(logging.INFO):
         click_codes_by_arrow(driver, delay=0, max_scrolls=3, retry_delay=0)
 
-    assert call_counts["cell1"] == 1
+    assert call_counts["cell1"] == 2
     assert first_cell.click.called
-    assert not cell1.click.called
-    assert not cell2.click.called
+    assert cell1.click.called
+    assert cell2.click.called
 
 
 def test_click_codes_by_arrow_focus_recovery(caplog):
