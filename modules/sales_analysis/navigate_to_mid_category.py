@@ -181,27 +181,30 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
     for _ in range(max_scrolls):
         row_idx += 1
         actions.send_keys(Keys.ARROW_DOWN).perform()
-        time.sleep(0.2)
+        time.sleep(0.3)
 
         cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
         next_cell = None
 
-        for attempt in range(2):
+        for attempt in range(3):
             try:
                 next_cell = driver.find_element(By.ID, cell_id)
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});",
+                    next_cell,
+                )
+                next_cell.click()
                 break
             except Exception as e:
-                if attempt == 0:
-                    actions.send_keys(Keys.ARROW_DOWN).perform()
-                    time.sleep(0.2)
-                    continue
-                log("click_code", "종료", f"더 이상 셀 없음 또는 오류: {e}")
-                return
+                if attempt == 2:
+                    log("click_code", "종료", f"셀 클릭 실패 또는 존재 안함: {e}")
+                    return
+                actions.send_keys(Keys.ARROW_DOWN).perform()
+                time.sleep(0.3)
 
         if not next_cell:
             break
 
-        next_cell.click()
         code = next_cell.text.strip()
 
         if not code or not code.isdigit():
