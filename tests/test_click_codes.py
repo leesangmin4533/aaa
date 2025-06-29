@@ -111,6 +111,12 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     )
     assert summary_found
 
+    final_found = any(
+        "최종 종료" in rec.getMessage() and "총 클릭 수" in rec.getMessage()
+        for rec in caplog.records
+    )
+    assert final_found
+
 
 def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
     first_cell = MagicMock()
@@ -159,7 +165,7 @@ def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
     ), caplog.at_level(logging.INFO):
         click_codes_by_arrow(driver, delay=0, max_scrolls=3, retry_delay=0)
 
-    assert call_counts["cell1"] == 2
+    assert call_counts["cell1"] == 1
     assert first_cell.click.called
-    assert cell1.click.called
-    assert cell2.click.called
+    assert not cell1.click.called
+    assert not cell2.click.called
