@@ -159,7 +159,7 @@ def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
     ), caplog.at_level(logging.INFO):
         click_codes_by_arrow(driver, delay=0, max_scrolls=3, retry_delay=0)
 
-    assert call_counts["cell1"] == 1
+    assert call_counts["cell1"] == 2
     assert first_cell.click.called
-    assert not cell1.click.called
+    assert cell1.click.called
     assert cell2.click.called
