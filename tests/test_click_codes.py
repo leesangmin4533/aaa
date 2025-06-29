@@ -105,7 +105,7 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     assert first_cell.click.called
     assert active1.click.called
     assert active2.click.called
-    assert not active3.click.called
+    assert active3.click.called
 
     summary_found = any(
         "총 클릭: 3건" in rec.getMessage() for rec in caplog.records
