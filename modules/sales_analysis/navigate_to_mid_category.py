@@ -57,9 +57,12 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
             # Nexacro uses `:text` suffix for the inner text element. Searching
             # for `cell_0_0.text` does not match this pattern, so look for any
             # div whose id includes `cell_0_0` and ends with `:text`.
+            # ``ends-with`` is only available in Selenium 4+, so we use a
+            # ``substring`` expression that checks the last ``':text'``
+            # characters regardless of ID length.
             cell = row.find_element(
                 By.XPATH,
-                ".//div[contains(@id, 'cell_0_0') and substring(@id, string-length(@id) - 5) = ':text']",
+                ".//div[contains(@id, 'cell_0_0') and substring(@id, string-length(@id) - string-length(':text') + 1) = ':text']",
             )
             code = cell.text.strip()
             log("scan_row", "실행", f"코드 추출값: {code}")
