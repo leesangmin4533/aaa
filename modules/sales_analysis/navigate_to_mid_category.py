@@ -143,41 +143,31 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
 def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) -> None:
     """Click mid-category codes using Arrow Down navigation.
 
-    Starting from code ``001``, this function moves the selection down one row at
-    a time using the keyboard. It clicks each numeric code encountered until a
-    previously visited code reappears or ``max_scrolls`` is reached.
-
-    Parameters
-    ----------
-    driver:
-        Selenium WebDriver instance currently on the mid-category sales page.
-    delay:
-        Seconds to wait after each click. Defaults to ``1.0``.
-    max_scrolls:
-        Maximum number of down-arrow key presses before giving up.
+    Workflow
+    --------
+    1. Locate the grid cell containing the text ``001``.
+    2. Click the cell and wait ``delay`` seconds.
+    3. Press the ↓ arrow key to move to the next row.
+    4. Read the active cell's text and check if it was already visited.
+    5. If not visited, click the cell, wait ``delay`` seconds and add the code
+       to ``visited``.
+    6. Stop when a duplicate code appears or ``max_scrolls`` is reached.
+    7. Log the total number of clicked codes.
     """
 
     actions = ActionChains(driver)
     visited = set()
 
-    gridrows = driver.find_elements(By.XPATH, "//div[contains(@id, 'gdList.body.gridrow')]")
-    found = False
-    for row in gridrows:
-        try:
-            row_id = row.get_attribute("id")
-            cell = driver.find_element(By.ID, f"{row_id}:text")
-            code = cell.text.strip()
-            if code == "001":
-                log("click_code", "실행", "코드 001 클릭")
-                cell.click()
-                visited.add("001")
-                time.sleep(delay)
-                found = True
-                break
-        except Exception:
-            continue
-
-    if not found:
+    try:
+        cell = driver.find_element(
+            By.XPATH,
+            "//div[contains(@id,'gdList.body.gridrow') and contains(text(),'001')]"
+        )
+        log("click_code", "실행", "코드 001 클릭")
+        cell.click()
+        visited.add("001")
+        time.sleep(delay)
+    except Exception as e:
         log("click_code", "오류", "코드 001을 찾지 못함")
         return
 

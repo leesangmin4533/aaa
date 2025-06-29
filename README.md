@@ -19,8 +19,9 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
 
 The mid-category sales automation is now executed directly from `main.py` using
 `modules/sales_analysis/gridrow_click_loop.json`. The JSON navigates to the
-중분류별 매출 구성 페이지 and then runs a helper function that clicks available
-mid-category codes in numerical order.
+중분류별 매출 구성 페이지 and then uses an arrow-key based helper that starts
+at code `001` and moves down the grid clicking each code until a duplicate
+appears.
 
 
 The structure files in the `structure` directory describe the XPath selectors

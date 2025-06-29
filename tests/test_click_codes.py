@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+from selenium.webdriver.common.by import By
 import logging
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -60,18 +61,15 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
 
 
 def test_click_codes_by_arrow_clicks_until_repeat(caplog):
-    row = MagicMock()
-    row.get_attribute.return_value = "row.cell"
     first_cell = MagicMock()
     first_cell.text = "001"
 
     driver = MagicMock()
-    driver.find_elements.return_value = [row]
 
     def find_element_side_effect(by, value):
-        if value == "row.cell:text":
+        if by == By.XPATH:
             return first_cell
-        raise AssertionError(f"Unexpected id lookup: {value}")
+        raise AssertionError(f"Unexpected lookup: {value}")
 
     driver.find_element.side_effect = find_element_side_effect
 
@@ -94,6 +92,7 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
                 self.drv.switch_to.active_element = next(active_iter)
             except StopIteration:
                 pass
+
 
     driver.switch_to.active_element = first_cell
 
