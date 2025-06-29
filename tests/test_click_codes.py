@@ -35,6 +35,7 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
     with patch('selenium.webdriver.support.ui.WebDriverWait') as MockWait, \
          patch('selenium.webdriver.support.expected_conditions.element_to_be_clickable') as mock_clickable:
         MockWait.return_value.until.side_effect = lambda cond: cond
+        MockWait.return_value.until_not.side_effect = lambda cond: True
         mock_clickable.side_effect = lambda el: el
 
         with caplog.at_level(logging.INFO):

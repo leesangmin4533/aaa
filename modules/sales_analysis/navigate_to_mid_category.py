@@ -82,7 +82,20 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
         if cell:
             try:
                 log("click_code", "실행", f"코드 {num:03d} 클릭 중...")
-                WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+                # ✅ overlay disappears before attempting click
+                WebDriverWait(driver, 5).until_not(
+                    EC.presence_of_element_located((By.ID, "nexacontainer"))
+                )
+
+                try:
+                    WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+                except Exception:
+                    # ✅ if not clickable, scroll into view and retry
+                    driver.execute_script(
+                        "arguments[0].scrollIntoView({block: 'center'});", cell
+                    )
+                    WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+
                 click_success += 1
                 time.sleep(1.0)
             except Exception as e:
