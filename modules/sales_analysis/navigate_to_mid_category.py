@@ -99,7 +99,28 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
                 click_success += 1
                 time.sleep(1.0)
             except Exception as e:
-                log("click_code", "오류", f"코드 {num:03d} 클릭 실패: {e}")
+                import traceback
+                import io
+
+                tb_io = io.StringIO()
+                traceback.print_exc(file=tb_io)
+                trace = tb_io.getvalue().strip()
+
+                log(
+                    "click_code",
+                    "디버그",
+                    f"셀 ID: {cell.get_attribute('id')}"
+                )
+                log(
+                    "click_code",
+                    "디버그",
+                    f"셀 표시 여부: {cell.is_displayed()}, 활성 여부: {cell.is_enabled()}"
+                )
+                log(
+                    "click_code",
+                    "오류",
+                    f"코드 {num:03d} 클릭 실패: {repr(e)}\n{trace}"
+                )
         else:
             not_found_count += 1
 
