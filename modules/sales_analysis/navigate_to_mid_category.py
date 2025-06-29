@@ -165,20 +165,30 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
         )
         log("click_code", "실행", "코드 001 클릭")
         cell.click()
+        first_id = cell.get_attribute("id") or ""
         visited.add("001")
         time.sleep(delay)
-    except Exception as e:
+    except Exception:
         log("click_code", "오류", "코드 001을 찾지 못함")
         return
 
+    import re
+
+    m = re.search(r"(.*gdList\.body\.gridrow_)(\d+)", first_id)
+    prefix = m.group(1) if m else ""
+    row_idx = int(m.group(2)) if m else 0
+
     for _ in range(max_scrolls):
+        row_idx += 1
         actions.send_keys(Keys.ARROW_DOWN).perform()
         time.sleep(0.2)
 
+        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+
         try:
-            active = driver.switch_to.active_element
-            active.click()  # make sure each moved row is actually clicked
-            code = active.text.strip()
+            next_cell = driver.find_element(By.ID, cell_id)
+            next_cell.click()
+            code = next_cell.text.strip()
 
             if not code or not code.isdigit():
                 continue
@@ -188,12 +198,11 @@ def click_codes_by_arrow(driver, delay: float = 1.0, max_scrolls: int = 1000) ->
                 break
 
             log("click_code", "실행", f"코드 {code} 클릭")
-            active.click()
             visited.add(code)
             time.sleep(delay)
 
         except Exception as e:
-            log("click_code", "오류", f"아래 이동 클릭 실패: {e}")
-            continue
+            log("click_code", "종료", f"더 이상 셀 없음 또는 오류: {e}")
+            break
 
     log("click_code", "완료", f"총 클릭: {len(visited)}건")
