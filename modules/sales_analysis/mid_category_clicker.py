@@ -20,7 +20,8 @@ def click_codes_by_arrow(
 
     first_cell = driver.find_element(By.ID, start_cell_id)
     first_cell.click()
-    log("click_code", "디버깅", "초기 셀 클릭 완료")
+    first_cell.send_keys(Keys.ARROW_DOWN)  # 강제 포커스 전환
+    log("click_code", "디버깅", "초기 셀 클릭 + 방향키 ↓ 입력 완료")
     time.sleep(1.0)
 
     last_code = ""
@@ -31,6 +32,14 @@ def click_codes_by_arrow(
     while True:
         focused = driver.switch_to.active_element
         cell_id = focused.get_attribute("id") or ""
+
+        if cell_id == "mainframe":
+            log("click_code", "포커스 재시도", "포커스가 mainframe에 머물러 있어 셀 재클릭")
+            first_cell.click()
+            first_cell.send_keys(Keys.ARROW_DOWN)
+            time.sleep(delay)
+            continue
+
         if "gdList.body.gridrow" not in cell_id or not cell_id.endswith("_0_0"):
             log("click_code", "경고", f"포커스 셀 ID 이상: {cell_id}")
             time.sleep(delay)
