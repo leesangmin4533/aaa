@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from modules.sales_analysis.mid_category_clicker import (
     click_codes_in_order,
-    click_codes_by_arrow,
+    click_all_codes_after_scroll,
     collect_all_code_cells,
 )
 
@@ -61,7 +61,7 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
     assert summary_found
 
 
-def test_click_codes_by_arrow_clicks_until_repeat(caplog):
+def test_click_all_codes_after_scroll_clicks_until_repeat(caplog):
     cell1 = MagicMock()
     cell1.text = "001"
     cell1.get_attribute.return_value = "id1_0:text"
@@ -81,13 +81,14 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     driver = MagicMock()
     driver.find_elements.return_value = [cell1, cell2, cell3, cell4]
 
-    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+    with patch('modules.sales_analysis.mid_category_clicker.collect_all_code_cells', return_value={1: cell1, 2: cell2, 3: cell3, 4: cell4}), \
+         patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
          patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
          caplog.at_level(logging.INFO):
         MockWait.return_value.until.side_effect = lambda cond: cond
         mock_clickable.side_effect = lambda el: el
 
-        click_codes_by_arrow(driver, delay=0)
+        click_all_codes_after_scroll(driver)
 
     assert cell1.click.called
     assert cell2.click.called
@@ -100,7 +101,7 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     assert summary_found
 
 
-def test_click_codes_by_arrow_sorts_and_skips(caplog):
+def test_click_all_codes_after_scroll_sorts_and_skips(caplog):
     invalid = MagicMock()
     invalid.text = "AA"
     invalid.get_attribute.return_value = "id0_0:text"
@@ -113,23 +114,26 @@ def test_click_codes_by_arrow_sorts_and_skips(caplog):
     cell2.text = "003"
     cell2.get_attribute.return_value = "id2_0:text"
 
+    clicked = []
+    cell1.click.side_effect = lambda: clicked.append("cell1")
+    cell2.click.side_effect = lambda: clicked.append("cell2")
+
     driver = MagicMock()
     driver.find_elements.return_value = [invalid, cell1, cell2]
 
-    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+    with patch('modules.sales_analysis.mid_category_clicker.collect_all_code_cells', return_value={10: cell1, 3: cell2}), \
+         patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
          patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
          caplog.at_level(logging.INFO):
         MockWait.return_value.until.side_effect = lambda cond: cond
         mock_clickable.side_effect = lambda el: el
 
-        click_codes_by_arrow(driver, delay=0)
+        click_all_codes_after_scroll(driver)
 
-    assert not invalid.click.called
-    assert cell2.click.called
-    assert cell1.click.called
+    assert clicked == ["cell2", "cell1"]
 
 
-def test_click_codes_by_arrow_retry_and_stop(caplog):
+def test_click_all_codes_after_scroll_retry_and_stop(caplog):
     cell1 = MagicMock()
     cell1.text = "001"
     cell1.get_attribute.return_value = "id1_0:text"
@@ -143,13 +147,14 @@ def test_click_codes_by_arrow_retry_and_stop(caplog):
     driver = MagicMock()
     driver.find_elements.return_value = [cell1, cell2]
 
-    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+    with patch('modules.sales_analysis.mid_category_clicker.collect_all_code_cells', return_value={1: cell1, 2: cell2}), \
+         patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
          patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
          caplog.at_level(logging.INFO):
         MockWait.return_value.until.side_effect = lambda cond: cond
         mock_clickable.side_effect = lambda el: el
 
-        click_codes_by_arrow(driver, delay=0)
+        click_all_codes_after_scroll(driver)
 
     assert cell1.click.call_count == 2
     assert cell2.click.call_count == 3
