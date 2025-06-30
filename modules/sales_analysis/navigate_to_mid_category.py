@@ -251,8 +251,7 @@ def click_codes_by_arrow(
                                 "완료",
                                 f"포커스 복구 성공: {last_cell_id}",
                             )
-                            # move index forward so we don't repeat the same cell
-                            # and avoid searching the previous row again
+                            # 포커스 복구 성공 후 다음 셀도 명확히 _0:text 로 강제 지정
                             row_idx += 1
                             cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
                             continue

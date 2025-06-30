@@ -27,7 +27,9 @@ clicks it and remembers the cell ID. The helper then moves down the grid using
 the ↓ key while reading and clicking each code. If a cell is not found or the
 click fails, it scrolls the element into view and retries twice. When retries
 still fail, it attempts to recover by re-clicking the last successful cell and
-searching ahead several rows.
+searching ahead several rows. During recovery the helper explicitly moves the
+row index forward and reselects the next row's `cell_{i}_0:text` element to
+avoid mismatched focus.
 
 The loop automatically stops when the same code appears three times or when too
 many consecutive cells are missing. Before exit, the function logs the last
