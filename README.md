@@ -29,6 +29,8 @@ The loop automatically stops when the same code appears three times or when too
 many consecutive cells are missing. Before exit, the function logs the last
 code, the last cell ID, recent click counts and the current focused element to
 aid debugging.
+The helper ``scroll_to_expand_dom`` moves the trackbar to the bottom of the grid
+so every code cell is loaded before collection begins.
 
 
 The structure files in the `structure` directory describe the XPath selectors
