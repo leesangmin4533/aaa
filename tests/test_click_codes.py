@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from modules.sales_analysis.mid_category_clicker import (
     click_codes_in_order,
     click_codes_by_arrow,
+    collect_all_code_cells,
 )
 
 
@@ -152,3 +153,31 @@ def test_click_codes_by_arrow_retry_and_stop(caplog):
 
     assert cell1.click.call_count == 2
     assert cell2.click.call_count == 3
+
+
+def test_collect_all_code_cells_deduplicates():
+    trackbar = MagicMock()
+
+    cell1 = MagicMock()
+    cell1.get_attribute.return_value = "row1_0:text"
+    cell1.text = "001"
+
+    cell2 = MagicMock()
+    cell2.get_attribute.return_value = "row2_0:text"
+    cell2.text = "002"
+
+    driver = MagicMock()
+    driver.find_element.return_value = trackbar
+    driver.find_elements.side_effect = [[cell1], [cell1, cell2]]
+
+    actions = MagicMock()
+    actions.click_and_hold.return_value = actions
+    actions.move_by_offset.return_value = actions
+    actions.release.return_value = actions
+
+    with patch(
+        "modules.sales_analysis.mid_category_clicker.ActionChains", return_value=actions
+    ):
+        result = collect_all_code_cells(driver, scroll_delay=0, max_scrolls=2)
+
+    assert list(sorted(result.keys())) == [1, 2]
