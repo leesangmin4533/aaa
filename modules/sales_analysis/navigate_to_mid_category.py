@@ -221,24 +221,10 @@ def click_codes_by_arrow(
         next_cell = None
         cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
 
-        if cell_id == last_cell_id:
-            focus_retries += 1
-            if focus_retries >= 5:
-                log(
-                    "click_code",
-                    "종료",
-                    "같은 셀 복구 반복 초과로 종료",
-                )
-                return
-            log(
-                "click_code",
-                "경고",
-                "같은 셀 반복 탐지 → 다음 셀로 이동 강제",
-            )
-            actions.send_keys(Keys.ARROW_DOWN).perform()
-            time.sleep(0.3)
+        if last_cell_id == cell_id:
             row_idx += 1
             cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+            log("click_code", "경고", "셀 ID가 동일하여 강제 row_idx 증가")
             continue
         else:
             focus_retries = 0
@@ -266,6 +252,14 @@ def click_codes_by_arrow(
                                 "시도",
                                 f"포커스 복구: {last_cell_id}",
                             )
+                            focus_retries += 1
+                            if focus_retries >= 5:
+                                log(
+                                    "click_code",
+                                    "종료",
+                                    "같은 셀 복구 반복 초과로 종료",
+                                )
+                                return
                             recover_cell = driver.find_element(By.ID, last_cell_id)
                             actions.move_to_element(recover_cell).click().perform()
                             time.sleep(1.0)
