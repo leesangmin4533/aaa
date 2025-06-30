@@ -6,7 +6,7 @@ import logging
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from modules.sales_analysis.navigate_to_mid_category import (
+from modules.sales_analysis.mid_category_clicker import (
     click_codes_in_order,
     click_codes_by_arrow,
 )
@@ -36,8 +36,8 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
 
     driver.find_element.side_effect = find_element_side_effect
 
-    with patch('selenium.webdriver.support.ui.WebDriverWait') as MockWait, \
-         patch('selenium.webdriver.support.expected_conditions.element_to_be_clickable') as mock_clickable:
+    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+         patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable:
         MockWait.return_value.until.side_effect = lambda cond: cond
         MockWait.return_value.until_not.side_effect = lambda cond: True
         mock_clickable.side_effect = lambda el: el
@@ -100,7 +100,7 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
             pass
 
     with patch(
-        "modules.sales_analysis.navigate_to_mid_category.ActionChains",
+        "modules.sales_analysis.mid_category_clicker.ActionChains",
         DummyActions,
     ), caplog.at_level(logging.INFO):
         click_codes_by_arrow(driver, delay=0, max_scrolls=5, retry_delay=0)
@@ -168,7 +168,7 @@ def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
             pass
 
     with patch(
-        "modules.sales_analysis.navigate_to_mid_category.ActionChains",
+        "modules.sales_analysis.mid_category_clicker.ActionChains",
         DummyActions,
     ), caplog.at_level(logging.INFO):
         click_codes_by_arrow(driver, delay=0, max_scrolls=3, retry_delay=0)
@@ -231,7 +231,7 @@ def test_click_codes_by_arrow_focus_recovery(caplog):
             pass
 
     with patch(
-        "modules.sales_analysis.navigate_to_mid_category.ActionChains",
+        "modules.sales_analysis.mid_category_clicker.ActionChains",
         DummyActions,
     ), caplog.at_level(logging.INFO):
         click_codes_by_arrow(driver, delay=0, max_scrolls=1, retry_delay=0)

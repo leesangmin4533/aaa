@@ -25,8 +25,12 @@ MODULE_MAP = {
             "role": "DOM 스니펫 결과를 JSON 명령으로 변환하거나 ID 규칙에 따라 명령을 생성하는 CLI 도구 제공",
         },
         {
-            "module": "modules/sales_analysis/navigate_to_mid_category.py",
+            "module": "modules/sales_analysis/navigation.py",
             "role": "매출분석 메뉴에서 중분류별 매출 구성 페이지까지 이동",
+        },
+        {
+            "module": "modules/sales_analysis/mid_category_clicker.py",
+            "role": "중분류 코드 그리드에서 셀을 순서대로 클릭",
         },
         {
             "module": "modules/data_parser/parse_and_save.py",
