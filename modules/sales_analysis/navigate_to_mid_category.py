@@ -178,6 +178,7 @@ def click_codes_by_arrow(
     missing_attempts = 0
     visited = set()
     retry_count = 0
+    focus_retries = 0
 
     try:
         cell = driver.find_element(
@@ -219,6 +220,28 @@ def click_codes_by_arrow(
         attempt = 0
         next_cell = None
         cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+
+        if cell_id == last_cell_id:
+            focus_retries += 1
+            if focus_retries >= 5:
+                log(
+                    "click_code",
+                    "종료",
+                    "같은 셀 복구 반복 초과로 종료",
+                )
+                return
+            log(
+                "click_code",
+                "경고",
+                "같은 셀 반복 탐지 → 다음 셀로 이동 강제",
+            )
+            actions.send_keys(Keys.ARROW_DOWN).perform()
+            time.sleep(0.3)
+            row_idx += 1
+            cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+            continue
+        else:
+            focus_retries = 0
 
         while attempt < 2:
             found_by_id = True
@@ -292,9 +315,10 @@ def click_codes_by_arrow(
                         log("click_code", "오류", f"재클릭 실패: {rec_err}")
 
                     if recovery_success:
-                        row_idx -= 1
+                        row_idx += 1
+                        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
                         next_cell = None
-                        break
+                        continue
 
                     search_loops = 0
                     while search_loops < search_limit:
@@ -319,7 +343,8 @@ def click_codes_by_arrow(
                                 f"예상 셀 탐색 실패 {missing_attempts}회",
                             )
                             return
-                        row_idx -= 1
+                        row_idx += 1
+                        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
                     else:
                         missing_attempts = 0
                     break
