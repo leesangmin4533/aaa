@@ -11,6 +11,40 @@ MODULE_NAME = "mid_click"
 log = create_logger(MODULE_NAME)
 
 
+def collect_all_code_cells(driver, scroll_delay: float = 0.2, max_scrolls: int = 200):
+    """Return a mapping of code numbers to cell elements by scrolling the grid."""
+
+    trackbar = driver.find_element(
+        By.XPATH,
+        '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.trackbar"]',
+    )
+    actions = ActionChains(driver)
+
+    seen_ids = set()
+    collected = {}
+
+    for _ in range(max_scrolls):
+        cells = driver.find_elements(
+            By.XPATH,
+            "//div[contains(@id,'gdList.body.gridrow_') and contains(@id,'cell_') and contains(@id,'_0:text')]",
+        )
+        for cell in cells:
+            cell_id = cell.get_attribute("id")
+            if not cell_id or cell_id in seen_ids:
+                continue
+            seen_ids.add(cell_id)
+            code = cell.text.strip()
+            if code.isdigit():
+                num = int(code)
+                if 1 <= num <= 900:
+                    collected[num] = cell
+
+        actions.click_and_hold(trackbar).move_by_offset(0, 5).release().perform()
+        time.sleep(scroll_delay)
+
+    return collected
+
+
 def try_or_none(func):
     """Return the result of ``func`` or ``None`` if it raises."""
     try:
