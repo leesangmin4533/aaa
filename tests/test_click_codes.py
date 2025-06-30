@@ -47,6 +47,17 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
     class DummyActions:
         def __init__(self, driver):
             self.driver = driver
+            self.element = None
+
+        def move_to_element(self, element):
+            self.element = element
+            return self
+
+        def click(self, element=None):
+            target = element or self.element
+            if target is not None:
+                target.click()
+            return self
 
         def send_keys(self, key):
             if key == Keys.ARROW_DOWN:

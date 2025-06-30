@@ -35,10 +35,18 @@ def click_codes_by_arrow(
     """
 
     first_cell = driver.find_element(By.ID, start_cell_id)
-    first_cell.click()
-    ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()  # 강제 포커스 전환
-    log("click_code", "디버깅", "초기 셀 클릭 + 방향키 ↓ 입력 완료")
+    log("click_code", "초기포커스", f"초기 셀 찾음: {start_cell_id}")
+
+    ActionChains(driver).move_to_element(first_cell).click().perform()
+    driver.execute_script("arguments[0].focus();", first_cell)  # JS로 명시적 포커스
     time.sleep(1.0)
+
+    focused = driver.switch_to.active_element
+    log(
+        "click_code",
+        "초기포커스확인",
+        f"초기 포커스된 셀 ID: {focused.get_attribute('id')}",
+    )
 
     last_code = ""
     repeat_count = 0
