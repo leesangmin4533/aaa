@@ -234,10 +234,27 @@ def click_codes_by_arrow(
                             "종료",
                             f"비정상 active_element 감지: {active_id}",
                         )
+                        try:
+                            log(
+                                "click_code",
+                                "시도",
+                                f"포커스 복구: {last_cell_id}",
+                            )
+                            recover_cell = driver.find_element(By.ID, last_cell_id)
+                            actions.move_to_element(recover_cell).click().perform()
+                            time.sleep(1.0)
+                            log(
+                                "click_code",
+                                "완료",
+                                f"포커스 복구 성공: {last_cell_id}",
+                            )
+                        except Exception as rec_err:
+                            log(
+                                "click_code",
+                                "오류",
+                                f"포커스 복구 실패: {rec_err}",
+                            )
                         next_cell = driver.find_element(By.ID, cell_id)
-                        log("click_code", "실행", f"포커스 복구 시도: {cell_id}")
-                        next_cell.click()
-                        log("click_code", "완료", f"포커스 복구 성공: {cell_id}")
                         found_by_id = True
                 except Exception as err:
                     e = err

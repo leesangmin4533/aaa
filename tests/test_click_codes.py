@@ -90,6 +90,10 @@ def test_click_codes_by_arrow_clicks_until_repeat(caplog):
     class DummyActions:
         def __init__(self, drv):
             self.drv = drv
+        def move_to_element(self, el):
+            return self
+        def click(self, el=None):
+            return self
         def send_keys(self, key):
             return self
         def perform(self):
@@ -152,6 +156,10 @@ def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
     class DummyActions:
         def __init__(self, drv):
             pass
+        def move_to_element(self, el):
+            return self
+        def click(self, el=None):
+            return self
 
         def send_keys(self, key):
             return self
@@ -185,6 +193,8 @@ def test_click_codes_by_arrow_focus_recovery(caplog):
 
     driver = MagicMock()
 
+    last_id = first_cell.get_attribute.return_value
+
     def find_element_side_effect(by, value):
         if by == By.XPATH:
             return first_cell
@@ -194,6 +204,8 @@ def test_click_codes_by_arrow_focus_recovery(caplog):
                 if id_calls["cnt"] == 1:
                     raise Exception("not ready")
                 return cell1
+            if value == last_id:
+                return first_cell
         raise AssertionError(f"Unexpected lookup: {value}")
 
     driver.find_element.side_effect = find_element_side_effect
@@ -205,6 +217,10 @@ def test_click_codes_by_arrow_focus_recovery(caplog):
     class DummyActions:
         def __init__(self, drv):
             pass
+        def move_to_element(self, el):
+            return self
+        def click(self, el=None):
+            return self
 
         def send_keys(self, key):
             return self
