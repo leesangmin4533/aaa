@@ -61,183 +61,94 @@ def test_click_codes_in_order_clicks_and_logs(caplog):
 
 
 def test_click_codes_by_arrow_clicks_until_repeat(caplog):
-    first_cell = MagicMock()
-    first_cell.text = "001"
-    first_cell.get_attribute.return_value = (
-        "prefix.gdList.body.gridrow_0.cell_0_0:text"
-    )
-
     cell1 = MagicMock()
-    cell1.text = "002"
+    cell1.text = "001"
+    cell1.get_attribute.return_value = "id1_0:text"
+
     cell2 = MagicMock()
     cell2.text = "002"
-    cell3 = MagicMock()
-    cell3.text = "002"  # third time triggers stop
+    cell2.get_attribute.return_value = "id2_0:text"
 
-    calls = iter([cell1, cell2, cell3])
+    cell3 = MagicMock()
+    cell3.text = "002"
+    cell3.get_attribute.return_value = "id3_0:text"
+
+    cell4 = MagicMock()
+    cell4.text = "002"
+    cell4.get_attribute.return_value = "id4_0:text"
 
     driver = MagicMock()
+    driver.find_elements.return_value = [cell1, cell2, cell3, cell4]
 
-    def find_element_side_effect(by, value):
-        if by == By.XPATH:
-            return first_cell
-        if by == By.ID:
-            return next(calls)
-        raise AssertionError(f"Unexpected lookup: {value}")
+    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+         patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
+         caplog.at_level(logging.INFO):
+        MockWait.return_value.until.side_effect = lambda cond: cond
+        mock_clickable.side_effect = lambda el: el
 
-    driver.find_element.side_effect = find_element_side_effect
+        click_codes_by_arrow(driver, delay=0)
 
-    class DummyActions:
-        def __init__(self, drv):
-            self.drv = drv
-        def move_to_element(self, el):
-            return self
-        def click(self, el=None):
-            return self
-        def send_keys(self, key):
-            return self
-        def perform(self):
-            pass
-
-    with patch(
-        "modules.sales_analysis.mid_category_clicker.ActionChains",
-        DummyActions,
-    ), caplog.at_level(logging.INFO):
-        click_codes_by_arrow(driver, delay=0, max_scrolls=5, retry_delay=0)
-
-    assert first_cell.click.called
     assert cell1.click.called
     assert cell2.click.called
     assert cell3.click.called
+    assert cell4.click.called
 
     summary_found = any(
         "총 클릭: 4건" in rec.getMessage() for rec in caplog.records
     )
     assert summary_found
 
-    final_found = any(
-        "최종 종료" in rec.getMessage() and "마지막 코드" in rec.getMessage()
-        for rec in caplog.records
-    )
-    assert final_found
 
-
-def test_click_codes_by_arrow_rescroll_on_missing_cell(caplog):
-    first_cell = MagicMock()
-    first_cell.text = "001"
-    first_cell.get_attribute.return_value = (
-        "prefix.gdList.body.gridrow_0.cell_0_0:text"
-    )
+def test_click_codes_by_arrow_sorts_and_skips(caplog):
+    invalid = MagicMock()
+    invalid.text = "AA"
+    invalid.get_attribute.return_value = "id0_0:text"
 
     cell1 = MagicMock()
-    cell1.text = "002"
+    cell1.text = "010"
+    cell1.get_attribute.return_value = "id1_0:text"
+
     cell2 = MagicMock()
     cell2.text = "003"
-
-    call_counts = {"cell1": 0}
-
-    driver = MagicMock()
-
-    def find_element_side_effect(by, value):
-        if by == By.XPATH:
-            return first_cell
-        if by == By.ID:
-            if value == "prefix.gdList.body.gridrow_1.cell_1_0:text":
-                call_counts["cell1"] += 1
-                if call_counts["cell1"] == 1:
-                    raise Exception("not loaded")
-                return cell1
-            if value == "prefix.gdList.body.gridrow_2.cell_2_0:text":
-                return cell2
-        raise AssertionError(f"Unexpected lookup: {value}")
-
-    driver.find_element.side_effect = find_element_side_effect
-
-    class DummyActions:
-        def __init__(self, drv):
-            pass
-        def move_to_element(self, el):
-            return self
-        def click(self, el=None):
-            return self
-
-        def send_keys(self, key):
-            return self
-
-        def perform(self):
-            pass
-
-    with patch(
-        "modules.sales_analysis.mid_category_clicker.ActionChains",
-        DummyActions,
-    ), caplog.at_level(logging.INFO):
-        click_codes_by_arrow(driver, delay=0, max_scrolls=3, retry_delay=0)
-
-    assert call_counts["cell1"] == 1
-    assert first_cell.click.called
-    assert not cell1.click.called
-    assert not cell2.click.called
-
-
-def test_click_codes_by_arrow_focus_recovery(caplog):
-    first_cell = MagicMock()
-    first_cell.text = "001"
-    first_cell.get_attribute.return_value = (
-        "prefix.gdList.body.gridrow_0.cell_0_0:text"
-    )
-
-    cell1 = MagicMock()
-    cell1.text = "002"
-
-    id_calls = {"cnt": 0}
+    cell2.get_attribute.return_value = "id2_0:text"
 
     driver = MagicMock()
+    driver.find_elements.return_value = [invalid, cell1, cell2]
 
-    last_id = first_cell.get_attribute.return_value
+    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+         patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
+         caplog.at_level(logging.INFO):
+        MockWait.return_value.until.side_effect = lambda cond: cond
+        mock_clickable.side_effect = lambda el: el
 
-    def find_element_side_effect(by, value):
-        if by == By.XPATH:
-            return first_cell
-        if by == By.ID:
-            if value == "prefix.gdList.body.gridrow_1.cell_1_0:text":
-                id_calls["cnt"] += 1
-                if id_calls["cnt"] == 1:
-                    raise Exception("not ready")
-                return cell1
-            if value == "prefix.gdList.body.gridrow_2.cell_2_0:text":
-                return cell1
-            if value == last_id:
-                return first_cell
-        raise AssertionError(f"Unexpected lookup: {value}")
+        click_codes_by_arrow(driver, delay=0)
 
-    driver.find_element.side_effect = find_element_side_effect
-
-    invalid_el = MagicMock()
-    invalid_el.get_attribute.return_value = "mainframe"
-    driver.switch_to.active_element = invalid_el
-
-    class DummyActions:
-        def __init__(self, drv):
-            pass
-        def move_to_element(self, el):
-            return self
-        def click(self, el=None):
-            return self
-
-        def send_keys(self, key):
-            return self
-
-        def perform(self):
-            pass
-
-    with patch(
-        "modules.sales_analysis.mid_category_clicker.ActionChains",
-        DummyActions,
-    ), caplog.at_level(logging.INFO):
-        click_codes_by_arrow(driver, delay=0, max_scrolls=1, retry_delay=0)
-
+    assert not invalid.click.called
+    assert cell2.click.called
     assert cell1.click.called
-    recovery_logged = any(
-        "포커스 복구 성공" in rec.getMessage() for rec in caplog.records
-    )
-    assert recovery_logged
+
+
+def test_click_codes_by_arrow_retry_and_stop(caplog):
+    cell1 = MagicMock()
+    cell1.text = "001"
+    cell1.get_attribute.return_value = "id1_0:text"
+    cell1.click.side_effect = [Exception("fail"), None]
+
+    cell2 = MagicMock()
+    cell2.text = "002"
+    cell2.get_attribute.return_value = "id2_0:text"
+    cell2.click.side_effect = [Exception("fail"), Exception("fail"), Exception("fail")]
+
+    driver = MagicMock()
+    driver.find_elements.return_value = [cell1, cell2]
+
+    with patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
+         patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
+         caplog.at_level(logging.INFO):
+        MockWait.return_value.until.side_effect = lambda cond: cond
+        mock_clickable.side_effect = lambda el: el
+
+        click_codes_by_arrow(driver, delay=0)
+
+    assert cell1.click.call_count == 2
+    assert cell2.click.call_count == 3
