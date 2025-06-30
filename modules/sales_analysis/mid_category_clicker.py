@@ -73,6 +73,8 @@ def click_codes_by_arrow(
         new_focused = driver.switch_to.active_element
         new_cell_id = new_focused.get_attribute("id") or ""
 
+        log("click_code", "위치확인", f"방향키 ↓ 입력 후 포커스된 셀 ID: {new_cell_id}")
+
         if new_cell_id == prev_cell_id:
             log(
                 "click_code",
