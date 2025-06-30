@@ -253,6 +253,8 @@ def click_codes_by_arrow(
                             )
                             # move index forward so we don't repeat the same cell
                             row_idx += 1
+                            cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
+                            continue
                         except Exception as rec_err:
                             log(
                                 "click_code",
