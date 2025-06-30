@@ -99,230 +99,71 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
 def click_codes_by_arrow(
     driver,
     delay: float = 1.0,
-    max_scrolls: int = 1000,
-    retry_delay: float = 2.0,
-    search_limit: int = 5,
+    max_retry: int = 3,
 ) -> None:
-    """Click mid-category codes using Arrow Down navigation."""
+    """Click mid-category codes by scanning and sorting cell IDs."""
 
-    actions = ActionChains(driver)
+    cells = driver.find_elements(By.XPATH, "//div[contains(@id,'gdList.body.gridrow')]")
+
+    entries = []
+    for cell in cells:
+        cid = cell.get_attribute("id") or ""
+        if not cid.endswith("_0:text"):
+            continue
+        code = cell.text.strip()
+        if code.isdigit():
+            num = int(code)
+            if 1 <= num <= 900:
+                entries.append((num, cell))
+
+    entries.sort(key=lambda x: x[0])
+
     code_counts = {}
-    last_cell_id = ""
     last_code = ""
-    missing_attempts = 0
-    visited = set()
-    retry_count = 0
-    focus_retries = 0
-    MAX_RETRY = 3
+    last_cell_id = ""
 
-    try:
-        cell = driver.find_element(
-            By.XPATH,
-            "//div[contains(@id,'gdList.body.gridrow') and contains(text(),'001')]",
-        )
-        log("click_code", "실행", "코드 001 클릭")
-        cell.click()
-        first_id = cell.get_attribute("id") or ""
-        last_cell_id = first_id
-        last_code = "001"
-        code_counts[last_code] = code_counts.get(last_code, 0) + 1
-        visited.add(last_code)
-        time.sleep(delay)
-    except Exception:
-        log("click_code", "오류", "코드 001을 찾지 못함")
-        log(
-            "click_code",
-            "최종 종료",
-            {
-                "마지막 코드": last_code,
-                "마지막 셀 ID": last_cell_id,
-                "코드 누적": code_counts,
-            },
-        )
-        return
-
-    import re
-
-    m = re.search(r"(.*gdList\.body\.gridrow_)(\d+)", first_id)
-    prefix = m.group(1) if m else ""
-    row_idx = int(m.group(2)) if m else 0
-
-    for _ in range(max_scrolls):
-        row_idx += 1
-        actions.send_keys(Keys.ARROW_DOWN).perform()
-        time.sleep(0.3)
-
-        attempt = 0
-        next_cell = None
-        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
-
-        if last_cell_id == cell_id:
-            row_idx += 1
-            cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
-            log("click_code", "경고", "셀 ID가 동일하여 강제 row_idx 증가")
-            continue
-        else:
-            focus_retries = 0
-
-        while attempt < 2:
-            found_by_id = True
+    for num, cell in entries:
+        code_str = f"{num:03d}"
+        attempts = 0
+        success = False
+        while attempts < max_retry:
             try:
-                next_cell = driver.find_element(By.ID, cell_id)
-            except Exception:
-                found_by_id = False
-                try:
-                    active = driver.switch_to.active_element
-                    active_id = active.get_attribute("id") or ""
-                    if active_id.startswith(prefix) and active_id.endswith(":text"):
-                        next_cell = active
-                    else:
-                        log(
-                            "click_code",
-                            "종료",
-                            f"비정상 active_element 감지: {active_id}",
-                        )
-                        try:
-                            log("click_code", "시도", f"포커스 복구: {last_cell_id}")
-                            focus_retries += 1
-                            if focus_retries >= 5:
-                                log("click_code", "종료", "같은 셀 복구 반복 초과로 종료")
-                                return
-                            recover_cell = driver.find_element(By.ID, last_cell_id)
-                            actions.move_to_element(recover_cell).click().perform()
-                            time.sleep(1.0)
-                            log("click_code", "완료", f"포커스 복구 성공: {last_cell_id}")
-                            row_idx += 1
-                            cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
-                            continue
-                        except Exception as rec_err:
-                            log("click_code", "오류", f"포커스 복구 실패: {rec_err}")
-                        next_cell = driver.find_element(By.ID, cell_id)
-                        found_by_id = True
-                except Exception:
-                    next_cell = None
-
-            try:
-                if next_cell is None:
-                    raise Exception("cell missing")
-                retry_attempts = 0
-                while retry_attempts < MAX_RETRY:
-                    try:
-                        driver.execute_script(
-                            "arguments[0].scrollIntoView({block: 'center'});",
-                            next_cell,
-                        )
-                        next_cell.click()
-                        if not found_by_id:
-                            raise Exception("clicked active element")
-                        break
-                    except Exception as click_err_inner:
-                        retry_attempts += 1
-                        log(
-                            "click_code",
-                            "오류",
-                            f"셀 클릭 실패 재시도 {retry_attempts}회: {click_err_inner}",
-                        )
-                        last_cell_id = cell_id
-                        time.sleep(retry_delay)
-                        continue
-
-                if retry_attempts >= MAX_RETRY:
-                    log(
-                        "click_code",
-                        "종료",
-                        f"셀 클릭 {MAX_RETRY}회 실패 → 루프 종료",
-                    )
-                    return
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});",
+                    cell,
+                )
+                WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+                success = True
                 break
-            except Exception as click_err:
-                attempt += 1
-                if attempt >= 2:
-                    log("click_code", "종료", f"셀 클릭 실패: {click_err}")
-                    time.sleep(1)
-                    recovery_success = False
-                    try:
-                        recovery = driver.find_element(By.ID, last_cell_id)
-                        recovery.click()
-                        recovery_success = True
-                    except Exception as rec_err:
-                        log("click_code", "오류", f"재클릭 실패: {rec_err}")
+            except Exception as e:
+                attempts += 1
+                log("click_code", "오류", f"코드 {code_str} 클릭 실패 {attempts}회: {e}")
+                time.sleep(delay)
 
-                    if recovery_success:
-                        row_idx += 1
-                        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
-                        next_cell = None
-                        continue
+        if not success:
+            last_code = code_str
+            last_cell_id = cell.get_attribute("id") or ""
+            log("click_code", "종료", f"코드 {code_str} 클릭 실패 → 루프 종료")
+            break
 
-                    search_loops = 0
-                    while search_loops < search_limit:
-                        actions.send_keys(Keys.ARROW_DOWN).perform()
-                        time.sleep(0.3)
-                        search_loops += 1
-                        row_idx += 1
-                        tmp_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
-                        try:
-                            next_cell = driver.find_element(By.ID, tmp_id)
-                            cell_id = tmp_id
-                            break
-                        except Exception:
-                            continue
-
-                    if next_cell is None:
-                        missing_attempts += 1
-                        if missing_attempts >= search_limit:
-                            log(
-                                "click_code",
-                                "종료",
-                                f"예상 셀 탐색 실패 {missing_attempts}회",
-                            )
-                            return
-                        row_idx += 1
-                        cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
-                    else:
-                        missing_attempts = 0
-                    break
-                time.sleep(retry_delay)
-
-        if not next_cell:
-            continue
-
-        last_cell_id = cell_id
-        code = next_cell.text.strip()
-        last_code = code
-
-        if not code or not code.isdigit():
-            continue
-
-        if code in visited:
-            retry_count += 1
-            if retry_count >= 3:
-                log("click_code", "종료", f"동일 코드 {code} 3회 시도 → 종료")
-                break
-        else:
-            retry_count = 0
-            visited.add(code)
-
-        code_counts[code] = code_counts.get(code, 0) + 1
-        log("click_code", "실행", f"코드 {code} 클릭")
+        last_code = code_str
+        last_cell_id = cell.get_attribute("id") or ""
+        code_counts[code_str] = code_counts.get(code_str, 0) + 1
+        log("click_code", "실행", f"코드 {code_str} 클릭")
         time.sleep(delay)
 
-        if code_counts[code] >= 3:
-            log("click_code", "종료", f"코드 {code} 3회 이상 등장 → 종료")
+        if code_counts[code_str] >= 3:
+            log("click_code", "종료", f"코드 {code_str} 3회 이상 등장 → 종료")
             break
 
     total_clicks = sum(code_counts.values())
     log("click_code", "완료", f"총 클릭: {total_clicks}건")
-    active = try_or_none(lambda: driver.switch_to.active_element)
-    focus_id = try_or_none(lambda: active.get_attribute("id")) if active else ""
-    focus_text = try_or_none(lambda: active.text.strip()) if active else ""
-
     log(
         "click_code",
         "최종 종료",
         {
             "마지막 코드": last_code,
             "마지막 셀 ID": last_cell_id,
-            "코드 누적": {k: code_counts[k] for k in list(code_counts)[-5:]},
-            "포커스": {"id": focus_id, "text": focus_text},
+            "코드 누적": code_counts,
         },
     )
