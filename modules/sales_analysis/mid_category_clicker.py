@@ -222,7 +222,9 @@ def click_codes_by_arrow(
                             "오류",
                             f"셀 클릭 실패 재시도 {retry_attempts}회: {click_err_inner}",
                         )
+                        last_cell_id = cell_id
                         time.sleep(retry_delay)
+                        continue
 
                 if retry_attempts >= MAX_RETRY:
                     log(
