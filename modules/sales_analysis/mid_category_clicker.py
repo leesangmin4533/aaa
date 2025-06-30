@@ -10,14 +10,27 @@ MODULE_NAME = "mid_click"
 
 log = create_logger(MODULE_NAME)
 
+# XPath for the grid's vertical scrollbar trackbar
+TRACKBAR_XPATH = (
+    "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.trackbar']"
+)
+
+
+def scroll_to_expand_dom(driver, scroll_delay: float = 0.2, max_scrolls: int = 200) -> None:
+    """Scroll the grid's trackbar to ensure all code cells are loaded into the DOM."""
+
+    trackbar = driver.find_element(By.XPATH, TRACKBAR_XPATH)
+    actions = ActionChains(driver)
+
+    for _ in range(max_scrolls):
+        actions.click_and_hold(trackbar).move_by_offset(0, 5).release().perform()
+        time.sleep(scroll_delay)
+
 
 def collect_all_code_cells(driver, scroll_delay: float = 0.2, max_scrolls: int = 200):
     """Return a mapping of code numbers to cell elements by scrolling the grid."""
 
-    trackbar = driver.find_element(
-        By.XPATH,
-        '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.trackbar"]',
-    )
+    trackbar = driver.find_element(By.XPATH, TRACKBAR_XPATH)
     actions = ActionChains(driver)
 
     seen_ids = set()
@@ -205,8 +218,12 @@ def click_codes_by_arrow(
 
 def click_all_codes_after_scroll(driver) -> None:
     """Scroll the grid to collect all code cells and click them sequentially."""
+    try:
+        scroll_to_expand_dom(driver)
+    except Exception as e:  # pragma: no cover - best effort scrolling
+        log("scroll", "오류", f"스크롤 실패: {e}")
 
-    collected = collect_all_code_cells(driver)
+    collected = collect_all_code_cells(driver, max_scrolls=1)
     entries = sorted(collected.items())
 
     code_counts = {}

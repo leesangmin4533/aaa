@@ -82,6 +82,7 @@ def test_click_all_codes_after_scroll_clicks_until_repeat(caplog):
     driver.find_elements.return_value = [cell1, cell2, cell3, cell4]
 
     with patch('modules.sales_analysis.mid_category_clicker.collect_all_code_cells', return_value={1: cell1, 2: cell2, 3: cell3, 4: cell4}), \
+         patch('modules.sales_analysis.mid_category_clicker.scroll_to_expand_dom'), \
          patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
          patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
          caplog.at_level(logging.INFO):
@@ -122,6 +123,7 @@ def test_click_all_codes_after_scroll_sorts_and_skips(caplog):
     driver.find_elements.return_value = [invalid, cell1, cell2]
 
     with patch('modules.sales_analysis.mid_category_clicker.collect_all_code_cells', return_value={10: cell1, 3: cell2}), \
+         patch('modules.sales_analysis.mid_category_clicker.scroll_to_expand_dom'), \
          patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
          patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
          caplog.at_level(logging.INFO):
@@ -148,6 +150,7 @@ def test_click_all_codes_after_scroll_retry_and_stop(caplog):
     driver.find_elements.return_value = [cell1, cell2]
 
     with patch('modules.sales_analysis.mid_category_clicker.collect_all_code_cells', return_value={1: cell1, 2: cell2}), \
+         patch('modules.sales_analysis.mid_category_clicker.scroll_to_expand_dom'), \
          patch('modules.sales_analysis.mid_category_clicker.WebDriverWait') as MockWait, \
          patch('modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable') as mock_clickable, \
          caplog.at_level(logging.INFO):
