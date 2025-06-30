@@ -62,8 +62,29 @@ def click_codes_by_arrow(
             log("click_code", "종료", f"코드 {code} {repeat_limit}회 이상 반복 → 종료")
             break
 
+        # \ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \uc804 \ud604\uc7ac \uc140 ID \uc800\uc7a5
+        prev_cell_id = cell_id
+
+        # \u2193 \ud0a4 \uc785\ub825
         focused.send_keys(Keys.ARROW_DOWN)
         time.sleep(delay)
+
+        # \u2193 \uc785\ub825 \ud6c4 \ud3ec\uce20\uc0ac\ub41c \uc140 ID \ub2e4\uc2dc \uc77d\uae30
+        new_focused = driver.switch_to.active_element
+        new_cell_id = new_focused.get_attribute("id") or ""
+
+        if new_cell_id == prev_cell_id:
+            log(
+                "click_code",
+                "\uacbd\uace0",
+                f"\ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \ud6c4\uc5d0\ub3c4 \uc140 \uc774\ub3d9 \uc5c6\uc74c (\uc140 ID \ub3d9\uc77c: {new_cell_id})",
+            )
+        else:
+            log(
+                "click_code",
+                "\uc774\ub3d9",
+                f"\ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \ud6c4 \uc140 \uc774\ub3d9 \uc131\uacf5 \u2192 {prev_cell_id} \u2192 {new_cell_id}",
+            )
 
     total_clicks = sum(code_counts.values())
     log("click_code", "완료", f"총 클릭: {total_clicks}건")
