@@ -20,6 +20,7 @@ def click_codes_by_arrow(
 
     first_cell = driver.find_element(By.ID, start_cell_id)
     first_cell.click()
+    log("click_code", "디버깅", "초기 셀 클릭 완료")
     time.sleep(1.0)
 
     last_code = ""
@@ -31,10 +32,12 @@ def click_codes_by_arrow(
         focused = driver.switch_to.active_element
         cell_id = focused.get_attribute("id") or ""
         if "gdList.body.gridrow" not in cell_id or not cell_id.endswith("_0_0"):
+            log("click_code", "경고", f"포커스 셀 ID 이상: {cell_id}")
             time.sleep(delay)
             continue
 
         code = focused.text.strip()
+        log("click_code", "포커스 확인", f"포커스된 코드: {code} / 셀 ID: {cell_id}")
         log("click_code", "실행", f"코드 {code} 클릭")
         focused.click()
         code_counts[code] = code_counts.get(code, 0) + 1
