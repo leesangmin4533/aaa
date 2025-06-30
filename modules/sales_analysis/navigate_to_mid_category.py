@@ -176,6 +176,8 @@ def click_codes_by_arrow(
     last_code = ""
     e = None
     missing_attempts = 0
+    visited = set()
+    retry_count = 0
 
     try:
         cell = driver.find_element(
@@ -188,6 +190,7 @@ def click_codes_by_arrow(
         last_cell_id = first_id
         last_code = "001"
         code_counts[last_code] = code_counts.get(last_code, 0) + 1
+        visited.add(last_code)
         time.sleep(delay)
     except Exception:
         log("click_code", "오류", "코드 001을 찾지 못함")
@@ -248,6 +251,8 @@ def click_codes_by_arrow(
                                 "완료",
                                 f"포커스 복구 성공: {last_cell_id}",
                             )
+                            # move index forward so we don't repeat the same cell
+                            row_idx += 1
                         except Exception as rec_err:
                             log(
                                 "click_code",
@@ -327,6 +332,19 @@ def click_codes_by_arrow(
 
         if not code or not code.isdigit():
             continue
+
+        if code in visited:
+            retry_count += 1
+            if retry_count >= 3:
+                log(
+                    "click_code",
+                    "종료",
+                    f"동일 코드 {code} 3회 시도 → 종료",
+                )
+                break
+        else:
+            retry_count = 0
+            visited.add(code)
 
         code_counts[code] = code_counts.get(code, 0) + 1
         log("click_code", "실행", f"코드 {code} 클릭")
