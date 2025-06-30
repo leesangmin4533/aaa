@@ -6,7 +6,7 @@ import logging
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from modules.sales_analysis.mid_category_clicker import click_codes_by_arrow
+import modules.sales_analysis.mid_category_clicker as mid_clicker
 
 
 def test_click_codes_by_arrow_stops_after_repeat(caplog):
@@ -43,21 +43,31 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
 
     switch = DummySwitch(cells)
 
-    def make_send_keys():
-        def _send_keys(key):
+
+    class DummyActions:
+        def __init__(self, driver):
+            self.driver = driver
+
+        def send_keys(self, key):
             if key == Keys.ARROW_DOWN:
                 switch.next()
-        return _send_keys
+            return self
 
-    for c in cells:
-        c.send_keys.side_effect = make_send_keys()
+        def perform(self):
+            pass
+
+    original_actions = mid_clicker.ActionChains
+    mid_clicker.ActionChains = DummyActions
 
     driver = MagicMock()
     driver.find_element.return_value = cell1
     driver.switch_to = switch
 
     with caplog.at_level(logging.INFO):
-        click_codes_by_arrow(driver, delay=0)
+        try:
+            mid_clicker.click_codes_by_arrow(driver, delay=0)
+        finally:
+            mid_clicker.ActionChains = original_actions
 
     assert cell1.click.called
     assert cell2.click.called

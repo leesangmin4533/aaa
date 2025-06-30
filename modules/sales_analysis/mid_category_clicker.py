@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 from log_util import create_logger
 
@@ -20,7 +21,7 @@ def click_codes_by_arrow(
 
     first_cell = driver.find_element(By.ID, start_cell_id)
     first_cell.click()
-    first_cell.send_keys(Keys.ARROW_DOWN)  # 강제 포커스 전환
+    ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()  # 강제 포커스 전환
     log("click_code", "디버깅", "초기 셀 클릭 + 방향키 ↓ 입력 완료")
     time.sleep(1.0)
 
@@ -36,7 +37,7 @@ def click_codes_by_arrow(
         if cell_id == "mainframe":
             log("click_code", "포커스 재시도", "포커스가 mainframe에 머물러 있어 셀 재클릭")
             first_cell.click()
-            first_cell.send_keys(Keys.ARROW_DOWN)
+            ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
             time.sleep(delay)
             continue
 
@@ -65,27 +66,27 @@ def click_codes_by_arrow(
         # \ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \uc804 \ud604\uc7ac \uc140 ID \uc800\uc7a5
         prev_cell_id = cell_id
 
-        # \u2193 \ud0a4 \uc785\ub825
-        focused.send_keys(Keys.ARROW_DOWN)
+        # \u2193 \ud0a4 \uc785\ub825 (ActionChains \uae30\ubc18)
+        ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
         time.sleep(delay)
 
         # \u2193 \uc785\ub825 \ud6c4 \ud3ec\uce20\uc0ac\ub41c \uc140 ID \ub2e4\uc2dc \uc77d\uae30
         new_focused = driver.switch_to.active_element
         new_cell_id = new_focused.get_attribute("id") or ""
 
-        log("click_code", "위치확인", f"방향키 ↓ 입력 후 포커스된 셀 ID: {new_cell_id}")
+        log("click_code", "위치확인", f"ActionChains ↓ 입력 후 포커스된 셀 ID: {new_cell_id}")
 
         if new_cell_id == prev_cell_id:
             log(
                 "click_code",
                 "\uacbd\uace0",
-                f"\ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \ud6c4\uc5d0\ub3c4 \uc140 \uc774\ub3d9 \uc5c6\uc74c (\uc140 ID \ub3d9\uc77c: {new_cell_id})",
+                f"ActionChains ↓ 입력 후에도 셀 이동 없음 (셀 ID 동일: {new_cell_id})",
             )
         else:
             log(
                 "click_code",
                 "\uc774\ub3d9",
-                f"\ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \ud6c4 \uc140 \uc774\ub3d9 \uc131\uacf5 \u2192 {prev_cell_id} \u2192 {new_cell_id}",
+                f"ActionChains ↓ 입력으로 셀 이동 성공 → {prev_cell_id} → {new_cell_id}",
             )
 
     total_clicks = sum(code_counts.values())
