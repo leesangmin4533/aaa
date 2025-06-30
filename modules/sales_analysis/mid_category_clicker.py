@@ -216,6 +216,10 @@ def click_codes_by_arrow(
     )
 
 
+
+
+
+
 def click_all_codes_after_scroll(driver) -> None:
     """Scroll the grid to collect all code cells and click them sequentially."""
     try:
@@ -271,3 +275,59 @@ def click_all_codes_after_scroll(driver) -> None:
             "코드 누적": code_counts,
         },
     )
+
+def click_codes_with_dom_refresh(driver, scroll_offset: int = 50, repeat_limit: int = 3) -> None:
+    """Repeatedly refresh the DOM and click newly loaded code cells."""
+
+    from selenium.common.exceptions import NoSuchElementException
+
+    def get_trackbar():
+        try:
+            return driver.find_element(By.XPATH, TRACKBAR_XPATH)
+        except NoSuchElementException:
+            return None
+
+    code_counts = {}
+    last_code = 0
+
+    while True:
+        collected = collect_all_code_cells(driver, max_scrolls=1)
+        if not collected:
+            log("click_code", "중단", "코드 셀 없음 → 종료")
+            break
+
+        sorted_items = sorted((num, cell) for num, cell in collected.items() if num > last_code)
+
+        for num, cell in sorted_items:
+            code_str = f"{num:03d}"
+            count = code_counts.get(code_str, 0)
+
+            try:
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});",
+                    cell,
+                )
+                WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+                code_counts[code_str] = count + 1
+                last_code = num
+                log("click_code", "실행", f"{code_str} 클릭 ({code_counts[code_str]}회)")
+                time.sleep(1.0)
+
+                if code_counts[code_str] >= repeat_limit:
+                    log(
+                        "click_code",
+                        "종료",
+                        f"{code_str} 코드 {repeat_limit}회 클릭 → 종료 조건 충족",
+                    )
+                    return
+            except Exception as e:  # pragma: no cover - best effort clicking
+                log("click_code", "오류", f"{code_str} 클릭 실패: {e}")
+
+        trackbar = get_trackbar()
+        if not trackbar:
+            log("scroll", "종료", "트랙바 없음 → 더 이상 스크롤 불가")
+            break
+
+        actions = ActionChains(driver)
+        actions.click_and_hold(trackbar).move_by_offset(0, scroll_offset).release().perform()
+        time.sleep(0.5)

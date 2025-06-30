@@ -10,6 +10,7 @@ from modules.sales_analysis.mid_category_clicker import (
     click_codes_in_order,
     click_all_codes_after_scroll,
     collect_all_code_cells,
+    click_codes_with_dom_refresh,
 )
 
 
@@ -189,3 +190,59 @@ def test_collect_all_code_cells_deduplicates():
         result = collect_all_code_cells(driver, scroll_delay=0, max_scrolls=2)
 
     assert list(sorted(result.keys())) == [1, 2]
+
+
+def test_click_codes_with_dom_refresh_scrolls_and_clicks():
+    cell1 = MagicMock()
+    cell1.text = "001"
+    cell1.get_attribute.return_value = "id1_0:text"
+
+    cell2 = MagicMock()
+    cell2.text = "002"
+    cell2.get_attribute.return_value = "id2_0:text"
+
+    trackbar = MagicMock()
+    driver = MagicMock()
+
+    collects = [{1: cell1, 2: cell2}, {1: cell1, 2: cell2}]
+
+    def collect_side_effect(*args, **kwargs):
+        return collects.pop(0)
+
+    from selenium.common.exceptions import NoSuchElementException
+
+    first_call = True
+
+    def find_element_side_effect(by, value):
+        nonlocal first_call
+        if first_call:
+            first_call = False
+            return trackbar
+        raise NoSuchElementException()
+
+    driver.find_element.side_effect = find_element_side_effect
+
+    actions = MagicMock()
+    actions.click_and_hold.return_value = actions
+    actions.move_by_offset.return_value = actions
+    actions.release.return_value = actions
+
+    with patch(
+        "modules.sales_analysis.mid_category_clicker.collect_all_code_cells",
+        side_effect=collect_side_effect,
+    ), patch(
+        "modules.sales_analysis.mid_category_clicker.WebDriverWait"
+    ) as MockWait, patch(
+        "modules.sales_analysis.mid_category_clicker.EC.element_to_be_clickable"
+    ) as mock_clickable, patch(
+        "modules.sales_analysis.mid_category_clicker.ActionChains",
+        return_value=actions,
+    ):
+        MockWait.return_value.until.side_effect = lambda cond: cond
+        mock_clickable.side_effect = lambda el: el
+
+        click_codes_with_dom_refresh(driver, scroll_offset=10)
+
+    assert cell1.click.called
+    assert cell2.click.called
+    actions.move_by_offset.assert_called_with(0, 10)
