@@ -113,6 +113,7 @@ def click_codes_by_arrow(
     visited = set()
     retry_count = 0
     focus_retries = 0
+    MAX_RETRY = 3
 
     try:
         cell = driver.find_element(
@@ -203,10 +204,33 @@ def click_codes_by_arrow(
             try:
                 if next_cell is None:
                     raise Exception("cell missing")
-                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", next_cell)
-                next_cell.click()
-                if not found_by_id:
-                    raise Exception("clicked active element")
+                retry_attempts = 0
+                while retry_attempts < MAX_RETRY:
+                    try:
+                        driver.execute_script(
+                            "arguments[0].scrollIntoView({block: 'center'});",
+                            next_cell,
+                        )
+                        next_cell.click()
+                        if not found_by_id:
+                            raise Exception("clicked active element")
+                        break
+                    except Exception as click_err_inner:
+                        retry_attempts += 1
+                        log(
+                            "click_code",
+                            "오류",
+                            f"셀 클릭 실패 재시도 {retry_attempts}회: {click_err_inner}",
+                        )
+                        time.sleep(retry_delay)
+
+                if retry_attempts >= MAX_RETRY:
+                    log(
+                        "click_code",
+                        "종료",
+                        f"셀 클릭 {MAX_RETRY}회 실패 → 루프 종료",
+                    )
+                    return
                 break
             except Exception as click_err:
                 attempt += 1
@@ -244,7 +268,11 @@ def click_codes_by_arrow(
                     if next_cell is None:
                         missing_attempts += 1
                         if missing_attempts >= search_limit:
-                            log("click_code", "종료", f"예상 셀 탐색 실패 {missing_attempts}회")
+                            log(
+                                "click_code",
+                                "종료",
+                                f"예상 셀 탐색 실패 {missing_attempts}회",
+                            )
                             return
                         row_idx += 1
                         cell_id = f"{prefix}{row_idx}.cell_{row_idx}_0:text"
