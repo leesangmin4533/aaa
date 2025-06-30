@@ -27,7 +27,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env
     from modules.sales_analysis.navigation import navigate_to_mid_category_sales
-    from modules.sales_analysis.mid_category_clicker import click_all_codes_after_scroll
+    from modules.sales_analysis.mid_category_clicker import click_codes_by_arrow
     from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
     def substitute(value: str, variables: dict) -> str:
@@ -68,7 +68,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
                 filter_dict=step.get("filter"),
             )
         elif action == "click_codes_by_arrow":
-            click_all_codes_after_scroll(driver)
+            click_codes_by_arrow(driver)
         log("step_end", "완료", f"{action} 완료")
         if step_log:
             log("message", "실행", step_log)
