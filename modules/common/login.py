@@ -60,6 +60,26 @@ def run_step(driver, step, elements, env):
     elif action == "script":
         code = step["code"]
         driver.execute_script(code, elements[step["target"]])
+    elif action == "javascript_keydown":
+        target_id = step["target_id"]
+        key = step.get("key", "ArrowDown")
+        key_code = step.get("keyCode", 40)
+        driver.execute_script(
+            """
+var e = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    key: arguments[1],
+    code: arguments[1],
+    keyCode: arguments[2],
+    which: arguments[2]
+});
+document.getElementById(arguments[0]).dispatchEvent(e);
+""",
+            target_id,
+            key,
+            key_code,
+        )
     elif action == "sleep":
         time.sleep(step["seconds"])
     elif action == "extract_texts":
