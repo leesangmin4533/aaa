@@ -42,6 +42,12 @@ def click_codes_by_arrow(
     time.sleep(1.0)
 
     focused = driver.switch_to.active_element
+    # 처음 포커스된 셀의 내용 추출 및 출력
+    cell_id = focused.get_attribute("id") or "(ID 없음)"
+    cell_text = (
+        focused.text.strip() or focused.get_attribute("innerText") or "(내용 없음)"
+    )
+    log("click_code", "초기포커스내용", f"ID: {cell_id}, 텍스트: '{cell_text}'")
     log(
         "click_code",
         "초기포커스확인",
