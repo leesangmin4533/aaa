@@ -67,6 +67,26 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
                 fields=step.get("fields"),
                 filter_dict=step.get("filter"),
             )
+        elif action == "javascript_keydown":
+            target_id = substitute(step["target_id"], variables)
+            key = step.get("key", "ArrowDown")
+            key_code = step.get("keyCode", 40)
+            driver.execute_script(
+                """
+var e = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    key: arguments[1],
+    code: arguments[1],
+    keyCode: arguments[2],
+    which: arguments[2]
+});
+document.getElementById(arguments[0]).dispatchEvent(e);
+""",
+                target_id,
+                key,
+                key_code,
+            )
         elif action == "click_codes_by_arrow":
             click_codes_by_arrow(driver)
         log("step_end", "완료", f"{action} 완료")
