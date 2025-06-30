@@ -13,11 +13,26 @@ def click_codes_by_arrow(
     driver,
     delay: float = 0.5,
     repeat_limit: int = 3,
+    focus_retry_limit: int = 5,
     start_cell_id: str = (
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
     ),
 ) -> None:
-    """Click each grid row using the down arrow key until the same code repeats."""
+    """Click each grid row using the down arrow key until the same code repeats.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Selenium WebDriver instance.
+    delay : float, optional
+        Seconds to wait between actions.
+    repeat_limit : int, optional
+        Stop when the same code appears this many times in a row.
+    focus_retry_limit : int, optional
+        Abort if the focus remains on ``mainframe`` for this many retries.
+    start_cell_id : str, optional
+        ID of the first grid cell to click.
+    """
 
     first_cell = driver.find_element(By.ID, start_cell_id)
     first_cell.click()
@@ -29,16 +44,25 @@ def click_codes_by_arrow(
     repeat_count = 0
     code_counts: dict[str, int] = {}
     last_cell_id = ""
+    focus_retry_count = 0
 
     while True:
         focused = driver.switch_to.active_element
         cell_id = focused.get_attribute("id") or ""
 
         if cell_id == "mainframe":
-            log("click_code", "포커스 재시도", "포커스가 mainframe에 머물러 있어 셀 재클릭")
+            focus_retry_count += 1
+            log(
+                "click_code",
+                "포커스 재시도",
+                f"포커스가 mainframe에 있음 → 재시도 {focus_retry_count}/{focus_retry_limit}",
+            )
             first_cell.click()
             ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
             time.sleep(delay)
+            if focus_retry_count >= focus_retry_limit:
+                log("click_code", "치명오류", "초기 포커스 이동 실패 → 루프 강제 종료")
+                return
             continue
 
         if "gdList.body.gridrow" not in cell_id or not cell_id.endswith("_0_0"):
