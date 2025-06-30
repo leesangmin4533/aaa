@@ -201,3 +201,56 @@ def click_codes_by_arrow(
             "코드 누적": code_counts,
         },
     )
+
+
+def click_all_codes_after_scroll(driver) -> None:
+    """Scroll the grid to collect all code cells and click them sequentially."""
+
+    collected = collect_all_code_cells(driver)
+    entries = sorted(collected.items())
+
+    code_counts = {}
+    last_code = ""
+    last_cell_id = ""
+
+    for num, cell in entries:
+        code_str = f"{num:03d}"
+        success = False
+
+        for _ in range(3):
+            try:
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});",
+                    cell,
+                )
+                WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
+                success = True
+                break
+            except Exception as e:
+                log("click_code", "오류", f"코드 {code_str} 클릭 실패: {e}")
+                time.sleep(0.5)
+
+        if not success:
+            log("click_code", "종료", f"코드 {code_str} 클릭 실패 → 루프 종료")
+            break
+
+        code_counts[code_str] = code_counts.get(code_str, 0) + 1
+        last_code, last_cell_id = code_str, cell.get_attribute("id")
+
+        log("click_code", "실행", f"코드 {code_str} 클릭")
+        time.sleep(1.0)
+
+        if code_counts[code_str] >= 3:
+            log("click_code", "종료", f"코드 {code_str} 3회 이상 등장 → 종료")
+            break
+
+    log("click_code", "완료", f"총 클릭: {sum(code_counts.values())}건")
+    log(
+        "click_code",
+        "최종 종료",
+        {
+            "마지막 코드": last_code,
+            "마지막 셀 ID": last_cell_id,
+            "코드 누적": code_counts,
+        },
+    )

@@ -27,7 +27,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env
     from modules.sales_analysis.navigation import navigate_to_mid_category_sales
-    from modules.sales_analysis.mid_category_clicker import collect_all_code_cells
+    from modules.sales_analysis.mid_category_clicker import click_all_codes_after_scroll
     from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
     def substitute(value: str, variables: dict) -> str:
@@ -68,27 +68,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
                 filter_dict=step.get("filter"),
             )
         elif action == "click_codes_by_arrow":
-            delay = step.get("delay", 1)
-            max_retry = step.get("max_retry", 3)
-            collected = collect_all_code_cells(driver)
-            for num in sorted(collected):
-                cell = collected[num]
-                attempts = 0
-                code_str = f"{num:03d}"
-                while attempts < max_retry:
-                    try:
-                        driver.execute_script(
-                            "arguments[0].scrollIntoView({block: 'center'});",
-                            cell,
-                        )
-                        WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
-                        log("click_code", "실행", f"코드 {code_str} 클릭")
-                        time.sleep(delay)
-                        break
-                    except Exception as e:
-                        attempts += 1
-                        log("click_code", "오류", f"코드 {code_str} 클릭 실패 {attempts}회: {e}")
-                        time.sleep(delay)
+            click_all_codes_after_scroll(driver)
         log("step_end", "완료", f"{action} 완료")
         if step_log:
             log("message", "실행", step_log)
