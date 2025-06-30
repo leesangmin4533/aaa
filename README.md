@@ -19,10 +19,20 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
 
 The mid-category sales automation is now executed directly from `main.py` using
 `modules/sales_analysis/gridrow_click_loop.json`. The JSON navigates to the
-중분류별 매출 구성 페이지 and then uses an arrow-key based helper that starts
-at code `001` and moves down the grid clicking each code until a duplicate
-appears. If a click fails, the helper waits two seconds and presses the down
-arrow once more before retrying. A second failure stops the loop.
+중분류별 매출 구성 페이지 and then invokes `click_codes_by_arrow` for the
+grid interaction.
+
+`click_codes_by_arrow` first locates the cell containing the text `001`,
+clicks it and remembers the cell ID. The helper then moves down the grid using
+the ↓ key while reading and clicking each code. If a cell is not found or the
+click fails, it scrolls the element into view and retries twice. When retries
+still fail, it attempts to recover by re-clicking the last successful cell and
+searching ahead several rows.
+
+The loop automatically stops when the same code appears three times or when too
+many consecutive cells are missing. Before exit, the function logs the last
+code, the last cell ID, recent click counts and the current focused element to
+aid debugging.
 
 
 The structure files in the `structure` directory describe the XPath selectors
