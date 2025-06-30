@@ -145,63 +145,44 @@ def click_codes_in_order(driver, start: int = 1, end: int = 900) -> None:
 
 def click_codes_by_arrow(
     driver,
-    delay: float = 1.0,
-    max_retry: int = 3,
+    delay: float = 0.5,
+    repeat_limit: int = 3,
+    start_cell_id: str = "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0",
 ) -> None:
-    """Click mid-category codes by scanning and sorting cell IDs."""
+    """Click codes by moving the focus with the down arrow key."""
 
-    cells = driver.find_elements(By.XPATH, "//div[contains(@id,'gdList.body.gridrow')]")
+    first_cell = driver.find_element(By.ID, start_cell_id)
+    first_cell.click()
+    time.sleep(1.0)
 
-    entries = []
-    for cell in cells:
-        cid = cell.get_attribute("id") or ""
-        if not cid.endswith("_0:text"):
-            continue
-        code = cell.text.strip()
-        if code.isdigit():
-            num = int(code)
-            if 1 <= num <= 900:
-                entries.append((num, cell))
-
-    entries.sort(key=lambda x: x[0])
-
-    code_counts = {}
     last_code = ""
+    repeat_count = 0
+    code_counts: dict[str, int] = {}
     last_cell_id = ""
 
-    for num, cell in entries:
-        code_str = f"{num:03d}"
-        attempts = 0
-        success = False
-        while attempts < max_retry:
-            try:
-                driver.execute_script(
-                    "arguments[0].scrollIntoView({block: 'center'});",
-                    cell,
-                )
-                WebDriverWait(driver, 5).until(EC.element_to_be_clickable(cell)).click()
-                success = True
-                break
-            except Exception as e:
-                attempts += 1
-                log("click_code", "오류", f"코드 {code_str} 클릭 실패 {attempts}회: {e}")
-                time.sleep(delay)
+    while True:
+        focused = driver.switch_to.active_element
+        cell_id = focused.get_attribute("id") or ""
+        code = focused.text.strip()
 
-        if not success:
-            last_code = code_str
-            last_cell_id = cell.get_attribute("id") or ""
-            log("click_code", "종료", f"코드 {code_str} 클릭 실패 → 루프 종료")
+        log("click_code", "실행", f"코드 {code} 클릭")
+        focused.click()
+
+        code_counts[code] = code_counts.get(code, 0) + 1
+        last_cell_id = cell_id
+
+        if code == last_code:
+            repeat_count += 1
+        else:
+            repeat_count = 1
+            last_code = code
+
+        if repeat_count >= repeat_limit:
+            log("click_code", "종료", f"코드 {code} {repeat_limit}회 이상 반복 → 종료")
             break
 
-        last_code = code_str
-        last_cell_id = cell.get_attribute("id") or ""
-        code_counts[code_str] = code_counts.get(code_str, 0) + 1
-        log("click_code", "실행", f"코드 {code_str} 클릭")
+        focused.send_keys(Keys.ARROW_DOWN)
         time.sleep(delay)
-
-        if code_counts[code_str] >= 3:
-            log("click_code", "종료", f"코드 {code_str} 3회 이상 등장 → 종료")
-            break
 
     total_clicks = sum(code_counts.values())
     log("click_code", "완료", f"총 클릭: {total_clicks}건")
