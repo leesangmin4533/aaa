@@ -19,18 +19,12 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
 
 The mid-category sales automation is now executed directly from `main.py` using
 `modules/sales_analysis/gridrow_click_loop.json`. The JSON navigates to the
-중분류별 매출 구성 페이지 and then invokes `click_codes_by_arrow` for the
-grid interaction.
+중분류별 매출 구성 페이지 and then collects all code cells in the grid before
+clicking them sequentially.
 
-`click_codes_by_arrow` first locates the cell containing the text `001`,
-clicks it and remembers the cell ID. The helper then moves down the grid using
-the ↓ key while reading and clicking each code. If a cell is not found or the
-click fails, it scrolls the element into view and retries twice. When retries
-still fail, it attempts to recover by re-clicking the last successful cell and
-searching ahead several rows. During recovery the helper explicitly moves the
-row index forward and reselects the next row's `cell_{i}_0:text` element to
-avoid mismatched focus.
-
+During the grid interaction the script scrolls through all rows, collecting
+every visible code cell. Duplicates are removed and the resulting dictionary is
+sorted by code number. Each cell is clicked in order with retries if needed.
 The loop automatically stops when the same code appears three times or when too
 many consecutive cells are missing. Before exit, the function logs the last
 code, the last cell ID, recent click counts and the current focused element to
