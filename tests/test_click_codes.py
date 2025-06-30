@@ -204,6 +204,8 @@ def test_click_codes_by_arrow_focus_recovery(caplog):
                 if id_calls["cnt"] == 1:
                     raise Exception("not ready")
                 return cell1
+            if value == "prefix.gdList.body.gridrow_2.cell_2_0:text":
+                return cell1
             if value == last_id:
                 return first_cell
         raise AssertionError(f"Unexpected lookup: {value}")
