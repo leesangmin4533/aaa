@@ -57,7 +57,6 @@ def scroll_with_arrow_fallback_loop(
     try:
         first_cell = driver.find_element(By.ID, start_cell_id)
         ActionChains(driver).move_to_element(first_cell).click().perform()
-        driver.execute_script("arguments[0].focus();", first_cell)
         time.sleep(0.5)
         prev_id = get_active_id()
         write_log(f"• 초기 포커스: {prev_id}")
@@ -66,12 +65,6 @@ def scroll_with_arrow_fallback_loop(
         return
 
     for i in range(max_steps):
-        try:
-            focused_cell = driver.find_element(By.ID, prev_id)
-            driver.execute_script("arguments[0].focus();", focused_cell)
-        except Exception as e:
-            write_log(f"[{i}] ⚠ 포커스 고정 실패: {e}")
-
         action.send_keys(Keys.ARROW_DOWN).perform()
         write_log(f"[{i}] ↓ ArrowDown")
         time.sleep(1)
