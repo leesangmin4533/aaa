@@ -3,8 +3,7 @@ from modules.common.driver import create_chrome_driver
 from modules.common.module_map import write_module_map
 from log_util import create_logger
 from popup_utils import close_popups
-from modules.sales_analysis.grid_click_logger import scroll_and_click_loop
-from modules.sales_analysis.mid_category_clicker import grid_click_with_scroll_from_20
+from modules.sales_analysis.arrow_fallback_scroll import scroll_with_arrow_fallback_loop
 import importlib
 import json
 import time
@@ -238,18 +237,9 @@ def main():
         run_sales_analysis(driver)
         log("sales_analysis", "완료", "매출 분석 성공")
 
-        # 셀 순회 클릭 실행
-        log("grid_click", "실행", "셀 순회 클릭 실행")
-        scroll_and_click_loop(driver, max_cells=100, log_path="grid_click_log.txt")
-        log("grid_click", "완료", "셀 순회 클릭 완료")
-
-        log("grid_click_after4", "실행", "4회 간격 셀 클릭 및 스크롤 실행")
-        grid_click_with_scroll_from_20(
-            driver,
-            max_rows=100,
-            log_path="grid_click_log.txt",
-        )
-        log("grid_click_after4", "완료", "4회 간격 셀 클릭 및 스크롤 완료")
+        log("arrow_scroll", "실행", "방향키 스크롤 루프 실행")
+        scroll_with_arrow_fallback_loop(driver, max_steps=100, log_path="grid_click_log.txt")
+        log("arrow_scroll", "완료", "방향키 스크롤 루프 완료")
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > sales_analysis] 매출 분석 실패")
         driver.quit()
