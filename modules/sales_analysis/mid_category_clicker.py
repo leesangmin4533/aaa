@@ -41,7 +41,7 @@ def click_codes_by_arrow(
     start_cell_id: str = (
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
     ),
-) -> None:
+    ) -> None:
     """Click each grid row using the down arrow key until the same code repeats.
 
     Parameters
@@ -165,3 +165,40 @@ def click_codes_by_arrow(
             "코드 누적": code_counts,
         },
     )
+
+
+def click_codes_by_loop(driver, row_limit: int = 50) -> None:
+    """Sequentially click grid cells by ID without using Arrow keys.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Selenium WebDriver instance.
+    row_limit : int, optional
+        Maximum number of grid rows to iterate over.
+    """
+
+    base_id = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
+        ".form.div2.form.gdList.body"
+    )
+
+    rows = driver.find_elements(By.XPATH, f"//*[contains(@id, '{base_id}.gridrow_')]")
+    total_rows = min(len(rows), row_limit)
+
+    log(
+        "click_code",
+        "행개수확인",
+        f"로드 된 그리드 행 수: {len(rows)} → 순회 대상: {total_rows}",
+    )
+
+    for i in range(total_rows):
+        cell_id = f"{base_id}.gridrow_{i}.cell_0_0"
+        try:
+            cell = driver.find_element(By.ID, cell_id)
+            code = cell.text.strip()
+            log("click_code", "셀확인", f"[{i}] ID: {cell_id}, 코드: '{code}' → 클릭")
+            cell.click()
+            time.sleep(0.3)
+        except Exception as e:
+            log("click_code", "오류", f"[{i}] 셀 접근 실패: {e}")

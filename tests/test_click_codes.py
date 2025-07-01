@@ -87,3 +87,31 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
     assert cell4.click.called
     summary_found = any("총 클릭" in rec.getMessage() for rec in caplog.records)
     assert summary_found
+
+
+def test_click_codes_by_loop_iterates_rows(caplog):
+    driver = MagicMock()
+    driver.find_elements.return_value = [MagicMock() for _ in range(5)]
+
+    cells = [MagicMock() for _ in range(3)]
+    for idx, cell in enumerate(cells):
+        cell.text = str(idx)
+
+    base = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
+        ".form.div2.form.gdList.body"
+    )
+
+    def find_element_side_effect(by, value):
+        row_index = int(value.split("gridrow_")[1].split(".")[0])
+        return cells[row_index]
+
+    driver.find_element.side_effect = find_element_side_effect
+
+    with caplog.at_level(logging.INFO):
+        mid_clicker.click_codes_by_loop(driver, row_limit=3)
+
+    for cell in cells:
+        assert cell.click.called
+    row_log_found = any("순회 대상: 3" in rec.getMessage() for rec in caplog.records)
+    assert row_log_found

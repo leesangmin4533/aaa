@@ -38,8 +38,9 @@
       "timeout": 10
     },
     {
-      "action": "click_codes_by_arrow",
-      "delay": 1
+      "action": "gridrow_loop_click",
+      "max_rows": 50,
+      "log": "ID 기반 셀 순회 클릭 시작"
     }
   ]
 }
