@@ -3,6 +3,7 @@ from modules.common.driver import create_chrome_driver
 from modules.common.module_map import write_module_map
 from log_util import create_logger
 from popup_utils import close_popups
+from modules.sales_analysis.grid_click_logger import scroll_and_click_loop
 import json
 import time
 import logging
@@ -220,6 +221,11 @@ def main():
     try:
         run_sales_analysis(driver)
         log("sales_analysis", "완료", "매출 분석 성공")
+
+        # 셀 순회 클릭 실행
+        log("grid_click", "실행", "셀 순회 클릭 실행")
+        scroll_and_click_loop(driver, max_cells=100, log_path="grid_click_log.txt")
+        log("grid_click", "완료", "셀 순회 클릭 완료")
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > sales_analysis] 매출 분석 실패")
         driver.quit()
