@@ -1,21 +1,11 @@
-2025-07-01 23:42:06 ▶ 실행: 방향키 기반 셀 이동 시작
-2025-07-01 23:42:07 • 초기 포커스: mainframe
-2025-07-01 23:42:07 [0] ↓ ArrowDown
-2025-07-01 23:42:09 [0] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
-2025-07-01 23:42:09 [0] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
-2025-07-01 23:42:09 [1] ↓ ArrowDown
-2025-07-01 23:42:11 [1] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
-2025-07-01 23:42:11 [1] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
-2025-07-01 23:42:11 [2] ↓ ArrowDown
-2025-07-01 23:42:13 [2] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
-2025-07-01 23:42:13 [2] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
-2025-07-01 23:42:13 [3] ↓ ArrowDown
-2025-07-01 23:42:15 [3] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
-2025-07-01 23:42:15 [3] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
-2025-07-01 23:42:16 [4] ↓ ArrowDown
-2025-07-01 23:42:18 [4] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
-2025-07-01 23:42:18 [4] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
-2025-07-01 23:42:18 [5] ↓ ArrowDown
-2025-07-01 23:42:20 [5] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
-2025-07-01 23:42:20 [5] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
-2025-07-01 23:42:20 [6] ↓ ArrowDown
+2025-07-02 07:26:24 ▶ 실행: 방향키 기반 셀 이동 시작
+2025-07-02 07:26:25 • 초기 포커스: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
+2025-07-02 07:26:25 [0] ↓ ArrowDown
+2025-07-02 07:26:27 [0] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
+2025-07-02 07:26:27 [0] ⚠ 셀 ID 파싱 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0 (xpath=//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0'])
+2025-07-02 07:26:27 [1] ↓ ArrowDown
+2025-07-02 07:26:29 [1] 찾은 셀 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
+2025-07-02 07:26:29 [1] ↩ 재시도: ↓ ArrowDown
+2025-07-02 07:26:31 [1] 재시도 후 ID → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
+2025-07-02 07:26:31 [1] ⚠ 이동 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.div_multCombo.form.pdv_combo.form.grd_list.head.gridrow_-1.cell_-1_0
+2025-07-02 07:26:31 ✅ 완료: 방향키 기반 셀 이동 종료
