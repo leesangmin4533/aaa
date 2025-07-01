@@ -74,7 +74,7 @@ def scroll_with_arrow_fallback_loop(
 
         action.send_keys(Keys.ARROW_DOWN).perform()
         write_log(f"[{i}] ↓ ArrowDown")
-        time.sleep(0.3)
+        time.sleep(1)
         curr_id = get_active_id()
         write_log(f"[{i}] activeElement → {curr_id}")
 
