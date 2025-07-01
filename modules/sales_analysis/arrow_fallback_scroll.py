@@ -118,7 +118,8 @@ def scroll_with_arrow_fallback_loop(
         match = re.search(r"gridrow_(\d+)", curr_id or "")
         row_idx = int(match.group(1)) if match else None
         if row_idx is None:
-            write_log(f"[{i}] ⚠ 셀 ID 파싱 실패: {curr_id}")
+            curr_xpath = f"//*[@id='{curr_id}']" if curr_id else "N/A"
+            write_log(f"[{i}] ⚠ 셀 ID 파싱 실패: {curr_id} (xpath={curr_xpath})")
             prev_id = curr_id
             continue
 
@@ -133,7 +134,10 @@ def scroll_with_arrow_fallback_loop(
             else:
                 write_log(f"[{i}] ⚠ 클릭 건너뜀: 텍스트 '{text}'")
         except Exception as e:
-            write_log(f"[{i}] ❌ 셀 클릭 실패: ID={text_cell_id}, 오류: {e}")
+            text_xpath = f"//*[@id='{text_cell_id}']"
+            write_log(
+                f"[{i}] ❌ 셀 클릭 실패: ID={text_cell_id}, xpath={text_xpath}, 오류: {e}"
+            )
             break
 
         prev_id = curr_id
