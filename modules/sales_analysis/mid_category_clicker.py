@@ -280,7 +280,7 @@ def grid_click_with_scroll(
     max_rows: int = 100,
     scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
 ) -> None:
-    """Click each grid row and press the grid scrollbar button."""
+    """Click grid rows sequentially, scrolling after every four clicks."""
 
     base_id = (
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
@@ -288,24 +288,25 @@ def grid_click_with_scroll(
     )
 
     for i in range(max_rows):
-        cell_id = f"{base_id}.gridrow_{i}.cell_0_0"
+        cell_id = f"{base_id}.gridrow_{i}.cell_{i}_0"
         try:
-            code_cell = driver.find_element(By.ID, cell_id)
-            code_text = code_cell.text.strip()
-            log_detail(f"[{i}] 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'")
-            code_cell.click()
-            time.sleep(0.2)
+            cell = driver.find_element(By.ID, cell_id)
+            text = cell.text.strip()
+            log("grid_click", "실행", f"[{i}] 코드 셀 클릭: ID={cell_id}, 텍스트='{text}'")
+            cell.click()
+            time.sleep(0.3)
 
-            scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
-            scroll_btn.click()
-            log_detail(f"[{i}] 스크롤 버튼 클릭 완료")
-            time.sleep(0.4)
+            if (i + 1) % 4 == 0:
+                scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
+                scroll_btn.click()
+                log("grid_click", "실행", f"[{i}] 스크롤 버튼 클릭 완료")
+                time.sleep(0.4)
 
         except Exception as e:  # pragma: no cover - generic error handling
-            log_detail(f"[{i}] ❌ 오류 발생: {e}")
+            log("grid_click", "오류", f"[{i}] {e}")
             break
 
-    log_detail("✅ 전체 셀 클릭 및 스크롤 루프 종료")
+    log("grid_click", "완료", "전체 셀 클릭 및 스크롤 루프 종료")
 
 
 def grid_click_with_scroll_after_4(
