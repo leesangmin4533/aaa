@@ -1,210 +1,138 @@
-2025-07-01 19:02:54 ▶ 실행: 방향키 기반 셀 이동 시작
-2025-07-01 19:02:55 • 초기 포커스: mainframe
-2025-07-01 19:02:55 [0] ↓ ArrowDown
-2025-07-01 19:02:56 [0] activeElement → mainframe
-2025-07-01 19:02:56 [0] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:02:57 [1] ↓ ArrowDown
-2025-07-01 19:02:58 [1] activeElement → mainframe
-2025-07-01 19:02:58 [1] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:02:58 [2] ↓ ArrowDown
-2025-07-01 19:02:59 [2] activeElement → mainframe
-2025-07-01 19:02:59 [2] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:00 [3] ↓ ArrowDown
-2025-07-01 19:03:01 [3] activeElement → mainframe
-2025-07-01 19:03:01 [3] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:01 [4] ↓ ArrowDown
-2025-07-01 19:03:02 [4] activeElement → mainframe
-2025-07-01 19:03:03 [4] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:03 [5] ↓ ArrowDown
-2025-07-01 19:03:04 [5] activeElement → mainframe
-2025-07-01 19:03:04 [5] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:05 [6] ↓ ArrowDown
-2025-07-01 19:03:06 [6] activeElement → mainframe
-2025-07-01 19:03:06 [6] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:06 [7] ↓ ArrowDown
-2025-07-01 19:03:07 [7] activeElement → mainframe
-2025-07-01 19:03:07 [7] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:08 [8] ↓ ArrowDown
-2025-07-01 19:03:09 [8] activeElement → mainframe
-2025-07-01 19:03:09 [8] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:10 [9] ↓ ArrowDown
-2025-07-01 19:03:11 [9] activeElement → mainframe
-2025-07-01 19:03:11 [9] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:11 [10] ↓ ArrowDown
-2025-07-01 19:03:12 [10] activeElement → mainframe
-2025-07-01 19:03:12 [10] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:13 [11] ↓ ArrowDown
-2025-07-01 19:03:14 [11] activeElement → mainframe
-2025-07-01 19:03:14 [11] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:15 [12] ↓ ArrowDown
-2025-07-01 19:03:16 [12] activeElement → mainframe
-2025-07-01 19:03:16 [12] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:16 [13] ↓ ArrowDown
-2025-07-01 19:03:17 [13] activeElement → mainframe
-2025-07-01 19:03:17 [13] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:18 [14] ↓ ArrowDown
-2025-07-01 19:03:19 [14] activeElement → mainframe
-2025-07-01 19:03:19 [14] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:19 [15] ↓ ArrowDown
-2025-07-01 19:03:20 [15] activeElement → mainframe
-2025-07-01 19:03:21 [15] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:21 [16] ↓ ArrowDown
-2025-07-01 19:03:22 [16] activeElement → mainframe
-2025-07-01 19:03:22 [16] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:23 [17] ↓ ArrowDown
-2025-07-01 19:03:24 [17] activeElement → mainframe
-2025-07-01 19:03:24 [17] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:24 [18] ↓ ArrowDown
-2025-07-01 19:03:25 [18] activeElement → mainframe
-2025-07-01 19:03:25 [18] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:26 [19] ↓ ArrowDown
-2025-07-01 19:03:27 [19] activeElement → mainframe
-2025-07-01 19:03:27 [19] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:28 [20] ↓ ArrowDown
-2025-07-01 19:03:29 [20] activeElement → mainframe
-2025-07-01 19:03:29 [20] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:29 [21] ↓ ArrowDown
-2025-07-01 19:03:30 [21] activeElement → mainframe
-2025-07-01 19:03:30 [21] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:31 [22] ↓ ArrowDown
-2025-07-01 19:03:32 [22] activeElement → mainframe
-2025-07-01 19:03:32 [22] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:32 [23] ↓ ArrowDown
-2025-07-01 19:03:33 [23] activeElement → mainframe
-2025-07-01 19:03:34 [23] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:34 [24] ↓ ArrowDown
-2025-07-01 19:03:35 [24] activeElement → mainframe
-2025-07-01 19:03:35 [24] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:36 [25] ↓ ArrowDown
-2025-07-01 19:03:37 [25] activeElement → mainframe
-2025-07-01 19:03:37 [25] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:37 [26] ↓ ArrowDown
-2025-07-01 19:03:38 [26] activeElement → mainframe
-2025-07-01 19:03:38 [26] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:39 [27] ↓ ArrowDown
-2025-07-01 19:03:40 [27] activeElement → mainframe
-2025-07-01 19:03:40 [27] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:41 [28] ↓ ArrowDown
-2025-07-01 19:03:42 [28] activeElement → mainframe
-2025-07-01 19:03:42 [28] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:42 [29] ↓ ArrowDown
-2025-07-01 19:03:43 [29] activeElement → mainframe
-2025-07-01 19:03:43 [29] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:44 [30] ↓ ArrowDown
-2025-07-01 19:03:45 [30] activeElement → mainframe
-2025-07-01 19:03:45 [30] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:45 [31] ↓ ArrowDown
-2025-07-01 19:03:46 [31] activeElement → mainframe
-2025-07-01 19:03:47 [31] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:47 [32] ↓ ArrowDown
-2025-07-01 19:03:48 [32] activeElement → mainframe
-2025-07-01 19:03:48 [32] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:49 [33] ↓ ArrowDown
-2025-07-01 19:03:50 [33] activeElement → mainframe
-2025-07-01 19:03:50 [33] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:50 [34] ↓ ArrowDown
-2025-07-01 19:03:51 [34] activeElement → mainframe
-2025-07-01 19:03:51 [34] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:52 [35] ↓ ArrowDown
-2025-07-01 19:03:53 [35] activeElement → mainframe
-2025-07-01 19:03:53 [35] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:54 [36] ↓ ArrowDown
-2025-07-01 19:03:55 [36] activeElement → mainframe
-2025-07-01 19:03:55 [36] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:55 [37] ↓ ArrowDown
-2025-07-01 19:03:56 [37] activeElement → mainframe
-2025-07-01 19:03:56 [37] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:57 [38] ↓ ArrowDown
-2025-07-01 19:03:58 [38] activeElement → mainframe
-2025-07-01 19:03:58 [38] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:03:58 [39] ↓ ArrowDown
-2025-07-01 19:03:59 [39] activeElement → mainframe
-2025-07-01 19:04:00 [39] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:00 [40] ↓ ArrowDown
-2025-07-01 19:04:01 [40] activeElement → mainframe
-2025-07-01 19:04:01 [40] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:02 [41] ↓ ArrowDown
-2025-07-01 19:04:03 [41] activeElement → mainframe
-2025-07-01 19:04:03 [41] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:03 [42] ↓ ArrowDown
-2025-07-01 19:04:04 [42] activeElement → mainframe
-2025-07-01 19:04:04 [42] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:05 [43] ↓ ArrowDown
-2025-07-01 19:04:06 [43] activeElement → mainframe
-2025-07-01 19:04:06 [43] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:07 [44] ↓ ArrowDown
-2025-07-01 19:04:08 [44] activeElement → mainframe
-2025-07-01 19:04:08 [44] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:08 [45] ↓ ArrowDown
-2025-07-01 19:04:09 [45] activeElement → mainframe
-2025-07-01 19:04:09 [45] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:10 [46] ↓ ArrowDown
-2025-07-01 19:04:11 [46] activeElement → mainframe
-2025-07-01 19:04:11 [46] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:11 [47] ↓ ArrowDown
-2025-07-01 19:04:12 [47] activeElement → mainframe
-2025-07-01 19:04:12 [47] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:13 [48] ↓ ArrowDown
-2025-07-01 19:04:14 [48] activeElement → mainframe
-2025-07-01 19:04:14 [48] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:15 [49] ↓ ArrowDown
-2025-07-01 19:04:16 [49] activeElement → mainframe
-2025-07-01 19:04:16 [49] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:16 [50] ↓ ArrowDown
-2025-07-01 19:04:17 [50] activeElement → mainframe
-2025-07-01 19:04:17 [50] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:18 [51] ↓ ArrowDown
-2025-07-01 19:04:19 [51] activeElement → mainframe
-2025-07-01 19:04:19 [51] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:19 [52] ↓ ArrowDown
-2025-07-01 19:04:20 [52] activeElement → mainframe
-2025-07-01 19:04:20 [52] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:21 [53] ↓ ArrowDown
-2025-07-01 19:04:22 [53] activeElement → mainframe
-2025-07-01 19:04:22 [53] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:23 [54] ↓ ArrowDown
-2025-07-01 19:04:24 [54] activeElement → mainframe
-2025-07-01 19:04:24 [54] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:24 [55] ↓ ArrowDown
-2025-07-01 19:04:25 [55] activeElement → mainframe
-2025-07-01 19:04:25 [55] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:26 [56] ↓ ArrowDown
-2025-07-01 19:04:27 [56] activeElement → mainframe
-2025-07-01 19:04:27 [56] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:27 [57] ↓ ArrowDown
-2025-07-01 19:04:28 [57] activeElement → mainframe
-2025-07-01 19:04:29 [57] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:29 [58] ↓ ArrowDown
-2025-07-01 19:04:30 [58] activeElement → mainframe
-2025-07-01 19:04:30 [58] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:31 [59] ↓ ArrowDown
-2025-07-01 19:04:32 [59] activeElement → mainframe
-2025-07-01 19:04:32 [59] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:32 [60] ↓ ArrowDown
-2025-07-01 19:04:33 [60] activeElement → mainframe
-2025-07-01 19:04:33 [60] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:34 [61] ↓ ArrowDown
-2025-07-01 19:04:35 [61] activeElement → mainframe
-2025-07-01 19:04:35 [61] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:36 [62] ↓ ArrowDown
-2025-07-01 19:04:37 [62] activeElement → mainframe
-2025-07-01 19:04:37 [62] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:37 [63] ↓ ArrowDown
-2025-07-01 19:04:38 [63] activeElement → mainframe
-2025-07-01 19:04:38 [63] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:39 [64] ↓ ArrowDown
-2025-07-01 19:04:40 [64] activeElement → mainframe
-2025-07-01 19:04:40 [64] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:40 [65] ↓ ArrowDown
-2025-07-01 19:04:41 [65] activeElement → mainframe
-2025-07-01 19:04:42 [65] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:42 [66] ↓ ArrowDown
-2025-07-01 19:04:43 [66] activeElement → mainframe
-2025-07-01 19:04:43 [66] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:44 [67] ↓ ArrowDown
-2025-07-01 19:04:45 [67] activeElement → mainframe
-2025-07-01 19:04:45 [67] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:45 [68] ↓ ArrowDown
-2025-07-01 19:04:46 [68] activeElement → mainframe
-2025-07-01 19:04:46 [68] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 19:04:47 [69] ↓ ArrowDown
+2025-07-01 19:57:12 ▶ 실행: 방향키 기반 셀 이동 시작
+2025-07-01 19:57:13 • 초기 포커스: mainframe
+2025-07-01 19:57:13 [0] ↓ ArrowDown
+2025-07-01 19:57:14 [0] activeElement → mainframe
+2025-07-01 19:57:14 [0] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:14 [1] ↓ ArrowDown
+2025-07-01 19:57:15 [1] activeElement → mainframe
+2025-07-01 19:57:15 [1] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:15 [2] ↓ ArrowDown
+2025-07-01 19:57:16 [2] activeElement → mainframe
+2025-07-01 19:57:16 [2] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:16 [3] ↓ ArrowDown
+2025-07-01 19:57:17 [3] activeElement → mainframe
+2025-07-01 19:57:17 [3] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:17 [4] ↓ ArrowDown
+2025-07-01 19:57:18 [4] activeElement → mainframe
+2025-07-01 19:57:18 [4] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:18 [5] ↓ ArrowDown
+2025-07-01 19:57:19 [5] activeElement → mainframe
+2025-07-01 19:57:19 [5] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:19 [6] ↓ ArrowDown
+2025-07-01 19:57:20 [6] activeElement → mainframe
+2025-07-01 19:57:20 [6] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:20 [7] ↓ ArrowDown
+2025-07-01 19:57:21 [7] activeElement → mainframe
+2025-07-01 19:57:21 [7] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:21 [8] ↓ ArrowDown
+2025-07-01 19:57:22 [8] activeElement → mainframe
+2025-07-01 19:57:22 [8] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:22 [9] ↓ ArrowDown
+2025-07-01 19:57:23 [9] activeElement → mainframe
+2025-07-01 19:57:23 [9] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:23 [10] ↓ ArrowDown
+2025-07-01 19:57:24 [10] activeElement → mainframe
+2025-07-01 19:57:24 [10] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:24 [11] ↓ ArrowDown
+2025-07-01 19:57:25 [11] activeElement → mainframe
+2025-07-01 19:57:25 [11] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:25 [12] ↓ ArrowDown
+2025-07-01 19:57:26 [12] activeElement → mainframe
+2025-07-01 19:57:26 [12] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:26 [13] ↓ ArrowDown
+2025-07-01 19:57:27 [13] activeElement → mainframe
+2025-07-01 19:57:27 [13] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:27 [14] ↓ ArrowDown
+2025-07-01 19:57:28 [14] activeElement → mainframe
+2025-07-01 19:57:28 [14] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:28 [15] ↓ ArrowDown
+2025-07-01 19:57:29 [15] activeElement → mainframe
+2025-07-01 19:57:29 [15] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:29 [16] ↓ ArrowDown
+2025-07-01 19:57:30 [16] activeElement → mainframe
+2025-07-01 19:57:30 [16] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:30 [17] ↓ ArrowDown
+2025-07-01 19:57:31 [17] activeElement → mainframe
+2025-07-01 19:57:31 [17] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:31 [18] ↓ ArrowDown
+2025-07-01 19:57:32 [18] activeElement → mainframe
+2025-07-01 19:57:32 [18] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:32 [19] ↓ ArrowDown
+2025-07-01 19:57:33 [19] activeElement → mainframe
+2025-07-01 19:57:33 [19] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:33 [20] ↓ ArrowDown
+2025-07-01 19:57:34 [20] activeElement → mainframe
+2025-07-01 19:57:34 [20] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:34 [21] ↓ ArrowDown
+2025-07-01 19:57:35 [21] activeElement → mainframe
+2025-07-01 19:57:35 [21] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:35 [22] ↓ ArrowDown
+2025-07-01 19:57:36 [22] activeElement → mainframe
+2025-07-01 19:57:36 [22] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:36 [23] ↓ ArrowDown
+2025-07-01 19:57:37 [23] activeElement → mainframe
+2025-07-01 19:57:37 [23] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:37 [24] ↓ ArrowDown
+2025-07-01 19:57:38 [24] activeElement → mainframe
+2025-07-01 19:57:38 [24] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:38 [25] ↓ ArrowDown
+2025-07-01 19:57:39 [25] activeElement → mainframe
+2025-07-01 19:57:39 [25] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:40 [26] ↓ ArrowDown
+2025-07-01 19:57:41 [26] activeElement → mainframe
+2025-07-01 19:57:41 [26] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:41 [27] ↓ ArrowDown
+2025-07-01 19:57:42 [27] activeElement → mainframe
+2025-07-01 19:57:42 [27] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:42 [28] ↓ ArrowDown
+2025-07-01 19:57:43 [28] activeElement → mainframe
+2025-07-01 19:57:43 [28] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:43 [29] ↓ ArrowDown
+2025-07-01 19:57:44 [29] activeElement → mainframe
+2025-07-01 19:57:44 [29] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:44 [30] ↓ ArrowDown
+2025-07-01 19:57:45 [30] activeElement → mainframe
+2025-07-01 19:57:45 [30] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:45 [31] ↓ ArrowDown
+2025-07-01 19:57:46 [31] activeElement → mainframe
+2025-07-01 19:57:46 [31] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:46 [32] ↓ ArrowDown
+2025-07-01 19:57:47 [32] activeElement → mainframe
+2025-07-01 19:57:47 [32] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:47 [33] ↓ ArrowDown
+2025-07-01 19:57:48 [33] activeElement → mainframe
+2025-07-01 19:57:48 [33] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:48 [34] ↓ ArrowDown
+2025-07-01 19:57:49 [34] activeElement → mainframe
+2025-07-01 19:57:49 [34] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:49 [35] ↓ ArrowDown
+2025-07-01 19:57:50 [35] activeElement → mainframe
+2025-07-01 19:57:50 [35] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:50 [36] ↓ ArrowDown
+2025-07-01 19:57:51 [36] activeElement → mainframe
+2025-07-01 19:57:51 [36] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:51 [37] ↓ ArrowDown
+2025-07-01 19:57:52 [37] activeElement → mainframe
+2025-07-01 19:57:52 [37] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:52 [38] ↓ ArrowDown
+2025-07-01 19:57:53 [38] activeElement → mainframe
+2025-07-01 19:57:53 [38] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:53 [39] ↓ ArrowDown
+2025-07-01 19:57:54 [39] activeElement → mainframe
+2025-07-01 19:57:54 [39] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:54 [40] ↓ ArrowDown
+2025-07-01 19:57:55 [40] activeElement → mainframe
+2025-07-01 19:57:55 [40] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:55 [41] ↓ ArrowDown
+2025-07-01 19:57:56 [41] activeElement → mainframe
+2025-07-01 19:57:56 [41] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:56 [42] ↓ ArrowDown
+2025-07-01 19:57:57 [42] activeElement → mainframe
+2025-07-01 19:57:57 [42] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:57 [43] ↓ ArrowDown
+2025-07-01 19:57:58 [43] activeElement → mainframe
+2025-07-01 19:57:58 [43] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:58 [44] ↓ ArrowDown
+2025-07-01 19:57:59 [44] activeElement → mainframe
+2025-07-01 19:57:59 [44] ⚠ 셀 ID 파싱 실패: mainframe
+2025-07-01 19:57:59 [45] ↓ ArrowDown
