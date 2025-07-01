@@ -32,6 +32,7 @@ def scroll_and_click_loop(
             log.write(f"[{ts}] {msg}\n")
             print(f"[{ts}] {msg}")
 
+        write_log("함수 진입")
         write_log(f"▶ 실행: 셀 순회 시작 (최대 {max_cells}셀)")
         action = ActionChains(driver)
 
