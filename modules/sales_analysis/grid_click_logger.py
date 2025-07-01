@@ -30,6 +30,7 @@ def scroll_and_click_loop(
         def write_log(msg: str) -> None:
             ts = time.strftime("%H:%M:%S")
             log.write(f"[{ts}] {msg}\n")
+            log.flush()
             print(f"[{ts}] {msg}")
 
         write_log(f"▶ 실행: 셀 순회 시작 (최대 {max_cells}셀)")

@@ -3,9 +3,12 @@ from unittest.mock import MagicMock
 from pathlib import Path
 from selenium.common.exceptions import NoSuchElementException
 import sys
+import pytest
+
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import modules.sales_analysis.grid_click_logger as grid_click_logger
 from modules.sales_analysis.grid_click_logger import scroll_and_click_loop
 
 
@@ -44,3 +47,25 @@ def test_scroll_and_click_loop_logs(tmp_path):
         log_contents = f.read()
     assert "클릭 시도" in log_contents
     assert "순회 종료" in log_contents
+
+
+def test_scroll_and_click_loop_flush_on_exception(tmp_path):
+    log_file = tmp_path / "test_log.txt"
+
+    driver = MagicMock()
+
+    class FailingActions:
+        def __init__(self, _driver):
+            raise RuntimeError("fail")
+
+    original_actions = grid_click_logger.ActionChains
+    grid_click_logger.ActionChains = FailingActions
+    try:
+        with pytest.raises(RuntimeError):
+            scroll_and_click_loop(driver, log_path=str(log_file))
+    finally:
+        grid_click_logger.ActionChains = original_actions
+
+    with open(log_file, "r", encoding="utf-8") as f:
+        contents = f.read()
+    assert "실행: 셀 순회 시작" in contents
