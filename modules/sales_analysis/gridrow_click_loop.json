@@ -39,9 +39,9 @@
     },
     {
       "action": "run_function",
-      "function": "scroll_and_click_loop",
-      "module": "grid_click_logger",
-      "log": "코드 셀 클릭 후 스크롤 반복 실행"
+      "function": "scroll_with_arrow_fallback_loop",
+      "module": "arrow_fallback_scroll",
+      "log": "방향키 기반 셀 이동"
     }
   ]
 }
