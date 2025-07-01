@@ -1,8 +1,71 @@
-[10:52:52] ▶ 실행: 셀 순회 시작 (최대 100셀)
-[10:52:52] • 포커스 상태: activeElement → mainframe
-[10:52:52] ✅ 셀 0 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0, 텍스트='001'
-[10:52:53] ⚠ 이동 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_0_0 찾을 수 없음
-[10:52:53] ❌ 오류: [1] 셀 접근 실패: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_0_0"]"}
+[11:06:40] ▶ 실행: 셀 순회 시작 (최대 100셀)
+[11:06:40] • 포커스 상태: activeElement → mainframe
+[11:06:40] ✅ 셀 0 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0, 텍스트='001'
+[11:06:40] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0, 텍스트='002'
+[11:06:40] • 포커스 상태: activeElement → mainframe
+[11:06:40] ✅ 셀 1 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0, 텍스트='002'
+[11:06:41] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0, 텍스트='003'
+[11:06:41] • 포커스 상태: activeElement → mainframe
+[11:06:41] ✅ 셀 2 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0, 텍스트='003'
+[11:06:42] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0, 텍스트='010'
+[11:06:42] • 포커스 상태: activeElement → mainframe
+[11:06:42] ✅ 셀 3 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0, 텍스트='010'
+[11:06:42] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0, 텍스트='012'
+[11:06:42] • 포커스 상태: activeElement → mainframe
+[11:06:42] ✅ 셀 4 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0, 텍스트='012'
+[11:06:43] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_5.cell_5_0, 텍스트='014'
+[11:06:43] • 포커스 상태: activeElement → mainframe
+[11:06:43] ✅ 셀 5 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_5.cell_5_0, 텍스트='014'
+[11:06:43] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_5.cell_5_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_6.cell_6_0, 텍스트='015'
+[11:06:43] • 포커스 상태: activeElement → mainframe
+[11:06:43] ✅ 셀 6 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_6.cell_6_0, 텍스트='015'
+[11:06:44] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_6.cell_6_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_7.cell_7_0, 텍스트='016'
+[11:06:44] • 포커스 상태: activeElement → mainframe
+[11:06:44] ✅ 셀 7 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_7.cell_7_0, 텍스트='016'
+[11:06:45] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_7.cell_7_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_8.cell_8_0, 텍스트='022'
+[11:06:45] • 포커스 상태: activeElement → mainframe
+[11:06:45] ✅ 셀 8 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_8.cell_8_0, 텍스트='022'
+[11:06:45] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_8.cell_8_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_9.cell_9_0, 텍스트='032'
+[11:06:45] • 포커스 상태: activeElement → mainframe
+[11:06:45] ✅ 셀 9 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_9.cell_9_0, 텍스트='032'
+[11:06:46] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_9.cell_9_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_10.cell_10_0, 텍스트='033'
+[11:06:46] • 포커스 상태: activeElement → mainframe
+[11:06:46] ✅ 셀 10 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_10.cell_10_0, 텍스트='033'
+[11:06:47] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_10.cell_10_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_11.cell_11_0, 텍스트='034'
+[11:06:47] • 포커스 상태: activeElement → mainframe
+[11:06:47] ✅ 셀 11 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_11.cell_11_0, 텍스트='034'
+[11:06:47] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_11.cell_11_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_12.cell_12_0, 텍스트='035'
+[11:06:47] • 포커스 상태: activeElement → mainframe
+[11:06:47] ✅ 셀 12 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_12.cell_12_0, 텍스트='035'
+[11:06:48] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_12.cell_12_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_13.cell_13_0, 텍스트='036'
+[11:06:48] • 포커스 상태: activeElement → mainframe
+[11:06:48] ✅ 셀 13 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_13.cell_13_0, 텍스트='036'
+[11:06:48] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_13.cell_13_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_14.cell_14_0, 텍스트='039'
+[11:06:48] • 포커스 상태: activeElement → mainframe
+[11:06:48] ✅ 셀 14 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_14.cell_14_0, 텍스트='039'
+[11:06:49] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_14.cell_14_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_15.cell_15_0, 텍스트='041'
+[11:06:49] • 포커스 상태: activeElement → mainframe
+[11:06:49] ✅ 셀 15 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_15.cell_15_0, 텍스트='041'
+[11:06:49] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_15.cell_15_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_16.cell_16_0, 텍스트='042'
+[11:06:49] • 포커스 상태: activeElement → mainframe
+[11:06:50] ✅ 셀 16 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_16.cell_16_0, 텍스트='042'
+[11:06:50] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_16.cell_16_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_17.cell_17_0, 텍스트='044'
+[11:06:50] • 포커스 상태: activeElement → mainframe
+[11:06:50] ✅ 셀 17 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_17.cell_17_0, 텍스트='044'
+[11:06:51] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_17.cell_17_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_18.cell_18_0, 텍스트='046'
+[11:06:51] • 포커스 상태: activeElement → mainframe
+[11:06:51] ✅ 셀 18 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_18.cell_18_0, 텍스트='046'
+[11:06:51] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_18.cell_18_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_19.cell_19_0, 텍스트='047'
+[11:06:51] • 포커스 상태: activeElement → mainframe
+[11:06:51] ✅ 셀 19 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_19.cell_19_0, 텍스트='047'
+[11:06:52] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_19.cell_19_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_20.cell_20_0, 텍스트='048'
+[11:06:52] • 포커스 상태: activeElement → mainframe
+[11:06:52] ✅ 셀 20 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_20.cell_20_0, 텍스트='048'
+[11:06:53] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_20.cell_20_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_21.cell_21_0, 텍스트='049'
+[11:06:53] • 포커스 상태: activeElement → mainframe
+[11:06:53] ✅ 셀 21 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_21.cell_21_0, 텍스트='049'
+[11:06:53] ⚠ 이동 실패: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_22.cell_22_0 찾을 수 없음
+[11:06:53] ❌ 오류: [22] 셀 접근 실패: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_22.cell_22_0"]"}
   (Session info: chrome=138.0.7204.50); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
 Stacktrace:
 	GetHandleVerifier [0x0x7ff752ce6f95+76917]
@@ -27,4 +90,4 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
 	RtlUserThreadStart [0x0x7ff908e1c34c+44]
 
-[10:52:53] ✅ 완료: 셀 순회 종료
+[11:06:53] ✅ 완료: 셀 순회 종료
