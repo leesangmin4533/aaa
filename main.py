@@ -229,7 +229,11 @@ def main():
         log("grid_click", "완료", "셀 순회 클릭 완료")
 
         log("grid_click_after4", "실행", "4회 간격 셀 클릭 및 스크롤 실행")
-        grid_click_with_scroll_from_20(driver, max_rows=100)
+        grid_click_with_scroll_from_20(
+            driver,
+            max_rows=100,
+            log_path="grid_click_log.txt",
+        )
         log("grid_click_after4", "완료", "4회 간격 셀 클릭 및 스크롤 완료")
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > sales_analysis] 매출 분석 실패")

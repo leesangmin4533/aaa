@@ -198,7 +198,7 @@ def test_grid_click_with_scroll_after_4_basic(capsys):
     assert "루프 종료" in captured
 
 
-def test_grid_click_with_scroll_from_20_basic(capsys):
+def test_grid_click_with_scroll_from_20_basic(capsys, tmp_path):
     driver = MagicMock()
     cells = [MagicMock() for _ in range(21)]
     scroll_btn1 = MagicMock()
@@ -215,7 +215,12 @@ def test_grid_click_with_scroll_from_20_basic(capsys):
 
     driver.find_element.side_effect = side_effects
 
-    mid_clicker.grid_click_with_scroll_from_20(driver, max_rows=21)
+    log_file = tmp_path / "log.txt"
+    mid_clicker.grid_click_with_scroll_from_20(
+        driver,
+        max_rows=21,
+        log_path=str(log_file),
+    )
 
     for cell in cells:
         assert cell.click.called
@@ -223,3 +228,4 @@ def test_grid_click_with_scroll_from_20_basic(capsys):
     assert scroll_btn2.click.called
     captured = capsys.readouterr().out
     assert "루프 종료" in captured
+    assert log_file.is_file()
