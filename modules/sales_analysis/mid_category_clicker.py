@@ -34,6 +34,30 @@ def send_arrow_down_native(driver) -> None:
     )
 
 
+def send_home_native(driver) -> None:
+    """Send a Home key event using CDP so Nexacro handles it natively."""
+    driver.execute_cdp_cmd(
+        "Input.dispatchKeyEvent",
+        {
+            "type": "keyDown",
+            "key": "Home",
+            "code": "Home",
+            "windowsVirtualKeyCode": 36,
+            "nativeVirtualKeyCode": 36,
+        },
+    )
+    time.sleep(0.1)
+    driver.execute_cdp_cmd(
+        "Input.dispatchKeyEvent",
+        {
+            "type": "keyUp",
+            "key": "Home",
+            "code": "Home",
+            "windowsVirtualKeyCode": 36,
+            "nativeVirtualKeyCode": 36,
+        },
+    )
+
 def click_codes_by_arrow(
     driver,
     delay: float = 0.5,
@@ -351,7 +375,7 @@ def grid_click_with_scroll_from_20(
     scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
     log_path: str = "grid_click_log.txt",
 ) -> None:
-    """20번째 셀 이후부터 스크롤 버튼을 누르며 셀을 순서대로 클릭한다."""
+    """Scroll after the 20th row while clicking visible cells via ArrowDown."""
     from selenium.webdriver.common.by import By
     import time
 
@@ -360,26 +384,36 @@ def grid_click_with_scroll_from_20(
         ".form.div2.form.gdList.body"
     )
 
+    grid_body = driver.find_element(By.ID, base_id)
+    ActionChains(driver).move_to_element(grid_body).perform()
+    send_home_native(driver)
+    time.sleep(0.2)
+
+    focused = driver.find_element(By.ID, f"{base_id}.gridrow_0.cell_0_0")
+
     for i in range(max_rows):
-        cell_id = f"{base_id}.gridrow_{i}.cell_0_0"
-        try:
-            code_cell = driver.find_element(By.ID, cell_id)
-            code_text = code_cell.text.strip()
-            log_detail(
-                f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'",
-                log_path=log_path,
-            )
-            code_cell.click()
+        if i > 0:
+            prev_id = focused.get_attribute("id")
+            send_arrow_down_native(driver)
             time.sleep(0.2)
+            focused = driver.switch_to.active_element
+            if focused.get_attribute("id") == prev_id:
+                log_detail(f"[{i}] ❌ 다음 셀로 이동 실패", log_path=log_path)
+                break
 
-            if i >= 19:
-                scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
-                scroll_btn.click()
-                log_detail(f"[{i}] ➡ 스크롤 버튼 클릭 완료", log_path=log_path)
-                time.sleep(0.4)
+        cell_id = focused.get_attribute("id") or f"{base_id}.gridrow_{i}.cell_0_0"
+        code_text = focused.text.strip()
+        log_detail(
+            f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'",
+            log_path=log_path,
+        )
+        focused.click()
+        time.sleep(0.2)
 
-        except Exception as e:
-            log_detail(f"[{i}] ❌ 오류 발생: {e}", log_path=log_path)
-            break
+        if i >= 19:
+            scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
+            scroll_btn.click()
+            log_detail(f"[{i}] ➡ 스크롤 버튼 클릭 완료", log_path=log_path)
+            time.sleep(0.4)
 
     log_detail("✅ 전체 셀 클릭 및 스크롤 루프 종료", log_path=log_path)

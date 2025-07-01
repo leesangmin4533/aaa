@@ -201,26 +201,76 @@ def test_grid_click_with_scroll_after_4_basic(capsys):
 def test_grid_click_with_scroll_from_20_basic(capsys, tmp_path):
     driver = MagicMock()
     cells = [MagicMock() for _ in range(21)]
+    for idx, cell in enumerate(cells):
+        cell.text = str(idx)
+        cell.get_attribute.return_value = f"cell_{idx}"
+
+    grid_elem = MagicMock()
     scroll_btn1 = MagicMock()
     scroll_btn2 = MagicMock()
 
-    side_effects = []
-    for i, cell in enumerate(cells):
-        side_effects.append(cell)
-        if i >= 19:
-            if i == 19:
-                side_effects.append(scroll_btn1)
-            else:
-                side_effects.append(scroll_btn2)
+    def find_element_side_effect(by, value):
+        if by == mid_clicker.By.ID and value.endswith("gdList.body"):
+            return grid_elem
+        if by == mid_clicker.By.ID and value.endswith("gridrow_0.cell_0_0"):
+            return cells[0]
+        if by == mid_clicker.By.XPATH:
+            find_element_side_effect.calls += 1
+            return scroll_btn1 if find_element_side_effect.calls == 1 else scroll_btn2
+        raise AssertionError("Unexpected locator")
 
-    driver.find_element.side_effect = side_effects
+    find_element_side_effect.calls = 0
+    driver.find_element.side_effect = find_element_side_effect
+
+    class DummySwitch:
+        def __init__(self, elems):
+            self.elems = elems
+            self.idx = 0
+
+        @property
+        def active_element(self):
+            return self.elems[self.idx]
+
+        def next(self):
+            if self.idx < len(self.elems) - 1:
+                self.idx += 1
+
+    switch = DummySwitch(cells)
+    driver.switch_to = switch
+
+    def fake_send_arrow_down_native(_driver):
+        switch.next()
+
+    class DummyActions:
+        def __init__(self, driver):
+            self.driver = driver
+            self.element = None
+
+        def move_to_element(self, element):
+            self.element = element
+            return self
+
+        def perform(self):
+            pass
+
+    original_actions = mid_clicker.ActionChains
+    original_arrow = mid_clicker.send_arrow_down_native
+    original_home = mid_clicker.send_home_native
+    mid_clicker.ActionChains = DummyActions
+    mid_clicker.send_arrow_down_native = fake_send_arrow_down_native
+    mid_clicker.send_home_native = lambda d: None
 
     log_file = tmp_path / "log.txt"
-    mid_clicker.grid_click_with_scroll_from_20(
-        driver,
-        max_rows=21,
-        log_path=str(log_file),
-    )
+    try:
+        mid_clicker.grid_click_with_scroll_from_20(
+            driver,
+            max_rows=21,
+            log_path=str(log_file),
+        )
+    finally:
+        mid_clicker.ActionChains = original_actions
+        mid_clicker.send_arrow_down_native = original_arrow
+        mid_clicker.send_home_native = original_home
 
     for cell in cells:
         assert cell.click.called
