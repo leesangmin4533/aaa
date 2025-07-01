@@ -272,3 +272,40 @@ def grid_scroll_click_loop(
             if log_enabled:
                 log("grid_scroll", "완료", f"[{i}] 셀 존재 안 함: {cell_id} → 루프 종료")
             break
+
+
+def grid_click_with_scroll(
+    driver,
+    max_rows: int = 100,
+    scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
+) -> None:
+    """Click each grid row and press the grid scrollbar button."""
+
+    base_id = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
+        ".form.div2.form.gdList.body"
+    )
+
+    for i in range(max_rows):
+        cell_id = f"{base_id}.gridrow_{i}.cell_0_0"
+        try:
+            code_cell = driver.find_element(By.ID, cell_id)
+            code_text = code_cell.text.strip()
+            log(
+                "grid_click",
+                "실행",
+                f"[{i}] 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'",
+            )
+            code_cell.click()
+            time.sleep(0.2)
+
+            scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
+            scroll_btn.click()
+            log("grid_click", "실행", f"[{i}] 스크롤 버튼 클릭 완료")
+            time.sleep(0.4)
+
+        except Exception as e:  # pragma: no cover - generic error handling
+            log("grid_click", "오류", f"[{i}] {e}")
+            break
+
+    log("grid_click", "완료", "전체 셀 클릭 및 스크롤 루프 종료")
