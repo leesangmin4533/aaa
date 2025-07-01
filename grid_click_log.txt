@@ -1,0 +1,3 @@
+2025-07-01 10:24:26 [0] ▶ 셀 스크롤 완료: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
+2025-07-01 10:24:26 [0] ✅ 클릭 완료 - 코드: '001', ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
+2025-07-01 10:24:27 [1] ❌ 셀 접근 실패 - ID 없음: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_0_0 → 루프 종료
