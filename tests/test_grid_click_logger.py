@@ -19,9 +19,11 @@ def test_scroll_and_click_loop_logs(tmp_path):
 
     side_effects = [
         cells[0],  # first cell
-        cells[1],  # next cell after arrow
+        MagicMock(),  # scroll button first click
+        cells[1],  # next cell after scroll
         cells[1],  # second iteration current cell
-        NoSuchElementException(),  # missing next cell
+        MagicMock(),  # scroll button second click
+        NoSuchElementException(),  # missing next cell after second scroll
         NoSuchElementException(),  # third iteration first cell missing -> break
     ]
 

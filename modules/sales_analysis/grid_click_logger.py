@@ -2,8 +2,6 @@ from datetime import datetime
 import os
 import time
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
 
@@ -39,7 +37,6 @@ def scroll_and_click_loop(
 
         write_log("함수 진입")
         write_log(f"▶ 실행: 셀 순회 시작 (최대 {max_cells}셀)")
-        action = ActionChains(driver)
 
         for idx in range(max_cells):
             cell_id = f"{base_id}.gridrow_{idx}.cell_{idx}_0"
@@ -55,7 +52,11 @@ def scroll_and_click_loop(
                 cell.send_keys("")  # 명시적 포커스 부여
                 time.sleep(0.2)
 
-                action.send_keys(Keys.ARROW_DOWN).perform()
+                scroll_btn = driver.find_element(
+                    By.XPATH,
+                    "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
+                )
+                scroll_btn.click()
                 time.sleep(0.2)
 
                 next_id = f"{base_id}.gridrow_{idx+1}.cell_{idx+1}_0"
