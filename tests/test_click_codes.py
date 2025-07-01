@@ -182,3 +182,26 @@ def test_grid_click_with_scroll_basic(caplog):
     assert cell2.click.called
     assert scroll_btn.click.call_count == 2
     assert any("루프 종료" in msg for msg in logs)
+
+
+def test_grid_click_with_scroll_after_4_basic(capsys):
+    driver = MagicMock()
+    cells = [MagicMock() for _ in range(5)]
+    scroll_btn = MagicMock()
+
+    driver.find_element.side_effect = [
+        cells[0],
+        cells[1],
+        cells[2],
+        cells[3],
+        scroll_btn,
+        cells[4],
+    ]
+
+    mid_clicker.grid_click_with_scroll_after_4(driver, max_rows=5)
+
+    for cell in cells:
+        assert cell.click.called
+    assert scroll_btn.click.call_count == 1
+    captured = capsys.readouterr().out
+    assert "루프 종료" in captured

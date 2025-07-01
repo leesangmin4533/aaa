@@ -306,3 +306,39 @@ def grid_click_with_scroll(
             break
 
     log_detail("✅ 전체 셀 클릭 및 스크롤 루프 종료")
+
+
+def grid_click_with_scroll_after_4(
+    driver,
+    max_rows: int = 100,
+    scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
+) -> None:
+    """셀을 4번 클릭한 뒤 스크롤 버튼을 눌러 다음 셀을 표시한다."""
+    from selenium.webdriver.common.by import By
+    import time
+
+    base_id = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
+        ".form.div2.form.gdList.body"
+    )
+
+    for i in range(max_rows):
+        cell_id = f"{base_id}.gridrow_{i}.cell_{i}_0"
+        try:
+            cell = driver.find_element(By.ID, cell_id)
+            cell_text = cell.text.strip()
+            print(f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{cell_text}'")
+            cell.click()
+            time.sleep(0.2)
+
+            if (i + 1) % 4 == 0:
+                scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
+                scroll_btn.click()
+                print(f"[{i}] ➡ 스크롤 버튼 클릭 (4회 클릭 후)")
+                time.sleep(0.4)
+
+        except Exception as e:
+            print(f"[{i}] ❌ 오류 발생: {e}")
+            break
+
+    print("✅ 전체 셀 클릭 및 스크롤 루프 종료")
