@@ -31,6 +31,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
         click_codes_by_arrow,
         click_codes_by_loop,
         scroll_loop_click,
+        grid_scroll_click_loop,
     )
     from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
@@ -129,6 +130,20 @@ document.getElementById(arguments[0]).dispatchEvent(e);
                 start_index=start_idx,
                 max_attempts=max_attempts,
                 scroll=do_scroll,
+            )
+        elif action == "grid_scroll_click_loop":
+            prefix = step.get("grid_id_prefix")
+            suffix = step.get("cell_suffix", "")
+            max_rows = step.get("max_rows", 100)
+            do_scroll = step.get("scroll_into_view", True)
+            enable_log = step.get("log", True)
+            grid_scroll_click_loop(
+                driver,
+                prefix,
+                suffix,
+                max_rows=max_rows,
+                scroll_into_view=do_scroll,
+                log_enabled=enable_log,
             )
         log("step_end", "완료", f"{action} 완료")
         if step_log:

@@ -232,7 +232,9 @@ def scroll_loop_click(driver, start_index: int = 0, max_attempts: int = 100, scr
         try:
             cell = driver.find_element(By.ID, cell_id)
             if scroll:
-                driver.execute_script("arguments[0].scrollIntoView();", cell)
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});", cell
+                )
             cell.click()
             log("scroll_loop", "실행", f"[{i}] 클릭 성공")
             i += 1
@@ -240,4 +242,33 @@ def scroll_loop_click(driver, start_index: int = 0, max_attempts: int = 100, scr
             time.sleep(0.3)
         except NoSuchElementException:
             log("scroll_loop", "완료", f"[{i}] 셀 없음 → 종료")
+            break
+
+
+def grid_scroll_click_loop(
+    driver,
+    grid_id_prefix: str,
+    cell_suffix: str,
+    max_rows: int = 100,
+    scroll_into_view: bool = True,
+    log_enabled: bool = True,
+) -> None:
+    """Click grid cells sequentially with optional scrolling."""
+    from selenium.common.exceptions import NoSuchElementException
+
+    for i in range(max_rows):
+        cell_id = f"{grid_id_prefix}{i}{cell_suffix}"
+        try:
+            cell = driver.find_element(By.ID, cell_id)
+            if scroll_into_view:
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});", cell
+                )
+            cell.click()
+            if log_enabled:
+                log("grid_scroll", "실행", f"[{i}] 클릭 완료: {cell_id}")
+            time.sleep(0.2)
+        except NoSuchElementException:
+            if log_enabled:
+                log("grid_scroll", "완료", f"[{i}] 셀 존재 안 함: {cell_id} → 루프 종료")
             break
