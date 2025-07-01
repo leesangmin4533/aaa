@@ -5,6 +5,7 @@ from log_util import create_logger
 from popup_utils import close_popups
 from modules.sales_analysis.grid_click_logger import scroll_and_click_loop
 from modules.sales_analysis.mid_category_clicker import grid_click_with_scroll_from_20
+import importlib
 import json
 import time
 import logging
@@ -147,6 +148,20 @@ document.getElementById(arguments[0]).dispatchEvent(e);
                 scroll_into_view=do_scroll,
                 log_enabled=enable_log,
             )
+        elif action == "run_function":
+            module_name = step.get("module")
+            func_name = step["function"]
+            if module_name:
+                mod = importlib.import_module(f"modules.sales_analysis.{module_name}")
+            else:
+                mod = importlib.import_module("modules.sales_analysis")
+            func = getattr(mod, func_name)
+            args = [substitute(str(a), variables) if isinstance(a, str) else a for a in step.get("args", [])]
+            kwargs = {
+                k: substitute(str(v), variables) if isinstance(v, str) else v
+                for k, v in step.get("kwargs", {}).items()
+            }
+            func(driver, *args, **kwargs)
         log("step_end", "완료", f"{action} 완료")
         if step_log:
             log("message", "실행", step_log)
