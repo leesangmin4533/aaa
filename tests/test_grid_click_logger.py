@@ -55,3 +55,23 @@ def test_scroll_and_click_loop_creates_nested_log_path(tmp_path):
 
     assert nested_log.is_file()
     assert nested_log.parent.is_dir()
+
+
+def test_scroll_and_click_loop_flushes_on_exception(tmp_path):
+    log_file = tmp_path / "fail_log.txt"
+
+    driver = MagicMock()
+    cell = MagicMock()
+    cell.text = "001"
+    cell.click.side_effect = RuntimeError("fail click")
+
+    driver.find_element.side_effect = [cell]
+    driver.execute_script = MagicMock(return_value="cell_0_0")
+
+    scroll_and_click_loop(driver, max_cells=5, log_path=str(log_file))
+
+    with open(log_file, "r", encoding="utf-8") as f:
+        log_contents = f.read()
+
+    assert "함수 진입" in log_contents
+    assert "fail click" in log_contents

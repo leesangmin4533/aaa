@@ -12,6 +12,7 @@ def log_detail(message: str, log_path: str = "grid_click_log.txt") -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(f"{timestamp} {message}\n")
+        f.flush()
     print(f"{timestamp} {message}")
 
 
@@ -33,6 +34,7 @@ def scroll_and_click_loop(
         def write_log(msg: str) -> None:
             ts = time.strftime("%H:%M:%S")
             log.write(f"[{ts}] {msg}\n")
+            log.flush()
             print(f"[{ts}] {msg}")
 
         write_log("함수 진입")
