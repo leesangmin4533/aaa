@@ -7,7 +7,7 @@ import re
 from .grid_click_logger import log_detail
 
 
-def find_cell_under_mainframe(driver, depth: int = 3):
+def find_cell_under_mainframe(driver, depth: int = 6):
     """Return the grid cell element under the current active element.
 
     If the active element itself is a cell, it is returned immediately. Otherwise
@@ -19,7 +19,7 @@ def find_cell_under_mainframe(driver, depth: int = 3):
     driver : WebDriver
         Selenium WebDriver instance.
     depth : int, optional
-        Max DOM depth to search.
+        Max DOM depth to search. 기본값은 6이다.
     """
     script = f"""
         function findCell() {{
