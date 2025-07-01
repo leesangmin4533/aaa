@@ -3,6 +3,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
+from .grid_click_logger import log_detail
+
 
 def scroll_with_arrow_fallback_loop(
     driver,
@@ -16,62 +18,63 @@ def scroll_with_arrow_fallback_loop(
     log_path: str = "grid_click_log.txt",
 ) -> None:
     """Move focus down the grid using ArrowDown and scroll when needed."""
-    with open(log_path, "w", encoding="utf-8") as log:
-        def write_log(msg: str) -> None:
-            ts = time.strftime("%H:%M:%S")
-            log.write(f"[{ts}] {msg}\n")
-            log.flush()
-            print(f"[{ts}] {msg}")
+    # reset log file
+    open(log_path, "w", encoding="utf-8").close()
 
-        def get_active_id():
+    def write_log(msg: str) -> None:
+        log_detail(msg, log_path=log_path)
+
+    def get_active_id():
+        try:
+            return driver.execute_script("return document.activeElement?.id")
+        except Exception:
+            return None
+
+    write_log("▶ 실행: 방향키 기반 셀 이동 시작")
+    action = ActionChains(driver)
+
+    try:
+        first_cell = driver.find_element(By.ID, start_cell_id)
+        ActionChains(driver).move_to_element(first_cell).click().perform()
+        driver.execute_script("arguments[0].focus();", first_cell)
+        time.sleep(0.5)
+        prev_id = get_active_id()
+        write_log(f"• 초기 포커스: {prev_id}")
+    except Exception as e:
+        write_log(f"❌ 초기 셀 포커스 실패: {e}")
+        return
+
+    for i in range(max_steps):
+        action.send_keys(Keys.ARROW_DOWN).perform()
+        write_log(f"[{i}] ↓ ArrowDown")
+        time.sleep(0.3)
+        curr_id = get_active_id()
+        write_log(f"[{i}] activeElement → {curr_id}")
+
+        if not curr_id:
+            write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
+            break
+
+        if curr_id == prev_id:
             try:
-                return driver.execute_script("return document.activeElement?.id")
-            except Exception:
-                return None
-
-        write_log("▶ 실행: 방향키 기반 셀 이동 시작")
-        action = ActionChains(driver)
+                scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
+                scroll_btn.click()
+                write_log(f"[{i}] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: {curr_id})")
+                time.sleep(0.5)
+                continue
+            except Exception as e:
+                write_log(f"[{i}] ❌ 스크롤 실패: {e}")
+                break
 
         try:
-            first_cell = driver.find_element(By.ID, start_cell_id)
-            ActionChains(driver).move_to_element(first_cell).click().perform()
-            driver.execute_script("arguments[0].focus();", first_cell)
-            time.sleep(0.5)
-            prev_id = get_active_id()
-            write_log(f"• 초기 포커스: {prev_id}")
+            cell = driver.find_element(By.ID, curr_id)
+            text = cell.text.strip()
+            write_log(f"[{i}] ✅ 셀 클릭: ID={curr_id}, 텍스트='{text}'")
+            cell.click()
         except Exception as e:
-            write_log(f"❌ 초기 셀 포커스 실패: {e}")
-            return
+            write_log(f"[{i}] ❌ 셀 클릭 실패: ID={curr_id}, 오류: {e}")
+            break
 
-        for i in range(max_steps):
-            action.send_keys(Keys.ARROW_DOWN).perform()
-            time.sleep(0.3)
-            curr_id = get_active_id()
+        prev_id = curr_id
 
-            if not curr_id:
-                write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
-                break
-
-            if curr_id == prev_id:
-                try:
-                    scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
-                    scroll_btn.click()
-                    write_log(f"[{i}] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: {curr_id})")
-                    time.sleep(0.5)
-                    continue
-                except Exception as e:
-                    write_log(f"[{i}] ❌ 스크롤 실패: {e}")
-                    break
-
-            try:
-                cell = driver.find_element(By.ID, curr_id)
-                text = cell.text.strip()
-                write_log(f"[{i}] ✅ 셀 클릭: ID={curr_id}, 텍스트='{text}'")
-                cell.click()
-            except Exception as e:
-                write_log(f"[{i}] ❌ 셀 클릭 실패: ID={curr_id}, 오류: {e}")
-                break
-
-            prev_id = curr_id
-
-        write_log("✅ 완료: 방향키 기반 셀 이동 종료")
+    write_log("✅ 완료: 방향키 기반 셀 이동 종료")
