@@ -162,8 +162,8 @@ def test_grid_click_with_scroll_basic(caplog):
         cells[1],
         cells[2],
         cells[3],
-        scroll_btn,
         cells[4],
+        scroll_btn,
     ]
 
     with caplog.at_level(logging.INFO):
@@ -185,8 +185,8 @@ def test_grid_click_with_scroll_after_4_basic(capsys):
         cells[1],
         cells[2],
         cells[3],
-        scroll_btn,
         cells[4],
+        scroll_btn,
     ]
 
     mid_clicker.grid_click_with_scroll_after_4(driver, max_rows=5)
