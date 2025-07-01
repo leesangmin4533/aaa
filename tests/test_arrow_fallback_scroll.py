@@ -49,4 +49,5 @@ def test_arrow_fallback_scroll_logs(tmp_path):
         contents = f.read()
 
     assert "ArrowDown" in contents
+    assert "찾은 셀 ID" in contents
     assert "완료" in contents
