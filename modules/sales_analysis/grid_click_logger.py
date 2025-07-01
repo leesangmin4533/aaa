@@ -12,6 +12,7 @@ def log_detail(message: str, log_path: str = "grid_click_log.txt") -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(f"{timestamp} {message}\n")
+        f.flush()
     print(f"{timestamp} {message}")
 
 
@@ -25,13 +26,18 @@ def scroll_and_click_loop(
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
         ".form.div2.form.gdList.body"
     )
+    log_dir = os.path.dirname(log_path)
+    if log_dir:
+        os.makedirs(log_dir, exist_ok=True)
 
     with open(log_path, "w", encoding="utf-8") as log:
         def write_log(msg: str) -> None:
             ts = time.strftime("%H:%M:%S")
             log.write(f"[{ts}] {msg}\n")
+            log.flush()
             print(f"[{ts}] {msg}")
 
+        write_log("함수 진입")
         write_log(f"▶ 실행: 셀 순회 시작 (최대 {max_cells}셀)")
         action = ActionChains(driver)
 
