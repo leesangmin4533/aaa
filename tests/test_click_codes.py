@@ -166,10 +166,19 @@ def test_grid_click_with_scroll_basic(caplog):
         Exception("stop"),
     ]
 
-    with caplog.at_level(logging.INFO):
+    logs = []
+    original_log_detail = mid_clicker.log_detail
+
+    def fake_log_detail(message: str) -> None:
+        logs.append(message)
+
+    mid_clicker.log_detail = fake_log_detail
+    try:
         mid_clicker.grid_click_with_scroll(driver, max_rows=5)
+    finally:
+        mid_clicker.log_detail = original_log_detail
 
     assert cell1.click.called
     assert cell2.click.called
     assert scroll_btn.click.call_count == 2
-    assert any("루프 종료" in rec.getMessage() for rec in caplog.records)
+    assert any("루프 종료" in msg for msg in logs)

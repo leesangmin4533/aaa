@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 from log_util import create_logger
+from .grid_click_logger import log_detail
 
 MODULE_NAME = "mid_click"
 
@@ -291,21 +292,17 @@ def grid_click_with_scroll(
         try:
             code_cell = driver.find_element(By.ID, cell_id)
             code_text = code_cell.text.strip()
-            log(
-                "grid_click",
-                "실행",
-                f"[{i}] 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'",
-            )
+            log_detail(f"[{i}] 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'")
             code_cell.click()
             time.sleep(0.2)
 
             scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
             scroll_btn.click()
-            log("grid_click", "실행", f"[{i}] 스크롤 버튼 클릭 완료")
+            log_detail(f"[{i}] 스크롤 버튼 클릭 완료")
             time.sleep(0.4)
 
         except Exception as e:  # pragma: no cover - generic error handling
-            log("grid_click", "오류", f"[{i}] {e}")
+            log_detail(f"[{i}] ❌ 오류 발생: {e}")
             break
 
-    log("grid_click", "완료", "전체 셀 클릭 및 스크롤 루프 종료")
+    log_detail("✅ 전체 셀 클릭 및 스크롤 루프 종료")
