@@ -1,314 +1,225 @@
-2025-07-01 15:58:33 ▶ 실행: 방향키 기반 셀 이동 시작
-2025-07-01 15:58:34 • 초기 포커스: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
-2025-07-01 15:58:34 [0] ↓ ArrowDown
-2025-07-01 15:58:35 [0] activeElement → mainframe
-2025-07-01 15:58:35 [0] ✅ 셀 클릭: ID=mainframe, 텍스트='2025-07-01(화) 15:58:34
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-28º
-나의 메뉴
-발주
-정산
-검수전표
-매출분석
-재고
-커뮤니케이션
-점주관리
-마스터
-신청업무
-온라인(APP)
-나의 온라인점포
-
-
-
-
-
-
-
-
-
-
-
-점포시스템
-(46513) 이천호반베르디움점
-
- 중분류별 매출 ...
-Home
-
-
-
-
-
-
-조회일자
-점포
-영수금액
-매출금액
-기간구분
-일자선택
-기간선택
-코드
-중분류
-수량
-금액
-구성비(%)
-001
-도시락
-1
-5,900
-1.5
-002
-주먹밥
-6
-8,800
-2.2
-003
-김밥
-5
-16,600
-4.2
-004
-샌드위치류
-1
-3,700
-0.9
-010
-제조음료
-1
-900
-0.2
-012
-빵
-3
-4,339
-1.1
-014
-디저트
-3
-6,235
-1.5
-015
-비스켓/쿠키
-9
-17,400
-4.4
-016
-스낵류
-6
-10,300
-2.6
-020
-캔디
-3
-4,500
-1.1
-022
-마른안주류
-2
-3,500
-0.8
-023
-육가공류
-4
-7,885
-2
-032
-면류
-21
-26,911
-6.8
-033
-상온즉석식
-2
-2,000
-0.5
-034
-냉동즉석식
-1
-1,900
-0.4
-035
-냉장즉석식
-1
-5,500
-1.4
-036
-의약외품
-1
-1,000
-0.2
-039
-과일야채음료
-7
-11,400
-2.9
-040
-기능건강음료
-3
-4,600
-1.1
-041
-생수
-3
-2,800
-0.7
-042
-커피음료
-13
-27,900
-7.1
-상품코드
-상품명
-매출
-발주
-매입
-폐기
-현재고
-8800271902797
-도)쟌슨빌스페셜정식1
-1
-1
-0
-조회구분
-중분류별 매출 구성비
-종 료
-저 장
-조 회'
-2025-07-01 15:58:35 [1] ↓ ArrowDown
-2025-07-01 15:58:35 [1] activeElement → mainframe
-2025-07-01 15:58:35 [1] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:36 [2] ↓ ArrowDown
-2025-07-01 15:58:36 [2] activeElement → mainframe
-2025-07-01 15:58:36 [2] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:37 [3] ↓ ArrowDown
-2025-07-01 15:58:37 [3] activeElement → mainframe
-2025-07-01 15:58:37 [3] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:38 [4] ↓ ArrowDown
-2025-07-01 15:58:38 [4] activeElement → mainframe
-2025-07-01 15:58:38 [4] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:39 [5] ↓ ArrowDown
-2025-07-01 15:58:39 [5] activeElement → mainframe
-2025-07-01 15:58:39 [5] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:40 [6] ↓ ArrowDown
-2025-07-01 15:58:40 [6] activeElement → mainframe
-2025-07-01 15:58:40 [6] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:41 [7] ↓ ArrowDown
-2025-07-01 15:58:41 [7] activeElement → mainframe
-2025-07-01 15:58:41 [7] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:42 [8] ↓ ArrowDown
-2025-07-01 15:58:42 [8] activeElement → mainframe
-2025-07-01 15:58:42 [8] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:42 [9] ↓ ArrowDown
-2025-07-01 15:58:43 [9] activeElement → mainframe
-2025-07-01 15:58:43 [9] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:43 [10] ↓ ArrowDown
-2025-07-01 15:58:44 [10] activeElement → mainframe
-2025-07-01 15:58:44 [10] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:44 [11] ↓ ArrowDown
-2025-07-01 15:58:44 [11] activeElement → mainframe
-2025-07-01 15:58:45 [11] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:45 [12] ↓ ArrowDown
-2025-07-01 15:58:45 [12] activeElement → mainframe
-2025-07-01 15:58:46 [12] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:46 [13] ↓ ArrowDown
-2025-07-01 15:58:46 [13] activeElement → mainframe
-2025-07-01 15:58:46 [13] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:47 [14] ↓ ArrowDown
-2025-07-01 15:58:47 [14] activeElement → mainframe
-2025-07-01 15:58:47 [14] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:48 [15] ↓ ArrowDown
-2025-07-01 15:58:48 [15] activeElement → mainframe
-2025-07-01 15:58:48 [15] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:49 [16] ↓ ArrowDown
-2025-07-01 15:58:49 [16] activeElement → mainframe
-2025-07-01 15:58:49 [16] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:50 [17] ↓ ArrowDown
-2025-07-01 15:58:50 [17] activeElement → mainframe
-2025-07-01 15:58:50 [17] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:51 [18] ↓ ArrowDown
-2025-07-01 15:58:51 [18] activeElement → mainframe
-2025-07-01 15:58:51 [18] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:51 [19] ↓ ArrowDown
-2025-07-01 15:58:52 [19] activeElement → mainframe
-2025-07-01 15:58:52 [19] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:52 [20] ↓ ArrowDown
-2025-07-01 15:58:53 [20] activeElement → mainframe
-2025-07-01 15:58:53 [20] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:53 [21] ↓ ArrowDown
-2025-07-01 15:58:54 [21] activeElement → mainframe
-2025-07-01 15:58:54 [21] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:54 [22] ↓ ArrowDown
-2025-07-01 15:58:55 [22] activeElement → mainframe
-2025-07-01 15:58:55 [22] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:55 [23] ↓ ArrowDown
-2025-07-01 15:58:55 [23] activeElement → mainframe
-2025-07-01 15:58:56 [23] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:56 [24] ↓ ArrowDown
-2025-07-01 15:58:56 [24] activeElement → mainframe
-2025-07-01 15:58:57 [24] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: mainframe)
-2025-07-01 15:58:57 [25] ↓ ArrowDown
-2025-07-01 15:58:57 [25] activeElement → mainframe
+2025-07-01 16:31:45 ▶ 실행: 방향키 기반 셀 이동 시작
+2025-07-01 16:31:46 • 초기 포커스: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
+2025-07-01 16:31:46 [0] ↓ ArrowDown
+2025-07-01 16:31:46 [0] activeElement → mainframe
+2025-07-01 16:31:46 [0] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:46 [1] ↓ ArrowDown
+2025-07-01 16:31:47 [1] activeElement → mainframe
+2025-07-01 16:31:47 [1] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:47 [2] ↓ ArrowDown
+2025-07-01 16:31:47 [2] activeElement → mainframe
+2025-07-01 16:31:47 [2] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:47 [3] ↓ ArrowDown
+2025-07-01 16:31:47 [3] activeElement → mainframe
+2025-07-01 16:31:47 [3] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:47 [4] ↓ ArrowDown
+2025-07-01 16:31:48 [4] activeElement → mainframe
+2025-07-01 16:31:48 [4] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:48 [5] ↓ ArrowDown
+2025-07-01 16:31:48 [5] activeElement → mainframe
+2025-07-01 16:31:48 [5] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:48 [6] ↓ ArrowDown
+2025-07-01 16:31:48 [6] activeElement → mainframe
+2025-07-01 16:31:48 [6] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:48 [7] ↓ ArrowDown
+2025-07-01 16:31:49 [7] activeElement → mainframe
+2025-07-01 16:31:49 [7] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:49 [8] ↓ ArrowDown
+2025-07-01 16:31:49 [8] activeElement → mainframe
+2025-07-01 16:31:49 [8] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:49 [9] ↓ ArrowDown
+2025-07-01 16:31:49 [9] activeElement → mainframe
+2025-07-01 16:31:49 [9] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:49 [10] ↓ ArrowDown
+2025-07-01 16:31:50 [10] activeElement → mainframe
+2025-07-01 16:31:50 [10] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:50 [11] ↓ ArrowDown
+2025-07-01 16:31:50 [11] activeElement → mainframe
+2025-07-01 16:31:50 [11] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:50 [12] ↓ ArrowDown
+2025-07-01 16:31:50 [12] activeElement → mainframe
+2025-07-01 16:31:50 [12] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:50 [13] ↓ ArrowDown
+2025-07-01 16:31:51 [13] activeElement → mainframe
+2025-07-01 16:31:51 [13] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:51 [14] ↓ ArrowDown
+2025-07-01 16:31:51 [14] activeElement → mainframe
+2025-07-01 16:31:51 [14] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:51 [15] ↓ ArrowDown
+2025-07-01 16:31:51 [15] activeElement → mainframe
+2025-07-01 16:31:51 [15] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:51 [16] ↓ ArrowDown
+2025-07-01 16:31:52 [16] activeElement → mainframe
+2025-07-01 16:31:52 [16] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:52 [17] ↓ ArrowDown
+2025-07-01 16:31:52 [17] activeElement → mainframe
+2025-07-01 16:31:52 [17] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:52 [18] ↓ ArrowDown
+2025-07-01 16:31:52 [18] activeElement → mainframe
+2025-07-01 16:31:52 [18] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:52 [19] ↓ ArrowDown
+2025-07-01 16:31:53 [19] activeElement → mainframe
+2025-07-01 16:31:53 [19] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:53 [20] ↓ ArrowDown
+2025-07-01 16:31:53 [20] activeElement → mainframe
+2025-07-01 16:31:53 [20] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:53 [21] ↓ ArrowDown
+2025-07-01 16:31:53 [21] activeElement → mainframe
+2025-07-01 16:31:53 [21] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:53 [22] ↓ ArrowDown
+2025-07-01 16:31:54 [22] activeElement → mainframe
+2025-07-01 16:31:54 [22] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:54 [23] ↓ ArrowDown
+2025-07-01 16:31:54 [23] activeElement → mainframe
+2025-07-01 16:31:54 [23] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:54 [24] ↓ ArrowDown
+2025-07-01 16:31:54 [24] activeElement → mainframe
+2025-07-01 16:31:54 [24] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:54 [25] ↓ ArrowDown
+2025-07-01 16:31:55 [25] activeElement → mainframe
+2025-07-01 16:31:55 [25] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:55 [26] ↓ ArrowDown
+2025-07-01 16:31:55 [26] activeElement → mainframe
+2025-07-01 16:31:55 [26] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:55 [27] ↓ ArrowDown
+2025-07-01 16:31:55 [27] activeElement → mainframe
+2025-07-01 16:31:55 [27] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:55 [28] ↓ ArrowDown
+2025-07-01 16:31:56 [28] activeElement → mainframe
+2025-07-01 16:31:56 [28] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:56 [29] ↓ ArrowDown
+2025-07-01 16:31:56 [29] activeElement → mainframe
+2025-07-01 16:31:56 [29] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:56 [30] ↓ ArrowDown
+2025-07-01 16:31:56 [30] activeElement → mainframe
+2025-07-01 16:31:56 [30] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:56 [31] ↓ ArrowDown
+2025-07-01 16:31:57 [31] activeElement → mainframe
+2025-07-01 16:31:57 [31] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:57 [32] ↓ ArrowDown
+2025-07-01 16:31:57 [32] activeElement → mainframe
+2025-07-01 16:31:57 [32] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:57 [33] ↓ ArrowDown
+2025-07-01 16:31:57 [33] activeElement → mainframe
+2025-07-01 16:31:57 [33] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:57 [34] ↓ ArrowDown
+2025-07-01 16:31:58 [34] activeElement → mainframe
+2025-07-01 16:31:58 [34] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:58 [35] ↓ ArrowDown
+2025-07-01 16:31:58 [35] activeElement → mainframe
+2025-07-01 16:31:58 [35] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:58 [36] ↓ ArrowDown
+2025-07-01 16:31:58 [36] activeElement → mainframe
+2025-07-01 16:31:58 [36] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:58 [37] ↓ ArrowDown
+2025-07-01 16:31:59 [37] activeElement → mainframe
+2025-07-01 16:31:59 [37] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:59 [38] ↓ ArrowDown
+2025-07-01 16:31:59 [38] activeElement → mainframe
+2025-07-01 16:31:59 [38] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:59 [39] ↓ ArrowDown
+2025-07-01 16:31:59 [39] activeElement → mainframe
+2025-07-01 16:31:59 [39] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:31:59 [40] ↓ ArrowDown
+2025-07-01 16:32:00 [40] activeElement → mainframe
+2025-07-01 16:32:00 [40] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:00 [41] ↓ ArrowDown
+2025-07-01 16:32:00 [41] activeElement → mainframe
+2025-07-01 16:32:00 [41] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:00 [42] ↓ ArrowDown
+2025-07-01 16:32:00 [42] activeElement → mainframe
+2025-07-01 16:32:00 [42] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:00 [43] ↓ ArrowDown
+2025-07-01 16:32:01 [43] activeElement → mainframe
+2025-07-01 16:32:01 [43] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:01 [44] ↓ ArrowDown
+2025-07-01 16:32:01 [44] activeElement → mainframe
+2025-07-01 16:32:01 [44] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:01 [45] ↓ ArrowDown
+2025-07-01 16:32:01 [45] activeElement → mainframe
+2025-07-01 16:32:01 [45] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:01 [46] ↓ ArrowDown
+2025-07-01 16:32:02 [46] activeElement → mainframe
+2025-07-01 16:32:02 [46] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:02 [47] ↓ ArrowDown
+2025-07-01 16:32:02 [47] activeElement → mainframe
+2025-07-01 16:32:02 [47] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:02 [48] ↓ ArrowDown
+2025-07-01 16:32:02 [48] activeElement → mainframe
+2025-07-01 16:32:02 [48] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:02 [49] ↓ ArrowDown
+2025-07-01 16:32:03 [49] activeElement → mainframe
+2025-07-01 16:32:03 [49] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:03 [50] ↓ ArrowDown
+2025-07-01 16:32:03 [50] activeElement → mainframe
+2025-07-01 16:32:03 [50] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:03 [51] ↓ ArrowDown
+2025-07-01 16:32:03 [51] activeElement → mainframe
+2025-07-01 16:32:03 [51] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:03 [52] ↓ ArrowDown
+2025-07-01 16:32:04 [52] activeElement → mainframe
+2025-07-01 16:32:04 [52] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:04 [53] ↓ ArrowDown
+2025-07-01 16:32:04 [53] activeElement → mainframe
+2025-07-01 16:32:04 [53] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:04 [54] ↓ ArrowDown
+2025-07-01 16:32:04 [54] activeElement → mainframe
+2025-07-01 16:32:04 [54] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:04 [55] ↓ ArrowDown
+2025-07-01 16:32:04 [55] activeElement → mainframe
+2025-07-01 16:32:04 [55] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:04 [56] ↓ ArrowDown
+2025-07-01 16:32:05 [56] activeElement → mainframe
+2025-07-01 16:32:05 [56] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:05 [57] ↓ ArrowDown
+2025-07-01 16:32:05 [57] activeElement → mainframe
+2025-07-01 16:32:05 [57] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:05 [58] ↓ ArrowDown
+2025-07-01 16:32:05 [58] activeElement → mainframe
+2025-07-01 16:32:05 [58] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:05 [59] ↓ ArrowDown
+2025-07-01 16:32:06 [59] activeElement → mainframe
+2025-07-01 16:32:06 [59] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:06 [60] ↓ ArrowDown
+2025-07-01 16:32:06 [60] activeElement → mainframe
+2025-07-01 16:32:06 [60] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:06 [61] ↓ ArrowDown
+2025-07-01 16:32:06 [61] activeElement → mainframe
+2025-07-01 16:32:06 [61] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:06 [62] ↓ ArrowDown
+2025-07-01 16:32:07 [62] activeElement → mainframe
+2025-07-01 16:32:07 [62] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:07 [63] ↓ ArrowDown
+2025-07-01 16:32:07 [63] activeElement → mainframe
+2025-07-01 16:32:07 [63] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:07 [64] ↓ ArrowDown
+2025-07-01 16:32:07 [64] activeElement → mainframe
+2025-07-01 16:32:07 [64] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:07 [65] ↓ ArrowDown
+2025-07-01 16:32:08 [65] activeElement → mainframe
+2025-07-01 16:32:08 [65] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:08 [66] ↓ ArrowDown
+2025-07-01 16:32:08 [66] activeElement → mainframe
+2025-07-01 16:32:08 [66] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:08 [67] ↓ ArrowDown
+2025-07-01 16:32:08 [67] activeElement → mainframe
+2025-07-01 16:32:08 [67] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:08 [68] ↓ ArrowDown
+2025-07-01 16:32:09 [68] activeElement → mainframe
+2025-07-01 16:32:09 [68] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:09 [69] ↓ ArrowDown
+2025-07-01 16:32:09 [69] activeElement → mainframe
+2025-07-01 16:32:09 [69] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:09 [70] ↓ ArrowDown
+2025-07-01 16:32:09 [70] activeElement → mainframe
+2025-07-01 16:32:09 [70] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:09 [71] ↓ ArrowDown
+2025-07-01 16:32:10 [71] activeElement → mainframe
+2025-07-01 16:32:10 [71] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:10 [72] ↓ ArrowDown
+2025-07-01 16:32:10 [72] activeElement → mainframe
+2025-07-01 16:32:10 [72] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:10 [73] ↓ ArrowDown
+2025-07-01 16:32:10 [73] activeElement → mainframe
+2025-07-01 16:32:10 [73] ⚠ 포커스 필터 미통과: mainframe
+2025-07-01 16:32:10 [74] ↓ ArrowDown
