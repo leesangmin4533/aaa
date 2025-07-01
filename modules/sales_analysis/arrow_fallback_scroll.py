@@ -111,6 +111,22 @@ def scroll_with_arrow_fallback_loop(
 
         write_log(f"[{i}] 찾은 셀 ID → {curr_id}")
 
+        if curr_id == prev_id:
+            action.send_keys(Keys.ARROW_DOWN).perform()
+            write_log(f"[{i}] ↩ 재시도: ↓ ArrowDown")
+            time.sleep(2)
+            cell_elem = find_cell_under_mainframe(driver)
+            if isinstance(cell_elem, str):
+                curr_id = cell_elem
+            elif cell_elem is not None:
+                curr_id = cell_elem.get_attribute("id")
+            else:
+                curr_id = get_active_id()
+            write_log(f"[{i}] 재시도 후 ID → {curr_id}")
+            if curr_id == prev_id:
+                write_log(f"[{i}] ⚠ 이동 실패: {curr_id}")
+                break
+
         if not curr_id:
             write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
             break
@@ -140,6 +156,7 @@ def scroll_with_arrow_fallback_loop(
 
             if text.isdigit() and 1 <= int(text) <= 900:
                 cell.click()
+                driver.execute_script("arguments[0].focus();", cell)
                 write_log(f"[{i}] ✅ 셀 클릭 완료")
             else:
                 write_log(f"[{i}] ⚠ 클릭 건너뜀: 텍스트 '{text}'")
