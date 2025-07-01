@@ -30,6 +30,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
     from modules.sales_analysis.mid_category_clicker import (
         click_codes_by_arrow,
         click_codes_by_loop,
+        scroll_loop_click,
     )
     from modules.data_parser.parse_and_save import parse_ssv, save_filtered_rows
 
@@ -119,6 +120,16 @@ document.getElementById(arguments[0]).dispatchEvent(e);
         elif action == "gridrow_loop_click":
             max_rows = step.get("max_rows", 50)
             click_codes_by_loop(driver, row_limit=max_rows)
+        elif action == "gridrow_scroll_loop_click":
+            start_idx = step.get("start_index", 0)
+            max_attempts = step.get("max_attempts", 100)
+            do_scroll = step.get("scroll", True)
+            scroll_loop_click(
+                driver,
+                start_index=start_idx,
+                max_attempts=max_attempts,
+                scroll=do_scroll,
+            )
         log("step_end", "완료", f"{action} 완료")
         if step_log:
             log("message", "실행", step_log)
