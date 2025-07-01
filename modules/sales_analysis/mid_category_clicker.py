@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import re
 from log_util import create_logger
 from .grid_click_logger import log_detail
 
@@ -66,7 +67,9 @@ def click_codes_by_arrow(
     start_cell_id: str = (
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
     ),
-    ) -> None:
+    row_start: int = 0,
+    row_end: int | None = None,
+) -> None:
     """Click each grid row using the down arrow key until the same code repeats.
 
     Parameters
@@ -81,6 +84,10 @@ def click_codes_by_arrow(
         Abort if the focus remains on ``mainframe`` for this many retries.
     start_cell_id : str, optional
         ID of the first grid cell to click.
+    row_start : int, optional
+        Index of the first row to click.
+    row_end : int | None, optional
+        Last row index to click. ``None`` means no upper bound.
     """
 
     first_cell = driver.find_element(By.ID, start_cell_id)
@@ -116,6 +123,9 @@ def click_codes_by_arrow(
         focused = driver.switch_to.active_element
         cell_id = focused.get_attribute("id") or ""
 
+        match = re.search(r"gridrow_(\d+)\.cell_", cell_id)
+        row_idx = int(match.group(1)) if match else None
+
         if cell_id == "mainframe":
             focus_retry_count += 1
             log(
@@ -129,6 +139,19 @@ def click_codes_by_arrow(
             if focus_retry_count >= focus_retry_limit:
                 log("click_code", "치명오류", "초기 포커스 이동 실패 → 루프 강제 종료")
                 return
+            continue
+
+        if (
+            row_idx is None
+            or row_idx < row_start
+            or (row_end is not None and row_idx > row_end)
+        ):
+            if row_end is not None and row_idx is not None and row_idx > row_end:
+                log("click_code", "종료", f"행 인덱스 {row_idx}가 허용 범위 초과 → 종료")
+                break
+            log("click_code", "경고", f"허용 범위 벗어난 셀: {cell_id}")
+            send_arrow_down_native(driver)
+            time.sleep(delay)
             continue
 
         if "gdList.body.gridrow" not in cell_id or not cell_id.endswith("_0_0"):
@@ -162,7 +185,10 @@ def click_codes_by_arrow(
 
         # \u2193 \uc785\ub825 \ud6c4 \ud3ec\uce20\uc0ac\ub41c \uc140 ID \ub2e4\uc2dc \uc77d\uae30
         new_focused = driver.switch_to.active_element
+        driver.execute_script("arguments[0].focus();", new_focused)
         new_cell_id = new_focused.get_attribute("id") or ""
+        new_match = re.search(r"gridrow_(\d+)\.cell_", new_cell_id)
+        new_row_idx = int(new_match.group(1)) if new_match else None
 
         log("click_code", "위치확인", f"CDP ↓ 입력 후 포커스된 셀 ID: {new_cell_id}")
 
@@ -178,6 +204,9 @@ def click_codes_by_arrow(
                 "\uc774\ub3d9",
                 f"CDP ↓ 입력으로 셀 이동 성공 → {prev_cell_id} → {new_cell_id}",
             )
+        if new_row_idx is not None and row_end is not None and new_row_idx > row_end:
+            log("click_code", "종료", f"행 인덱스 {new_row_idx}가 허용 범위 초과 → 종료")
+            break
 
     total_clicks = sum(code_counts.values())
     log("click_code", "완료", f"총 클릭: {total_clicks}건")
