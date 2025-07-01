@@ -10,6 +10,9 @@ def scroll_with_arrow_fallback_loop(
     scroll_xpath: str = (
         "//*[@id=\"mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext\"]"
     ),
+    start_cell_id: str = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
+    ),
     log_path: str = "grid_click_log.txt",
 ) -> None:
     """Move focus down the grid using ArrowDown and scroll when needed."""
@@ -29,8 +32,16 @@ def scroll_with_arrow_fallback_loop(
         write_log("▶ 실행: 방향키 기반 셀 이동 시작")
         action = ActionChains(driver)
 
-        prev_id = get_active_id()
-        write_log(f"• 초기 포커스: {prev_id}")
+        try:
+            first_cell = driver.find_element(By.ID, start_cell_id)
+            ActionChains(driver).move_to_element(first_cell).click().perform()
+            driver.execute_script("arguments[0].focus();", first_cell)
+            time.sleep(0.5)
+            prev_id = get_active_id()
+            write_log(f"• 초기 포커스: {prev_id}")
+        except Exception as e:
+            write_log(f"❌ 초기 셀 포커스 실패: {e}")
+            return
 
         for i in range(max_steps):
             action.send_keys(Keys.ARROW_DOWN).perform()
