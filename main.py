@@ -4,7 +4,7 @@ from modules.common.module_map import write_module_map
 from log_util import create_logger
 from popup_utils import close_popups
 from modules.sales_analysis.grid_click_logger import scroll_and_click_loop
-from modules.sales_analysis.mid_category_clicker import grid_click_with_scroll_after_4
+from modules.sales_analysis.mid_category_clicker import grid_click_with_scroll_from_20
 import json
 import time
 import logging
@@ -229,7 +229,7 @@ def main():
         log("grid_click", "완료", "셀 순회 클릭 완료")
 
         log("grid_click_after4", "실행", "4회 간격 셀 클릭 및 스크롤 실행")
-        grid_click_with_scroll_after_4(driver, max_rows=20)
+        grid_click_with_scroll_from_20(driver, max_rows=100)
         log("grid_click_after4", "완료", "4회 간격 셀 클릭 및 스크롤 완료")
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > sales_analysis] 매출 분석 실패")
