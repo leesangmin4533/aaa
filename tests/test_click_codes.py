@@ -131,3 +131,23 @@ def test_scroll_loop_click_stops_on_missing(caplog):
     assert cells[1].click.called
     assert driver.execute_script.call_count == 2
     assert any("셀 없음" in rec.getMessage() for rec in caplog.records)
+
+
+def test_grid_scroll_click_loop_basic(caplog):
+    driver = MagicMock()
+    cells = [MagicMock(), MagicMock()]
+    driver.find_element.side_effect = [cells[0], cells[1], NoSuchElementException()]
+    driver.execute_script = MagicMock()
+
+    with caplog.at_level(logging.INFO):
+        mid_clicker.grid_scroll_click_loop(
+            driver,
+            "prefix_",
+            "_suffix",
+            max_rows=5,
+        )
+
+    assert cells[0].click.called
+    assert cells[1].click.called
+    assert driver.execute_script.call_count == 2
+    assert any("루프 종료" in rec.getMessage() for rec in caplog.records)
