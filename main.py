@@ -87,6 +87,30 @@ document.getElementById(arguments[0]).dispatchEvent(e);
                 key,
                 key_code,
             )
+        elif action == "cdp_keydown":
+            key = step.get("key", "ArrowDown")
+            vk = step.get("windowsVirtualKeyCode", 40)
+            driver.execute_cdp_cmd(
+                "Input.dispatchKeyEvent",
+                {
+                    "type": "keyDown",
+                    "key": key,
+                    "code": key,
+                    "windowsVirtualKeyCode": vk,
+                    "nativeVirtualKeyCode": vk,
+                },
+            )
+            time.sleep(0.1)
+            driver.execute_cdp_cmd(
+                "Input.dispatchKeyEvent",
+                {
+                    "type": "keyUp",
+                    "key": key,
+                    "code": key,
+                    "windowsVirtualKeyCode": vk,
+                    "nativeVirtualKeyCode": vk,
+                },
+            )
         elif action == "click_codes_by_arrow":
             click_codes_by_arrow(driver)
         log("step_end", "완료", f"{action} 완료")

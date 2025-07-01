@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 from log_util import create_logger
@@ -7,6 +6,31 @@ from log_util import create_logger
 MODULE_NAME = "mid_click"
 
 log = create_logger(MODULE_NAME)
+
+
+def send_arrow_down_native(driver) -> None:
+    """Send an ArrowDown key event using CDP so Nexacro handles it natively."""
+    driver.execute_cdp_cmd(
+        "Input.dispatchKeyEvent",
+        {
+            "type": "keyDown",
+            "key": "ArrowDown",
+            "code": "ArrowDown",
+            "windowsVirtualKeyCode": 40,
+            "nativeVirtualKeyCode": 40,
+        },
+    )
+    time.sleep(0.1)
+    driver.execute_cdp_cmd(
+        "Input.dispatchKeyEvent",
+        {
+            "type": "keyUp",
+            "key": "ArrowDown",
+            "code": "ArrowDown",
+            "windowsVirtualKeyCode": 40,
+            "nativeVirtualKeyCode": 40,
+        },
+    )
 
 
 def click_codes_by_arrow(
@@ -41,6 +65,9 @@ def click_codes_by_arrow(
     driver.execute_script("arguments[0].focus();", first_cell)  # JS로 명시적 포커스
     time.sleep(1.0)
 
+    rows = driver.find_elements(By.XPATH, "//*[contains(@id, 'gdList.body.gridrow_')]")
+    log("click_code", "행개수확인", f"로드된 그리드 행 수: {len(rows)}")
+
     focused = driver.switch_to.active_element
     # 처음 포커스된 셀의 내용 추출 및 출력
     cell_id = focused.get_attribute("id") or "(ID 없음)"
@@ -72,7 +99,7 @@ def click_codes_by_arrow(
                 f"포커스가 mainframe에 있음 → 재시도 {focus_retry_count}/{focus_retry_limit}",
             )
             first_cell.click()
-            ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+            send_arrow_down_native(driver)
             time.sleep(delay)
             if focus_retry_count >= focus_retry_limit:
                 log("click_code", "치명오류", "초기 포커스 이동 실패 → 루프 강제 종료")
@@ -104,27 +131,27 @@ def click_codes_by_arrow(
         # \ubc29\ud5a5\ud0a4 \u2193 \uc785\ub825 \uc804 \ud604\uc7ac \uc140 ID \uc800\uc7a5
         prev_cell_id = cell_id
 
-        # \u2193 \ud0a4 \uc785\ub825 (ActionChains \uae30\ubc18)
-        ActionChains(driver).send_keys(Keys.ARROW_DOWN).perform()
+        # \u2193 \ud0a4 \uc785\ub825 (CDP native)
+        send_arrow_down_native(driver)
         time.sleep(delay)
 
         # \u2193 \uc785\ub825 \ud6c4 \ud3ec\uce20\uc0ac\ub41c \uc140 ID \ub2e4\uc2dc \uc77d\uae30
         new_focused = driver.switch_to.active_element
         new_cell_id = new_focused.get_attribute("id") or ""
 
-        log("click_code", "위치확인", f"ActionChains ↓ 입력 후 포커스된 셀 ID: {new_cell_id}")
+        log("click_code", "위치확인", f"CDP ↓ 입력 후 포커스된 셀 ID: {new_cell_id}")
 
         if new_cell_id == prev_cell_id:
             log(
                 "click_code",
                 "\uacbd\uace0",
-                f"ActionChains ↓ 입력 후에도 셀 이동 없음 (셀 ID 동일: {new_cell_id})",
+                f"CDP ↓ 입력 후에도 셀 이동 없음 (셀 ID 동일: {new_cell_id})",
             )
         else:
             log(
                 "click_code",
                 "\uc774\ub3d9",
-                f"ActionChains ↓ 입력으로 셀 이동 성공 → {prev_cell_id} → {new_cell_id}",
+                f"CDP ↓ 입력으로 셀 이동 성공 → {prev_cell_id} → {new_cell_id}",
             )
 
     total_clicks = sum(code_counts.values())
