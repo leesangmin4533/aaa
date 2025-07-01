@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import re
 
 from .grid_click_logger import log_detail
 
@@ -34,6 +35,8 @@ def scroll_with_arrow_fallback_loop(
     """
     # reset log file
     open(log_path, "w", encoding="utf-8").close()
+
+    base_prefix = start_cell_id.split("gridrow_")[0] + "gridrow_"
 
     def write_log(msg: str) -> None:
         log_detail(msg, log_path=log_path)
@@ -79,13 +82,25 @@ def scroll_with_arrow_fallback_loop(
                 write_log(f"[{i}] ❌ 스크롤 실패: {e}")
                 break
 
+        match = re.search(r"gridrow_(\d+)", curr_id or "")
+        row_idx = int(match.group(1)) if match else None
+        if row_idx is None:
+            write_log(f"[{i}] ⚠ 셀 ID 파싱 실패: {curr_id}")
+            prev_id = curr_id
+            continue
+
+        text_cell_id = f"{base_prefix}{row_idx}.cell_{row_idx}_0:text"
         try:
-            cell = driver.find_element(By.ID, curr_id)
+            cell = driver.find_element(By.ID, text_cell_id)
             text = cell.text.strip()
-            write_log(f"[{i}] ✅ 셀 클릭: ID={curr_id}, 텍스트='{text}'")
-            cell.click()
+            write_log(f"[{i}] 셀 확인: ID={text_cell_id}, 텍스트='{text}'")
+            if text.isdigit() and 1 <= int(text) <= 900:
+                cell.click()
+                write_log(f"[{i}] ✅ 셀 클릭 완료")
+            else:
+                write_log(f"[{i}] ⚠ 클릭 건너뜀: 텍스트 '{text}'")
         except Exception as e:
-            write_log(f"[{i}] ❌ 셀 클릭 실패: ID={curr_id}, 오류: {e}")
+            write_log(f"[{i}] ❌ 셀 클릭 실패: ID={text_cell_id}, 오류: {e}")
             break
 
         prev_id = curr_id
