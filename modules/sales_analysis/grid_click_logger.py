@@ -46,6 +46,7 @@ def scroll_and_click_loop(
                 write_log(f"✅ 셀 {idx} 클릭 시도: ID={cell_id}, 텍스트='{text}'")
 
                 cell.click()
+                cell.send_keys("")  # 명시적 포커스 부여
                 time.sleep(0.2)
 
                 action.send_keys(Keys.ARROW_DOWN).perform()
