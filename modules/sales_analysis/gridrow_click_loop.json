@@ -38,9 +38,10 @@
       "timeout": 10
     },
     {
-      "action": "gridrow_loop_click",
-      "max_rows": 50,
-      "log": "ID 기반 셀 순회 클릭 시작"
+      "action": "run_function",
+      "function": "grid_click_with_scroll",
+      "module": "mid_category_clicker",
+      "log": "코드 셀 클릭 후 스크롤 반복 실행"
     }
   ]
 }
