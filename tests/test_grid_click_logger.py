@@ -37,7 +37,9 @@ def test_scroll_and_click_loop_logs(tmp_path):
     scroll_and_click_loop(driver, max_cells=5, log_path=str(log_file))
 
     assert cells[0].click.called
+    assert cells[0].send_keys.called
     assert cells[1].click.called
+    assert cells[1].send_keys.called
     with open(log_file, "r", encoding="utf-8") as f:
         log_contents = f.read()
     assert "클릭 시도" in log_contents
