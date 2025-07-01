@@ -10,9 +10,6 @@ from .grid_click_logger import log_detail
 def scroll_with_arrow_fallback_loop(
     driver,
     max_steps: int = 100,
-    scroll_xpath: str = (
-        "//*[@id=\"mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext\"]"
-    ),
     start_cell_id: str = (
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
     ),
@@ -26,8 +23,6 @@ def scroll_with_arrow_fallback_loop(
         Selenium WebDriver instance.
     max_steps : int, optional
         Maximum loop iterations.
-    scroll_xpath : str, optional
-        XPath of the scroll button.
     start_cell_id : str, optional
         ID of the starting cell.
     log_path : str, optional
@@ -71,16 +66,6 @@ def scroll_with_arrow_fallback_loop(
             write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
             break
 
-        if curr_id == prev_id:
-            try:
-                scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
-                scroll_btn.click()
-                write_log(f"[{i}] ⬇ 스크롤 버튼 클릭 (포커스 유지 중: {curr_id})")
-                time.sleep(0.5)
-                continue
-            except Exception as e:
-                write_log(f"[{i}] ❌ 스크롤 실패: {e}")
-                break
 
         match = re.search(r"gridrow_(\d+)", curr_id or "")
         row_idx = int(match.group(1)) if match else None
