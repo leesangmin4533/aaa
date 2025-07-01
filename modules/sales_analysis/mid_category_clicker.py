@@ -314,7 +314,7 @@ def grid_click_with_scroll_after_4(
     max_rows: int = 100,
     scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
 ) -> None:
-    """셀을 4번 클릭한 뒤 스크롤 버튼을 눌러 다음 셀을 표시한다."""
+    """셀 4개를 순회한 후 스크롤 버튼을 눌러 다음 영역을 표시한다."""
     from selenium.webdriver.common.by import By
     import time
 
@@ -332,11 +332,11 @@ def grid_click_with_scroll_after_4(
             cell.click()
             time.sleep(0.2)
 
-            if (i + 1) % 4 == 0:
+            if i > 0 and i % 4 == 0:
                 scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
                 scroll_btn.click()
-                print(f"[{i}] ➡ 스크롤 버튼 클릭 (4회 클릭 후)")
-                time.sleep(0.4)
+                print(f"[{i}] ➡ 스크롤 버튼 클릭 (4회 간격)")
+                time.sleep(0.6)
 
         except Exception as e:
             print(f"[{i}] ❌ 오류 발생: {e}")
