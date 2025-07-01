@@ -66,6 +66,12 @@ def scroll_with_arrow_fallback_loop(
         return
 
     for i in range(max_steps):
+        try:
+            focused_cell = driver.find_element(By.ID, prev_id)
+            driver.execute_script("arguments[0].focus();", focused_cell)
+        except Exception as e:
+            write_log(f"[{i}] ⚠ 포커스 고정 실패: {e}")
+
         action.send_keys(Keys.ARROW_DOWN).perform()
         write_log(f"[{i}] ↓ ArrowDown")
         time.sleep(0.3)
