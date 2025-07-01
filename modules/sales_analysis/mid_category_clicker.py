@@ -202,3 +202,42 @@ def click_codes_by_loop(driver, row_limit: int = 50) -> None:
             time.sleep(0.3)
         except Exception as e:
             log("click_code", "오류", f"[{i}] 셀 접근 실패: {e}")
+
+
+def scroll_loop_click(driver, start_index: int = 0, max_attempts: int = 100, scroll: bool = True) -> None:
+    """Sequentially click grid cells until a cell is missing.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Selenium WebDriver instance.
+    start_index : int, optional
+        Index of the first grid row to click.
+    max_attempts : int, optional
+        Maximum iterations before aborting.
+    scroll : bool, optional
+        Whether to scroll the cell into view before clicking.
+    """
+    from selenium.common.exceptions import NoSuchElementException
+
+    base_id = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
+        ".form.div2.form.gdList.body"
+    )
+
+    i = start_index
+    attempts = 0
+    while attempts < max_attempts:
+        cell_id = f"{base_id}.gridrow_{i}.cell_0_0"
+        try:
+            cell = driver.find_element(By.ID, cell_id)
+            if scroll:
+                driver.execute_script("arguments[0].scrollIntoView();", cell)
+            cell.click()
+            log("scroll_loop", "실행", f"[{i}] 클릭 성공")
+            i += 1
+            attempts += 1
+            time.sleep(0.3)
+        except NoSuchElementException:
+            log("scroll_loop", "완료", f"[{i}] 셀 없음 → 종료")
+            break

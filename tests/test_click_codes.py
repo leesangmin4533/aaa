@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock
+from selenium.common.exceptions import NoSuchElementException
 import logging
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -115,3 +116,18 @@ def test_click_codes_by_loop_iterates_rows(caplog):
         assert cell.click.called
     row_log_found = any("순회 대상: 3" in rec.getMessage() for rec in caplog.records)
     assert row_log_found
+
+
+def test_scroll_loop_click_stops_on_missing(caplog):
+    driver = MagicMock()
+    cells = [MagicMock(), MagicMock()]
+    driver.find_element.side_effect = [cells[0], cells[1], NoSuchElementException()]
+    driver.execute_script = MagicMock()
+
+    with caplog.at_level(logging.INFO):
+        mid_clicker.scroll_loop_click(driver, max_attempts=5)
+
+    assert cells[0].click.called
+    assert cells[1].click.called
+    assert driver.execute_script.call_count == 2
+    assert any("셀 없음" in rec.getMessage() for rec in caplog.records)
