@@ -92,15 +92,20 @@ def scroll_with_arrow_fallback_loop(
         driver.execute_script("arguments[0].focus();", first_cell)
         time.sleep(0.5)
         prev_id = get_active_id()
-        write_log(f"• 초기 포커스: {prev_id}")
+        write_log(f"• 초기 포커스 및 클릭: {prev_id}")
     except Exception as e:
         write_log(f"❌ 초기 셀 포커스 실패: {e}")
         return
 
+    # move once to start from the next row
+    action.send_keys(Keys.ARROW_DOWN).perform()
+    write_log("• 초기 ArrowDown 실행")
+    time.sleep(1)
+
+    curr_id = get_active_id()
+    same_count = 0
+
     for i in range(max_steps):
-        action.send_keys(Keys.ARROW_DOWN).perform()
-        write_log(f"[{i}] ↓ ArrowDown")
-        time.sleep(2)
         cell_elem = find_cell_under_mainframe(driver)
         if isinstance(cell_elem, str):
             curr_id = cell_elem
@@ -109,35 +114,17 @@ def scroll_with_arrow_fallback_loop(
         else:
             curr_id = get_active_id()
 
-        write_log(f"[{i}] 찾은 셀 ID → {curr_id}")
-
-        if curr_id == prev_id:
-            action.send_keys(Keys.ARROW_DOWN).perform()
-            write_log(f"[{i}] ↩ 재시도: ↓ ArrowDown")
-            time.sleep(2)
-            cell_elem = find_cell_under_mainframe(driver)
-            if isinstance(cell_elem, str):
-                curr_id = cell_elem
-            elif cell_elem is not None:
-                curr_id = cell_elem.get_attribute("id")
-            else:
-                curr_id = get_active_id()
-            write_log(f"[{i}] 재시도 후 ID → {curr_id}")
-            if curr_id == prev_id:
-                write_log(f"[{i}] ⚠ 이동 실패: {curr_id}")
-                break
+        write_log(f"[{i}] 현재 셀 ID → {curr_id}")
 
         if not curr_id:
             write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
             break
-
 
         match = re.search(r"gridrow_(\d+)", curr_id or "")
         row_idx = int(match.group(1)) if match else None
         if row_idx is None:
             curr_xpath = f"//*[@id='{curr_id}']" if curr_id else "N/A"
             write_log(f"[{i}] ⚠ 셀 ID 파싱 실패: {curr_id} (xpath={curr_xpath})")
-            prev_id = curr_id
             continue
 
         text_cell_id = f"{base_prefix}{row_idx}.cell_{row_idx}_0:text"
@@ -146,7 +133,6 @@ def scroll_with_arrow_fallback_loop(
             text = cell.text.strip()
             write_log(f"[{i}] 셀 확인: ID={text_cell_id}, 텍스트='{text}'")
 
-            # 로그에 행 전체 정보를 추가로 기록해 노출 범위를 확인한다
             try:
                 row_elem = driver.find_element(By.ID, f"{base_prefix}{row_idx}")
                 row_text = row_elem.text.replace("\n", " | ").strip()
@@ -167,6 +153,38 @@ def scroll_with_arrow_fallback_loop(
             )
             break
 
-        prev_id = curr_id
+        action.send_keys(Keys.ARROW_DOWN).perform()
+        write_log(f"[{i}] ↓ ArrowDown")
+        time.sleep(1)
+
+        next_elem = find_cell_under_mainframe(driver)
+        if isinstance(next_elem, str):
+            next_id = next_elem
+        elif next_elem is not None:
+            next_id = next_elem.get_attribute("id")
+        else:
+            next_id = get_active_id()
+        write_log(f"[{i}] 다음 셀 ID → {next_id}")
+
+        if next_id == curr_id:
+            same_count += 1
+            write_log(f"[{i}] ⚠ 동일 셀 반복 {same_count}회")
+            if same_count >= 3:
+                action.send_keys(Keys.ARROW_DOWN).perform()
+                write_log(f"[{i}] ↩ 반복 중단: 추가 ↓ ArrowDown")
+                time.sleep(1)
+                next_elem = find_cell_under_mainframe(driver)
+                if isinstance(next_elem, str):
+                    next_id = next_elem
+                elif next_elem is not None:
+                    next_id = next_elem.get_attribute("id")
+                else:
+                    next_id = get_active_id()
+                write_log(f"[{i}] 추가 이동 후 셀 ID → {next_id}")
+                same_count = 0
+        else:
+            same_count = 0
+
+        curr_id = next_id
 
     write_log("✅ 완료: 방향키 기반 셀 이동 종료")
