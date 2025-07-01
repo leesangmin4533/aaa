@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import re
 
 from .grid_click_logger import log_detail
 
@@ -16,8 +17,28 @@ def scroll_with_arrow_fallback_loop(
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
     ),
     log_path: str = "grid_click_log.txt",
+    row_start: int = 0,
+    row_end: int | None = None,
 ) -> None:
-    """Move focus down the grid using ArrowDown and scroll when needed."""
+    """Move focus down the grid using ArrowDown and scroll when needed.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Selenium WebDriver instance.
+    max_steps : int, optional
+        Maximum loop iterations.
+    scroll_xpath : str, optional
+        XPath of the scroll button.
+    start_cell_id : str, optional
+        ID of the starting cell.
+    log_path : str, optional
+        Path of the log file.
+    row_start : int, optional
+        Index of the first row to allow clicking.
+    row_end : int | None, optional
+        Last row index to allow. ``None`` means no upper bound.
+    """
     # reset log file
     open(log_path, "w", encoding="utf-8").close()
 
@@ -54,6 +75,19 @@ def scroll_with_arrow_fallback_loop(
         if not curr_id:
             write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
             break
+
+        match = re.search(r"gridrow_(\d+)\.cell_", curr_id or "")
+        row_idx = int(match.group(1)) if match else None
+
+        if (
+            row_idx is None
+            or row_idx < row_start
+            or (row_end is not None and row_idx > row_end)
+            or not curr_id.endswith("_0_0")
+        ):
+            write_log(f"[{i}] ⚠ 포커스 필터 미통과: {curr_id}")
+            prev_id = curr_id
+            continue
 
         if curr_id == prev_id:
             try:
