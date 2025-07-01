@@ -44,3 +44,14 @@ def test_scroll_and_click_loop_logs(tmp_path):
         log_contents = f.read()
     assert "클릭 시도" in log_contents
     assert "순회 종료" in log_contents
+
+
+def test_scroll_and_click_loop_creates_nested_log_path(tmp_path):
+    nested_log = tmp_path / "sub" / "dir" / "log.txt"
+
+    driver = MagicMock()
+
+    scroll_and_click_loop(driver, max_cells=0, log_path=str(nested_log))
+
+    assert nested_log.is_file()
+    assert nested_log.parent.is_dir()
