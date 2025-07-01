@@ -39,8 +39,8 @@
     },
     {
       "action": "run_function",
-      "function": "grid_click_with_scroll",
-      "module": "mid_category_clicker",
+      "function": "scroll_and_click_loop",
+      "module": "grid_click_logger",
       "log": "코드 셀 클릭 후 스크롤 반복 실행"
     }
   ]
