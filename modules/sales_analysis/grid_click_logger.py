@@ -25,6 +25,9 @@ def scroll_and_click_loop(
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
         ".form.div2.form.gdList.body"
     )
+    log_dir = os.path.dirname(log_path)
+    if log_dir:
+        os.makedirs(log_dir, exist_ok=True)
 
     with open(log_path, "w", encoding="utf-8") as log:
         def write_log(msg: str) -> None:
