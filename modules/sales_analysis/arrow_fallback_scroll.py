@@ -128,6 +128,15 @@ def scroll_with_arrow_fallback_loop(
             cell = driver.find_element(By.ID, text_cell_id)
             text = cell.text.strip()
             write_log(f"[{i}] 셀 확인: ID={text_cell_id}, 텍스트='{text}'")
+
+            # 로그에 행 전체 정보를 추가로 기록해 노출 범위를 확인한다
+            try:
+                row_elem = driver.find_element(By.ID, f"{base_prefix}{row_idx}")
+                row_text = row_elem.text.replace("\n", " | ").strip()
+                write_log(f"[{i}] 행 텍스트: {row_text}")
+            except Exception as e:
+                write_log(f"[{i}] ⚠ 행 텍스트 조회 실패: {e}")
+
             if text.isdigit() and 1 <= int(text) <= 900:
                 cell.click()
                 write_log(f"[{i}] ✅ 셀 클릭 완료")
