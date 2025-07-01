@@ -1,20 +1,20 @@
-[14:09:16] 함수 진입
-[14:09:16] ▶ 실행: 셀 순회 시작 (최대 100셀)
-[14:09:16] • 포커스 상태: activeElement → mainframe
-[14:09:16] ✅ 셀 0 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0, 텍스트='001'
-[14:09:17] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0, 텍스트='002'
-[14:09:17] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
-[14:09:17] ✅ 셀 1 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0, 텍스트='002'
-[14:09:18] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0, 텍스트='003'
-[14:09:18] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0
-[14:09:18] ✅ 셀 2 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0, 텍스트='003'
-[14:09:19] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0, 텍스트='010'
-[14:09:19] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0
-[14:09:19] ✅ 셀 3 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0, 텍스트='010'
-[14:09:19] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0, 텍스트=''
-[14:09:19] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0
-[14:09:19] ✅ 셀 4 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0, 텍스트=''
-[14:09:19] ❌ 오류: [4] 셀 접근 실패: Message: element not interactable
+[14:17:37] 함수 진입
+[14:17:37] ▶ 실행: 셀 순회 시작 (최대 100셀)
+[14:17:37] • 포커스 상태: activeElement → mainframe
+[14:17:37] ✅ 셀 0 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0, 텍스트='001'
+[14:17:38] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0, 텍스트='002'
+[14:17:38] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0
+[14:17:38] ✅ 셀 1 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0, 텍스트='002'
+[14:17:39] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0, 텍스트='003'
+[14:17:39] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_1_0
+[14:17:39] ✅ 셀 2 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0, 텍스트='003'
+[14:17:40] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0, 텍스트='010'
+[14:17:40] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_2.cell_2_0
+[14:17:40] ✅ 셀 3 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0, 텍스트='010'
+[14:17:40] ➡ 이동 확인: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0 → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0, 텍스트=''
+[14:17:40] • 포커스 상태: activeElement → mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_3.cell_3_0
+[14:17:40] ✅ 셀 4 클릭 시도: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_4.cell_4_0, 텍스트=''
+[14:17:40] ❌ 오류: [4] 셀 접근 실패: Message: element not interactable
   (Session info: chrome=138.0.7204.50)
 Stacktrace:
 	GetHandleVerifier [0x0x7ff752ce6f95+76917]
@@ -40,4 +40,31 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
 	RtlUserThreadStart [0x0x7ff908e1c34c+44]
 
-[14:09:19] ✅ 완료: 셀 순회 종료
+[14:17:40] ✅ 완료: 셀 순회 종료
+2025-07-01 14:17:40 [0] ✅ 코드 셀 클릭: ID=mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0, 텍스트='048'
+2025-07-01 14:17:41 [1] ❌ 오류 발생: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_1.cell_0_0"]"}
+  (Session info: chrome=138.0.7204.50); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff752ce6f95+76917]
+	GetHandleVerifier [0x0x7ff752ce6ff0+77008]
+	(No symbol) [0x0x7ff752a99dea]
+	(No symbol) [0x0x7ff752af0256]
+	(No symbol) [0x0x7ff752af050c]
+	(No symbol) [0x0x7ff752b43887]
+	(No symbol) [0x0x7ff752b184af]
+	(No symbol) [0x0x7ff752b4065c]
+	(No symbol) [0x0x7ff752b18243]
+	(No symbol) [0x0x7ff752ae1431]
+	(No symbol) [0x0x7ff752ae21c3]
+	GetHandleVerifier [0x0x7ff752fbd2cd+3051437]
+	GetHandleVerifier [0x0x7ff752fb7923+3028483]
+	GetHandleVerifier [0x0x7ff752fd58bd+3151261]
+	GetHandleVerifier [0x0x7ff752d0185e+185662]
+	GetHandleVerifier [0x0x7ff752d0971f+218111]
+	GetHandleVerifier [0x0x7ff752cefb14+112628]
+	GetHandleVerifier [0x0x7ff752cefcc9+113065]
+	GetHandleVerifier [0x0x7ff752cd6c98+10616]
+	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
+	RtlUserThreadStart [0x0x7ff908e1c34c+44]
+
+2025-07-01 14:17:41 ✅ 전체 셀 클릭 및 스크롤 루프 종료
