@@ -7,6 +7,47 @@ import re
 from .grid_click_logger import log_detail
 
 
+def find_cell_under_mainframe(driver, depth: int = 3):
+    """Return the grid cell element under the current active element.
+
+    If the active element itself is a cell, it is returned immediately. Otherwise
+    the DOM tree under the active element is searched breadth-first for an
+    element whose ID contains ``gridrow_`` and ``cell``.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Selenium WebDriver instance.
+    depth : int, optional
+        Max DOM depth to search.
+    """
+    script = f"""
+        function findCell() {{
+            var elem = document.activeElement;
+            if (elem && elem.id && elem.id.includes('gridrow_') && elem.id.includes('cell')) {{
+                return elem;
+            }}
+            function findCellUnder(e, maxDepth) {{
+                if (!e || maxDepth <= 0) return null;
+                let queue = [e];
+                while (queue.length) {{
+                    const current = queue.shift();
+                    if (current.id && current.id.includes('gridrow_') && current.id.includes('cell')) {{
+                        return current;
+                    }}
+                    for (const child of current.children || []) {{
+                        queue.push(child);
+                    }}
+                }}
+                return null;
+            }}
+            return findCellUnder(elem, {depth});
+        }}
+        return findCell();
+    """
+    return driver.execute_script(script)
+
+
 def scroll_with_arrow_fallback_loop(
     driver,
     max_steps: int = 100,
@@ -58,9 +99,16 @@ def scroll_with_arrow_fallback_loop(
     for i in range(max_steps):
         action.send_keys(Keys.ARROW_DOWN).perform()
         write_log(f"[{i}] ↓ ArrowDown")
-        time.sleep(1)
-        curr_id = get_active_id()
-        write_log(f"[{i}] activeElement → {curr_id}")
+        time.sleep(2)
+        cell_elem = find_cell_under_mainframe(driver)
+        if isinstance(cell_elem, str):
+            curr_id = cell_elem
+        elif cell_elem is not None:
+            curr_id = cell_elem.get_attribute("id")
+        else:
+            curr_id = get_active_id()
+
+        write_log(f"[{i}] 찾은 셀 ID → {curr_id}")
 
         if not curr_id:
             write_log(f"[{i}] ⚠ activeElement 없음 → 중단")
