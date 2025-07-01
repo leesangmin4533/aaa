@@ -1,10 +1,8 @@
 from datetime import datetime
-import os
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.common.exceptions import NoSuchElementException
 
 
 def log_detail(message: str, log_path: str = "grid_click_log.txt") -> None:

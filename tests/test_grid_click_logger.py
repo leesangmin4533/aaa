@@ -1,9 +1,9 @@
-import os
-from unittest.mock import MagicMock
-from pathlib import Path
-from selenium.common.exceptions import NoSuchElementException
 import sys
+from pathlib import Path
+from unittest.mock import MagicMock
+
 import pytest
+from selenium.common.exceptions import NoSuchElementException
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -25,7 +25,7 @@ def test_scroll_and_click_loop_logs(tmp_path):
         cells[1],  # next cell after arrow
         cells[1],  # second iteration current cell
         NoSuchElementException(),  # missing next cell
-        NoSuchElementException(),  # third iteration first cell missing -> break
+        NoSuchElementException(),  # 3rd iteration first cell missing -> break
     ]
 
     def fake_find(*args, **kwargs):
