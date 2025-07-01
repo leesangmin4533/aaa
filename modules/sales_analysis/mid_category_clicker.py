@@ -343,3 +343,39 @@ def grid_click_with_scroll_after_4(
             break
 
     print("✅ 전체 셀 클릭 및 스크롤 루프 종료")
+
+
+def grid_click_with_scroll_from_20(
+    driver,
+    max_rows: int = 100,
+    scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
+) -> None:
+    """20번째 셀 이후부터 스크롤 버튼을 누르며 셀을 순서대로 클릭한다."""
+    from selenium.webdriver.common.by import By
+    import time
+
+    base_id = (
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
+        ".form.div2.form.gdList.body"
+    )
+
+    for i in range(max_rows):
+        cell_id = f"{base_id}.gridrow_{i}.cell_0_0"
+        try:
+            code_cell = driver.find_element(By.ID, cell_id)
+            code_text = code_cell.text.strip()
+            print(f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'")
+            code_cell.click()
+            time.sleep(0.2)
+
+            if i >= 19:
+                scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
+                scroll_btn.click()
+                print(f"[{i}] ➡ 스크롤 버튼 클릭 완료")
+                time.sleep(0.4)
+
+        except Exception as e:
+            print(f"[{i}] ❌ 오류 발생: {e}")
+            break
+
+    print("✅ 전체 셀 클릭 및 스크롤 루프 종료")
