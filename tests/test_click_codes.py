@@ -1,7 +1,6 @@
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock
-from selenium.webdriver.common.keys import Keys
 import logging
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -43,6 +42,10 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
 
     switch = DummySwitch(cells)
 
+    def fake_send_arrow_down_native(driver):
+        switch.next()
+
+
 
     class DummyActions:
         def __init__(self, driver):
@@ -59,16 +62,13 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
                 target.click()
             return self
 
-        def send_keys(self, key):
-            if key == Keys.ARROW_DOWN:
-                switch.next()
-            return self
-
         def perform(self):
             pass
 
     original_actions = mid_clicker.ActionChains
     mid_clicker.ActionChains = DummyActions
+    original_send_arrow = mid_clicker.send_arrow_down_native
+    mid_clicker.send_arrow_down_native = fake_send_arrow_down_native
 
     driver = MagicMock()
     driver.find_element.return_value = cell1
@@ -79,6 +79,7 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
             mid_clicker.click_codes_by_arrow(driver, delay=0)
         finally:
             mid_clicker.ActionChains = original_actions
+            mid_clicker.send_arrow_down_native = original_send_arrow
 
     assert cell1.click.called
     assert cell2.click.called
