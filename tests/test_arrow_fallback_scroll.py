@@ -16,9 +16,9 @@ def test_arrow_fallback_scroll_logs(tmp_path):
     next_cell = MagicMock()
     next_cell.text = "002"
 
-    # first call for start_cell, second for current cell
-    driver.find_element.side_effect = [first_cell, next_cell]
-    driver.execute_script.side_effect = ["cell_0_0", "cell_1_0"]
+    # calls: start_cell, prev_cell focus, current cell
+    driver.find_element.side_effect = [first_cell, first_cell, next_cell]
+    driver.execute_script.side_effect = ["cell_0_0", "cell_0_0", "cell_1_0", "cell_1_0"]
 
     class DummyActions:
         def __init__(self, driver):
