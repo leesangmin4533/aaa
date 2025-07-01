@@ -36,7 +36,7 @@ def scroll_and_click_loop(
         action = ActionChains(driver)
 
         for idx in range(max_cells):
-            cell_id = f"{base_id}.gridrow_{idx}.cell_0_0"
+            cell_id = f"{base_id}.gridrow_{idx}.cell_{idx}_0"
             try:
                 cell = driver.find_element(By.ID, cell_id)
                 active = driver.execute_script("return document.activeElement?.id")
@@ -52,7 +52,7 @@ def scroll_and_click_loop(
                 action.send_keys(Keys.ARROW_DOWN).perform()
                 time.sleep(0.2)
 
-                next_id = f"{base_id}.gridrow_{idx+1}.cell_0_0"
+                next_id = f"{base_id}.gridrow_{idx+1}.cell_{idx+1}_0"
                 try:
                     next_cell = driver.find_element(By.ID, next_id)
                     write_log(
