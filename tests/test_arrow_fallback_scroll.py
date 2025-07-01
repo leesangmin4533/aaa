@@ -18,7 +18,7 @@ def test_arrow_fallback_scroll_logs(tmp_path):
 
     # calls: start_cell, text cell
     driver.find_element.side_effect = [first_cell, next_cell]
-    driver.execute_script.side_effect = ["cell_0_0", "cell_1_0"]
+    driver.execute_script.side_effect = [None, "cell_0_0", "cell_1_0"]
 
     class DummyActions:
         def __init__(self, driver):
@@ -51,3 +51,4 @@ def test_arrow_fallback_scroll_logs(tmp_path):
     assert "ArrowDown" in contents
     assert "찾은 셀 ID" in contents
     assert "완료" in contents
+    assert driver.execute_script.call_args_list[0][0][0] == "arguments[0].focus();"
