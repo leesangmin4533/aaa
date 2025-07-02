@@ -11,7 +11,7 @@ from log_util import create_logger
 from .grid_click_logger import log_detail
 
 MODULE_NAME = "arrow_fallback"
-log = create_logger(MODULE_NAME)
+log = create_logger(MODULE_NAME, log_file=f"{MODULE_NAME}.log")
 
 
 def navigate_to_mid_category_sales(driver):
