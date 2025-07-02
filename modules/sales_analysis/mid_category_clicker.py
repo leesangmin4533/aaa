@@ -418,6 +418,10 @@ def grid_click_with_scroll_from_20(
     send_home_native(driver)
     time.sleep(0.2)
 
+    def write_log(msg: str, step: str = "scroll20") -> None:
+        prefix = f"[{MODULE_NAME} > {step}]"
+        log_detail(f"{prefix} {msg}", log_path=log_path)
+
     focused = driver.find_element(By.ID, f"{base_id}.gridrow_0.cell_0_0")
 
     for i in range(max_rows):
@@ -427,22 +431,19 @@ def grid_click_with_scroll_from_20(
             time.sleep(0.2)
             focused = driver.switch_to.active_element
             if focused.get_attribute("id") == prev_id:
-                log_detail(f"[{i}] ❌ 다음 셀로 이동 실패", log_path=log_path)
+                write_log(f"[{i}] ❌ 다음 셀로 이동 실패")
                 break
 
         cell_id = focused.get_attribute("id") or f"{base_id}.gridrow_{i}.cell_0_0"
         code_text = focused.text.strip()
-        log_detail(
-            f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'",
-            log_path=log_path,
-        )
+        write_log(f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{code_text}'")
         focused.click()
         time.sleep(0.2)
 
         if i >= 19:
             scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
             scroll_btn.click()
-            log_detail(f"[{i}] ➡ 스크롤 버튼 클릭 완료", log_path=log_path)
+            write_log(f"[{i}] ➡ 스크롤 버튼 클릭 완료")
             time.sleep(0.4)
 
-    log_detail("✅ 전체 셀 클릭 및 스크롤 루프 종료", log_path=log_path)
+    write_log("✅ 전체 셀 클릭 및 스크롤 루프 종료", step="end")

@@ -10,7 +10,8 @@ import os
 from log_util import create_logger
 from .grid_click_logger import log_detail
 
-log = create_logger("navigation")
+MODULE_NAME = "arrow_fallback"
+log = create_logger(MODULE_NAME)
 
 
 def navigate_to_mid_category_sales(driver):
@@ -124,8 +125,9 @@ def scroll_with_arrow_fallback_loop(
 
     base_prefix = start_cell_id.split("gridrow_")[0] + "gridrow_"
 
-    def write_log(msg: str) -> None:
-        log_detail(msg, log_path=log_path)
+    def write_log(msg: str, step: str = "loop") -> None:
+        prefix = f"[{MODULE_NAME} > {step}]"
+        log_detail(f"{prefix} {msg}", log_path=log_path)
 
     def get_active_id():
         try:
@@ -133,7 +135,7 @@ def scroll_with_arrow_fallback_loop(
         except Exception:
             return None
 
-    write_log("▶ 실행: 방향키 기반 셀 이동 시작")
+    write_log("▶ 실행: 방향키 기반 셀 이동 시작", step="start")
     action = ActionChains(driver)
 
     try:
@@ -242,4 +244,4 @@ def scroll_with_arrow_fallback_loop(
 
         curr_id = next_id
 
-    write_log("✅ 완료: 방향키 기반 셀 이동 종료")
+    write_log("✅ 완료: 방향키 기반 셀 이동 종료", step="end")
