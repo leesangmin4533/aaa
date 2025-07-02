@@ -17,10 +17,10 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
    It also detects pop-up dialogs using z-index and size rules and attempts to
    close them automatically.
 
-The mid-category sales automation is now executed directly from `main.py` using
-`modules/sales_analysis/gridrow_click_loop.json`. The JSON navigates to the
-중분류별 매출 구성 페이지 and then collects all code cells in the grid before
-clicking them sequentially.
+The mid-category sales automation now relies on the Python functions in
+`modules/sales_analysis`. These helpers navigate the grid and click each cell in
+order while logging progress. Arrow key input is combined with direct clicks to
+ensure the focus moves reliably.
 
 During the grid interaction the script scrolls through all rows, collecting
 every visible code cell. Duplicates are removed and the resulting dictionary is

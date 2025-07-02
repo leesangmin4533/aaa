@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 import re
+import os
 
 from .grid_click_logger import log_detail
 
@@ -55,6 +56,7 @@ def scroll_with_arrow_fallback_loop(
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
     ),
     log_path: str = "grid_click_log.txt",
+    exit_on_repeat: bool = False,
 ) -> None:
     """Move focus down the grid using ArrowDown and click the current row.
 
@@ -68,7 +70,13 @@ def scroll_with_arrow_fallback_loop(
         ID of the starting cell.
     log_path : str, optional
         Path of the log file.
+    exit_on_repeat : bool, optional
+        If True, stop looping when the same cell appears three times.
     """
+    log_dir = os.path.dirname(log_path)
+    if log_dir:
+        os.makedirs(log_dir, exist_ok=True)
+
     # reset log file
     open(log_path, "w", encoding="utf-8").close()
 
@@ -170,6 +178,9 @@ def scroll_with_arrow_fallback_loop(
             same_count += 1
             write_log(f"[{i}] ⚠ 동일 셀 반복 {same_count}회")
             if same_count >= 3:
+                if exit_on_repeat:
+                    write_log(f"[{i}] ↩ 반복 중단: 동일 셀 3회 연속 → 종료")
+                    break
                 action.send_keys(Keys.ARROW_DOWN).perform()
                 write_log(f"[{i}] ↩ 반복 중단: 추가 ↓ ArrowDown")
                 time.sleep(1)

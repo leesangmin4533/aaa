@@ -24,11 +24,10 @@ logger = logging.getLogger(__name__)
 log = create_logger(MODULE_NAME)
 
 
-def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click_loop.json"):
+def run_sales_analysis(driver, config_path=None):
     """Execute sales analysis steps defined in a JSON config, supporting loops."""
     from modules.common.network import extract_ssv_from_cdp
     from modules.common.login import load_env
-    from modules.sales_analysis.navigation import navigate_to_mid_category_sales
     from modules.sales_analysis.mid_category_clicker import (
         click_codes_by_arrow,
         click_codes_by_loop,
@@ -47,9 +46,7 @@ def run_sales_analysis(driver, config_path="modules/sales_analysis/gridrow_click
         step_log = step.get("log")
         log("step_start", "진입", f"{action} 시작")
 
-        if action == "navigate_menu":
-            navigate_to_mid_category_sales(driver)
-        elif action == "click":
+        if action == "click":
             driver.find_element(By.XPATH, substitute(step["target_xpath"], variables)).click()
         elif action == "wait":
             xpath = substitute(step["target_xpath"], variables)
@@ -166,6 +163,10 @@ document.getElementById(arguments[0]).dispatchEvent(e);
             log("message", "실행", step_log)
 
     log("run_sales_analysis", "진입")
+    if not config_path:
+        log("run_sales_analysis", "경고", "config_path 미제공 → 실행 건너뜀")
+        return
+
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
 
