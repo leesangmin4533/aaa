@@ -36,6 +36,10 @@ The mid-category sales automation now relies on the Python functions in
 order while logging progress. Arrow key input is combined with direct clicks to
 ensure the focus moves reliably.
 
+`row_click_by_arrow`는 간단한 조건 검사를 하며 방향키로 행을 이동해
+적합한 셀을 클릭하는 보조 함수다. 메인 스크립트에서 메뉴 이동 직후 호출되어
+초기 행 선택을 담당한다.
+
 During the grid interaction the script scrolls through all rows, collecting
 every visible code cell. Duplicates are removed and the resulting dictionary is
 sorted by code number. Each cell is clicked in order with retries if needed.
