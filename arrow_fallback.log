@@ -55,3 +55,30 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
 	RtlUserThreadStart [0x0x7ff908e1c34c+44]
 
+18:00:26 [INFO] [arrow_fallback > open_menu] ▶ 실행: 매출분석 메뉴 클릭
+18:00:27 [INFO] [arrow_fallback > wait_mid_menu] ▶ 실행: 중분류 메뉴 등장 대기
+18:00:28 [INFO] [arrow_fallback > click_mid_sales] ▶ 실행: 중분류별 매출 구성비 클릭
+18:00:40 [INFO] [arrow_fallback > wait_mid_menu] ❌ 오류: 그리드 셀 로드 실패: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6a4316f95+76917]
+	GetHandleVerifier [0x0x7ff6a4316ff0+77008]
+	(No symbol) [0x0x7ff6a40c9dea]
+	(No symbol) [0x0x7ff6a4120256]
+	(No symbol) [0x0x7ff6a412050c]
+	(No symbol) [0x0x7ff6a4173887]
+	(No symbol) [0x0x7ff6a41484af]
+	(No symbol) [0x0x7ff6a417065c]
+	(No symbol) [0x0x7ff6a4148243]
+	(No symbol) [0x0x7ff6a4111431]
+	(No symbol) [0x0x7ff6a41121c3]
+	GetHandleVerifier [0x0x7ff6a45ed2cd+3051437]
+	GetHandleVerifier [0x0x7ff6a45e7923+3028483]
+	GetHandleVerifier [0x0x7ff6a46058bd+3151261]
+	GetHandleVerifier [0x0x7ff6a433185e+185662]
+	GetHandleVerifier [0x0x7ff6a433971f+218111]
+	GetHandleVerifier [0x0x7ff6a431fb14+112628]
+	GetHandleVerifier [0x0x7ff6a431fcc9+113065]
+	GetHandleVerifier [0x0x7ff6a4306c98+10616]
+	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
+	RtlUserThreadStart [0x0x7ff908e1c34c+44]
+
