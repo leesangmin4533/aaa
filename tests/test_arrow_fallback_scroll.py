@@ -110,7 +110,30 @@ def test_arrow_fallback_scroll_creates_nested_log_path(tmp_path):
 
     driver = MagicMock()
 
-    afs.scroll_with_arrow_fallback_loop(driver, max_steps=0, log_path=str(nested_log))
+    class DummyActions:
+        def __init__(self, driver):
+            pass
+
+        def move_to_element(self, element):
+            return self
+
+        def click(self, element=None):
+            return self
+
+        def send_keys(self, *args):
+            return self
+
+        def perform(self):
+            pass
+
+    original_actions = afs.ActionChains
+    afs.ActionChains = DummyActions
+    try:
+        afs.scroll_with_arrow_fallback_loop(
+            driver, max_steps=0, log_path=str(nested_log)
+        )
+    finally:
+        afs.ActionChains = original_actions
 
     assert nested_log.is_file()
     assert nested_log.parent.is_dir()
@@ -158,3 +181,59 @@ def test_arrow_fallback_scroll_stop_on_repeat(tmp_path):
 
     assert "반복 중단" in contents
     assert len(send_calls) == 4
+
+
+def test_first_cell_location_logged(tmp_path):
+    log_file = tmp_path / "loc_log.txt"
+
+    driver = MagicMock()
+    first_cell = MagicMock()
+    first_cell.text = "001"
+    first_cell.location = {"x": 10, "y": 20}
+    driver.find_element.return_value = first_cell
+    driver.execute_script.return_value = "gridrow_0.cell_0_0"
+
+    class DummyActions:
+        def __init__(self, driver):
+            pass
+
+        def move_to_element(self, element):
+            return self
+
+        def click(self, element=None):
+            return self
+
+        def send_keys(self, *args):
+            return self
+
+        def perform(self):
+            pass
+
+    original_actions = afs.ActionChains
+    afs.ActionChains = DummyActions
+    try:
+        afs.scroll_with_arrow_fallback_loop(
+            driver, max_steps=0, log_path=str(log_file)
+        )
+    finally:
+        afs.ActionChains = original_actions
+
+    with open(log_file, "r", encoding="utf-8") as f:
+        contents = f.read()
+
+    assert "x=10" in contents and "y=20" in contents
+
+
+def test_start_cell_error_logged(tmp_path):
+    log_file = tmp_path / "error_log.txt"
+
+    driver = MagicMock()
+    driver.find_element.side_effect = Exception("no element")
+
+    afs.scroll_with_arrow_fallback_loop(driver, max_steps=0, log_path=str(log_file))
+
+    with open(log_file, "r", encoding="utf-8") as f:
+        contents = f.read()
+
+    assert "초기 셀 찾기 실패" in contents
+    assert "gridrow_0.cell_0_0" in contents

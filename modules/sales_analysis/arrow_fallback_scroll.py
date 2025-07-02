@@ -140,15 +140,19 @@ def scroll_with_arrow_fallback_loop(
 
     try:
         first_cell = driver.find_element(By.ID, start_cell_id)
+    except Exception as e:
+        write_log(f"❌ 초기 셀 찾기 실패: ID={start_cell_id}, 오류: {e}")
+        return
+    else:
         time.sleep(1)
         ActionChains(driver).move_to_element(first_cell).click().perform()
         driver.execute_script("arguments[0].focus();", first_cell)
         time.sleep(0.5)
         prev_id = get_active_id()
-        write_log(f"• 초기 포커스 및 클릭: {prev_id}")
-    except Exception as e:
-        write_log(f"❌ 초기 셀 포커스 실패: {e}")
-        return
+        loc = first_cell.location
+        write_log(
+            f"• 초기 포커스 및 클릭: {prev_id} (x={loc.get('x')}, y={loc.get('y')})"
+        )
 
     # move once to start from the next row
     action.send_keys(Keys.ARROW_DOWN).perform()
