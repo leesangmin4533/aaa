@@ -3,7 +3,10 @@ from modules.common.driver import create_chrome_driver
 from modules.common.module_map import write_module_map
 from log_util import create_logger
 from popup_utils import close_popups
-from modules.sales_analysis.arrow_fallback_scroll import scroll_with_arrow_fallback_loop
+from modules.sales_analysis.arrow_fallback_scroll import (
+    scroll_with_arrow_fallback_loop,
+    navigate_to_mid_category_sales,
+)
 import importlib
 import json
 import time
@@ -228,6 +231,9 @@ def main():
                     input("수동 확인 후 Enter...")
         except Exception as e:
             logger.warning("팝업 닫기 중 예외 발생", exc_info=e)
+
+        # ✅ 매출 분석 메뉴 진입
+        navigate_to_mid_category_sales(driver)
     except Exception as e:
         logger.exception(f"[{MODULE_NAME} > login] 로그인 시퀀스 실패")
         driver.quit()
