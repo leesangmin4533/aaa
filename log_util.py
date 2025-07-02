@@ -15,6 +15,9 @@ def create_logger(module_name: str):
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
 
+    # Prevent duplicate log lines by stopping propagation to the root logger
+    logger.propagate = False
+
     def log(step: str, state: str, msg: str = "") -> None:
         symbol = {
             "진입": "➡",
