@@ -70,7 +70,7 @@ modules/
 │   ├── network.py         # CDP 로그 수집 및 SSV 저장
 │   └── snippet_utils.py   # XPath → 명령 변환 도구
 ├── sales_analysis/
-│   ├── navigation.py                 # 메뉴 이동
+│   ├── arrow_fallback_scroll.py      # 메뉴 이동 및 그리드 스크롤
 │   ├── mid_category_clicker.py       # 중분류 코드 클릭 기능
 │   ├── process_one_category.py       # 단일 항목 처리
 │   └── loop_all_categories.py        # 반복 처리
