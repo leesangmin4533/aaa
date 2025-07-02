@@ -65,7 +65,7 @@ def click_codes_by_arrow(
     repeat_limit: int = 3,
     focus_retry_limit: int = 5,
     start_cell_id: str = (
-        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text"
     ),
     row_start: int = 0,
     row_end: int | None = None,
