@@ -90,12 +90,21 @@ def click_codes_by_arrow(
         Last row index to click. ``None`` means no upper bound.
     """
 
-    first_cell = driver.find_element(By.ID, start_cell_id)
-    log("click_code", "초기포커스", f"초기 셀 찾음: {start_cell_id}")
-
-    ActionChains(driver).move_to_element(first_cell).click().perform()
-    driver.execute_script("arguments[0].focus();", first_cell)  # JS로 명시적 포커스
-    time.sleep(1.0)
+    try:
+        first_cell = driver.find_element(By.ID, start_cell_id)
+        ActionChains(driver).move_to_element(first_cell).click().perform()
+        driver.execute_script("arguments[0].focus();", first_cell)  # JS로 명시적 포커스
+        time.sleep(1.0)
+    except Exception as e:
+        log("click_code", "오류", f"초기 셀 클릭 실패: ID={start_cell_id}, 오류: {e}")
+        return
+    else:
+        loc = first_cell.location
+        log(
+            "click_code",
+            "초기포커스",
+            f"초기 셀 찾음: {start_cell_id} (x={loc.get('x')}, y={loc.get('y')})",
+        )
 
     rows = driver.find_elements(By.XPATH, "//*[contains(@id, 'gdList.body.gridrow_')]")
     log("click_code", "행개수확인", f"로드된 그리드 행 수: {len(rows)}")
