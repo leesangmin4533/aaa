@@ -375,10 +375,15 @@ def grid_click_with_scroll_after_4(
     driver,
     max_rows: int = 100,
     scroll_xpath: str = "//*[@id='mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.vscrollbar.incbutton:icontext']",
+    log_path: str = "grid_click_log.txt",
 ) -> None:
     """셀 4개를 순회한 후 스크롤 버튼을 눌러 다음 영역을 표시한다."""
     from selenium.webdriver.common.by import By
     import time
+
+    def write_log(msg: str, step: str = "after4") -> None:
+        prefix = f"[{MODULE_NAME} > {step}]"
+        log_detail(f"{prefix} {msg}", log_path=log_path)
 
     base_id = (
         "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm"
@@ -390,21 +395,21 @@ def grid_click_with_scroll_after_4(
         try:
             cell = driver.find_element(By.ID, cell_id)
             cell_text = cell.text.strip()
-            print(f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{cell_text}'")
+            write_log(f"[{i}] ✅ 코드 셀 클릭: ID={cell_id}, 텍스트='{cell_text}'")
             cell.click()
             time.sleep(0.2)
 
             if i > 0 and i % 4 == 0:
                 scroll_btn = driver.find_element(By.XPATH, scroll_xpath)
                 scroll_btn.click()
-                print(f"[{i}] ➡ 스크롤 버튼 클릭 (4회 간격)")
+                write_log(f"[{i}] ➡ 스크롤 버튼 클릭 (4회 간격)")
                 time.sleep(0.6)
 
         except Exception as e:
-            print(f"[{i}] ❌ 오류 발생: {e}")
+            write_log(f"[{i}] ❌ 오류 발생: {e}")
             break
 
-    print("✅ 전체 셀 클릭 및 스크롤 루프 종료")
+    write_log("✅ 전체 셀 클릭 및 스크롤 루프 종료", step="end")
 
 
 def grid_click_with_scroll_from_20(
