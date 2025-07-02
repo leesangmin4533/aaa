@@ -109,3 +109,57 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
 	RtlUserThreadStart [0x0x7ff908e1c34c+44]
 
+06:19:39 [INFO] [arrow_fallback > open_menu] ▶ 실행: 매출분석 메뉴 클릭
+06:19:40 [INFO] [arrow_fallback > wait_mid_menu] ▶ 실행: 중분류 메뉴 등장 대기
+06:19:41 [INFO] [arrow_fallback > click_mid_sales] ▶ 실행: 중분류별 매출 구성비 클릭
+06:19:54 [INFO] [arrow_fallback > wait_mid_menu] ❌ 오류: 그리드 셀 로드 실패: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff684316f95+76917]
+	GetHandleVerifier [0x0x7ff684316ff0+77008]
+	(No symbol) [0x0x7ff6840c9dea]
+	(No symbol) [0x0x7ff684120256]
+	(No symbol) [0x0x7ff68412050c]
+	(No symbol) [0x0x7ff684173887]
+	(No symbol) [0x0x7ff6841484af]
+	(No symbol) [0x0x7ff68417065c]
+	(No symbol) [0x0x7ff684148243]
+	(No symbol) [0x0x7ff684111431]
+	(No symbol) [0x0x7ff6841121c3]
+	GetHandleVerifier [0x0x7ff6845ed2cd+3051437]
+	GetHandleVerifier [0x0x7ff6845e7923+3028483]
+	GetHandleVerifier [0x0x7ff6846058bd+3151261]
+	GetHandleVerifier [0x0x7ff68433185e+185662]
+	GetHandleVerifier [0x0x7ff68433971f+218111]
+	GetHandleVerifier [0x0x7ff68431fb14+112628]
+	GetHandleVerifier [0x0x7ff68431fcc9+113065]
+	GetHandleVerifier [0x0x7ff684306c98+10616]
+	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
+	RtlUserThreadStart [0x0x7ff908e1c34c+44]
+
+06:23:59 [INFO] [arrow_fallback > open_menu] ▶ 실행: 매출분석 메뉴 클릭
+06:24:00 [INFO] [arrow_fallback > wait_mid_menu] ▶ 실행: 중분류 메뉴 등장 대기
+06:24:00 [INFO] [arrow_fallback > click_mid_sales] ▶ 실행: 중분류별 매출 구성비 클릭
+06:24:13 [INFO] [arrow_fallback > wait_mid_menu] ❌ 오류: 그리드 셀 로드 실패: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff684316f95+76917]
+	GetHandleVerifier [0x0x7ff684316ff0+77008]
+	(No symbol) [0x0x7ff6840c9dea]
+	(No symbol) [0x0x7ff684120256]
+	(No symbol) [0x0x7ff68412050c]
+	(No symbol) [0x0x7ff684173887]
+	(No symbol) [0x0x7ff6841484af]
+	(No symbol) [0x0x7ff68417065c]
+	(No symbol) [0x0x7ff684148243]
+	(No symbol) [0x0x7ff684111431]
+	(No symbol) [0x0x7ff6841121c3]
+	GetHandleVerifier [0x0x7ff6845ed2cd+3051437]
+	GetHandleVerifier [0x0x7ff6845e7923+3028483]
+	GetHandleVerifier [0x0x7ff6846058bd+3151261]
+	GetHandleVerifier [0x0x7ff68433185e+185662]
+	GetHandleVerifier [0x0x7ff68433971f+218111]
+	GetHandleVerifier [0x0x7ff68431fb14+112628]
+	GetHandleVerifier [0x0x7ff68431fcc9+113065]
+	GetHandleVerifier [0x0x7ff684306c98+10616]
+	BaseThreadInitThunk [0x0x7ff907f0e8d7+23]
+	RtlUserThreadStart [0x0x7ff908e1c34c+44]
+
