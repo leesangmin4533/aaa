@@ -234,10 +234,10 @@ def main():
 
         # ✅ 매출 분석 메뉴 진입
         navigate_to_mid_category_sales(driver)
-    except Exception as e:
+    except Exception:
         logger.exception(f"[{MODULE_NAME} > login] 로그인 시퀀스 실패")
         driver.quit()
-        raise
+        return
 
     log("sales_analysis", "실행", "매출 분석")
     try:

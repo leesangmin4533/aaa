@@ -161,4 +161,6 @@ def run_login(driver, config_path="login_sequence.json"):
             run_step(driver, step, elements, env)
         except Exception as e:
             log("step_fail", "오류", f"Step 실패: {step.get('action')} → {e}")
-            break
+            raise
+
+    return True
