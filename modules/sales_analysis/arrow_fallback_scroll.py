@@ -55,7 +55,7 @@ def navigate_to_mid_category_sales(driver):
             EC.presence_of_element_located(
                 (
                     By.XPATH,
-                    '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_0.cell_0_0"]',
+                    '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text"]',
                 )
             )
         )
@@ -115,7 +115,7 @@ def scroll_with_arrow_fallback_loop(
     driver,
     max_steps: int = 100,
     start_cell_id: str = (
-        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
+        "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text"
     ),
     log_path: str = "grid_click_log.txt",
     exit_on_repeat: bool = False,
