@@ -12,7 +12,7 @@ import modules.sales_analysis.mid_category_clicker as mid_clicker
 def test_click_codes_by_arrow_stops_after_repeat(caplog):
     cell1 = MagicMock()
     cell1.text = "001"
-    cell1.get_attribute.return_value = "gdList.body.gridrow_0.cell_0_0"
+    cell1.get_attribute.return_value = "gdList.body.gridrow_0.cell_0_0:text"
 
     cell2 = MagicMock()
     cell2.text = "002"
@@ -239,7 +239,7 @@ def test_grid_click_with_scroll_from_20_basic(capsys, tmp_path):
     def find_element_side_effect(by, value):
         if by == mid_clicker.By.ID and value.endswith("gdList.body"):
             return grid_elem
-        if by == mid_clicker.By.ID and value.endswith("gridrow_0.cell_0_0"):
+        if by == mid_clicker.By.ID and value.endswith("gridrow_0.cell_0_0:text"):
             return cells[0]
         if by == mid_clicker.By.XPATH:
             find_element_side_effect.calls += 1

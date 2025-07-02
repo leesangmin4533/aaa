@@ -22,11 +22,11 @@ def test_arrow_fallback_scroll_logs(tmp_path):
     driver.find_element.side_effect = [first_cell, next_cell, row_elem]
     driver.execute_script.side_effect = [
         None,  # focus first
-        "gridrow_0.cell_0_0",  # initial active id
-        "gridrow_1.cell_1_0",  # after first ArrowDown
-        "gridrow_1.cell_1_0",  # find_cell_under_mainframe
+        "gridrow_0.cell_0_0:text",  # initial active id
+        "gridrow_1.cell_1_0:text",  # after first ArrowDown
+        "gridrow_1.cell_1_0:text",  # find_cell_under_mainframe
         None,  # focus after click
-        "gridrow_2.cell_2_0",  # next cell after ArrowDown
+        "gridrow_2.cell_2_0:text",  # next cell after ArrowDown
     ]
 
     class DummyActions:
@@ -70,7 +70,7 @@ def test_arrow_fallback_scroll_forces_move_after_three_same(tmp_path):
     cell = MagicMock()
     cell.text = "001"
     driver.find_element.return_value = cell
-    driver.execute_script.return_value = "gridrow_0.cell_0_0"
+    driver.execute_script.return_value = "gridrow_0.cell_0_0:text"
 
     send_calls = []
 
@@ -146,7 +146,7 @@ def test_arrow_fallback_scroll_stop_on_repeat(tmp_path):
     cell = MagicMock()
     cell.text = "001"
     driver.find_element.return_value = cell
-    driver.execute_script.return_value = "gridrow_0.cell_0_0"
+    driver.execute_script.return_value = "gridrow_0.cell_0_0:text"
 
     send_calls = []
 
@@ -191,7 +191,7 @@ def test_first_cell_location_logged(tmp_path):
     first_cell.text = "001"
     first_cell.location = {"x": 10, "y": 20}
     driver.find_element.return_value = first_cell
-    driver.execute_script.return_value = "gridrow_0.cell_0_0"
+    driver.execute_script.return_value = "gridrow_0.cell_0_0:text"
 
     class DummyActions:
         def __init__(self, driver):
@@ -236,4 +236,4 @@ def test_start_cell_error_logged(tmp_path):
         contents = f.read()
 
     assert "초기 셀 찾기 실패" in contents
-    assert "gridrow_0.cell_0_0" in contents
+    assert "gridrow_0.cell_0_0:text" in contents
