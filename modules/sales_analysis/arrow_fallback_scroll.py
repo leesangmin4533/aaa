@@ -55,24 +55,18 @@ def navigate_to_mid_category_sales(driver):
             EC.presence_of_element_located(
                 (
                     By.XPATH,
-                    '//div[starts-with(@id, "grd_msg")]', # 좀 더 유연한 XPath
+                    '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_0.cell_0_0"]',
                 )
             )
         )
         log("wait_mid_menu", "성공", "그리드 셀 로드 성공")
 
     except TimeoutException as e:
-        log("wait_mid_menu", "오류", f"프레임 전환 또는 그리드 셀 로드 실패: {e}")
-        
-        # 실패 시 스크린샷 및 HTML 저장
-        screenshot_path = "debug_screenshot.png"
-        page_source_path = "debug_page_source.html"
-        driver.save_screenshot(screenshot_path)
-        with open(page_source_path, "w", encoding="utf-8") as f:
-            f.write(driver.page_source)
-        log("debug", "정보", f"스크린샷 저장: {screenshot_path}")
-        log("debug", "정보", f"페이지 소스 저장: {page_source_path}")
-        
+        log(
+            "wait_mid_menu",
+            "오류",
+            f"그리드 셀 로드 실패: {e}",
+        )
         raise
 
 
