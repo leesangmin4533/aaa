@@ -17,6 +17,19 @@ This project opens the BGF Retail store login page using Selenium. It is a simpl
    It also detects pop-up dialogs using z-index and size rules and attempts to
    close them automatically.
 
+## Logging
+
+`create_logger` now accepts an optional file path so console messages can also
+be saved to disk. Example:
+
+```python
+from log_util import create_logger
+log = create_logger("arrow_fallback", log_file="arrow_fallback.log")
+```
+
+Detailed steps inside `scroll_with_arrow_fallback_loop` continue to use the
+``log_path`` argument for their own log file.
+
 The mid-category sales automation now relies on the Python functions in
 `modules/sales_analysis`. These helpers navigate the grid and click each cell in
 order while logging progress. Arrow key input is combined with direct clicks to
