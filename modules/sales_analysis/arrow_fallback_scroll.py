@@ -138,6 +138,7 @@ def scroll_with_arrow_fallback_loop(
 
     try:
         first_cell = driver.find_element(By.ID, start_cell_id)
+        time.sleep(1)
         ActionChains(driver).move_to_element(first_cell).click().perform()
         driver.execute_script("arguments[0].focus();", first_cell)
         time.sleep(0.5)
@@ -191,6 +192,7 @@ def scroll_with_arrow_fallback_loop(
                 write_log(f"[{i}] ⚠ 행 텍스트 조회 실패: {e}")
 
             if text.isdigit() and 1 <= int(text) <= 900:
+                time.sleep(1)
                 cell.click()
                 driver.execute_script("arguments[0].focus();", cell)
                 write_log(f"[{i}] ✅ 셀 클릭 완료")
