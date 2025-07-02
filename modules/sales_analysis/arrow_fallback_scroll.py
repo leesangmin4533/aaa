@@ -42,21 +42,37 @@ def navigate_to_mid_category_sales(driver):
     ).click()
     time.sleep(2)
 
+    # 디버깅: 프레임 전환 및 그리드 대기
     try:
+        # WorkFrame으로 전환
+        WebDriverWait(driver, 10).until(
+            EC.frame_to_be_available_and_switch_to_it((By.NAME, "WorkFrame"))
+        )
+        log("debug", "정보", "WorkFrame으로 전환 성공")
+
+        # 그리드 요소 대기
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(
                 (
                     By.XPATH,
-                    '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_0.cell_0_0"]',
+                    '//div[starts-with(@id, "grd_msg")]', # 좀 더 유연한 XPath
                 )
             )
         )
+        log("wait_mid_menu", "성공", "그리드 셀 로드 성공")
+
     except TimeoutException as e:
-        log(
-            "wait_mid_menu",
-            "오류",
-            f"그리드 셀 로드 실패: {e}",
-        )
+        log("wait_mid_menu", "오류", f"프레임 전환 또는 그리드 셀 로드 실패: {e}")
+        
+        # 실패 시 스크린샷 및 HTML 저장
+        screenshot_path = "debug_screenshot.png"
+        page_source_path = "debug_page_source.html"
+        driver.save_screenshot(screenshot_path)
+        with open(page_source_path, "w", encoding="utf-8") as f:
+            f.write(driver.page_source)
+        log("debug", "정보", f"스크린샷 저장: {screenshot_path}")
+        log("debug", "정보", f"페이지 소스 저장: {page_source_path}")
+        
         raise
 
 
