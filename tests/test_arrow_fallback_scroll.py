@@ -103,3 +103,58 @@ def test_arrow_fallback_scroll_forces_move_after_three_same(tmp_path):
 
     assert "반복 중단" in contents
     assert len(send_calls) == 5
+
+
+def test_arrow_fallback_scroll_creates_nested_log_path(tmp_path):
+    nested_log = tmp_path / "sub" / "dir" / "log.txt"
+
+    driver = MagicMock()
+
+    afs.scroll_with_arrow_fallback_loop(driver, max_steps=0, log_path=str(nested_log))
+
+    assert nested_log.is_file()
+    assert nested_log.parent.is_dir()
+
+
+def test_arrow_fallback_scroll_stop_on_repeat(tmp_path):
+    log_file = tmp_path / "stop_log.txt"
+
+    driver = MagicMock()
+    cell = MagicMock()
+    cell.text = "001"
+    driver.find_element.return_value = cell
+    driver.execute_script.return_value = "gridrow_0.cell_0_0"
+
+    send_calls = []
+
+    class DummyActions:
+        def __init__(self, driver):
+            pass
+
+        def move_to_element(self, element):
+            return self
+
+        def click(self, element=None):
+            return self
+
+        def send_keys(self, *args):
+            send_calls.append(args)
+            return self
+
+        def perform(self):
+            pass
+
+    original_actions = afs.ActionChains
+    afs.ActionChains = DummyActions
+    try:
+        afs.scroll_with_arrow_fallback_loop(
+            driver, max_steps=3, log_path=str(log_file), exit_on_repeat=True
+        )
+    finally:
+        afs.ActionChains = original_actions
+
+    with open(log_file, "r", encoding="utf-8") as f:
+        contents = f.read()
+
+    assert "반복 중단" in contents
+    assert len(send_calls) == 4
