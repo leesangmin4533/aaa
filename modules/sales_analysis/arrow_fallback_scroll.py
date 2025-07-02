@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 import time
 import re
 import os
@@ -41,14 +42,22 @@ def navigate_to_mid_category_sales(driver):
     ).click()
     time.sleep(2)
 
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located(
-            (
-                By.XPATH,
-                '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_0.cell_0_0"]',
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (
+                    By.XPATH,
+                    '//*[@id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.WorkFrame.form.grd_msg.body.gridrow_0.cell_0_0"]',
+                )
             )
         )
-    )
+    except TimeoutException as e:
+        log(
+            "wait_mid_menu",
+            "오류",
+            f"그리드 셀 로드 실패: {e}",
+        )
+        raise
 
 
 def find_cell_under_mainframe(driver, depth: int = 6):
