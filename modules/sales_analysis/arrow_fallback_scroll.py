@@ -249,3 +249,12 @@ def scroll_with_arrow_fallback_loop(
         curr_id = next_id
 
     write_log("✅ 완료: 방향키 기반 셀 이동 종료", step="end")
+
+if __name__ == "__main__":
+    from selenium import webdriver
+    driver = webdriver.Chrome()
+    try:
+        navigate_to_mid_category_sales(driver)
+        scroll_with_arrow_fallback_loop(driver)
+    finally:
+        driver.quit()
