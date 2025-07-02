@@ -27,6 +27,10 @@
       "role": "메뉴 이동과 그리드 스크롤을 담당"
     },
     {
+      "module": "modules/sales_analysis/row_click_by_arrow.py",
+      "role": "그리드 행을 방향키로 이동하며 조건에 맞는 셀을 클릭"
+    },
+    {
       "module": "modules/sales_analysis/mid_category_clicker.py",
       "role": "중분류 코드 그리드에서 셀을 순서대로 클릭"
     },

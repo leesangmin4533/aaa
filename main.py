@@ -7,6 +7,7 @@ from modules.sales_analysis.arrow_fallback_scroll import (
     scroll_with_arrow_fallback_loop,
     navigate_to_mid_category_sales,
 )
+from modules.sales_analysis.row_click_by_arrow import row_click_by_arrow
 import importlib
 import json
 import time
@@ -234,6 +235,10 @@ def main():
 
         # ✅ 매출 분석 메뉴 진입
         navigate_to_mid_category_sales(driver)
+        row_click_by_arrow(
+            driver,
+            start_cell_id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text",
+        )
     except Exception:
         logger.exception(f"[{MODULE_NAME} > login] 로그인 시퀀스 실패")
         driver.quit()
