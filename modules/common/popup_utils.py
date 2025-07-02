@@ -5,7 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 
-POPUP_CLOSE_SCRIPT = """"""
+# ``POPUP_CLOSE_SCRIPT`` was previously reserved for a JavaScript snippet to
+# close pop-up windows. The Selenium-based approach in ``close_popups`` proved
+# sufficient, so the constant has been removed.
 
 
 def close_popups(driver: WebDriver) -> dict:
