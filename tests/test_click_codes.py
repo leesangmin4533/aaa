@@ -75,10 +75,13 @@ def test_click_codes_by_arrow_stops_after_repeat(caplog):
     driver.find_element.return_value = cell1
     driver.switch_to = switch
 
-    with caplog.at_level(logging.INFO):
+    with caplog.at_level(logging.INFO, logger=mid_clicker.MODULE_NAME):
+        logger = logging.getLogger(mid_clicker.MODULE_NAME)
+        logger.addHandler(caplog.handler)
         try:
             mid_clicker.click_codes_by_arrow(driver, delay=0)
         finally:
+            logger.removeHandler(caplog.handler)
             mid_clicker.ActionChains = original_actions
             mid_clicker.send_arrow_down_native = original_send_arrow
 
@@ -109,8 +112,13 @@ def test_click_codes_by_loop_iterates_rows(caplog):
 
     driver.find_element.side_effect = find_element_side_effect
 
-    with caplog.at_level(logging.INFO):
-        mid_clicker.click_codes_by_loop(driver, row_limit=3)
+    with caplog.at_level(logging.INFO, logger=mid_clicker.MODULE_NAME):
+        logger = logging.getLogger(mid_clicker.MODULE_NAME)
+        logger.addHandler(caplog.handler)
+        try:
+            mid_clicker.click_codes_by_loop(driver, row_limit=3)
+        finally:
+            logger.removeHandler(caplog.handler)
 
     for cell in cells:
         assert cell.click.called
@@ -124,8 +132,13 @@ def test_scroll_loop_click_stops_on_missing(caplog):
     driver.find_element.side_effect = [cells[0], cells[1], NoSuchElementException()]
     driver.execute_script = MagicMock()
 
-    with caplog.at_level(logging.INFO):
-        mid_clicker.scroll_loop_click(driver, max_attempts=5)
+    with caplog.at_level(logging.INFO, logger=mid_clicker.MODULE_NAME):
+        logger = logging.getLogger(mid_clicker.MODULE_NAME)
+        logger.addHandler(caplog.handler)
+        try:
+            mid_clicker.scroll_loop_click(driver, max_attempts=5)
+        finally:
+            logger.removeHandler(caplog.handler)
 
     assert cells[0].click.called
     assert cells[1].click.called
@@ -139,13 +152,18 @@ def test_grid_scroll_click_loop_basic(caplog):
     driver.find_element.side_effect = [cells[0], cells[1], NoSuchElementException()]
     driver.execute_script = MagicMock()
 
-    with caplog.at_level(logging.INFO):
-        mid_clicker.grid_scroll_click_loop(
-            driver,
-            "prefix_",
-            "_suffix",
-            max_rows=5,
-        )
+    with caplog.at_level(logging.INFO, logger=mid_clicker.MODULE_NAME):
+        logger = logging.getLogger(mid_clicker.MODULE_NAME)
+        logger.addHandler(caplog.handler)
+        try:
+            mid_clicker.grid_scroll_click_loop(
+                driver,
+                "prefix_",
+                "_suffix",
+                max_rows=5,
+            )
+        finally:
+            logger.removeHandler(caplog.handler)
 
     assert cells[0].click.called
     assert cells[1].click.called
@@ -166,8 +184,13 @@ def test_grid_click_with_scroll_basic(caplog):
         scroll_btn,
     ]
 
-    with caplog.at_level(logging.INFO):
-        mid_clicker.grid_click_with_scroll(driver, max_rows=5)
+    with caplog.at_level(logging.INFO, logger=mid_clicker.MODULE_NAME):
+        logger = logging.getLogger(mid_clicker.MODULE_NAME)
+        logger.addHandler(caplog.handler)
+        try:
+            mid_clicker.grid_click_with_scroll(driver, max_rows=5)
+        finally:
+            logger.removeHandler(caplog.handler)
 
     for cell in cells:
         assert cell.click.called
