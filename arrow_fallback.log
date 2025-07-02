@@ -1,0 +1,3 @@
+13:19:42 [INFO] [arrow_fallback > open_menu] ▶ 실행: 매출분석 메뉴 클릭
+13:19:44 [INFO] [arrow_fallback > wait_mid_menu] ▶ 실행: 중분류 메뉴 등장 대기
+13:19:44 [INFO] [arrow_fallback > click_mid_sales] ▶ 실행: 중분류별 매출 구성비 클릭
