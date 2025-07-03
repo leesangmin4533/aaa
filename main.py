@@ -8,6 +8,7 @@ from modules.sales_analysis.arrow_fallback_scroll import (
     navigate_to_mid_category_sales,
 )
 from modules.sales_analysis.row_click_by_arrow import row_click_by_arrow
+from modules.sales_analysis.cell_filter_logger import click_cells_log_filter
 import importlib
 import json
 import time
@@ -239,6 +240,7 @@ def main():
             driver,
             start_cell_id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text",
         )
+        click_cells_log_filter(driver, "filter", max_cells=100)
     except Exception:
         logger.exception(f"[{MODULE_NAME} > login] 로그인 시퀀스 실패")
         driver.quit()
