@@ -9,6 +9,7 @@ from modules.sales_analysis.arrow_fallback_scroll import (
 )
 from modules.sales_analysis.row_click_by_arrow import row_click_by_arrow
 from modules.sales_analysis.cell_filter_logger import click_cells_log_filter
+from modules.common.wait_utils import wait_and_click_cell
 import importlib
 import json
 import time
@@ -236,9 +237,13 @@ def main():
 
         # ✅ 매출 분석 메뉴 진입
         navigate_to_mid_category_sales(driver)
+        target_cell_id = (
+            "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0"
+        )
+        wait_and_click_cell(driver, target_cell_id)
         row_click_by_arrow(
             driver,
-            start_cell_id="mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0:text",
+            start_cell_id=target_cell_id,
         )
         click_cells_log_filter(driver, "filter", max_cells=100)
     except Exception:
