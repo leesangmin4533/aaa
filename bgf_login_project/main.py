@@ -5,7 +5,7 @@ from login.login_bgf import login_bgf
 
 def create_driver():
     options = Options()
-    options.add_experimental_option("detach", True)
+    options.add_experimental_option("detach", True)  # 창 자동 종료 방지
     return webdriver.Chrome(service=Service(), options=options)
 
 if __name__ == "__main__":
