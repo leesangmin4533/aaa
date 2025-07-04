@@ -1,5 +1,0 @@
-selenium
-python-dotenv
-requests
-beautifulsoup4
-google-generativeai
