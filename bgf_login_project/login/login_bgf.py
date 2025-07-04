@@ -21,7 +21,9 @@ def load_credentials(path: str | None = None) -> dict:
         raise RuntimeError(f"Failed to load credentials: {e}")
 
 
-def login_bgf(driver: WebDriver, credential_path: str | None = None, timeout: int = 10) -> bool:
+def login_bgf(
+    driver: WebDriver, credential_path: str | None = None, timeout: int = 10
+) -> bool:
     """Perform login on BGF Retail store page.
 
     Returns True if login succeeded, False otherwise.
@@ -46,11 +48,11 @@ try {{
     form.edt_pw.set_value("{password}");
     form.edt_pw.text = "{password}";
 
+    // 포커스 이동으로 이벤트 유도
     form.edt_id.setFocus();
 
-    setTimeout(function() {{
-        form.btn_login.click();
-    }}, 500);
+    // 지연 실행
+    setTimeout(() => form.btn_login.click(), 500);
 }} catch (e) {{
     console.error("login error", e);
 }}
