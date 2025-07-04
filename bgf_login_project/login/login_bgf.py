@@ -54,6 +54,16 @@ try {{
     try:
         driver.execute_script(js)
         log("login", "INFO", "Login script executed")
+        pw_value = driver.execute_script(
+            """
+try {
+    return nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw.value;
+} catch (e) {
+    return 'error: ' + e.toString();
+}
+"""
+        )
+        log("login", "DEBUG", f"[검증] 비밀번호 필드 값: {pw_value}")
     except Exception as e:
         log("login", "ERROR", f"JavaScript execution failed: {e}")
         return False
