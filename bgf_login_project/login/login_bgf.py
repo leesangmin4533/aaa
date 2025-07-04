@@ -35,18 +35,22 @@ def login_bgf(driver: WebDriver, credential_path: str | None = None, timeout: in
     password = creds.get("password")
 
     js = f"""
-    try {{
-        var form = nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form;
-        form.edt_id.set_value("{user_id}");
-        form.edt_id.oneditchanged();
-        form.edt_pw.set_value("{password}");
-        form.edt_pw.oneditchanged();
-        form.btn_login.click();
-        form.btn_login.onclick();
-    }} catch (e) {{
-        console.error("login error", e);
-    }}
-    """
+try {{
+    var form = nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form;
+
+    form.edt_id.setFocus();
+    form.edt_id.set_value("{user_id}");
+    form.edt_id.killFocus();
+
+    form.edt_pw.setFocus();
+    form.edt_pw.set_value("{password}");
+    form.edt_pw.killFocus();
+
+    form.btn_login.click();
+}} catch (e) {{
+    console.error("login error", e);
+}}
+"""
     try:
         driver.execute_script(js)
         log("login", "INFO", "Login script executed")
