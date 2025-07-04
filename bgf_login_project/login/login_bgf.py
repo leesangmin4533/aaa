@@ -40,15 +40,17 @@ try {{
 
     form.edt_id.setFocus();
     form.edt_id.set_value("{user_id}");
-    form.edt_id._on_changed();
-    form.edt_id.killFocus();
+    form.edt_id.text = "{user_id}";
 
     form.edt_pw.setFocus();
     form.edt_pw.set_value("{password}");
-    form.edt_pw._on_changed();
-    form.edt_pw.killFocus();
+    form.edt_pw.text = "{password}";
 
-    form.btn_login.click();
+    form.edt_id.setFocus();
+
+    setTimeout(function() {{
+        form.btn_login.click();
+    }}, 500);
 }} catch (e) {{
     console.error("login error", e);
 }}
