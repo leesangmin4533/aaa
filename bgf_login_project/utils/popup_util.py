@@ -6,46 +6,24 @@ log = create_logger("popup_util")
 
 
 def close_nexacro_popups(driver: WebDriver) -> None:
-    """Detect and close popups inside a Nexacro application."""
+    """Close Nexacro popups by simulating a DOM click on elements with text '닫기'."""
     js = """
 try {
-    let app = nexacro.getApplication();
-    let targets = [];
-
-    // 기존에 확인된 영역 추가
-    targets.push(app.mainframe.HFrameSet00.frames?.[0]?.form);
-    targets.push(app.mainframe.HFrameSet00?.VFrameSet00?.FrameSet?.WorkFrame?.form);
-
-    // VFrameSet00 내부 프레임 순회하여 form 수집
-    let vfs = app.mainframe.HFrameSet00?.VFrameSet00;
-    if (vfs?.frames) {
-        for (let i = 0; i < vfs.frames.length; i++) {
-            let f = vfs.frames[i];
-            if (f?.form) targets.push(f.form);
-        }
+    const closeEl = [...document.querySelectorAll('*')].find(el => el.innerText?.trim() === '닫기');
+    if (closeEl) {
+        const rect = closeEl.getBoundingClientRect();
+        ['mousedown', 'mouseup', 'click'].forEach(type => {
+            closeEl.dispatchEvent(new MouseEvent(type, {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                clientX: rect.left + rect.width / 2,
+                clientY: rect.top + rect.height / 2
+            }));
+        });
+        return 'clicked';
     }
-
-    for (let form of targets) {
-        if (!form) continue;
-        for (let name in form.all) {
-            let comp = form.all[name];
-            if (
-                (comp instanceof nexacro.Div ||
-                 comp instanceof nexacro.PopupDiv ||
-                 comp instanceof nexacro.ChildFrame) &&
-                comp.visible
-            ) {
-                if (typeof comp.set_visible === "function") {
-                    comp.set_visible(false);
-                } else if (typeof comp.close === "function") {
-                    comp.close();
-                } else if (comp.btn_close && typeof comp.btn_close.click === "function") {
-                    comp.btn_close.click();
-                }
-            }
-        }
-    }
-    return 'ok';
+    return 'not found';
 } catch (e) {
     return 'error: ' + e.toString();
 }
