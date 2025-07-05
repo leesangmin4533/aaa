@@ -1,5 +1,9 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time
 
 from .log_util import create_logger
 
@@ -47,3 +51,21 @@ try {
         log("close", "INFO", f"팝업 처리 결과: {result}")
     except Exception as e:
         log("close", "ERROR", f"스크립트 실행 실패: {e}")
+
+
+def close_focus_popup(driver: WebDriver, timeout: int = 5) -> None:
+    """"재택 유선권장 안내" 팝업을 엔터 키로 닫는다."""
+
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        try:
+            popup = driver.find_element(By.XPATH, "//div[contains(text(), '재택 유선권장 안내')]")
+            if popup.is_displayed():
+                log("focus_popup", "INFO", "팝업 감지됨: 엔터로 종료 시도")
+                ActionChains(driver).send_keys(Keys.ENTER).perform()
+                log("focus_popup", "INFO", "엔터 키 전송 완료")
+                return
+        except Exception as e:
+            log("focus_popup", "DEBUG", f"팝업 탐색 오류 또는 미표시: {e}")
+        time.sleep(0.5)
+    log("focus_popup", "DEBUG", "대상 팝업을 찾지 못함")
