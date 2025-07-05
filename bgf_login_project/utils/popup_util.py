@@ -10,10 +10,21 @@ def close_nexacro_popups(driver: WebDriver) -> None:
     js = """
 try {
     let app = nexacro.getApplication();
-    let targets = [
-        app.mainframe.HFrameSet00.frames?.[0]?.form,
-        app.mainframe.HFrameSet00?.VFrameSet00?.FrameSet?.WorkFrame?.form
-    ];
+    let targets = [];
+
+    // 기존에 확인된 영역 추가
+    targets.push(app.mainframe.HFrameSet00.frames?.[0]?.form);
+    targets.push(app.mainframe.HFrameSet00?.VFrameSet00?.FrameSet?.WorkFrame?.form);
+
+    // VFrameSet00 내부 프레임 순회하여 form 수집
+    let vfs = app.mainframe.HFrameSet00?.VFrameSet00;
+    if (vfs?.frames) {
+        for (let i = 0; i < vfs.frames.length; i++) {
+            let f = vfs.frames[i];
+            if (f?.form) targets.push(f.form);
+        }
+    }
+
     for (let form of targets) {
         if (!form) continue;
         for (let name in form.all) {
