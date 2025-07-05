@@ -4,6 +4,7 @@ import json
 import time
 
 from utils.log_util import create_logger
+from utils.popup_util import close_nexacro_popups
 
 log = create_logger("login_bgf")
 
@@ -84,6 +85,10 @@ try {
             success = False
         if success:
             log("login", "SUCCESS", "Login succeeded")
+            try:
+                close_nexacro_popups(driver)
+            except Exception as e:
+                log("login", "WARNING", f"Popup close failed: {e}")
             return True
     log("login", "FAIL", "Login check timeout")
     return False
