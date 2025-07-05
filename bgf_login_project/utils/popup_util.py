@@ -6,22 +6,24 @@ log = create_logger("popup_util")
 
 
 def close_nexacro_popups(driver: WebDriver) -> None:
-    """Close Nexacro popups by simulating a DOM click on elements with text '닫기'."""
+    """'닫기' 텍스트가 있는 모든 DOM 요소를 찾아 클릭 이벤트를 순서대로 발생시킨다."""
     js = """
 try {
-    const closeEl = [...document.querySelectorAll('*')].find(el => el.innerText?.trim() === '닫기');
-    if (closeEl) {
-        const rect = closeEl.getBoundingClientRect();
-        ['mousedown', 'mouseup', 'click'].forEach(type => {
-            closeEl.dispatchEvent(new MouseEvent(type, {
-                bubbles: true,
-                cancelable: true,
-                view: window,
-                clientX: rect.left + rect.width / 2,
-                clientY: rect.top + rect.height / 2
-            }));
+    const closeEls = [...document.querySelectorAll('*')].filter(el => el.innerText?.trim() === '닫기');
+    if (closeEls.length > 0) {
+        closeEls.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            ['mousedown', 'mouseup', 'click'].forEach(type => {
+                el.dispatchEvent(new MouseEvent(type, {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: rect.left + rect.width / 2,
+                    clientY: rect.top + rect.height / 2
+                }));
+            });
         });
-        return 'clicked';
+        return 'clicked:' + closeEls.length;
     }
     return 'not found';
 } catch (e) {
