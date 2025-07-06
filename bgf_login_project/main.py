@@ -9,12 +9,13 @@ from bgf_login_project.analysis import (
 )
 import os
 
-def create_driver():
+def create_driver() -> webdriver.Chrome:
     options = Options()
     options.add_experimental_option("detach", True)  # 창 자동 종료 방지
     return webdriver.Chrome(service=Service(), options=options)
 
-if __name__ == "__main__":
+
+def main() -> None:
     driver = create_driver()
     cred_path = os.environ.get("CREDENTIAL_FILE")
     success = login_bgf(driver, credential_path=cred_path)
@@ -32,3 +33,7 @@ if __name__ == "__main__":
             print("code detail extraction error", e)
     else:
         print("login failed")
+
+
+if __name__ == "__main__":
+    main()
