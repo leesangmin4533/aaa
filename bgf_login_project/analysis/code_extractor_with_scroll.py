@@ -3,14 +3,25 @@ import time
 import os
 
 
-def _click_code_and_get_detail(driver, code_str):
-    """주어진 코드 행을 클릭하고 세부 정보를 반환합니다."""
+def _click_code_and_get_detail(driver, code_str, max_attempts: int = 2):
+    """주어진 코드 행을 클릭하고 세부 정보를 반환합니다.
+
+    클릭 전 요소 존재 여부를 재확인하고 JavaScript 방식으로 클릭한다.
+    """
     code_xpath = f"//div[text()='{code_str}' and contains(@id, 'gdList.body')]"
-    code_el = driver.find_element(By.XPATH, code_xpath)
-    if not code_el.is_displayed():
+
+    for _ in range(max_attempts):
+        try:
+            code_el = driver.find_element(By.XPATH, code_xpath)
+            if not code_el.is_displayed():
+                raise Exception("code not visible yet")
+            driver.execute_script("arguments[0].click();", code_el)
+            break
+        except Exception:
+            time.sleep(0.5)
+    else:
         return None
 
-    code_el.click()
     time.sleep(0.5)
 
     detail_xpath = "//div[contains(@id, 'gdDetail.body.gridrow_0.cell_0_0:text')]"
