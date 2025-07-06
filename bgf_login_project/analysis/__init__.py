@@ -35,11 +35,15 @@ def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 5) -> bool:
     return False
 
 
-def go_to_category_mix_ratio(driver: WebDriver) -> None:
-    click_menu_by_text(driver, "매출분석")
+def go_to_category_mix_ratio(driver: WebDriver) -> bool:
+    """Navigate to the category mix ratio screen."""
+    if not click_menu_by_text(driver, "매출분석"):
+        return False
     time.sleep(1)
-    click_menu_by_text(driver, "중분류별 매출 구성비")
+    if not click_menu_by_text(driver, "중분류별 매출 구성비"):
+        return False
     time.sleep(1)
+    return True
 
 
 def click_code_cell(driver: WebDriver, index: int) -> bool:

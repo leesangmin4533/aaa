@@ -19,20 +19,26 @@ def main() -> None:
     driver = create_driver()
     cred_path = os.environ.get("CREDENTIAL_FILE")
     success = login_bgf(driver, credential_path=cred_path)
-    if success:
-        go_to_category_mix_ratio(driver)
-        try:
-            df = parse_mix_ratio_data(driver)
-            print(df.head())
-        except Exception as e:
-            print("analysis error", e)
-
-        try:
-            extract_code_details_with_button_scroll(driver)
-        except Exception as e:
-            print("code detail extraction error", e)
-    else:
+    if not success:
         print("login failed")
+        driver.quit()
+        return
+
+    if not go_to_category_mix_ratio(driver):
+        print("navigation failed")
+        driver.quit()
+        return
+
+    try:
+        df = parse_mix_ratio_data(driver)
+        print(df.head())
+    except Exception as e:
+        print("analysis error", e)
+
+    try:
+        extract_code_details_with_button_scroll(driver)
+    except Exception as e:
+        print("code detail extraction error", e)
 
 
 if __name__ == "__main__":
