@@ -4,7 +4,7 @@ import os
 
 
 def _click_code_and_get_detail(driver, code_str):
-    """Click the given code row and return the detail text."""
+    """주어진 코드 행을 클릭하고 세부 정보를 반환합니다."""
     code_xpath = f"//div[text()='{code_str}' and contains(@id, 'gdList.body')]"
     code_el = driver.find_element(By.XPATH, code_xpath)
     if not code_el.is_displayed():
@@ -18,8 +18,8 @@ def _click_code_and_get_detail(driver, code_str):
     return detail_el.text.strip()
 
 
-def extract_code_details_with_scroll(driver, output_file="code_outputs/all_codes.txt"):
-    """Extract details for codes 001~900 using scroll support and save to one file."""
+def extract_code_details_with_button_scroll(driver, output_file="code_outputs/all_codes.txt"):
+    """inc 버튼 클릭으로 스크롤하며 코드 001~900의 세부 정보를 추출합니다."""
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     with open(output_file, "w", encoding="utf-8") as out:
@@ -29,12 +29,15 @@ def extract_code_details_with_scroll(driver, output_file="code_outputs/all_codes
                 detail_text = _click_code_and_get_detail(driver, code_str)
                 if detail_text:
                     out.write(f"{code_str},{detail_text}\n")
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"[ERROR] Code {code_str}: {e}")
             finally:
-                driver.execute_script(
-                    """
-                    document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']").click();
-                    """
-                )
+                try:
+                    driver.execute_script(
+                        """
+                        document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']").click();
+                        """
+                    )
+                except Exception as e:
+                    print(f"[SCROLL ERROR] after code {code_str}: {e}")
                 time.sleep(1.5)
