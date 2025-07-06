@@ -1,13 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+import os
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from bgf_login_project.login.login_bgf import login_bgf
 from bgf_login_project.analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
     extract_code_details_with_button_scroll,
 )
-import os
 
 def create_driver() -> webdriver.Chrome:
     options = Options()
