@@ -38,7 +38,11 @@ def main() -> None:
 
     try:
         df = parse_mix_ratio_data(driver)
-        print(df.head())
+        if df is None:
+            print("[analysis][ERROR] 그리드에서 코드 데이터를 가져올 수 없음")
+            driver.save_screenshot("fail_parse_mix_ratio.png")
+        else:
+            print(df.head())
     except Exception as e:
         print("analysis error", e)
 
