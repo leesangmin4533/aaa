@@ -81,7 +81,9 @@ def parse_mix_ratio_data(driver: WebDriver):
         import pandas as pd
     except Exception:
         return None
-    rows = driver.execute_script(
-        "return [...document.querySelectorAll('[id^="gridrow_"][id*="cell_0_0:text"]')].map(el => el.innerText)"
+    script = (
+        "return [...document.querySelectorAll(\"[id^='gridrow_'][id*='cell_0_0:text']\")]."
+        "map(el => el.innerText)"
     )
+    rows = driver.execute_script(script)
     return pd.DataFrame({'code': rows}) if rows else None
