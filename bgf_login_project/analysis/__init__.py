@@ -21,11 +21,11 @@ var rect = arguments[0].getBoundingClientRect();
 
 
 def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 5) -> bool:
-    """class가 nexatextitem이고 텍스트가 일치하는 요소를 클릭"""
+    """주어진 텍스트를 가진 ``div`` 요소를 찾아 클릭한다."""
     end = time.time() + timeout
     while time.time() < end:
         element = driver.execute_script(
-            "return [...document.querySelectorAll('div.nexatextitem')].find(el => el.innerText.trim() === arguments[0])",
+            "return [...document.querySelectorAll('div')].find(el => el.innerText?.trim() === arguments[0])",
             text,
         )
         if element:
