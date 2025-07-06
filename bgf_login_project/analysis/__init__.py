@@ -55,6 +55,7 @@ def go_to_category_mix_ratio(driver: WebDriver) -> bool:
         return False
 
     print("[navigation] '중분류별 매출 구성비' 클릭 성공")
+    time.sleep(2)
     return True
 
 
@@ -102,4 +103,8 @@ def parse_mix_ratio_data(driver: WebDriver):
         "map(el => el.innerText)"
     )
     rows = driver.execute_script(script)
-    return pd.DataFrame({'code': rows}) if rows else None
+    if rows:
+        print(f"[parse_mix_ratio_data] {len(rows)}개 행 추출")
+        return pd.DataFrame({'code': rows})
+    print("[parse_mix_ratio_data][WARN] 추출된 행이 없음")
+    return None
