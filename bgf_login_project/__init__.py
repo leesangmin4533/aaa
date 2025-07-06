@@ -4,5 +4,6 @@ __all__ = [
     "analysis",
     "login",
     "utils",
+    "main",
 ]
 
