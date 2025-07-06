@@ -93,18 +93,25 @@ def extract_code_details_with_button_scroll(driver: WebDriver, rows: int = 10, d
 
 
 def parse_mix_ratio_data(driver: WebDriver):
-    """그리드에서 데이터 프레임을 생성하는 기본 구조."""
+    """그리드에서 코드 데이터를 추출하여 DataFrame으로 반환"""
     try:
         import pandas as pd
-    except Exception:
+    except ImportError:
+        print("[parse_mix_ratio_data][ERROR] pandas 로드 실패")
         return None
-    script = (
-        "return [...document.querySelectorAll(\"[id^='gridrow_'][id*='cell_0_0:text']\")]."
-        "map(el => el.innerText)"
-    )
-    rows = driver.execute_script(script)
-    if rows:
-        print(f"[parse_mix_ratio_data] {len(rows)}개 행 추출")
+
+    script = """
+return [...document.querySelectorAll("div")]
+  .filter(el => el.innerText?.trim().match(/^\\d{3}$/))
+  .map(el => el.innerText.trim());
+"""
+    try:
+        rows = driver.execute_script(script)
+        if not rows:
+            print("[parse_mix_ratio_data][WARN] 추출된 코드 행 없음")
+            return None
+        print(f"[parse_mix_ratio_data][INFO] 추출된 코드 수: {len(rows)}")
         return pd.DataFrame({'code': rows})
-    print("[parse_mix_ratio_data][WARN] 추출된 행이 없음")
-    return None
+    except Exception as e:
+        print("[parse_mix_ratio_data][ERROR] 스크립트 실행 실패:", e)
+        return None
