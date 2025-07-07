@@ -11,7 +11,7 @@ import time
 from pathlib import Path
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from .grid_utils import get_product_row_texts, wait_for_grid_update
+from . import grid_utils
 
 
 def dispatch_mouse_event(driver: WebDriver, element):
@@ -123,7 +123,7 @@ def wait_for_detail_grid_value_change(
     driver: WebDriver, prev_text: str = "", timeout: float = 6.0
 ) -> bool:
     """gridrow_0 의 첫 셀 값이 변경될 때까지 대기한다."""
-    return wait_for_grid_update(driver, prev_text, timeout=timeout)
+    return grid_utils.wait_for_grid_update(driver, prev_text, timeout=timeout)
 
 
 def get_visible_rows(driver: WebDriver):
@@ -245,7 +245,7 @@ return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_
             print(f"[WARN] '{code_str}' 상품 그리드 로딩 실패")
             continue
 
-        if not wait_for_detail_grid_value_change(driver, prev_text, timeout=6):
+        if not grid_utils.wait_for_grid_update(driver, prev_text, timeout=6):
             print(f"[WARN] '{code_str}' 상품 그리드 값 변화 없음")
             continue
         time.sleep(delay)
@@ -280,7 +280,7 @@ return [...document.querySelectorAll('div')]
                     print(f"[WARN] row {row} 클릭 대상 없음")
                 time.sleep(delay)
 
-                cols = get_product_row_texts(driver, row)
+                cols = grid_utils.get_product_row_texts(driver, row)
                 for idx, text in enumerate(cols):
                     if text == "":
                         print(f"[WARN] row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
@@ -293,7 +293,7 @@ return [...document.querySelectorAll('div')]
             prev_text = driver.execute_script(
                 "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
             )
-            if click_scroll_button(driver) and wait_for_detail_grid_value_change(driver, prev_text, timeout=6):
+            if click_scroll_button(driver) and grid_utils.wait_for_grid_update(driver, prev_text, timeout=6):
                 time.sleep(delay)
                 continue
             break
