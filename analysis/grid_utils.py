@@ -46,54 +46,50 @@ def wait_for_grid_update(driver: WebDriver, prev_value: str, timeout: float = 6.
     return False
 
 
-def click_all_visible_product_codes(driver: WebDriver, seen: set[str]) -> int:
-    """현재 화면에 렌더링된 상품코드 셀을 중복 없이 클릭한다.
+def click_all_visible_product_codes(driver: WebDriver) -> int:
+    """현재 화면에 보이는 상품코드 셀을 모두 클릭한다.
 
-    Parameters
-    ----------
-    driver : WebDriver
-        Selenium WebDriver instance.
-    seen : set[str]
-        이미 클릭한 상품코드들. 중복 방지용으로 갱신됨.
-
-    Returns
-    -------
-    int
-        새롭게 클릭된 상품코드 수
+    ``window.__clickedProductCodes`` 집합을 통해 이미 클릭한 코드를 관리하며
+    새롭게 클릭된 코드의 개수를 반환한다. 스크롤 직후 렌더링 지연을 고려해
+    첫 탐색에서 셀이 없으면 0.5초 뒤 한 번 더 시도한다.
     """
 
-    script = """
-const seen = new Set(arguments[1]);
+    def _run_js() -> list[str]:
+        script = r"""
+const seen = window.__clickedProductCodes = window.__clickedProductCodes || new Set();
 const clicked = [];
 
-const textCells = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='gridrow_'][id*='cell_'][id$='_0:text']")]
-  .filter(el => /^\\d{13}$/.test(el.innerText?.trim()));
+const cells = [...document.querySelectorAll('div[id]')]
+  .filter(el => el.id.includes('gdDetail') && el.id.endsWith(':text') &&
+                /^\d{13}$/.test(el.innerText?.trim()));
 
-for (const textEl of textCells) {
+for (const textEl of cells) {
   const code = textEl.innerText.trim();
   if (seen.has(code)) continue;
-
-  const clickId = textEl.id.replace(":text", "");
-  const clickEl = document.getElementById(clickId);
+  const clickEl = document.getElementById(textEl.id.replace(':text', ''));
   if (!clickEl) continue;
 
-  const rect = clickEl.getBoundingClientRect();
+  const r = clickEl.getBoundingClientRect();
   ['mousedown', 'mouseup', 'click'].forEach(type => {
     clickEl.dispatchEvent(new MouseEvent(type, {
       bubbles: true,
       cancelable: true,
       view: window,
-      clientX: rect.left + rect.width / 2,
-      clientY: rect.top + rect.height / 2
+      clientX: r.left + r.width / 2,
+      clientY: r.top + r.height / 2
     }));
   });
 
   seen.add(code);
   clicked.push(code);
 }
-
 return clicked;
 """
-    new_codes: list[str] = driver.execute_script(script, list(seen))
-    seen.update(new_codes)
+        return driver.execute_script(script)
+
+    new_codes = _run_js()
+    if not new_codes:
+        time.sleep(0.5)
+        new_codes = _run_js()
+
     return len(new_codes)

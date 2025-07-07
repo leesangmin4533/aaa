@@ -73,16 +73,25 @@ def test_wait_for_grid_update_timeout():
         assert grid_utils.wait_for_grid_update(driver, "same", timeout=1.0) is False
 
 
-def test_click_all_visible_product_codes():
+def test_click_all_visible_product_codes_basic():
     driver = Mock()
     driver.execute_script.return_value = ["111", "222"]
 
-    seen = {"000"}
-    result = grid_utils.click_all_visible_product_codes(driver, seen)
+    result = grid_utils.click_all_visible_product_codes(driver)
 
     assert result == 2
-    assert seen == {"000", "111", "222"}
     driver.execute_script.assert_called_once()
     assert isinstance(driver.execute_script.call_args.args[0], str)
-    assert driver.execute_script.call_args.args[1] == ["000"]
+
+
+def test_click_all_visible_product_codes_polling():
+    driver = Mock()
+    driver.execute_script.side_effect = [[], ["333"]]
+
+    with patch.object(grid_utils.time, "sleep") as sleep_mock:
+        result = grid_utils.click_all_visible_product_codes(driver)
+
+    assert result == 1
+    assert driver.execute_script.call_count == 2
+    sleep_mock.assert_called_once_with(0.5)
 

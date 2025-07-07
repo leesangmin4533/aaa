@@ -167,11 +167,10 @@ def click_all_product_codes(driver: WebDriver, delay: float = 1.0) -> int:
     수를 반환한다.
     """
 
-    seen: set[str] = set()
     total = 0
 
     while True:
-        count = grid_utils.click_all_visible_product_codes(driver, seen)
+        count = grid_utils.click_all_visible_product_codes(driver)
         total += count
         if count == 0:
             break
