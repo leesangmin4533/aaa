@@ -11,6 +11,7 @@ import time
 from pathlib import Path
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from selenium.common.exceptions import WebDriverException
 from utils.log_util import create_logger
 from . import grid_utils
 
@@ -93,6 +94,23 @@ return [...document.querySelectorAll("div")]
         return True
     return False
 
+def safe_click_code_element(driver: WebDriver, element, label: str) -> bool:
+    """코드 셀 클릭 전 검증 후 클릭한다."""
+    try:
+        if 'nexacontentsbox' not in (element.get_attribute('class') or ''):
+            log('code-click', 'WARNING', f"'{label}' 셀은 클릭 대상 아님 → 패스")
+            return False
+        url_before = driver.current_url
+        dispatch_mouse_event(driver, element)
+        time.sleep(1)
+        url_after = driver.current_url
+        if url_before != url_after:
+            log('navigation', 'ERROR', f"클릭 이후 화면 전환 감지 → '{label}' 스킵")
+            return False
+        return True
+    except WebDriverException as e:
+        log('code-click', 'EXCEPTION', f"WebDriver 예외 발생: {e}")
+        return False
 
 def click_scroll_button(driver: WebDriver) -> bool:
     js = """
@@ -167,7 +185,7 @@ return [...document.querySelectorAll("div")]
 
         if element:
             log("code-click", "INFO", f"'{code_str}' 셀 클릭")
-            dispatch_mouse_event(driver, element)
+            safe_click_code_element(driver, element, code_str)
             time.sleep(delay)
 
             if click_scroll_button(driver):
@@ -241,7 +259,7 @@ return [...document.querySelectorAll('div')]
             log("category-skip", "INFO", f"'{code_str}' 셀 없음")
             continue
 
-        dispatch_mouse_event(driver, element)
+        safe_click_code_element(driver, element, code_str)
         prev_text = driver.execute_script(
             """
 return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']")?.innerText?.trim() || '';
