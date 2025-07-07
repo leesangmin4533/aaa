@@ -14,6 +14,7 @@ from bgf_retail_project.analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
     extract_code_details_strict_sequence,
+    extract_product_info,
 )
 
 def create_driver() -> webdriver.Chrome:
@@ -50,6 +51,11 @@ def main() -> None:
         extract_code_details_strict_sequence(driver)
     except Exception as e:
         print("code detail extraction error", e)
+
+    try:
+        extract_product_info(driver)
+    except Exception as e:
+        print("product info extraction error", e)
 
 
 if __name__ == "__main__":
