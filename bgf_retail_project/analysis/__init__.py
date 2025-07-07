@@ -282,12 +282,12 @@ return el?.innerText?.trim() || '';
                 text = driver.execute_script(
                     """
 var el = document.querySelector(`div[id*='gridrow_0'][id*='cell_0_${arguments[0]}:text']`);
-return el?.innerText?.trim() || '';
+return el?.innerText?.trim() || "";
 """,
                     col,
                 )
-                if not text:
-                    print(f"[WARN] row 0 col {col} 텍스트 없음")
+                if text == "":
+                    print(f"[WARN] row 0 col {col} 텍스트 없음 (빈 문자열 처리됨)")
                 cols.append(text)
 
             if any(cols):
