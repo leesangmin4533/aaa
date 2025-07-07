@@ -5,5 +5,8 @@ __all__ = [
     "login",
     "utils",
     "main",
+    "extract_product_info",
 ]
+
+from .analysis import extract_product_info
 

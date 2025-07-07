@@ -8,6 +8,7 @@
 """
 
 import time
+from pathlib import Path
 from selenium.webdriver.remote.webdriver import WebDriver
 
 
@@ -160,3 +161,87 @@ return [...document.querySelectorAll("div")]
     except Exception as e:
         print("[parse_mix_ratio_data][ERROR] 스크립트 실행 실패:", e)
         return None
+
+
+def extract_product_info(driver: WebDriver, output_file: str | None = None, delay: float = 1.0) -> None:
+    """중분류 코드별 상품 정보를 추출하여 텍스트 파일에 저장한다.
+
+    매출 구성비 화면에서 왼쪽 코드(gdList)를 순차적으로 클릭한 뒤,
+    오른쪽 상품 그리드(gdDetail)의 4개 행을 클릭하며 모든 상품 정보를
+    수집한다. 각 상품 행에서 ``cell_0_0:text`` 부터 ``cell_0_6:text``
+    의 값을 읽어 ``code | category | 상품코드 | 상품명 | 매출 | 발주 | 매입 | 폐기 | 현재고``
+    형식으로 ``output_file`` 경로에 한 줄씩 기록한다.
+    """
+
+    path = Path(output_file or (Path(__file__).resolve().parent.parent / "code_outputs/products.txt"))
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    for num in range(1, 901):
+        code_str = f"{num:03}"
+        element = driver.execute_script(
+            """
+return [...document.querySelectorAll('div')]
+  .find(el => el.innerText?.trim() === arguments[0] &&
+               el.id?.includes('cell_') && !el.id?.includes(':text'));
+""",
+            code_str,
+        )
+
+        if not element:
+            print(f"[category-skip] '{code_str}' 셀 없음")
+            continue
+
+        dispatch_mouse_event(driver, element)
+        time.sleep(delay)
+
+        row_index = driver.execute_script(
+            """var m = arguments[0].id.match(/gridrow_(\\d+)/); return m ? m[1] : null;""",
+            element,
+        )
+        category_name = driver.execute_script(
+            """var el = document.querySelector(`div#gridrow_${arguments[0]}.cell_${arguments[0]}_1:text`); return el ? el.innerText.trim() : '';""",
+            row_index,
+        )
+
+        while True:
+            for row in range(4):
+                row_el = driver.execute_script(
+                    """
+return [...document.querySelectorAll('div')]
+  .find(el => el.id?.includes('gridrow_0') &&
+               el.id?.includes(`cell_${arguments[0]}_0`) && !el.id?.includes(':text'));
+""",
+                    row,
+                )
+                if not row_el:
+                    continue
+                dispatch_mouse_event(driver, row_el)
+                time.sleep(delay)
+
+                cols = []
+                for col in range(7):
+                    text_el = driver.execute_script(
+                        """
+return [...document.querySelectorAll('div')]
+  .find(el => el.id?.includes('gridrow_0') &&
+               el.id?.includes(`cell_${arguments[0]}_${arguments[1]}:text`));
+""",
+                        row,
+                        col,
+                    )
+                    text = driver.execute_script(
+                        "return arguments[0]?.innerText?.trim() || ''",
+                        text_el,
+                    )
+                    cols.append(text)
+
+                if any(cols):
+                    line = f"{code_str} | {category_name} | " + " | ".join(cols)
+                    with path.open("a", encoding="utf-8") as f:
+                        f.write(line + "\n")
+
+            if click_scroll_button(driver):
+                time.sleep(delay)
+            else:
+                break
+
