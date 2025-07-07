@@ -8,5 +8,8 @@ __all__ = [
     "extract_product_info",
 ]
 
-from .analysis import extract_product_info
+try:
+    from .analysis import extract_product_info
+except Exception:  # pragma: no cover - optional dependency may be missing
+    extract_product_info = None
 
