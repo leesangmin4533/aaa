@@ -95,3 +95,62 @@ def test_click_all_visible_product_codes_polling():
     assert driver.execute_script.call_count == 2
     sleep_mock.assert_called_once_with(0.5)
 
+
+def test_wait_until_clickable_success():
+    driver = Mock()
+    driver.execute_script.side_effect = [None, None, "el"]
+
+    fake_time = fake_time_generator()
+    with patch.object(grid_utils, "time") as tm:
+        tm.time.side_effect = fake_time
+        tm.sleep.side_effect = lambda x: None
+        result = grid_utils.wait_until_clickable(driver, "cid", timeout=1)
+
+    assert result == "el"
+    assert driver.execute_script.call_count == 3
+
+
+def test_wait_until_clickable_timeout():
+    driver = Mock()
+    driver.execute_script.return_value = None
+
+    fake_time = fake_time_generator()
+    with patch.object(grid_utils, "time") as tm:
+        tm.time.side_effect = fake_time
+        tm.sleep.side_effect = lambda x: None
+        result = grid_utils.wait_until_clickable(driver, "cid", timeout=1)
+
+    assert result is None
+
+
+def test_find_clickable_cell_by_code_success():
+    driver = Mock()
+    text_el = object()
+    driver.execute_script.side_effect = [text_el, "cid"]
+
+    with patch.object(grid_utils, "wait_until_clickable", return_value="el") as wuc:
+        result = grid_utils.find_clickable_cell_by_code(driver, "001")
+
+    assert result == "el"
+    assert wuc.call_args.args == (driver, "cid")
+
+
+def test_find_clickable_cell_by_code_no_text():
+    driver = Mock()
+    driver.execute_script.return_value = None
+
+    result = grid_utils.find_clickable_cell_by_code(driver, "001")
+
+    assert result is None
+
+
+def test_find_clickable_cell_by_code_not_clickable():
+    driver = Mock()
+    text_el = object()
+    driver.execute_script.side_effect = [text_el, "cid"]
+
+    with patch.object(grid_utils, "wait_until_clickable", return_value=None):
+        result = grid_utils.find_clickable_cell_by_code(driver, "001")
+
+    assert result is None
+
