@@ -18,7 +18,8 @@ def get_product_row_texts(driver: WebDriver, row: int, col_count: int = 7) -> li
     for col in range(col_count):
         text = driver.execute_script(
             """
-var el = document.querySelector(`div[id*='gridrow_0'][id*='cell_${arguments[0]}_${arguments[1]}:text']`);
+var selector = `div[id*='gdDetail'] div[id*='gridrow_0'][id*='cell_${arguments[0]}_${arguments[1]}:text']`;
+var el = document.querySelector(selector);
 return el?.innerText?.trim() || "";
 """,
             row,
@@ -33,7 +34,7 @@ def wait_for_grid_update(driver: WebDriver, prev_value: str, timeout: float = 6.
     end = time.time() + timeout
     while time.time() < end:
         curr = driver.execute_script(
-            "return document.querySelector(\"div[id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
+            "return document.querySelector(\"div[id*='gdDetail'] div[id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
         )
         if curr != prev_value and curr:
             return True
