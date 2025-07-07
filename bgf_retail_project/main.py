@@ -9,8 +9,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from bgf_login_project.login.login_bgf import login_bgf
-from bgf_login_project.analysis import (
+from bgf_retail_project.login.login_bgf import login_bgf
+from bgf_retail_project.analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
     extract_code_details_strict_sequence,
