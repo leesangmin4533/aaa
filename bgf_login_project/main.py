@@ -13,7 +13,7 @@ from bgf_login_project.login.login_bgf import login_bgf
 from bgf_login_project.analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
-    extract_code_details_with_button_scroll,
+    extract_code_details_strict_sequence,
 )
 
 def create_driver() -> webdriver.Chrome:
@@ -47,7 +47,7 @@ def main() -> None:
         print("analysis error", e)
 
     try:
-        extract_code_details_with_button_scroll(driver)
+        extract_code_details_strict_sequence(driver)
     except Exception as e:
         print("code detail extraction error", e)
 

@@ -84,12 +84,42 @@ return document.querySelector('div.ButtonControl.incbutton') ||
 
 
 def extract_code_details_with_button_scroll(driver: WebDriver, rows: int = 10, delay: float = 1.0) -> None:
+    """기존 방식: 미리 정해진 행 개수만큼 셀 클릭 후 스크롤."""
     for i in range(rows):
         if click_code_cell(driver, i):
             time.sleep(delay)
         if not click_scroll_button(driver):
             break
         time.sleep(delay)
+
+
+def extract_code_details_strict_sequence(driver: WebDriver, delay: float = 1.0):
+    """001 ~ 900까지 순차적으로 코드 셀을 탐색하며 클릭 후 스크롤 버튼을 누른다."""
+    for num in range(1, 901):
+        code_str = f"{num:03}"
+        print(f"[code-check] '{code_str}' 셀 탐색 중...")
+
+        element = driver.execute_script(
+            """
+return [...document.querySelectorAll("div")]
+  .find(el => el.innerText?.trim() === arguments[0] && el.id?.includes("gridrow_") && el.id?.includes("cell_0_0:text"));
+""",
+            code_str,
+        )
+
+        if element:
+            print(f"[code-click] '{code_str}' 셀 클릭")
+            dispatch_mouse_event(driver, element)
+            time.sleep(delay)
+
+            if click_scroll_button(driver):
+                print(f"[scroll] 스크롤 버튼 클릭 완료")
+            else:
+                print(f"[scroll][END] 스크롤 버튼 없음 → 종료")
+                break
+            time.sleep(delay)
+        else:
+            print(f"[code-skip] '{code_str}' 셀 없음 → 패스")
 
 
 def parse_mix_ratio_data(driver: WebDriver):
