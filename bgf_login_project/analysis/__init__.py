@@ -1,3 +1,12 @@
+"""분석 및 화면 자동화를 위한 유틸리티 모듈.
+
+코드 셀 구조
+--------------
+각 코드 셀은 ``div.cell_X_Y``(클릭 대상)과 ``div.cell_X_Y:text``(텍스트 표시)로
+구성된다. 텍스트 추출은 ``:text`` 요소에서 수행하고, 실제 클릭 이벤트는
+부모 ``div.cell_X_Y``에 전달해야 한다.
+"""
+
 import time
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -60,10 +69,14 @@ def go_to_category_mix_ratio(driver: WebDriver) -> bool:
 
 
 def click_code_cell(driver: WebDriver, index: int) -> bool:
-    selector = f"div[id*='gridrow_{index}'][id*='.cell_0_0:text']"
+    """지정한 행 번호의 코드 셀(div.cell_X_Y)을 클릭한다."""
     element = driver.execute_script(
-        "return document.querySelector(arguments[0])",
-        selector,
+        """
+return [...document.querySelectorAll("div")]
+  .find(el => el.id?.includes(`gridrow_${arguments[0]}`) &&
+               el.id?.includes("cell_0_0") && !el.id?.includes(":text"));
+""",
+        index,
     )
     if element:
         dispatch_mouse_event(driver, element)
@@ -102,7 +115,8 @@ def extract_code_details_strict_sequence(driver: WebDriver, delay: float = 1.0):
         element = driver.execute_script(
             """
 return [...document.querySelectorAll("div")]
-  .find(el => el.innerText?.trim() === arguments[0] && el.id?.includes("gridrow_") && el.id?.includes("cell_0_0:text"));
+  .find(el => el.innerText?.trim() === arguments[0] &&
+              el.id?.includes("cell_") && !el.id?.includes(":text"));
 """,
             code_str,
         )
@@ -132,7 +146,8 @@ def parse_mix_ratio_data(driver: WebDriver):
 
     script = """
 return [...document.querySelectorAll("div")]
-  .filter(el => el.innerText?.trim().match(/^\\d{3}$/))
+  .filter(el => el.id?.includes("cell_") && el.id?.includes(":text") &&
+                 /^\\d{3}$/.test(el.innerText?.trim()))
   .map(el => el.innerText.trim());
 """
     try:
