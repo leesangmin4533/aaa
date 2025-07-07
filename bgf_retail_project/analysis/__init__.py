@@ -97,6 +97,35 @@ return document.querySelector('div.ButtonControl.incbutton') ||
     return False
 
 
+def wait_for_detail_grid(driver: WebDriver, timeout: float = 5.0) -> bool:
+    """오른쪽 상품 그리드가 로딩될 때까지 대기한다."""
+    end = time.time() + timeout
+    while time.time() < end:
+        ready = driver.execute_script(
+            """
+return [...document.querySelectorAll('div')]
+  .some(el => el.id?.includes('gridrow_0') && el.id?.includes('cell_0_0:text'));
+"""
+        )
+        if ready:
+            return True
+        time.sleep(0.5)
+    return False
+
+
+def get_visible_rows(driver: WebDriver):
+    """현재 DOM에 표시된 상품 행 번호 목록을 반환한다."""
+    return driver.execute_script(
+        """
+return [...document.querySelectorAll('div')]
+  .filter(el => el.id?.includes('gridrow_0') &&
+                 /cell_(\\d+)_0$/.test(el.id) &&
+                 !el.id.includes(':text'))
+  .map(el => parseInt(el.id.match(/cell_(\\d+)_0$/)[1], 10));
+"""
+    )
+
+
 def extract_code_details_with_button_scroll(driver: WebDriver, rows: int = 10, delay: float = 1.0) -> None:
     """기존 방식: 미리 정해진 행 개수만큼 셀 클릭 후 스크롤."""
     for i in range(rows):
@@ -192,6 +221,10 @@ return [...document.querySelectorAll('div')]
             continue
 
         dispatch_mouse_event(driver, element)
+
+        if not wait_for_detail_grid(driver, timeout=5):
+            print(f"[WARN] '{code_str}' 상품 그리드 로딩 실패")
+            continue
         time.sleep(delay)
 
         row_index = driver.execute_script(
@@ -204,7 +237,11 @@ return [...document.querySelectorAll('div')]
         )
 
         while True:
-            for row in range(4):
+            row_indices = get_visible_rows(driver) or []
+            if not row_indices:
+                print("[WARN] 표시된 상품 행 없음 → 중단")
+                break
+            for row in row_indices:
                 row_el = driver.execute_script(
                     """
 return [...document.querySelectorAll('div')]
@@ -214,6 +251,7 @@ return [...document.querySelectorAll('div')]
                     row,
                 )
                 if not row_el:
+                    print(f"[WARN] row {row} 클릭 대상 없음 → 스킵")
                     continue
                 dispatch_mouse_event(driver, row_el)
                 time.sleep(delay)
@@ -229,10 +267,14 @@ return [...document.querySelectorAll('div')]
                         row,
                         col,
                     )
-                    text = driver.execute_script(
-                        "return arguments[0]?.innerText?.trim() || ''",
-                        text_el,
-                    )
+                    if not text_el:
+                        print(f"[WARN] row {row} col {col} 텍스트 없음")
+                        text = ''
+                    else:
+                        text = driver.execute_script(
+                            "return arguments[0]?.innerText?.trim() || ''",
+                            text_el,
+                        )
                     cols.append(text)
 
                 if any(cols):
