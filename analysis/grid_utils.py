@@ -44,3 +44,56 @@ def wait_for_grid_update(driver: WebDriver, prev_value: str, timeout: float = 6.
             return True
         time.sleep(0.3)
     return False
+
+
+def click_all_visible_product_codes(driver: WebDriver, seen: set[str]) -> int:
+    """현재 화면에 렌더링된 상품코드 셀을 중복 없이 클릭한다.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Selenium WebDriver instance.
+    seen : set[str]
+        이미 클릭한 상품코드들. 중복 방지용으로 갱신됨.
+
+    Returns
+    -------
+    int
+        새롭게 클릭된 상품코드 수
+    """
+
+    script = """
+const seen = new Set(arguments[1]);
+const clicked = [];
+
+const textCells = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='gridrow_'][id*='cell_'][id$='_0:text']")]
+  .filter(el => /^\\d{13}$/.test(el.innerText?.trim()));
+
+for (const textEl of textCells) {
+  const code = textEl.innerText.trim();
+  if (seen.has(code)) continue;
+
+  const clickId = textEl.id.replace(":text", "");
+  const clickEl = document.getElementById(clickId);
+  if (!clickEl) continue;
+
+  const rect = clickEl.getBoundingClientRect();
+  ['mousedown', 'mouseup', 'click'].forEach(type => {
+    clickEl.dispatchEvent(new MouseEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      clientX: rect.left + rect.width / 2,
+      clientY: rect.top + rect.height / 2
+    }));
+  });
+
+  seen.add(code);
+  clicked.push(code);
+}
+
+return clicked;
+"""
+    new_codes: list[str] = driver.execute_script(script, list(seen))
+    seen.update(new_codes)
+    return len(new_codes)
