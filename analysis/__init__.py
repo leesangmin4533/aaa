@@ -266,38 +266,27 @@ return el?.innerText?.trim() || '';
             row_index,
         )
 
-        while True:
-            for row in range(4):
-                row_el = driver.execute_script(
-                    """
+
+        for row in [0]:
+            row_el = driver.execute_script(
+                """
 return [...document.querySelectorAll('div')]
   .find(el => el.id?.includes('gridrow_0') &&
                el.id?.includes('cell_' + arguments[0] + '_0') &&
                !el.id?.includes(':text'));
 """,
-                    row,
-                )
-                if row_el:
-                    dispatch_mouse_event(driver, row_el)
-                else:
-                    log("row", "WARNING", f"row {row} 클릭 대상 없음")
-                time.sleep(delay)
-
-                cols = grid_utils.get_product_row_texts(driver, row)
-                for idx, text in enumerate(cols):
-                    if text == "":
-                        log("row", "WARNING", f"row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
-
-                if any(cols):
-                    line = f"{code_str} | {category_name} | " + " | ".join(cols)
-                    with path.open("a", encoding="utf-8") as f:
-                        f.write(line + "\n")
-
-            prev_text = driver.execute_script(
-                "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
+                row,
             )
-            if click_scroll_button(driver) and grid_utils.wait_for_grid_update(driver, prev_text, timeout=6):
+            if row_el:
+                dispatch_mouse_event(driver, row_el)
                 time.sleep(delay)
-                continue
-            break
 
+            cols = grid_utils.get_product_row_texts(driver, row)
+            for idx, text in enumerate(cols):
+                if text == "":
+                    log("row", "WARNING", f"row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
+
+            if any(cols):
+                line = f"{code_str} | {category_name} | " + " | ".join(cols)
+                with path.open("a", encoding="utf-8") as f:
+                    f.write(line + "\n")
