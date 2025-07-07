@@ -8,6 +8,7 @@ from analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
     extract_product_info,
+    click_all_product_codes,
 )
 
 def create_driver() -> webdriver.Chrome:
@@ -40,6 +41,12 @@ def main() -> None:
             print(df.head())
     except Exception as e:
         print("analysis error", e)
+
+    try:
+        total = click_all_product_codes(driver)
+        print(f"clicked {total} product codes")
+    except Exception as e:
+        print("auto click error", e)
 
     try:
         extract_product_info(driver)

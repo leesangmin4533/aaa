@@ -158,6 +158,37 @@ def get_visible_rows(driver: WebDriver):
     return [0]
 
 
+def click_all_product_codes(driver: WebDriver, delay: float = 1.0) -> int:
+    """현재 보이는 상품코드 셀을 모두 클릭하며 스크롤을 반복한다.
+
+    ``grid_utils.click_all_visible_product_codes`` 를 이용해 한 화면에
+    나타난 상품코드 셀들을 클릭하고, 이후 스크롤 버튼을 눌러 다음 셀을
+    로딩한다. 새로 클릭할 코드가 없을 때까지 반복하며 총 클릭된 코드
+    수를 반환한다.
+    """
+
+    seen: set[str] = set()
+    total = 0
+
+    while True:
+        count = grid_utils.click_all_visible_product_codes(driver, seen)
+        total += count
+        if count == 0:
+            break
+
+        prev = driver.execute_script(
+            "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
+        )
+
+        if not click_scroll_button(driver):
+            break
+
+        grid_utils.wait_for_grid_update(driver, prev, timeout=6)
+        time.sleep(delay)
+
+    return total
+
+
 def extract_code_details_with_button_scroll(driver: WebDriver, rows: int = 10, delay: float = 1.0) -> None:
     """기존 방식: 미리 정해진 행 개수만큼 셀 클릭 후 스크롤."""
     for i in range(rows):
