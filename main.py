@@ -3,8 +3,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import os
 
-from bgf_retail_project.login.login_bgf import login_bgf
-from bgf_retail_project.analysis import (
+from login.login_bgf import login_bgf
+from analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
     extract_product_info,
