@@ -209,13 +209,16 @@ return [...document.querySelectorAll("div")]
         return None
 
 
-def extract_product_info(driver: WebDriver, output_file: str | None = None, delay: float = 1.0) -> None:
+def extract_product_info(
+    driver: WebDriver, output_file: str | None = None, delay: float = 1.0
+) -> None:
     """중분류 코드별 상품 정보를 추출하여 텍스트 파일에 저장한다.
 
+    이 함수는 코드 셀 클릭부터 상품 행 순회까지 한 번의 루프에서 처리한다.
     매출 구성비 화면에서 왼쪽 코드(gdList)를 순차적으로 클릭한 뒤,
     오른쪽 상품 그리드(gdDetail)의 4개 행을 클릭하며 모든 상품 정보를
-    수집한다. 각 상품 행에서 ``cell_0_0:text`` 부터 ``cell_0_6:text``
-    의 값을 읽어 ``code | category | 상품코드 | 상품명 | 매출 | 발주 | 매입 | 폐기 | 현재고``
+    수집한다. 각 상품 행에서 ``cell_0_0:text`` 부터 ``cell_0_6:text`` 의
+    값을 읽어 ``code | category | 상품코드 | 상품명 | 매출 | 발주 | 매입 | 폐기 | 현재고``
     형식으로 ``output_file`` 경로에 한 줄씩 기록한다.
     """
 
@@ -258,7 +261,11 @@ return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_
             element,
         )
         category_name = driver.execute_script(
-            """var el = document.querySelector(`div#gridrow_${arguments[0]}.cell_${arguments[0]}_1:text`); return el?.innerText?.trim() || '';""",
+            """
+var selector = `div[id*="gridrow_${arguments[0]}"][id*="cell_${arguments[0]}_1:text"]`;
+var el = document.querySelector(selector);
+return el?.innerText?.trim() || '';
+""",
             row_index,
         )
 
