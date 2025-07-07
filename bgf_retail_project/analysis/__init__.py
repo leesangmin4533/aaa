@@ -70,12 +70,16 @@ def go_to_category_mix_ratio(driver: WebDriver) -> bool:
 
 
 def click_code_cell(driver: WebDriver, index: int) -> bool:
-    """지정한 행 번호의 코드 셀(div.cell_X_Y)을 클릭한다."""
+    """지정한 행 번호의 코드 셀(div.cell_X_Y)을 클릭한다.
+
+    좌측 코드 그리드 ``gdList`` 의 행 구조는 ``gridrow_{n}.cell_{n}_0`` 형태이다.
+    ``index`` 값에 해당하는 셀을 찾아 마우스 이벤트를 전달한다.
+    """
     element = driver.execute_script(
         """
 return [...document.querySelectorAll("div")]
   .find(el => el.id?.includes(`gridrow_${arguments[0]}`) &&
-               el.id?.includes("cell_0_0") && !el.id?.includes(":text"));
+               el.id?.includes(`cell_${arguments[0]}_0`) && !el.id?.includes(":text"));
 """,
         index,
     )
@@ -172,9 +176,9 @@ return [...document.querySelectorAll("div")]
             time.sleep(delay)
 
             if click_scroll_button(driver):
-                print(f"[scroll] 스크롤 버튼 클릭 완료")
+                print("[scroll] 스크롤 버튼 클릭 완료")
             else:
-                print(f"[scroll][END] 스크롤 버튼 없음 → 종료")
+                print("[scroll][END] 스크롤 버튼 없음 → 종료")
                 break
             time.sleep(delay)
         else:
