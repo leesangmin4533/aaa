@@ -8,6 +8,8 @@
 from __future__ import annotations
 
 import time
+from typing import Any
+
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.common.exceptions import WebDriverException
 
@@ -56,23 +58,95 @@ def click_all_product_codes(
 def go_to_category_mix_ratio(driver: WebDriver) -> bool:
     """Navigate to the category mix ratio page.
 
-    실제 구현 대신 성공했다고 가정한다.
+    Selenium DOM 구조가 변할 수 있으므로 JavaScript로 메뉴 이동을 시도하고
+    성공 여부를 반환한다. 실패해도 ``False`` 만 반환하여 상위 로직이 종료되지는
+    않도록 한다.
     """
 
     logger = create_logger("analysis")
-    logger("nav", "DEBUG", "go_to_category_mix_ratio stub called")
-    return True
+
+    js = """
+try {
+    var app = nexacro.getApplication();
+    if (app && app.gvMainFrame && app.gvMainFrame.fnOpenMenuWithParam) {
+        app.gvMainFrame.fnOpenMenuWithParam('WSM024', '', '');
+        return true;
+    }
+    return false;
+} catch (e) {
+    return 'error:' + e.toString();
+}
+"""
+
+    try:
+        result = driver.execute_script(js)
+    except Exception as e:
+        logger("nav", "ERROR", f"navigation script failed: {e}")
+        return False
+
+    if isinstance(result, str) and result.startswith("error"):
+        logger("nav", "ERROR", result)
+        return False
+
+    logger("nav", "DEBUG", "go_to_category_mix_ratio executed")
+    return bool(result)
 
 
 def parse_mix_ratio_data(driver: WebDriver):
     """Parse grid data and return a DataFrame.
 
-    이 예제에서는 실제 파싱 로직을 구현하지 않고 ``None`` 을 반환한다.
+    Nexacro 그리드에서 중분류 코드와 명칭을 추출하여 ``pandas.DataFrame`` 으로
+    반환한다. 실패 시 ``None`` 을 반환한다.
     """
 
     logger = create_logger("analysis")
-    logger("parse", "DEBUG", "parse_mix_ratio_data stub called")
-    return None
+    logger("parse", "DEBUG", "parse_mix_ratio_data start")
+
+    js = """
+try {
+    const rows = [];
+    const pattern = /^gdList\.gridrow_(\d+)$/;
+    const els = [...document.querySelectorAll('div[id^="gdList.gridrow_"]')];
+    els.forEach(el => {
+        const m = el.id.match(pattern);
+        if (!m) return;
+        const idx = m[1];
+        const code = document.querySelector(
+            `div[id="gdList.gridrow_${idx}.cell_${idx}_0:text"]`
+        );
+        if (!code) return;
+        const name = document.querySelector(
+            `div[id="gdList.gridrow_${idx}.cell_${idx}_1:text"]`
+        );
+        rows.push({
+            code: code.innerText.trim(),
+            name: name ? name.innerText.trim() : null,
+        });
+    });
+    return rows;
+} catch (e) {
+    return 'error:' + e.toString();
+}
+"""
+
+    try:
+        result: Any = driver.execute_script(js)
+    except Exception as e:
+        logger("parse", "ERROR", f"script failed: {e}")
+        return None
+
+    if isinstance(result, str) and result.startswith("error"):
+        logger("parse", "ERROR", result)
+        return None
+
+    try:
+        import pandas as pd
+        df = pd.DataFrame(result)
+    except Exception as e:
+        logger("parse", "ERROR", f"DataFrame error: {e}")
+        return None
+
+    return df
 
 
 def extract_product_info(driver: WebDriver) -> None:
