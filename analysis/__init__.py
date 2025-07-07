@@ -272,7 +272,14 @@ return el?.innerText?.trim() || '';
 
 
         while True:
-            for row in range(10):
+            text_cells = driver.execute_script(
+                """
+return [...document.querySelectorAll("div[id*='gdDetail'][id*='cell_'][id$='_0:text']")];
+"""
+            )
+            row_count = len(text_cells)
+
+            for row in range(row_count):
                 row_el = driver.execute_script(
                     """
 return [...document.querySelectorAll('div')]
@@ -290,9 +297,7 @@ return [...document.querySelectorAll('div')]
 
                 cols = grid_utils.get_product_row_texts(driver, row)
                 product_code = cols[0]
-                if not product_code:
-                    break
-                if product_code in seen_codes:
+                if not product_code or product_code in seen_codes:
                     continue
                 seen_codes.add(product_code)
 
