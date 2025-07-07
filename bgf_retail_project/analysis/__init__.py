@@ -113,6 +113,23 @@ return [...document.querySelectorAll('div')]
     return False
 
 
+def wait_for_detail_grid_value_change(
+    driver: WebDriver, prev_text: str = "", timeout: float = 6.0
+) -> bool:
+    """gridrow_0 의 첫 셀 값이 변경될 때까지 대기한다."""
+    end = time.time() + timeout
+    while time.time() < end:
+        new_text = driver.execute_script(
+            """
+return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']")?.innerText?.trim() || '';
+"""
+        )
+        if new_text and new_text != prev_text:
+            return True
+        time.sleep(0.3)
+    return False
+
+
 def get_visible_rows(driver: WebDriver):
     """현재 DOM에 표시된 상품 행 번호 목록을 반환한다."""
     return driver.execute_script(
@@ -221,9 +238,18 @@ return [...document.querySelectorAll('div')]
             continue
 
         dispatch_mouse_event(driver, element)
+        prev_text = driver.execute_script(
+            """
+return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']")?.innerText?.trim() || '';
+"""
+        )
 
         if not wait_for_detail_grid(driver, timeout=5):
             print(f"[WARN] '{code_str}' 상품 그리드 로딩 실패")
+            continue
+
+        if not wait_for_detail_grid_value_change(driver, prev_text, timeout=6):
+            print(f"[WARN] '{code_str}' 상품 그리드 값 변화 없음")
             continue
         time.sleep(delay)
 
@@ -232,7 +258,7 @@ return [...document.querySelectorAll('div')]
             element,
         )
         category_name = driver.execute_script(
-            """var el = document.querySelector(`div#gridrow_${arguments[0]}.cell_${arguments[0]}_1:text`); return el ? el.innerText.trim() : '';""",
+            """var el = document.querySelector(`div#gridrow_${arguments[0]}.cell_${arguments[0]}_1:text`); return el?.innerText?.trim() || '';""",
             row_index,
         )
 
