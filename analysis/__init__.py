@@ -11,7 +11,10 @@ import time
 from pathlib import Path
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from utils.log_util import create_logger
 from . import grid_utils
+
+log = create_logger("analysis")
 
 
 def dispatch_mouse_event(driver: WebDriver, element):
@@ -41,32 +44,32 @@ def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 5) -> bool:
             text,
         )
         if element:
-            print(f"[click_menu_by_text] '{text}' 요소 찾음 → 클릭 시도")
+            log("click_menu_by_text", "INFO", f"'{text}' 요소 찾음 → 클릭 시도")
             dispatch_mouse_event(driver, element)
             return True
         time.sleep(0.5)
-    print(f"[click_menu_by_text][WARN] '{text}' 요소 탐색 실패")
+    log("click_menu_by_text", "WARNING", f"'{text}' 요소 탐색 실패")
     return False
 
 
 def go_to_category_mix_ratio(driver: WebDriver) -> bool:
     """Navigate to the category mix ratio screen with detailed logging."""
-    print("[navigation] '매출분석' 클릭 시도 중...")
+    log("navigation", "INFO", "'매출분석' 클릭 시도 중...")
     if not click_menu_by_text(driver, '매출분석', timeout=10):
-        print("[navigation][ERROR] '매출분석' 클릭 실패: 요소 탐색 실패 또는 클릭 불가")
+        log("navigation", "ERROR", "'매출분석' 클릭 실패: 요소 탐색 실패 또는 클릭 불가")
         driver.save_screenshot('fail_매출분석.png')
         return False
 
-    print("[navigation] '매출분석' 클릭 성공 → 화면 로딩 대기")
+    log("navigation", "INFO", "'매출분석' 클릭 성공 → 화면 로딩 대기")
     time.sleep(3)
 
-    print("[navigation] '중분류별 매출 구성비' 클릭 시도 중...")
+    log("navigation", "INFO", "'중분류별 매출 구성비' 클릭 시도 중...")
     if not click_menu_by_text(driver, '중분류별 매출 구성비', timeout=10):
-        print("[navigation][ERROR] '중분류별 매출 구성비' 클릭 실패: 요소 탐색 실패 또는 클릭 불가")
+        log("navigation", "ERROR", "'중분류별 매출 구성비' 클릭 실패: 요소 탐색 실패 또는 클릭 불가")
         driver.save_screenshot('fail_중분류별매출구성비.png')
         return False
 
-    print("[navigation] '중분류별 매출 구성비' 클릭 성공")
+    log("navigation", "INFO", "'중분류별 매출 구성비' 클릭 성공")
     time.sleep(2)
     return True
 
@@ -151,7 +154,7 @@ def extract_code_details_strict_sequence(driver: WebDriver, delay: float = 1.0):
     """001 ~ 900까지 순차적으로 코드 셀을 탐색하며 클릭 후 스크롤 버튼을 누른다."""
     for num in range(1, 901):
         code_str = f"{num:03}"
-        print(f"[code-check] '{code_str}' 셀 탐색 중...")
+        log("code-check", "INFO", f"'{code_str}' 셀 탐색 중...")
 
         element = driver.execute_script(
             """
@@ -163,18 +166,18 @@ return [...document.querySelectorAll("div")]
         )
 
         if element:
-            print(f"[code-click] '{code_str}' 셀 클릭")
+            log("code-click", "INFO", f"'{code_str}' 셀 클릭")
             dispatch_mouse_event(driver, element)
             time.sleep(delay)
 
             if click_scroll_button(driver):
-                print("[scroll] 스크롤 버튼 클릭 완료")
+                log("scroll", "INFO", "스크롤 버튼 클릭 완료")
             else:
-                print("[scroll][END] 스크롤 버튼 없음 → 종료")
+                log("scroll", "INFO", "스크롤 버튼 없음 → 종료")
                 break
             time.sleep(delay)
         else:
-            print(f"[code-skip] '{code_str}' 셀 없음 → 패스")
+            log("code-skip", "INFO", f"'{code_str}' 셀 없음 → 패스")
 
 
 def parse_mix_ratio_data(driver: WebDriver):
@@ -182,7 +185,7 @@ def parse_mix_ratio_data(driver: WebDriver):
     try:
         import pandas as pd
     except ImportError:
-        print("[parse_mix_ratio_data][ERROR] pandas 로드 실패")
+        log("parse_mix_ratio_data", "ERROR", "pandas 로드 실패")
         return None
 
     script = """
@@ -194,12 +197,12 @@ return [...document.querySelectorAll("div")]
     try:
         rows = driver.execute_script(script)
         if not rows:
-            print("[parse_mix_ratio_data][WARN] 추출된 코드 행 없음")
+            log("parse_mix_ratio_data", "WARNING", "추출된 코드 행 없음")
             return None
-        print(f"[parse_mix_ratio_data][INFO] 추출된 코드 수: {len(rows)}")
+        log("parse_mix_ratio_data", "INFO", f"추출된 코드 수: {len(rows)}")
         return pd.DataFrame({'code': rows})
     except Exception as e:
-        print("[parse_mix_ratio_data][ERROR] 스크립트 실행 실패:", e)
+        log("parse_mix_ratio_data", "ERROR", f"스크립트 실행 실패: {e}")
         return None
 
 
@@ -231,7 +234,7 @@ return [...document.querySelectorAll('div')]
         )
 
         if not element:
-            print(f"[category-skip] '{code_str}' 셀 없음")
+            log("category-skip", "INFO", f"'{code_str}' 셀 없음")
             continue
 
         dispatch_mouse_event(driver, element)
@@ -242,11 +245,11 @@ return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_
         )
 
         if not wait_for_detail_grid(driver, timeout=5):
-            print(f"[WARN] '{code_str}' 상품 그리드 로딩 실패")
+            log("detail-grid", "WARNING", f"'{code_str}' 상품 그리드 로딩 실패")
             continue
 
         if not grid_utils.wait_for_grid_update(driver, prev_text, timeout=6):
-            print(f"[WARN] '{code_str}' 상품 그리드 값 변화 없음")
+            log("detail-grid", "WARNING", f"'{code_str}' 상품 그리드 값 변화 없음")
             continue
         time.sleep(delay)
 
@@ -277,13 +280,13 @@ return [...document.querySelectorAll('div')]
                 if row_el:
                     dispatch_mouse_event(driver, row_el)
                 else:
-                    print(f"[WARN] row {row} 클릭 대상 없음")
+                    log("row", "WARNING", f"row {row} 클릭 대상 없음")
                 time.sleep(delay)
 
                 cols = grid_utils.get_product_row_texts(driver, row)
                 for idx, text in enumerate(cols):
                     if text == "":
-                        print(f"[WARN] row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
+                        log("row", "WARNING", f"row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
 
                 if any(cols):
                     line = f"{code_str} | {category_name} | " + " | ".join(cols)
