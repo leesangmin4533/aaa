@@ -3,8 +3,8 @@ from pathlib import Path
 import json
 import time
 
-from ..utils.log_util import create_logger
-from ..utils.popup_util import close_nexacro_popups, close_focus_popup
+from utils.log_util import create_logger
+from utils.popup_util import close_nexacro_popups, close_focus_popup
 
 log = create_logger("login_bgf")
 
