@@ -176,26 +176,36 @@ def extract_code_details_strict_sequence(driver: WebDriver, delay: float = 1.0):
 
         element = driver.execute_script(
             """
-return [...document.querySelectorAll("div")]
-  .find(el => el.innerText?.trim() === arguments[0] &&
-              el.id?.includes("cell_") && !el.id?.includes(":text"));
+return [...document.querySelectorAll('div[id*="gdList"][id*="cell_"][id$="_0:text"]')]
+    .find(el => el.innerText?.trim() === arguments[0]);
 """,
             code_str,
         )
 
-        if element:
-            log("code-click", "INFO", f"'{code_str}' 셀 클릭")
-            safe_click_code_element(driver, element, code_str)
-            time.sleep(delay)
+        if not element:
+            log("code-click", "WARNING", f"'{code_str}' 텍스트 셀 없음 → 패스")
+            continue
 
-            if click_scroll_button(driver):
-                log("scroll", "INFO", "스크롤 버튼 클릭 완료")
-            else:
-                log("scroll", "INFO", "스크롤 버튼 없음 → 종료")
-                break
-            time.sleep(delay)
+        click_id = element.id.replace(':text', '')
+        click_el = driver.execute_script(
+            "return document.getElementById(arguments[0]);",
+            click_id,
+        )
+
+        if not click_el:
+            log("code-click", "WARNING", f"'{code_str}' 클릭 셀 없음 → 패스")
+            continue
+
+        log("code-click", "INFO", f"'{code_str}' 셀 클릭")
+        safe_click_code_element(driver, click_el, code_str)
+        time.sleep(delay)
+
+        if click_scroll_button(driver):
+            log("scroll", "INFO", "스크롤 버튼 클릭 완료")
         else:
-            log("code-skip", "INFO", f"'{code_str}' 셀 없음 → 패스")
+            log("scroll", "INFO", "스크롤 버튼 없음 → 종료")
+            break
+        time.sleep(delay)
 
 
 def parse_mix_ratio_data(driver: WebDriver):
@@ -246,17 +256,26 @@ def extract_product_info(
 
     for num in range(1, 901):
         code_str = f"{num:03}"
-        element = driver.execute_script(
+        text_el = driver.execute_script(
             """
-return [...document.querySelectorAll('div')]
-  .find(el => el.innerText?.trim() === arguments[0] &&
-               el.id?.includes('cell_') && !el.id?.includes(':text'));
+return [...document.querySelectorAll('div[id*="gdList"][id*="cell_"][id$="_0:text"]')]
+    .find(el => el.innerText?.trim() === arguments[0]);
 """,
             code_str,
         )
 
+        if not text_el:
+            log("category-skip", "INFO", f"'{code_str}' 텍스트 셀 없음")
+            continue
+
+        click_id = text_el.id.replace(':text', '')
+        element = driver.execute_script(
+            "return document.getElementById(arguments[0]);",
+            click_id,
+        )
+
         if not element:
-            log("category-skip", "INFO", f"'{code_str}' 셀 없음")
+            log("category-skip", "INFO", f"'{code_str}' 클릭 셀 없음")
             continue
 
         safe_click_code_element(driver, element, code_str)
