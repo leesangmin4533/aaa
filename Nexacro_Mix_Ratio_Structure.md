@@ -27,7 +27,7 @@ nexacro.getApplication().mainframe
 |------|------|
 | 구성 | 중분류별 상품 상세 정보 |
 | 표시 행 수 | 한 화면에 4행 (스크롤로 추가 불러오기 가능) |
-| 행 구조 | `gridrow_{row}` |
+| 행 구조 | 행 컨테이너는 항상 `gridrow_0` 하나이며 각 행 셀의 ID는 `cell_{row}_{col}` 형태로 표시됨 |
 | 열 구조 | `cell_{row}_{col}` |
 | 텍스트 셀 | `cell_{row}_{col}:text` |
 
@@ -48,7 +48,7 @@ nexacro.getApplication().mainframe
 | 구성 요소 | ID 예시 | 설명 |
 |------------|----------|------|
 | 스크롤 버튼 | `incbutton:icontext` | 클릭 시 다음 4행 로딩됨 |
-| 스크롤 후에도 DOM 구조는 동일 | `gridrow_{n}` | 다음 4행은 `gridrow_0 ~ 3`로 다시 채워짐 (이전 내용 덮어쓰기됨) |
+| 스크롤 후에도 DOM 구조는 동일 | `gridrow_0` | 다음 4행은 `gridrow_0 ~ 3`로 다시 채워짐 (이전 내용 덮어쓰기됨) |
 
 ## 🧩 작동 흐름 요약
 
@@ -61,11 +61,11 @@ nexacro.getApplication().mainframe
 
 | 대상 | DOM ID 패턴 |
 |------|--------------|
-| 중분류 코드 | `gdList.gridrow_{n}.cell_{n}_0[:text]` |
-| 중분류명 | `gdList.gridrow_{n}.cell_{n}_1:text` |
-| 상품코드 | `gdDetail.gridrow_{n}.cell_{n}_0:text` |
-| 상품명 | `gdDetail.gridrow_{n}.cell_{n}_1:text` |
-| 기타 항목 | `gdDetail.gridrow_{n}.cell_{n}_{col}:text` |
+| 중분류 코드 | `gdList.gridrow_0.cell_{n}_0[:text]` |
+| 중분류명 | `gdList.gridrow_0.cell_{n}_1:text` |
+| 상품코드 | `gdDetail.gridrow_0.cell_{n}_0:text` |
+| 상품명 | `gdDetail.gridrow_0.cell_{n}_1:text` |
+| 기타 항목 | `gdDetail.gridrow_0.cell_{n}_{col}:text` |
 
 ## ✅ 예시 콘솔 명령 요약 (기억용)
 
@@ -77,7 +77,7 @@ document.querySelector('div[id*="gdList"][id*="cell_9_1:text"]')?.innerText;
 
 ### 상품코드 4개 추출
 for (let i = 0; i < 4; i++) {
-  console.log(document.querySelector(`div[id*="gdDetail"][id*="gridrow_${i}"][id*="cell_${i}_0:text"]`)?.innerText);
+  console.log(document.querySelector(`div[id*="gdDetail"][id*="cell_${i}_0:text"]`)?.innerText);
 }
 
 ## 📌 정리 요약
