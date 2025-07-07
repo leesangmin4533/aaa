@@ -13,7 +13,6 @@ from bgf_retail_project.login.login_bgf import login_bgf
 from bgf_retail_project.analysis import (
     go_to_category_mix_ratio,
     parse_mix_ratio_data,
-    extract_code_details_strict_sequence,
     extract_product_info,
 )
 
@@ -46,11 +45,6 @@ def main() -> None:
             print(df.head())
     except Exception as e:
         print("analysis error", e)
-
-    try:
-        extract_code_details_strict_sequence(driver)
-    except Exception as e:
-        print("code detail extraction error", e)
 
     try:
         extract_product_info(driver)
