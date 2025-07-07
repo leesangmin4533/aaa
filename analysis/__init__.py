@@ -213,7 +213,7 @@ def extract_product_info(
 
     이 함수는 코드 셀 클릭부터 상품 행 순회까지 한 번의 루프에서 처리한다.
     매출 구성비 화면에서 왼쪽 코드(gdList)를 순차적으로 클릭한 뒤,
-    오른쪽 상품 그리드(gdDetail)의 4개 행을 클릭하며 모든 상품 정보를
+    오른쪽 상품 그리드(gdDetail)의 모든 행을 클릭하며 상품 정보를
     수집한다. 각 상품 행에서 ``cell_0_0:text`` 부터 ``cell_0_6:text`` 의
     값을 읽어 ``code | category | 상품코드 | 상품명 | 매출 | 발주 | 매입 | 폐기 | 현재고``
     형식으로 ``output_file`` 경로에 한 줄씩 기록한다.
@@ -221,6 +221,10 @@ def extract_product_info(
 
     path = Path(output_file or (Path(__file__).resolve().parent.parent / "code_outputs/products.txt"))
     path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        path.unlink()
+
+    seen_codes: set[str] = set()
 
     for num in range(1, 901):
         code_str = f"{num:03}"
@@ -267,26 +271,43 @@ return el?.innerText?.trim() || '';
         )
 
 
-        for row in [0]:
-            row_el = driver.execute_script(
-                """
+        while True:
+            for row in range(10):
+                row_el = driver.execute_script(
+                    """
 return [...document.querySelectorAll('div')]
   .find(el => el.id?.includes('gridrow_0') &&
                el.id?.includes('cell_' + arguments[0] + '_0') &&
                !el.id?.includes(':text'));
 """,
-                row,
-            )
-            if row_el:
-                dispatch_mouse_event(driver, row_el)
-                time.sleep(delay)
+                    row,
+                )
+                if row_el:
+                    dispatch_mouse_event(driver, row_el)
+                    time.sleep(delay)
+                else:
+                    log("row", "WARNING", f"row {row} 클릭 대상 없음")
 
-            cols = grid_utils.get_product_row_texts(driver, row)
-            for idx, text in enumerate(cols):
-                if text == "":
-                    log("row", "WARNING", f"row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
+                cols = grid_utils.get_product_row_texts(driver, row)
+                product_code = cols[0]
+                if not product_code:
+                    break
+                if product_code in seen_codes:
+                    continue
+                seen_codes.add(product_code)
 
-            if any(cols):
+                for idx, text in enumerate(cols):
+                    if text == "":
+                        log("row", "WARNING", f"row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
+
                 line = f"{code_str} | {category_name} | " + " | ".join(cols)
                 with path.open("a", encoding="utf-8") as f:
                     f.write(line + "\n")
+
+            prev_text = driver.execute_script(
+                "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
+            )
+            if click_scroll_button(driver) and grid_utils.wait_for_grid_update(driver, prev_text, timeout=6):
+                time.sleep(delay)
+                continue
+            break
