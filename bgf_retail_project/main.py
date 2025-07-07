@@ -23,6 +23,7 @@ def create_driver() -> webdriver.Chrome:
 
 
 def main() -> None:
+    print("[main] main() 진입")  # 루프 여부 추적용
     driver = create_driver()
     cred_path = os.environ.get("CREDENTIAL_FILE")
     success = login_bgf(driver, credential_path=cred_path)
