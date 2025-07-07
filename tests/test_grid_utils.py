@@ -72,3 +72,17 @@ def test_wait_for_grid_update_timeout():
         tm.sleep.side_effect = lambda x: None
         assert grid_utils.wait_for_grid_update(driver, "same", timeout=1.0) is False
 
+
+def test_click_all_visible_product_codes():
+    driver = Mock()
+    driver.execute_script.return_value = ["111", "222"]
+
+    seen = {"000"}
+    result = grid_utils.click_all_visible_product_codes(driver, seen)
+
+    assert result == 2
+    assert seen == {"000", "111", "222"}
+    driver.execute_script.assert_called_once()
+    assert isinstance(driver.execute_script.call_args.args[0], str)
+    assert driver.execute_script.call_args.args[1] == ["000"]
+
