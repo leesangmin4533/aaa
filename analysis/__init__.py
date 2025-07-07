@@ -11,6 +11,8 @@ import time
 from pathlib import Path
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from .grid_utils import get_product_row_texts, wait_for_grid_update
+
 
 def dispatch_mouse_event(driver: WebDriver, element):
     driver.execute_script(
@@ -121,17 +123,7 @@ def wait_for_detail_grid_value_change(
     driver: WebDriver, prev_text: str = "", timeout: float = 6.0
 ) -> bool:
     """gridrow_0 의 첫 셀 값이 변경될 때까지 대기한다."""
-    end = time.time() + timeout
-    while time.time() < end:
-        new_text = driver.execute_script(
-            """
-return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']")?.innerText?.trim() || '';
-"""
-        )
-        if new_text and new_text != prev_text:
-            return True
-        time.sleep(0.3)
-    return False
+    return wait_for_grid_update(driver, prev_text, timeout=timeout)
 
 
 def get_visible_rows(driver: WebDriver):
@@ -288,19 +280,10 @@ return [...document.querySelectorAll('div')]
                     print(f"[WARN] row {row} 클릭 대상 없음")
                 time.sleep(delay)
 
-                cols = []
-                for col in range(7):
-                    text = driver.execute_script(
-                        """
-var el = document.querySelector(`div[id*='gridrow_0'][id*='cell_${arguments[0]}_${arguments[1]}:text']`);
-return el?.innerText?.trim() || "";
-""",
-                        row,
-                        col,
-                    )
+                cols = get_product_row_texts(driver, row)
+                for idx, text in enumerate(cols):
                     if text == "":
-                        print(f"[WARN] row {row} col {col} 텍스트 없음 (빈 문자열 처리됨)")
-                    cols.append(text)
+                        print(f"[WARN] row {row} col {idx} 텍스트 없음 (빈 문자열 처리됨)")
 
                 if any(cols):
                     line = f"{code_str} | {category_name} | " + " | ".join(cols)
