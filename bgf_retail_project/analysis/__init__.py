@@ -268,32 +268,40 @@ return el?.innerText?.trim() || '';
         )
 
         while True:
-            row_el = driver.execute_script(
-                "return document.querySelector(\"div[id*='gridrow_0'][id*='cell_0_0']\");"
-            )
-            if row_el:
-                dispatch_mouse_event(driver, row_el)
-            else:
-                print("[WARN] row 0 클릭 대상 없음")
-            time.sleep(delay)
-
-            cols = []
-            for col in range(7):
-                text = driver.execute_script(
+            for row in range(4):
+                row_el = driver.execute_script(
                     """
-var el = document.querySelector(`div[id*='gridrow_0'][id*='cell_0_${arguments[0]}:text']`);
+return [...document.querySelectorAll('div')]
+  .find(el => el.id?.includes('gridrow_0') &&
+               el.id?.includes('cell_' + arguments[0] + '_0') &&
+               !el.id?.includes(':text'));
+""",
+                    row,
+                )
+                if row_el:
+                    dispatch_mouse_event(driver, row_el)
+                else:
+                    print(f"[WARN] row {row} 클릭 대상 없음")
+                time.sleep(delay)
+
+                cols = []
+                for col in range(7):
+                    text = driver.execute_script(
+                        """
+var el = document.querySelector(`div[id*='gridrow_0'][id*='cell_${arguments[0]}_${arguments[1]}:text']`);
 return el?.innerText?.trim() || "";
 """,
-                    col,
-                )
-                if text == "":
-                    print(f"[WARN] row 0 col {col} 텍스트 없음 (빈 문자열 처리됨)")
-                cols.append(text)
+                        row,
+                        col,
+                    )
+                    if text == "":
+                        print(f"[WARN] row {row} col {col} 텍스트 없음 (빈 문자열 처리됨)")
+                    cols.append(text)
 
-            if any(cols):
-                line = f"{code_str} | {category_name} | " + " | ".join(cols)
-                with path.open("a", encoding="utf-8") as f:
-                    f.write(line + "\n")
+                if any(cols):
+                    line = f"{code_str} | {category_name} | " + " | ".join(cols)
+                    with path.open("a", encoding="utf-8") as f:
+                        f.write(line + "\n")
 
             prev_text = driver.execute_script(
                 "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
