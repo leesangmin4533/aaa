@@ -9,10 +9,16 @@ selenium_pkg = types.ModuleType("selenium")
 webdriver_pkg = types.ModuleType("selenium.webdriver")
 remote_pkg = types.ModuleType("selenium.webdriver.remote")
 webdriver_module = types.ModuleType("selenium.webdriver.remote.webdriver")
+support_pkg = types.ModuleType("selenium.webdriver.support")
+ui_module = types.ModuleType("selenium.webdriver.support.ui")
+class WebDriverWait: ...
+ui_module.WebDriverWait = WebDriverWait
 class WebDriver: ...
 webdriver_module.WebDriver = WebDriver
 remote_pkg.webdriver = webdriver_module
 webdriver_pkg.remote = remote_pkg
+support_pkg.ui = ui_module
+webdriver_pkg.support = support_pkg
 common_pkg = types.ModuleType("selenium.common")
 exceptions_module = types.ModuleType("selenium.common.exceptions")
 class WebDriverException(Exception):
@@ -25,6 +31,8 @@ sys.modules.setdefault("selenium", selenium_pkg)
 sys.modules.setdefault("selenium.webdriver", webdriver_pkg)
 sys.modules.setdefault("selenium.webdriver.remote", remote_pkg)
 sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
+sys.modules.setdefault("selenium.webdriver.support", support_pkg)
+sys.modules.setdefault("selenium.webdriver.support.ui", ui_module)
 sys.modules.setdefault("selenium.common", common_pkg)
 sys.modules.setdefault("selenium.common.exceptions", exceptions_module)
 

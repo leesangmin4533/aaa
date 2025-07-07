@@ -14,11 +14,13 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.common.exceptions import WebDriverException
 
 from . import grid_utils
+from .navigation import click_menu_by_text, go_to_mix_ratio_screen
 from utils.log_util import create_logger
 
 __all__ = [
     "click_all_product_codes",
     "go_to_category_mix_ratio",
+    "go_to_mix_ratio_screen",
     "parse_mix_ratio_data",
     "extract_product_info",
 ]
