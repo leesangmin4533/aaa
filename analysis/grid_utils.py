@@ -93,3 +93,42 @@ return clicked;
         new_codes = _run_js()
 
     return len(new_codes)
+
+
+def wait_until_clickable(driver: WebDriver, click_id: str, timeout: int = 3):
+    """Return element when ``click_id`` exists and is visible within timeout."""
+    end = time.time() + timeout
+    while time.time() < end:
+        element = driver.execute_script(
+            "var el = document.getElementById(arguments[0]);"
+            "return el && el.offsetParent !== null ? el : null;",
+            click_id,
+        )
+        if element:
+            return element
+        time.sleep(0.1)
+    return None
+
+
+def find_clickable_cell_by_code(driver: WebDriver, code: str):
+    """Locate clickable grid cell for a given code.
+
+    Parameters
+    ----------
+    driver : WebDriver
+        Active Selenium instance.
+    code : str
+        Code text to search for.
+    """
+
+    text_el = driver.execute_script(
+        """
+return [...document.querySelectorAll('div[id*="gdList"][id*="cell_"][id$="_0:text"]')]
+  .find(el => el.innerText?.trim() === arguments[0]);
+""",
+        code,
+    )
+    if not text_el:
+        return None
+    click_id = driver.execute_script("return arguments[0].id.replace(':text', '')", text_el)
+    return wait_until_clickable(driver, click_id)
