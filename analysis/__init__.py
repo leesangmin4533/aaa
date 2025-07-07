@@ -158,6 +158,37 @@ def get_visible_rows(driver: WebDriver):
     return [0]
 
 
+def click_all_product_codes(driver: WebDriver, delay: float = 1.0) -> int:
+    """현재 보이는 상품코드 셀을 모두 클릭하며 스크롤을 반복한다.
+
+    ``grid_utils.click_all_visible_product_codes`` 를 이용해 한 화면에
+    나타난 상품코드 셀들을 클릭하고, 이후 스크롤 버튼을 눌러 다음 셀을
+    로딩한다. 새로 클릭할 코드가 없을 때까지 반복하며 총 클릭된 코드
+    수를 반환한다.
+    """
+
+    seen: set[str] = set()
+    total = 0
+
+    while True:
+        count = grid_utils.click_all_visible_product_codes(driver, seen)
+        total += count
+        if count == 0:
+            break
+
+        prev = driver.execute_script(
+            "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
+        )
+
+        if not click_scroll_button(driver):
+            break
+
+        grid_utils.wait_for_grid_update(driver, prev, timeout=6)
+        time.sleep(delay)
+
+    return total
+
+
 def extract_code_details_with_button_scroll(driver: WebDriver, rows: int = 10, delay: float = 1.0) -> None:
     """기존 방식: 미리 정해진 행 개수만큼 셀 클릭 후 스크롤."""
     for i in range(rows):
@@ -176,26 +207,36 @@ def extract_code_details_strict_sequence(driver: WebDriver, delay: float = 1.0):
 
         element = driver.execute_script(
             """
-return [...document.querySelectorAll("div")]
-  .find(el => el.innerText?.trim() === arguments[0] &&
-              el.id?.includes("cell_") && !el.id?.includes(":text"));
+return [...document.querySelectorAll('div[id*="gdList"][id*="cell_"][id$="_0:text"]')]
+    .find(el => el.innerText?.trim() === arguments[0]);
 """,
             code_str,
         )
 
-        if element:
-            log("code-click", "INFO", f"'{code_str}' 셀 클릭")
-            safe_click_code_element(driver, element, code_str)
-            time.sleep(delay)
+        if not element:
+            log("code-click", "WARNING", f"'{code_str}' 텍스트 셀 없음 → 패스")
+            continue
 
-            if click_scroll_button(driver):
-                log("scroll", "INFO", "스크롤 버튼 클릭 완료")
-            else:
-                log("scroll", "INFO", "스크롤 버튼 없음 → 종료")
-                break
-            time.sleep(delay)
+        click_id = element.id.replace(':text', '')
+        click_el = driver.execute_script(
+            "return document.getElementById(arguments[0]);",
+            click_id,
+        )
+
+        if not click_el:
+            log("code-click", "WARNING", f"'{code_str}' 클릭 셀 없음 → 패스")
+            continue
+
+        log("code-click", "INFO", f"'{code_str}' 셀 클릭")
+        safe_click_code_element(driver, click_el, code_str)
+        time.sleep(delay)
+
+        if click_scroll_button(driver):
+            log("scroll", "INFO", "스크롤 버튼 클릭 완료")
         else:
-            log("code-skip", "INFO", f"'{code_str}' 셀 없음 → 패스")
+            log("scroll", "INFO", "스크롤 버튼 없음 → 종료")
+            break
+        time.sleep(delay)
 
 
 def parse_mix_ratio_data(driver: WebDriver):
@@ -246,17 +287,26 @@ def extract_product_info(
 
     for num in range(1, 901):
         code_str = f"{num:03}"
-        element = driver.execute_script(
+        text_el = driver.execute_script(
             """
-return [...document.querySelectorAll('div')]
-  .find(el => el.innerText?.trim() === arguments[0] &&
-               el.id?.includes('cell_') && !el.id?.includes(':text'));
+return [...document.querySelectorAll('div[id*="gdList"][id*="cell_"][id$="_0:text"]')]
+    .find(el => el.innerText?.trim() === arguments[0]);
 """,
             code_str,
         )
 
+        if not text_el:
+            log("category-skip", "INFO", f"'{code_str}' 텍스트 셀 없음")
+            continue
+
+        click_id = text_el.id.replace(':text', '')
+        element = driver.execute_script(
+            "return document.getElementById(arguments[0]);",
+            click_id,
+        )
+
         if not element:
-            log("category-skip", "INFO", f"'{code_str}' 셀 없음")
+            log("category-skip", "INFO", f"'{code_str}' 클릭 셀 없음")
             continue
 
         safe_click_code_element(driver, element, code_str)

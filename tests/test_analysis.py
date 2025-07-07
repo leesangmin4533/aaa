@@ -1,0 +1,50 @@
+import importlib.util
+import pathlib
+import sys
+import types
+from unittest.mock import Mock, patch
+
+# minimal fake selenium package
+selenium_pkg = types.ModuleType("selenium")
+webdriver_pkg = types.ModuleType("selenium.webdriver")
+remote_pkg = types.ModuleType("selenium.webdriver.remote")
+webdriver_module = types.ModuleType("selenium.webdriver.remote.webdriver")
+class WebDriver: ...
+webdriver_module.WebDriver = WebDriver
+remote_pkg.webdriver = webdriver_module
+webdriver_pkg.remote = remote_pkg
+common_pkg = types.ModuleType("selenium.common")
+exceptions_module = types.ModuleType("selenium.common.exceptions")
+class WebDriverException(Exception):
+    pass
+exceptions_module.WebDriverException = WebDriverException
+common_pkg.exceptions = exceptions_module
+selenium_pkg.webdriver = webdriver_pkg
+selenium_pkg.common = common_pkg
+sys.modules.setdefault("selenium", selenium_pkg)
+sys.modules.setdefault("selenium.webdriver", webdriver_pkg)
+sys.modules.setdefault("selenium.webdriver.remote", remote_pkg)
+sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
+sys.modules.setdefault("selenium.common", common_pkg)
+sys.modules.setdefault("selenium.common.exceptions", exceptions_module)
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+_spec = importlib.util.spec_from_file_location(
+    "analysis", pathlib.Path(__file__).resolve().parents[1] / "analysis" / "__init__.py"
+)
+analysis = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(analysis)
+
+
+def test_click_all_product_codes_basic():
+    driver = Mock()
+    driver.execute_script.return_value = "prev"
+
+    with patch.object(analysis.grid_utils, "click_all_visible_product_codes", side_effect=[2, 0]) as click_mock, \
+         patch.object(analysis, "click_scroll_button", return_value=True) as scroll_mock, \
+         patch.object(analysis.grid_utils, "wait_for_grid_update", return_value=True):
+        count = analysis.click_all_product_codes(driver, delay=0)
+
+    assert count == 2
+    assert click_mock.call_count == 2
+    scroll_mock.assert_called_once()
