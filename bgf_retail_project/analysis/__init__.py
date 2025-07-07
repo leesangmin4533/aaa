@@ -131,16 +131,14 @@ return document.querySelector("div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_
 
 
 def get_visible_rows(driver: WebDriver):
-    """현재 DOM에 표시된 상품 행 번호 목록을 반환한다."""
-    return driver.execute_script(
-        """
-return [...document.querySelectorAll('div')]
-  .filter(el => el.id?.includes('gridrow_0') &&
-                 /cell_(\\d+)_0$/.test(el.id) &&
-                 !el.id.includes(':text'))
-  .map(el => parseInt(el.id.match(/cell_(\\d+)_0$/)[1], 10));
-"""
-    )
+    """Return the fixed row index for ``gdDetail``.
+
+    ``gdDetail`` always contains a single row (index ``0``), so this function
+    simply returns ``[0]``. It remains callable for compatibility with existing
+    code that expects a list of row indices.
+    """
+
+    return [0]
 
 
 def extract_code_details_with_button_scroll(driver: WebDriver, rows: int = 10, delay: float = 1.0) -> None:
@@ -270,53 +268,38 @@ return el?.innerText?.trim() || '';
         )
 
         while True:
-            row_indices = get_visible_rows(driver) or []
-            if not row_indices:
-                print("[WARN] 표시된 상품 행 없음 → 중단")
-                break
-            for row in row_indices:
-                row_el = driver.execute_script(
-                    """
-return [...document.querySelectorAll('div')]
-  .find(el => el.id?.includes('gridrow_0') &&
-               el.id?.includes(`cell_${arguments[0]}_0`) && !el.id?.includes(':text'));
-""",
-                    row,
-                )
-                if not row_el:
-                    print(f"[WARN] row {row} 클릭 대상 없음 → 스킵")
-                    continue
+            row_el = driver.execute_script(
+                "return document.querySelector(\"div[id*='gridrow_0'][id*='cell_0_0']\");"
+            )
+            if row_el:
                 dispatch_mouse_event(driver, row_el)
-                time.sleep(delay)
-
-                cols = []
-                for col in range(7):
-                    text_el = driver.execute_script(
-                        """
-return [...document.querySelectorAll('div')]
-  .find(el => el.id?.includes('gridrow_0') &&
-               el.id?.includes(`cell_${arguments[0]}_${arguments[1]}:text`));
-""",
-                        row,
-                        col,
-                    )
-                    if not text_el:
-                        print(f"[WARN] row {row} col {col} 텍스트 없음")
-                        text = ''
-                    else:
-                        text = driver.execute_script(
-                            "return arguments[0]?.innerText?.trim() || ''",
-                            text_el,
-                        )
-                    cols.append(text)
-
-                if any(cols):
-                    line = f"{code_str} | {category_name} | " + " | ".join(cols)
-                    with path.open("a", encoding="utf-8") as f:
-                        f.write(line + "\n")
-
-            if click_scroll_button(driver):
-                time.sleep(delay)
             else:
-                break
+                print("[WARN] row 0 클릭 대상 없음")
+            time.sleep(delay)
+
+            cols = []
+            for col in range(7):
+                text = driver.execute_script(
+                    """
+var el = document.querySelector(`div[id*='gridrow_0'][id*='cell_0_${arguments[0]}:text']`);
+return el?.innerText?.trim() || '';
+""",
+                    col,
+                )
+                if not text:
+                    print(f"[WARN] row 0 col {col} 텍스트 없음")
+                cols.append(text)
+
+            if any(cols):
+                line = f"{code_str} | {category_name} | " + " | ".join(cols)
+                with path.open("a", encoding="utf-8") as f:
+                    f.write(line + "\n")
+
+            prev_text = driver.execute_script(
+                "return document.querySelector(\"div[id*='gdDetail'][id*='gridrow_0'][id*='cell_0_0:text']\")?.innerText?.trim() || '';"
+            )
+            if click_scroll_button(driver) and wait_for_detail_grid_value_change(driver, prev_text, timeout=6):
+                time.sleep(delay)
+                continue
+            break
 
