@@ -1,6 +1,10 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 import time
 
+from utils.log_util import create_logger
+
+log = create_logger("grid_utils")
+
 
 def get_product_row_texts(driver: WebDriver, row: int, col_count: int = 7) -> list[str]:
     """Return text values for a product row in ``gdDetail``.
