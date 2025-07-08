@@ -14,17 +14,17 @@ logger = create_logger("navigation")
 def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 10) -> bool:
     """Click a menu element containing ``text``.
 
-    ``text`` is compared in a case-insensitive manner and consecutive
-    whitespace is ignored so that minor DOM text variations do not break the
-    navigation flow. The function searches all DOM nodes and clicks the first
-    matching element. ``True`` is returned on success, otherwise ``False``. Any
-    exception is logged and swallowed.
+    Nexacro 메뉴는 텍스트가 ``div.nexatextitem`` 안에 위치하므로 해당 노드를
+    대상으로 검색한다. ``text`` 는 대소문자를 구분하지 않고 연속된 공백을
+    하나로 간주하여 비교한다. 일치하는 첫 번째 요소를 클릭하며, 예외가 발생
+    하면 ``False`` 를 반환하고 로그만 남긴다.
     """
 
     try:
         target = " ".join(text.split()).lower()
         xpath = (
-            "//*[contains(translate(normalize-space(.),"
+            "//div[contains(@class, 'nexatextitem') and "
+            "contains(translate(normalize-space(.),"
             " 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),"
             f" '{target}')]"
         )
