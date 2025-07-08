@@ -49,6 +49,14 @@
     const seen = new Set();
     let scrollCount = 0;
 
+    let attempts = 0;
+    while (
+      document.querySelectorAll("div[id*='gdDetail.body'][id$='_0:text']").length === 0 &&
+      attempts++ < 10
+    ) {
+      await delay(300);
+    }
+
     while (true) {
       const textCells = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
       const newCodes = [];
