@@ -49,3 +49,52 @@ def go_to_mix_ratio_screen(driver: WebDriver) -> bool:
     if not click_menu_by_text(driver, "중분류별 매출 구성비"):
         return False
     return True
+
+
+def navigate_to_category_mix_ratio(driver: WebDriver) -> bool:
+    """Navigate to the category mix ratio page using direct DOM events."""
+
+    from utils.log_util import create_logger
+    log = create_logger("navigation")
+
+    def click_by_text(text: str, wait: float = 0.5, max_retry: int = 10) -> bool:
+        for _ in range(max_retry):
+            el = driver.execute_script(
+                """
+return [...document.querySelectorAll('div')].find(el =>
+  el.innerText?.trim() === arguments[0] &&
+  el.offsetParent !== null);
+""",
+                text,
+            )
+            if el:
+                driver.execute_script(
+                    """
+var rect = arguments[0].getBoundingClientRect();
+['mousedown', 'mouseup', 'click'].forEach(type => {
+  arguments[0].dispatchEvent(new MouseEvent(type, {
+    bubbles: true, cancelable: true, view: window,
+    clientX: rect.left + rect.width / 2,
+    clientY: rect.top + rect.height / 2
+  }));
+});
+""",
+                    el,
+                )
+                return True
+            time.sleep(wait)
+        return False
+
+    log("INFO", "🔍 '매출분석' 클릭 시도")
+    if not click_by_text("매출분석"):
+        log("ERROR", "❌ '매출분석' 클릭 실패")
+        return False
+
+    time.sleep(2)
+    log("INFO", "🔍 '중분류별 매출 구성비' 클릭 시도")
+    if not click_by_text("중분류별 매출 구성비"):
+        log("ERROR", "❌ '중분류별 매출 구성비' 클릭 실패")
+        return False
+
+    log("SUCCESS", "✅ 메뉴 진입 완료")
+    return True
