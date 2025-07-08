@@ -51,6 +51,9 @@
 
     while (true) {
       const textCells = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
+      if (textCells.length === 0) {
+        console.warn("❗ 상품 목록 비어 있음 → 렌더링 실패 가능성");
+      }
       const newCodes = [];
 
       for (const textEl of textCells) {
@@ -119,7 +122,7 @@
         seenMid.add(code);
         newMids.push(code);
         console.log(`✅ 중분류 클릭 완료: ${code}`);
-        await delay(500);  // 중분류 클릭 후 화면 렌더링 대기
+        await delay(800);  // 중분류 클릭 후 화면 렌더링 대기 (렌더링 안정성 확보)
 
         await autoClickAllProductCodes(code, midName); // 상품코드 클릭 루프 진입
         await delay(300); // 다음 중분류 넘어가기 전 딜레이
