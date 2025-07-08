@@ -149,17 +149,21 @@ def extract_product_info(driver: WebDriver, timeout: int = 3):
     logger = create_logger("analysis")
 
     end_time = time.time() + timeout
+    attempt = 1
     while time.time() < end_time:
         try:
             exists = driver.execute_script(
                 "return document.querySelector(\"div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']\") !== null;"
             )
+            logger("product", "DEBUG", f"셀 로딩 확인 시도 {attempt}: {exists}")
         except Exception as e:
             logger("product", "ERROR", f"load check failed: {e}")
             return None
         if exists:
+            logger("product", "INFO", "상품 셀 로딩 완료")
             break
         time.sleep(0.5)
+        attempt += 1
     else:
         logger("product", "WARNING", "상품 그리드 로딩 실패")
         return None
