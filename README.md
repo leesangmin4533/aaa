@@ -11,11 +11,14 @@ from analysis import (
     extract_product_info,
     export_product_data,
 )
+from utils.log_util import create_logger
 import time
+
+log = create_logger("example")
 
 # driver는 로그인 이후의 WebDriver 인스턴스라고 가정합니다.
 if navigate_to_category_mix_ratio(driver):
-    print("화면 이동 성공")
+    log("step", "INFO", "화면 이동 성공")
 
     # 원하는 중분류 코드를 찾아 클릭한다.
     driver.execute_script(
@@ -28,17 +31,22 @@ if (cell) {
         )
 
     # 상품 셀이 렌더링될 때까지 최대 2초간 대기한다.
-    for _ in range(10):
+    for i in range(10):
         exists = driver.execute_script(
             "return document.querySelector(\"div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']\") !== null;"
         )
+        log("wait", "DEBUG", f"{i + 1}회차 로딩 상태: {exists}")
         if exists:
+            log("wait", "INFO", "상품 셀이 로딩됨")
             break
         time.sleep(0.2)
+    else:
+        log("wait", "ERROR", "상품 셀 로딩 실패")
+        raise RuntimeError("grid load failure")
 
     # 상품 데이터를 추출해 현재 디렉터리에 저장
     rows = extract_product_info(driver) or []
     export_product_data(rows)
 else:
-    print("화면 이동 실패")
+    log("step", "ERROR", "화면 이동 실패")
 ```
