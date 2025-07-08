@@ -66,7 +66,9 @@
         if (!/^\d{13}$/.test(code)) continue;
         if (seen.has(code)) continue;
 
-        const rowIdx = textEl.id.match(/cell_(\d+)_0:text$/)?.[1];
+        const rowIdx = textEl
+          .closest("div[id*='gridrow_']")
+          ?.id.match(/gridrow_(\d+)/)?.[1];
         if (rowIdx !== undefined) {
           collectRowData(rowIdx, midCode, midName);
         }
