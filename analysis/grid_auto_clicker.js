@@ -118,6 +118,8 @@
           continue;
         }
 
+        // Nexacro DOM의 ID는 전체 경로 형태로만 존재하므로 행 인덱스를 추출해
+        // `gdList.gridrow_{i}.cell_{i}_1:text` 패턴의 ID를 직접 조회한다.
         const idx = textEl.id.match(/gridrow_(\d+)/)?.[1];
         const nameEl = idx
           ? document.querySelector(`div[id="gdList.gridrow_${idx}.cell_${idx}_1:text"]`)
