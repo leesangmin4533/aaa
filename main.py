@@ -9,6 +9,7 @@ from analysis import (
     parse_mix_ratio_data,
     extract_product_info,
     click_all_product_codes,
+    export_product_data,
 )
 
 def create_driver() -> webdriver.Chrome:
@@ -52,6 +53,15 @@ def main() -> None:
         extract_product_info(driver)
     except Exception as e:
         print("product info extraction error", e)
+
+    try:
+        output_path = export_product_data(driver, "code_outputs")
+        if output_path:
+            print(f"exported product data to {output_path}")
+        else:
+            print("export product data failed")
+    except Exception as e:
+        print("product export error", e)
 
 
 if __name__ == "__main__":
