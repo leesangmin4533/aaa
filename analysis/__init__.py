@@ -14,7 +14,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pathlib import Path
 from .navigation import navigate_to_category_mix_ratio
-from .product_exporter import export_product_data
+from .product_exporter import export_product_data, HEADER
 from utils.log_util import create_logger
 
 __all__ = [
@@ -103,11 +103,68 @@ try {
     return df
 
 
-def extract_product_info(driver: WebDriver) -> None:
-    """Extract product information from the page.
+def extract_product_info(driver: WebDriver, timeout: int = 3):
+    """Extract product information from the product grid.
 
-    Selenium 동작 예시만 제공하고 실질적인 처리는 하지 않는다.
+    Parameters
+    ----------
+    driver:
+        Selenium WebDriver instance.
+    timeout:
+        Maximum seconds to wait for the first cell to appear.
+
+    Returns
+    -------
+    list[dict[str, str]] | None
+        추출한 행 데이터 목록. 실패 시 ``None`` 을 반환한다.
     """
 
     logger = create_logger("analysis")
-    logger("product", "DEBUG", "extract_product_info stub called")
+
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        try:
+            exists = driver.execute_script(
+                "return document.querySelector(\"div[id^='gdDetail.gridrow_0.cell_0_0:text']\") !== null;"
+            )
+        except Exception as e:
+            logger("product", "ERROR", f"load check failed: {e}")
+            return None
+        if exists:
+            break
+        time.sleep(0.5)
+    else:
+        logger("product", "WARNING", "상품 그리드 로딩 실패")
+        return None
+
+    js = """
+try {
+    const header = arguments[0];
+    const out = [];
+    for (let r = 0; ; r++) {
+        const firstCell = document.querySelector(`div[id^='gdDetail.gridrow_0.cell_${r}_0:text']`);
+        if (!firstCell) break;
+        const row = {};
+        for (let c = 0; c < header.length - 2; c++) {
+            const cell = document.querySelector(`div[id^='gdDetail.gridrow_0.cell_${r}_${c}:text']`);
+            row[header[c + 2]] = cell ? cell.innerText.trim() : "";
+        }
+        out.push(row);
+    }
+    return out;
+} catch (e) {
+    return 'error:' + e.toString();
+}
+"""
+
+    try:
+        rows: Any = driver.execute_script(js, HEADER)
+    except Exception as e:
+        logger("product", "ERROR", f"script failed: {e}")
+        return None
+
+    if isinstance(rows, str) and rows.startswith("error"):
+        logger("product", "ERROR", rows)
+        return None
+
+    return rows

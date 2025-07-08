@@ -65,3 +65,16 @@ def test_click_all_product_codes_executes_js():
     analysis.click_all_product_codes(driver)
 
     driver.execute_script.assert_called_once()
+
+
+def test_extract_product_info_returns_rows():
+    driver = Mock()
+    driver.execute_script.side_effect = [True, [{"상품코드": "1"}]]
+
+    with patch.object(analysis.time, "sleep"), patch.object(
+        analysis, "create_logger", return_value=lambda *a: None
+    ):
+        rows = analysis.extract_product_info(driver)
+
+    assert rows == [{"상품코드": "1"}]
+    assert driver.execute_script.call_count == 2

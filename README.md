@@ -6,7 +6,11 @@
 
 ```python
 from selenium.webdriver.remote.webdriver import WebDriver
-from analysis import navigate_to_category_mix_ratio, export_product_data
+from analysis import (
+    navigate_to_category_mix_ratio,
+    extract_product_info,
+    export_product_data,
+)
 
 # driver는 로그인 이후의 WebDriver 인스턴스라고 가정합니다.
 if navigate_to_category_mix_ratio(driver):
@@ -15,5 +19,6 @@ else:
     print("화면 이동 실패")
 
 # 상품 데이터를 추출해 현재 디렉터리에 저장
-export_product_data(driver)
+rows = extract_product_info(driver) or []
+export_product_data(rows)
 ```
