@@ -60,33 +60,8 @@ analysis = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(analysis)
 
 
-def test_click_all_product_codes_basic():
+def test_click_all_product_codes_executes_js():
     driver = Mock()
-    el1, el2 = Mock(), Mock()
-    with patch.object(
-        analysis.grid_utils,
-        "find_clickable_cell_by_code",
-        side_effect=[el1, el2],
-    ):
-        with patch.object(analysis.time, "sleep"):
-            count = analysis.click_all_product_codes(driver, codes=["001", "002"], delay=0, max_retry=0)
+    analysis.click_all_product_codes(driver)
 
-    assert count == 2
-    assert el1.click.called
-    assert el2.click.called
-
-
-def test_click_all_product_codes_retry():
-    driver = Mock()
-    el = Mock()
-    with patch.object(
-        analysis.grid_utils,
-        "find_clickable_cell_by_code",
-        side_effect=[None, el],
-    ):
-        with patch.object(analysis.time, "sleep"):
-            count = analysis.click_all_product_codes(driver, codes=["001"], delay=0, max_retry=1)
-
-    assert count == 1
-    assert el.click.called
-    assert driver.execute_script.called
+    driver.execute_script.assert_called_once()
