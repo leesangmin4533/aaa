@@ -131,9 +131,27 @@
         seenMid.add(code);
         newMids.push(code);
         console.log(`✅ 중분류 클릭 완료: ${code}`);
-        await delay(500);  // 중분류 클릭 후 화면 렌더링 대기
 
-        await autoClickAllProductCodes(code, midName); // 상품코드 클릭 루프 진입
+        // 상품 셀이 렌더링될 때까지 최대 2초간 폴링
+        let loaded = false;
+        for (let i = 0; i < 10; i++) {
+          if (
+            document.querySelector(
+              "div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']"
+            )
+          ) {
+            loaded = true;
+            break;
+          }
+          await delay(200);
+        }
+
+        if (loaded) {
+          await autoClickAllProductCodes(code, midName); // 상품코드 클릭 루프 진입
+        } else {
+          console.warn("⛔ 상품 셀 렌더링 실패 → 수집 skip");
+        }
+
         await delay(300); // 다음 중분류 넘어가기 전 딜레이
       }
 
