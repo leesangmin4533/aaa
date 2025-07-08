@@ -7,10 +7,11 @@ from login.login_bgf import login_bgf
 from analysis import (
     navigate_to_category_mix_ratio,
     parse_mix_ratio_data,
-    extract_product_info,
     click_all_product_codes,
     export_product_data,
 )
+
+from collections.abc import Iterable
 
 def create_driver() -> webdriver.Chrome:
     options = Options()
@@ -50,12 +51,10 @@ def main() -> None:
         print("auto click error", e)
 
     try:
-        extract_product_info(driver)
-    except Exception as e:
-        print("product info extraction error", e)
-
-    try:
-        output_path = export_product_data(driver, "code_outputs")
+        rows = driver.execute_script("return window.__exportedRows || []")
+        if not isinstance(rows, Iterable):
+            raise TypeError(f"수신된 객체가 iterable이 아님: {type(rows)}")
+        output_path = export_product_data(rows, "code_outputs")
         if output_path:
             print(f"exported product data to {output_path}")
         else:
