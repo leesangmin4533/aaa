@@ -14,6 +14,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pathlib import Path
 from .navigation import navigate_to_category_mix_ratio
+from .product_exporter import export_product_data
 from utils.log_util import create_logger
 
 __all__ = [
@@ -21,6 +22,7 @@ __all__ = [
     "navigate_to_category_mix_ratio",
     "parse_mix_ratio_data",
     "extract_product_info",
+    "export_product_data",
 ]
 
 
