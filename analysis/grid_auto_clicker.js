@@ -38,7 +38,7 @@
     };
     for (let c = 0; c < HEADER.length - 2; c++) {
       const cell = document.querySelector(
-        `div[id^='gdDetail.gridrow_0.cell_${rowIdx}_${c}:text']`
+        `div[id*='gdDetail.body'][id*='cell_${rowIdx}_${c}'][id$=':text']`
       );
       row[HEADER[c + 2]] = cell ? cell.innerText.trim() : "";
     }
@@ -122,7 +122,7 @@
         // `gdList.gridrow_{i}.cell_{i}_1:text` 패턴의 ID를 직접 조회한다.
         const idx = textEl.id.match(/gridrow_(\d+)/)?.[1];
         const nameEl = idx
-          ? document.querySelector(`div[id="gdList.gridrow_${idx}.cell_${idx}_1:text"]`)
+          ? document.querySelector(`div[id*='gdList.body'][id*='cell_${idx}_1'][id$=':text']`)
           : null;
         const midName = nameEl ? nameEl.innerText.trim() : "";
 

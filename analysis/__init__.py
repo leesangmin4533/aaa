@@ -59,18 +59,18 @@ def parse_mix_ratio_data(driver: WebDriver):
     js = """
 try {
     const rows = [];
-    const pattern = /^gdList\.gridrow_(\d+)$/;
-    const els = [...document.querySelectorAll('div[id^="gdList.gridrow_"]')];
+    const pattern = /gridrow_(\d+)/;
+    const els = [...document.querySelectorAll("div[id*='gdList.body'][id*='gridrow_']")];
     els.forEach(el => {
         const m = el.id.match(pattern);
         if (!m) return;
         const idx = m[1];
         const code = document.querySelector(
-            `div[id="gdList.gridrow_${idx}.cell_${idx}_0:text"]`
+            `div[id*='gdList.body'][id*='cell_${idx}_0'][id$=':text']`
         );
         if (!code) return;
         const name = document.querySelector(
-            `div[id="gdList.gridrow_${idx}.cell_${idx}_1:text"]`
+            `div[id*='gdList.body'][id*='cell_${idx}_1'][id$=':text']`
         );
         rows.push({
             code: code.innerText.trim(),
@@ -125,7 +125,7 @@ def extract_product_info(driver: WebDriver, timeout: int = 3):
     while time.time() < end_time:
         try:
             exists = driver.execute_script(
-                "return document.querySelector(\"div[id^='gdDetail.gridrow_0.cell_0_0:text']\") !== null;"
+                "return document.querySelector(\"div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']\") !== null;"
             )
         except Exception as e:
             logger("product", "ERROR", f"load check failed: {e}")
@@ -142,11 +142,11 @@ try {
     const header = arguments[0];
     const out = [];
     for (let r = 0; ; r++) {
-        const firstCell = document.querySelector(`div[id^='gdDetail.gridrow_0.cell_${r}_0:text']`);
+        const firstCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${r}_0'][id$=':text']`);
         if (!firstCell) break;
         const row = {};
         for (let c = 0; c < header.length - 2; c++) {
-            const cell = document.querySelector(`div[id^='gdDetail.gridrow_0.cell_${r}_${c}:text']`);
+            const cell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${r}_${c}'][id$=':text']`);
             row[header[c + 2]] = cell ? cell.innerText.trim() : "";
         }
         out.push(row);
