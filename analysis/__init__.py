@@ -89,6 +89,33 @@ try {
         logger("parse", "ERROR", f"script failed: {e}")
         return None
 
+    # 중분류를 클릭한 직후에는 상품 셀이 렌더링되지 않아
+    # collectRowData() 호출이 실패할 수 있다. 셀 DOM 이
+    # 준비될 때까지 최대 3초간 폴링해 안정성을 높인다.
+    try:
+        loaded: bool = driver.execute_async_script(
+            """
+  const callback = arguments[arguments.length - 1];
+  let tries = 0;
+  const max = 15;
+  const wait = () => {
+    const el = document.querySelector("div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']");
+    if (el && el.innerText.trim()) {
+      callback(true);
+    } else if (++tries < max) {
+      setTimeout(wait, 200);
+    } else {
+      callback(false);  // timeout
+    }
+  };
+  wait();
+"""
+        )
+        if not loaded:
+            logger("parse", "WARNING", "상품 셀 로딩 대기 실패")
+    except Exception as e:
+        logger("parse", "ERROR", f"polling script failed: {e}")
+
     if isinstance(result, str) and result.startswith("error"):
         logger("parse", "ERROR", result)
         return None
