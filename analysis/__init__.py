@@ -14,13 +14,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.common.exceptions import WebDriverException
 
 from . import grid_utils
-from .navigation import click_menu_by_text, go_to_mix_ratio_screen
+from .navigation import navigate_to_category_mix_ratio
 from utils.log_util import create_logger
 
 __all__ = [
     "click_all_product_codes",
-    "go_to_category_mix_ratio",
-    "go_to_mix_ratio_screen",
+    "navigate_to_category_mix_ratio",
     "parse_mix_ratio_data",
     "extract_product_info",
 ]
@@ -57,41 +56,6 @@ def click_all_product_codes(
     return clicked
 
 
-def go_to_category_mix_ratio(driver: WebDriver) -> bool:
-    """Navigate to the category mix ratio page.
-
-    Selenium DOM 구조가 변할 수 있으므로 JavaScript로 메뉴 이동을 시도하고
-    성공 여부를 반환한다. 실패해도 ``False`` 만 반환하여 상위 로직이 종료되지는
-    않도록 한다.
-    """
-
-    logger = create_logger("analysis")
-
-    js = """
-try {
-    var app = nexacro.getApplication();
-    if (app && app.gvMainFrame && app.gvMainFrame.fnOpenMenuWithParam) {
-        app.gvMainFrame.fnOpenMenuWithParam('WSM024', '', '');
-        return true;
-    }
-    return false;
-} catch (e) {
-    return 'error:' + e.toString();
-}
-"""
-
-    try:
-        result = driver.execute_script(js)
-    except Exception as e:
-        logger("nav", "ERROR", f"navigation script failed: {e}")
-        return False
-
-    if isinstance(result, str) and result.startswith("error"):
-        logger("nav", "ERROR", result)
-        return False
-
-    logger("nav", "DEBUG", "go_to_category_mix_ratio executed")
-    return bool(result)
 
 
 def parse_mix_ratio_data(driver: WebDriver):

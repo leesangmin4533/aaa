@@ -6,10 +6,10 @@
 
 ```python
 from selenium.webdriver.remote.webdriver import WebDriver
-from analysis.navigation import go_to_mix_ratio_screen
+from analysis import navigate_to_category_mix_ratio
 
 # driver는 로그인 이후의 WebDriver 인스턴스라고 가정합니다.
-if go_to_mix_ratio_screen(driver):
+if navigate_to_category_mix_ratio(driver):
     print("화면 이동 성공")
 else:
     print("화면 이동 실패")

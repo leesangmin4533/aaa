@@ -5,7 +5,7 @@ import os
 
 from login.login_bgf import login_bgf
 from analysis import (
-    go_to_mix_ratio_screen,
+    navigate_to_category_mix_ratio,
     parse_mix_ratio_data,
     extract_product_info,
     click_all_product_codes,
@@ -27,7 +27,7 @@ def main() -> None:
         driver.quit()
         return
 
-    if not go_to_mix_ratio_screen(driver):
+    if not navigate_to_category_mix_ratio(driver):
         print("navigation failed")
         driver.quit()
         return
