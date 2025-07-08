@@ -2,16 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import os
+import time
 
 from login.login_bgf import login_bgf
 from analysis import (
     navigate_to_category_mix_ratio,
     parse_mix_ratio_data,
     click_all_product_codes,
+    extract_product_info,
     export_product_data,
 )
-
-from collections.abc import Iterable
 
 def create_driver() -> webdriver.Chrome:
     options = Options()
@@ -45,15 +45,11 @@ def main() -> None:
         print("analysis error", e)
 
     try:
-        total = click_all_product_codes(driver)
-        print(f"clicked {total} product codes")
-    except Exception as e:
-        print("auto click error", e)
-
-    try:
-        rows = driver.execute_script("return window.__exportedRows || []")
-        if not isinstance(rows, Iterable) or not rows:
-            print("[export][WARNING] product data not collected or empty")
+        click_all_product_codes(driver)
+        time.sleep(3)
+        rows = extract_product_info(driver)
+        if not rows:
+            print("[export][WARNING] 상품 데이터 없음")
             try:
                 driver.save_screenshot("fail_product_data.png")
             except Exception as se:
@@ -62,7 +58,7 @@ def main() -> None:
             output_path = export_product_data(rows, "code_outputs")
             print(f"exported product data to {output_path}")
     except Exception as e:
-        print("[export][ERROR] JS export failed:", e)
+        print("[export][ERROR] 데이터 수집 실패:", e)
 
 
 if __name__ == "__main__":
