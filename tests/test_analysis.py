@@ -11,14 +11,27 @@ remote_pkg = types.ModuleType("selenium.webdriver.remote")
 webdriver_module = types.ModuleType("selenium.webdriver.remote.webdriver")
 support_pkg = types.ModuleType("selenium.webdriver.support")
 ui_module = types.ModuleType("selenium.webdriver.support.ui")
+ec_module = types.ModuleType("selenium.webdriver.support.expected_conditions")
+common_by_pkg = types.ModuleType("selenium.webdriver.common")
+by_module = types.ModuleType("selenium.webdriver.common.by")
+def visibility_of_element_located(locator):
+    def _inner(driver):
+        return None
+    return _inner
+ec_module.visibility_of_element_located = visibility_of_element_located
 class WebDriverWait: ...
 ui_module.WebDriverWait = WebDriverWait
+class By:
+    XPATH = "xpath"
+by_module.By = By
 class WebDriver: ...
 webdriver_module.WebDriver = WebDriver
 remote_pkg.webdriver = webdriver_module
 webdriver_pkg.remote = remote_pkg
 support_pkg.ui = ui_module
 webdriver_pkg.support = support_pkg
+support_pkg.expected_conditions = ec_module
+common_by_pkg.by = by_module
 common_pkg = types.ModuleType("selenium.common")
 exceptions_module = types.ModuleType("selenium.common.exceptions")
 class WebDriverException(Exception):
@@ -33,6 +46,9 @@ sys.modules.setdefault("selenium.webdriver.remote", remote_pkg)
 sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
 sys.modules.setdefault("selenium.webdriver.support", support_pkg)
 sys.modules.setdefault("selenium.webdriver.support.ui", ui_module)
+sys.modules.setdefault("selenium.webdriver.support.expected_conditions", ec_module)
+sys.modules.setdefault("selenium.webdriver.common", common_by_pkg)
+sys.modules.setdefault("selenium.webdriver.common.by", by_module)
 sys.modules.setdefault("selenium.common", common_pkg)
 sys.modules.setdefault("selenium.common.exceptions", exceptions_module)
 
