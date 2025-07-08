@@ -2,7 +2,7 @@ import importlib.util
 import pathlib
 import sys
 import types
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, call
 
 # minimal fake selenium package
 selenium_pkg = types.ModuleType("selenium")
@@ -70,7 +70,13 @@ def test_go_to_mix_ratio_screen():
     driver = Mock()
     with patch.object(navigation, "click_menu_by_text", side_effect=[True, True]) as m:
         assert navigation.go_to_mix_ratio_screen(driver) is True
-        assert m.call_count == 2
+        m.assert_has_calls(
+            [
+                call(driver, "매출분석"),
+                call(driver, "중분류별 매출 구성비"),
+            ]
+        )
 
-    with patch.object(navigation, "click_menu_by_text", side_effect=[True, False]):
+    with patch.object(navigation, "click_menu_by_text", side_effect=[True, False]) as m:
         assert navigation.go_to_mix_ratio_screen(driver) is False
+        m.assert_called_with(driver, "중분류별 매출 구성비")
