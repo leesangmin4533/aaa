@@ -11,8 +11,22 @@ remote_pkg = types.ModuleType("selenium.webdriver.remote")
 webdriver_module = types.ModuleType("selenium.webdriver.remote.webdriver")
 support_pkg = types.ModuleType("selenium.webdriver.support")
 ui_module = types.ModuleType("selenium.webdriver.support.ui")
+ec_module = types.ModuleType("selenium.webdriver.support.expected_conditions")
+def visibility_of_element_located(locator):
+    def _inner(driver):
+        return None
+    return _inner
+ec_module.visibility_of_element_located = visibility_of_element_located
+common_pkg = types.ModuleType("selenium.webdriver.common")
+by_module = types.ModuleType("selenium.webdriver.common.by")
 class WebDriverWait: ...
 ui_module.WebDriverWait = WebDriverWait
+
+class By:
+    XPATH = "xpath"
+by_module.By = By
+common_pkg.by = by_module
+webdriver_pkg.common = common_pkg
 
 class WebDriver:
     ...
@@ -23,6 +37,8 @@ webdriver_pkg.remote = remote_pkg
 support_pkg.ui = ui_module
 webdriver_pkg.support = support_pkg
 selenium_pkg.webdriver = webdriver_pkg
+selenium_pkg.webdriver.common = common_pkg
+support_pkg.expected_conditions = ec_module
 
 sys.modules.setdefault("selenium", selenium_pkg)
 sys.modules.setdefault("selenium.webdriver", webdriver_pkg)
@@ -30,6 +46,9 @@ sys.modules.setdefault("selenium.webdriver.remote", remote_pkg)
 sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
 sys.modules.setdefault("selenium.webdriver.support", support_pkg)
 sys.modules.setdefault("selenium.webdriver.support.ui", ui_module)
+sys.modules.setdefault("selenium.webdriver.support.expected_conditions", ec_module)
+sys.modules.setdefault("selenium.webdriver.common", common_pkg)
+sys.modules.setdefault("selenium.webdriver.common.by", by_module)
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 _spec = importlib.util.spec_from_file_location(
@@ -43,13 +62,15 @@ _spec.loader.exec_module(navigation)
 def test_click_menu_by_text_success():
     driver = Mock()
     elem = object()
-    driver.execute_script.side_effect = [elem, None]
+    driver.execute_script.side_effect = None
 
     wait_mock = Mock()
-    wait_mock.until.side_effect = lambda func: func(driver)
+    wait_mock.until.side_effect = lambda cond: cond(driver)
 
     with patch.object(navigation, "WebDriverWait", return_value=wait_mock):
-        result = navigation.click_menu_by_text(driver, "메뉴")
+        with patch.object(navigation.EC, "visibility_of_element_located", return_value=lambda d: elem):
+            with patch.object(navigation.time, "sleep"):
+                result = navigation.click_menu_by_text(driver, "메뉴")
 
     assert result is True
     driver.execute_script.assert_called_with("arguments[0].click()", elem)
@@ -61,7 +82,9 @@ def test_click_menu_by_text_failure():
     wait_mock.until.side_effect = Exception("no")
 
     with patch.object(navigation, "WebDriverWait", return_value=wait_mock):
-        result = navigation.click_menu_by_text(driver, "메뉴")
+        with patch.object(navigation.EC, "visibility_of_element_located", return_value=lambda d: None):
+            with patch.object(navigation.time, "sleep"):
+                result = navigation.click_menu_by_text(driver, "메뉴")
 
     assert result is False
 

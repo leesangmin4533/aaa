@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+import time
 
 from utils.log_util import create_logger
 
@@ -19,21 +22,22 @@ def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 10) -> bool:
     """
 
     try:
-        element = WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script(
-                "const target = arguments[0].replace(/\\s+/g, ' ').trim().toLowerCase();"
-                "return [...document.querySelectorAll('*')]\n"
-                "  .find(el => {\n"
-                "    const t = (el.innerText || '').replace(/\\s+/g, ' ').trim().toLowerCase();\n"
-                "    return t.includes(target);\n"
-                "  }) || null;",
-                text,
-            )
+        target = " ".join(text.split()).lower()
+        xpath = (
+            "//*[contains(translate(normalize-space(.),"
+            " 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),"
+            f" '{target}')]"
         )
+
+        element = WebDriverWait(driver, timeout).until(
+            EC.visibility_of_element_located((By.XPATH, xpath))
+        )
+
+        time.sleep(0.5)
         driver.execute_script("arguments[0].click()", element)
         return True
     except Exception as e:  # pragma: no cover - defensive
-        logger("menu", "WARNING", f"click_menu_by_text failed: {e}")
+        logger("menu", "WARNING", f"click_menu_by_text failed: {type(e).__name__}: {e}")
         return False
 
 
