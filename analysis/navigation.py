@@ -8,18 +8,19 @@ from utils.log_util import create_logger
 logger = create_logger("navigation")
 
 
-def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 5) -> bool:
-    """Click a menu element matching ``text``.
+def click_menu_by_text(driver: WebDriver, text: str, timeout: int = 10) -> bool:
+    """Click a menu element containing ``text``.
 
-    The function searches all DOM nodes for an element whose ``innerText`` matches
-    ``text`` and clicks it using JavaScript. It returns ``True`` on success and
-    ``False`` on failure. Exceptions are logged as warnings.
+    The function searches all DOM nodes for an element whose ``innerText``
+    includes the given ``text`` (after trimming) and clicks it using JavaScript.
+    It returns ``True`` on success and ``False`` on failure. Exceptions are
+    logged as warnings.
     """
     try:
         element = WebDriverWait(driver, timeout).until(
             lambda d: d.execute_script(
                 "return [...document.querySelectorAll('*')]\n"
-                "    .find(el => el.innerText?.trim() === arguments[0]) || null;",
+                "    .find(el => (el.innerText || '').trim().includes(arguments[0])) || null;",
                 text,
             )
         )
