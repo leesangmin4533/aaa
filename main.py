@@ -52,15 +52,17 @@ def main() -> None:
 
     try:
         rows = driver.execute_script("return window.__exportedRows || []")
-        if not isinstance(rows, Iterable):
-            raise TypeError(f"수신된 객체가 iterable이 아님: {type(rows)}")
-        output_path = export_product_data(rows, "code_outputs")
-        if output_path:
-            print(f"exported product data to {output_path}")
+        if not isinstance(rows, Iterable) or not rows:
+            print("[export][WARNING] product data not collected or empty")
+            try:
+                driver.save_screenshot("fail_product_data.png")
+            except Exception as se:
+                print("[export][ERROR] screenshot failed:", se)
         else:
-            print("export product data failed")
+            output_path = export_product_data(rows, "code_outputs")
+            print(f"exported product data to {output_path}")
     except Exception as e:
-        print("product export error", e)
+        print("[export][ERROR] JS export failed:", e)
 
 
 if __name__ == "__main__":
