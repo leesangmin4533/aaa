@@ -6,11 +6,7 @@
 
 ```python
 from selenium.webdriver.remote.webdriver import WebDriver
-from analysis import (
-    navigate_to_category_mix_ratio,
-    extract_product_info,
-    export_product_data,
-)
+from analysis import navigate_to_category_mix_ratio
 from utils.log_util import create_logger
 import time
 
@@ -44,9 +40,7 @@ if (cell) {
         log("wait", "ERROR", "상품 셀 로딩 실패")
         raise RuntimeError("grid load failure")
 
-    # 상품 데이터를 추출해 현재 디렉터리에 저장
-    rows = extract_product_info(driver) or []
-    export_product_data(rows)
+    # 여기서 원하는 데이터를 직접 추출하거나 필요한 로직을 추가한다.
 else:
     log("step", "ERROR", "화면 이동 실패")
 ```
