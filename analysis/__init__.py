@@ -50,10 +50,11 @@ def click_all_product_codes(
 
 
 def parse_mix_ratio_data(driver: WebDriver):
-    """Parse grid data and return a DataFrame.
+    """Return category codes as a ``pandas.DataFrame``.
 
     Nexacro 그리드에서 중분류 코드와 명칭을 추출하여 ``pandas.DataFrame`` 으로
-    반환한다. 실패 시 ``None`` 을 반환한다.
+    반환한다. 그리드 로딩을 확인하기 위해 최대 3초간 대기하며,
+    실패 시 ``None`` 을 반환한다.
     """
 
     logger = create_logger("analysis")
@@ -92,9 +93,8 @@ try {
         logger("parse", "ERROR", f"script failed: {e}")
         return None
 
-    # 중분류를 클릭한 직후에는 상품 셀이 렌더링되지 않아
-    # collectRowData() 호출이 실패할 수 있다. 셀 DOM 이
-    # 준비될 때까지 최대 3초간 폴링해 안정성을 높인다.
+    # 중분류를 클릭한 직후에는 상품 셀이 바로 렌더링되지 않을 수 있으므로
+    # 셀 DOM이 나타날 때까지 최대 3초간 폴링한다.
     try:
         loaded: bool = driver.execute_async_script(
             """
