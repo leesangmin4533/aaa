@@ -3,6 +3,7 @@ import pathlib
 import sys
 import types
 from unittest.mock import Mock, patch
+import pytest
 
 # minimal fake selenium package
 selenium_pkg = types.ModuleType("selenium")
@@ -78,3 +79,19 @@ def test_extract_product_info_returns_rows():
 
     assert rows == [{"상품코드": "1"}]
     assert driver.execute_script.call_count == 2
+
+
+def test_click_all_product_codes_logs_and_raises(tmp_path):
+    driver = Mock()
+    missing = tmp_path / "no.js"
+
+    logger = Mock()
+    with patch.object(analysis, "create_logger", return_value=logger):
+        with pytest.raises(OSError):
+            analysis.click_all_product_codes(driver, str(missing))
+
+    logger.assert_called_once()
+    tag, level, msg = logger.call_args[0]
+    assert tag == "click"
+    assert level == "ERROR"
+
