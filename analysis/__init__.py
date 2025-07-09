@@ -32,14 +32,17 @@ def click_all_product_codes(
 ) -> None:
     """Run the JavaScript auto clicker inside the browser."""
 
+    logger = create_logger("analysis")
+
     if script_path is None:
         script_path = str(Path(__file__).with_name("grid_auto_clicker.js"))
 
     try:
         with open(script_path, "r", encoding="utf-8") as f:
             js = f.read()
-    except OSError:
-        return None
+    except OSError as e:
+        logger("click", "ERROR", f"script load failed: {e}")
+        raise
 
     driver.execute_script(js)
 
