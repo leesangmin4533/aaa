@@ -44,3 +44,19 @@ if (cell) {
 else:
     log("step", "ERROR", "화면 이동 실패")
 ```
+
+## 로그인 설정
+
+`login_bgf` 함수는 로그인 정보를 환경 변수 `BGF_USER_ID` 와 `BGF_PASSWORD` 에서
+읽습니다. 두 값이 설정되어 있지 않은 경우 JSON 형식의 자격 증명 파일 경로를
+`login_bgf` 의 `credential_path` 인자로 전달해야 합니다. `main.py` 에서는 환경
+변수 `CREDENTIAL_FILE` 이 지정되어 있으면 해당 경로를 사용합니다.
+
+예시 파일 구조는 다음과 같습니다.
+
+```json
+{
+  "id": "YOUR_ID",
+  "password": "YOUR_PASSWORD"
+}
+```
