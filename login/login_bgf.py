@@ -80,19 +80,16 @@ def login_bgf(
 try {{
     var form = nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form;
 
-    form.edt_id.setFocus();
     form.edt_id.set_value("{user_id}");
     form.edt_id.text = "{user_id}";
-
-    form.edt_pw.setFocus();
-    form.edt_pw.set_value("{password}");
-    form.edt_pw.text = "{password}";
-
-    // 포커스 이동으로 이벤트 유도
     form.edt_id.setFocus();
 
+    form.edt_pw.set_value("{password}");
+    form.edt_pw.text = "{password}";
+    form.edt_pw.setFocus();
+
     // 지연 실행
-    setTimeout(() => form.btn_login.click(), 500);
+    setTimeout(() => form.btn_login.click(), 300);
 }} catch (e) {{
     console.error("login error", e);
 }}
