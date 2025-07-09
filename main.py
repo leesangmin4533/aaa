@@ -3,7 +3,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import os
 
-from collections.abc import Iterable
 
 from login.login_bgf import login_bgf
 from analysis import (
@@ -17,6 +16,21 @@ def create_driver() -> webdriver.Chrome:
     options = Options()
     options.add_experimental_option("detach", True)  # 창 자동 종료 방지
     return webdriver.Chrome(service=Service(), options=options)
+
+
+def wait_for_exported_rows(driver: webdriver.Chrome, timeout: int = 10):
+    """Poll window.__exportedRows until data is available."""
+    import time
+
+    for _ in range(timeout * 2):
+        try:
+            rows = driver.execute_script("return window.__exportedRows || []")
+            if rows and isinstance(rows, list) and len(rows) > 0:
+                return rows
+        except Exception:
+            pass
+        time.sleep(0.5)
+    return []
 
 
 def main() -> None:
@@ -45,24 +59,19 @@ def main() -> None:
         print("analysis error", e)
 
     try:
-        total = click_all_product_codes(driver)
-        print(f"clicked {total} product codes")
-    except Exception as e:
-        print("auto click error", e)
+        click_all_product_codes(driver)
+        print("[JS] 자동 클릭 실행됨")
 
-    try:
-        rows = driver.execute_script("return window.__exportedRows || []")
-        if not isinstance(rows, Iterable) or not rows:
-            print("[export][WARNING] product data not collected or empty")
-            try:
-                driver.save_screenshot("fail_product_data.png")
-            except Exception as se:
-                print("[export][ERROR] screenshot failed:", se)
+        rows = wait_for_exported_rows(driver, timeout=15)
+        print(f"[DEBUG] 수집된 행 수: {len(rows)}")
+        if not rows:
+            print("[export][WARNING] 수집된 데이터 없음")
+            driver.save_screenshot("fail_product_data.png")
         else:
             output_path = export_product_data(rows, "code_outputs")
-            print(f"exported product data to {output_path}")
+            print(f"[SUCCESS] 저장 완료 → {output_path}")
     except Exception as e:
-        print("[export][ERROR] JS export failed:", e)
+        print("[export][ERROR] 예외 발생:", e)
 
 
 if __name__ == "__main__":
