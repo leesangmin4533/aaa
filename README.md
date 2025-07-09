@@ -71,6 +71,14 @@ set BGF_PASSWORD=your_password
 
 환경 변수를 설정한 뒤 `python main.py` 를 실행하면 로그인이 진행됩니다.
 
+환경 변수 대신 프로젝트 루트에 `.env` 파일을 생성해도 됩니다. 다음과 같이
+작성하면 자동으로 값이 로드됩니다.
+
+```env
+BGF_USER_ID=1113
+BGF_PASSWORD=46513
+```
+
 두 값이 제공되지 않은 경우 JSON 형식의 자격 증명 파일 경로를 `login_bgf` 의
 `credential_path` 인자로 전달해야 합니다. `main.py` 에서는 환경 변수
 `CREDENTIAL_FILE` 이 지정되어 있으면 해당 경로를 사용합니다.
