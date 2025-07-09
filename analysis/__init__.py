@@ -56,7 +56,7 @@ def parse_mix_ratio_data(driver: WebDriver):
     logger = create_logger("analysis")
     logger("parse", "DEBUG", "parse_mix_ratio_data start")
 
-    js = """
+    js = r"""
 try {
     const rows = [];
     const pattern = /gridrow_(\d+)/;
@@ -168,7 +168,7 @@ def extract_product_info(driver: WebDriver, timeout: int = 3):
         logger("product", "WARNING", "상품 그리드 로딩 실패")
         return None
 
-    js = """
+    js = r"""
 try {
     const header = arguments[0];
     const out = [];
