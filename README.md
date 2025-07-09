@@ -48,9 +48,16 @@ else:
 ## 로그인 설정
 
 `login_bgf` 함수는 로그인 정보를 환경 변수 `BGF_USER_ID` 와 `BGF_PASSWORD` 에서
-읽습니다. 두 값이 설정되어 있지 않은 경우 JSON 형식의 자격 증명 파일 경로를
-`login_bgf` 의 `credential_path` 인자로 전달해야 합니다. `main.py` 에서는 환경
-변수 `CREDENTIAL_FILE` 이 지정되어 있으면 해당 경로를 사용합니다.
+읽습니다. 쉘에서 다음과 같이 설정할 수 있습니다.
+
+```bash
+export BGF_USER_ID=your_id
+export BGF_PASSWORD=your_password
+```
+
+두 값이 제공되지 않은 경우 JSON 형식의 자격 증명 파일 경로를 `login_bgf` 의
+`credential_path` 인자로 전달해야 합니다. `main.py` 에서는 환경 변수
+`CREDENTIAL_FILE` 이 지정되어 있으면 해당 경로를 사용합니다.
 
 예시 파일 구조는 다음과 같습니다.
 
@@ -60,3 +67,22 @@ else:
   "password": "YOUR_PASSWORD"
 }
 ```
+
+## main.py와 scripts 사용법
+
+자격 증명을 준비한 뒤 아래 명령 중 하나를 실행하면 기본 자동화가 시작됩니다.
+
+```bash
+python -m aaa  # 또는 python main.py
+```
+
+`main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더에 있는 JavaScript
+파일을 순차적으로 실행합니다. 기본 제공 스크립트는 다음 세 가지입니다.
+
+1. `click_all_mid_categories.js`
+2. `wait_for_detail_grid.js`
+3. `extract_detail_data.js`
+
+실행이 끝나면 파싱된 데이터가 `output.txt` 에 저장됩니다. 다른 동작이 필요하면
+`scripts/` 폴더에 스크립트를 추가하고 `main.py` 의 스크립트 목록에 파일 이름을
+추가하세요.
