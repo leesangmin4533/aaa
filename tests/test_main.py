@@ -1,0 +1,93 @@
+import importlib.util
+import pathlib
+import sys
+import types
+from datetime import datetime
+from unittest.mock import Mock, patch
+
+# Create minimal fake selenium package
+selenium_pkg = types.ModuleType("selenium")
+webdriver_pkg = types.ModuleType("selenium.webdriver")
+remote_pkg = types.ModuleType("selenium.webdriver.remote")
+webdriver_module = types.ModuleType("selenium.webdriver.remote.webdriver")
+chrome_pkg = types.ModuleType("selenium.webdriver.chrome")
+service_pkg = types.ModuleType("selenium.webdriver.chrome.service")
+options_pkg = types.ModuleType("selenium.webdriver.chrome.options")
+
+class WebDriver: ...
+class Service: ...
+class Options:
+    def add_experimental_option(self, *a, **k):
+        pass
+
+webdriver_module.WebDriver = WebDriver
+service_pkg.Service = Service
+options_pkg.Options = Options
+
+remote_pkg.webdriver = webdriver_module
+webdriver_pkg.remote = remote_pkg
+webdriver_pkg.chrome = chrome_pkg
+chrome_pkg.service = service_pkg
+chrome_pkg.options = options_pkg
+
+selenium_pkg.webdriver = webdriver_pkg
+sys.modules.setdefault("selenium", selenium_pkg)
+sys.modules.setdefault("selenium.webdriver", webdriver_pkg)
+sys.modules.setdefault("selenium.webdriver.remote", remote_pkg)
+sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
+sys.modules.setdefault("selenium.webdriver.chrome", chrome_pkg)
+sys.modules.setdefault("selenium.webdriver.chrome.service", service_pkg)
+sys.modules.setdefault("selenium.webdriver.chrome.options", options_pkg)
+
+# dummy login module
+login_pkg = types.ModuleType("login")
+login_bgf_pkg = types.ModuleType("login.login_bgf")
+def dummy_login_bgf(*a, **k):
+    return True
+login_bgf_pkg.login_bgf = dummy_login_bgf
+login_pkg.login_bgf = login_bgf_pkg
+sys.modules.setdefault("login", login_pkg)
+sys.modules.setdefault("login.login_bgf", login_bgf_pkg)
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+_spec = importlib.util.spec_from_file_location(
+    "main", pathlib.Path(__file__).resolve().parents[1] / "main.py"
+)
+main = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(main)
+
+
+def test_run_script_reads_and_executes(tmp_path):
+    js_text = "console.log('hi');"
+    script = tmp_path / "sample.js"
+    script.write_text(js_text, encoding="utf-8")
+
+    driver = Mock()
+    with patch.object(main, "SCRIPT_DIR", tmp_path):
+        main.run_script(driver, "sample.js")
+
+    driver.execute_script.assert_called_once_with(js_text)
+
+
+def test_wait_for_data_polls_parsed_data():
+    driver = Mock()
+    driver.execute_script.side_effect = [None, {"a": 1}]
+
+    with patch.object(main.time, "sleep"):
+        data = main.wait_for_data(driver, timeout=1)
+
+    assert data == {"a": 1}
+    assert driver.execute_script.call_args_list[0][0][0] == "return window.__parsedData__ || null"
+
+
+def test_save_to_txt_writes_to_date_file(tmp_path):
+    data = [{"code": "1", "name": "a"}]
+    out_dir = tmp_path / "code_outputs"
+    out_dir.mkdir()
+    fname = datetime.now().strftime("%Y%m%d") + ".txt"
+    out_file = out_dir / fname
+
+    returned = main.save_to_txt(data, out_file)
+
+    assert returned == out_file
+    assert out_file.read_text(encoding="utf-8").strip() == "1\ta"
