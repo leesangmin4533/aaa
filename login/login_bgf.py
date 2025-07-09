@@ -1,6 +1,7 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from pathlib import Path
 import json
+import os
 import time
 
 from utils.log_util import create_logger
@@ -10,16 +11,29 @@ log = create_logger("login_bgf")
 
 
 def load_credentials(path: str | None = None) -> dict:
-    """Load login credentials from a JSON file."""
+    """Load login credentials from environment or a JSON file.
+
+    환경 변수 ``BGF_USER_ID`` 와 ``BGF_PASSWORD`` 가 존재하면 이를 우선 사용한다.
+    ``path`` 인자가 주어지면 해당 JSON 파일을 읽어 로그인 정보를 반환한다.
+    둘 다 제공되지 않으면 :class:`RuntimeError` 를 발생시킨다.
+    """
+
+    env_id = os.environ.get("BGF_USER_ID")
+    env_pw = os.environ.get("BGF_PASSWORD")
+    if env_id and env_pw:
+        return {"id": env_id, "password": env_pw}
+
     if path is None:
-        path = Path(__file__).resolve().parent.parent / "credentials.json"
-    else:
-        path = Path(path)
+        raise RuntimeError(
+            "Credentials not provided. Set BGF_USER_ID/BGF_PASSWORD or specify a file"
+        )
+
+    path = Path(path)
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
-        raise RuntimeError(f"Failed to load credentials: {e}")
+        raise RuntimeError(f"Failed to load credentials from {path}: {e}")
 
 
 def login_bgf(
