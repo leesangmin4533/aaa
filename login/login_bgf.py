@@ -10,16 +10,41 @@ from utils.popup_util import close_nexacro_popups, close_focus_popup
 log = create_logger("login_bgf")
 
 
+def _read_env_file(env_path: Path) -> dict:
+    env: dict[str, str] = {}
+    try:
+        with env_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                if not line.strip() or line.strip().startswith("#"):
+                    continue
+                if "=" not in line:
+                    continue
+                key, value = line.strip().split("=", 1)
+                env[key] = value
+    except Exception:
+        pass
+    return env
+
+
 def load_credentials(path: str | None = None) -> dict:
-    """Load login credentials from environment or a JSON file.
+    """Load login credentials from environment, ``.env`` file, or a JSON file.
 
     환경 변수 ``BGF_USER_ID`` 와 ``BGF_PASSWORD`` 가 존재하면 이를 우선 사용한다.
-    ``path`` 인자가 주어지면 해당 JSON 파일을 읽어 로그인 정보를 반환한다.
-    둘 다 제공되지 않으면 :class:`RuntimeError` 를 발생시킨다.
+    다음으로 현재 디렉터리의 ``.env`` 파일을 찾아 값을 읽는다. ``path`` 인자가
+    주어지면 해당 JSON 파일을 읽어 로그인 정보를 반환한다. 세 방법 모두 실패하면
+    :class:`RuntimeError` 를 발생시킨다.
     """
 
     env_id = os.environ.get("BGF_USER_ID")
     env_pw = os.environ.get("BGF_PASSWORD")
+
+    if not (env_id and env_pw):
+        env_path = Path(".env")
+        if env_path.is_file():
+            env = _read_env_file(env_path)
+            env_id = env_id or env.get("BGF_USER_ID")
+            env_pw = env_pw or env.get("BGF_PASSWORD")
+
     if env_id and env_pw:
         return {"id": env_id, "password": env_pw}
 
