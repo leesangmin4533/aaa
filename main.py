@@ -11,6 +11,21 @@ from selenium.webdriver.chrome.options import Options
 
 from login.login_bgf import login_bgf
 
+
+def click_login_button(driver: webdriver.Chrome) -> None:
+    """Click the login button on the Nexacro login form."""
+
+    js = """
+try {
+    nexacro.getApplication()
+        .mainframe.HFrameSet00.LoginFrame.form.div_login.form
+        .btn_login.click();
+} catch (e) {
+    console.error('login click error', e);
+}
+"""
+    driver.execute_script(js)
+
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 
 
@@ -60,6 +75,9 @@ def main() -> None:
         print("login failed")
         driver.quit()
         return
+
+    # 로그인 버튼 클릭만 필요한 경우를 위해 별도 호출
+    click_login_button(driver)
 
     scripts = [
         "click_all_mid_categories.js",
