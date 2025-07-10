@@ -36,7 +36,9 @@ def create_driver() -> webdriver.Chrome:
     options.add_experimental_option("detach", True)
     caps = DesiredCapabilities.CHROME.copy()
     caps["goog:loggingPrefs"] = {"browser": "ALL"}
-    return webdriver.Chrome(service=Service(), options=options, desired_capabilities=caps)
+    for key, value in caps.items():
+        options.set_capability(key, value)
+    return webdriver.Chrome(service=Service(), options=options)
 
 
 def run_script(driver: webdriver.Chrome, name: str) -> Any:
