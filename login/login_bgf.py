@@ -5,7 +5,11 @@ import os
 import time
 
 from utils.log_util import create_logger
-from utils.popup_util import close_nexacro_popups, close_focus_popup
+from utils.popup_util import (
+    close_nexacro_popups,
+    close_focus_popup,
+    ensure_focus_popup_closed,
+)
 
 log = create_logger("login_bgf")
 
@@ -123,6 +127,7 @@ try {
             log("login", "SUCCESS", "Login succeeded")
             try:
                 close_focus_popup(driver)
+                ensure_focus_popup_closed(driver)
                 close_nexacro_popups(driver)
             except Exception as e:
                 log("login", "WARNING", f"Popup close failed: {e}")
