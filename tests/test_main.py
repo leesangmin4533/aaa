@@ -13,6 +13,8 @@ webdriver_module = types.ModuleType("selenium.webdriver.remote.webdriver")
 chrome_pkg = types.ModuleType("selenium.webdriver.chrome")
 service_pkg = types.ModuleType("selenium.webdriver.chrome.service")
 options_pkg = types.ModuleType("selenium.webdriver.chrome.options")
+common_pkg = types.ModuleType("selenium.webdriver.common")
+dcaps_pkg = types.ModuleType("selenium.webdriver.common.desired_capabilities")
 
 class WebDriver: ...
 class Service: ...
@@ -29,6 +31,16 @@ webdriver_pkg.remote = remote_pkg
 webdriver_pkg.chrome = chrome_pkg
 chrome_pkg.service = service_pkg
 chrome_pkg.options = options_pkg
+webdriver_pkg.common = common_pkg
+common_pkg.desired_capabilities = dcaps_pkg
+
+class DesiredCapabilities:
+    CHROME = {}
+dcaps_pkg.DesiredCapabilities = DesiredCapabilities
+
+class DesiredCapabilities:
+    CHROME = {}
+dcaps_pkg.DesiredCapabilities = DesiredCapabilities
 
 selenium_pkg.webdriver = webdriver_pkg
 sys.modules.setdefault("selenium", selenium_pkg)
@@ -38,6 +50,10 @@ sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
 sys.modules.setdefault("selenium.webdriver.chrome", chrome_pkg)
 sys.modules.setdefault("selenium.webdriver.chrome.service", service_pkg)
 sys.modules.setdefault("selenium.webdriver.chrome.options", options_pkg)
+sys.modules.setdefault("selenium.webdriver.common", common_pkg)
+sys.modules.setdefault("selenium.webdriver.common.desired_capabilities", dcaps_pkg)
+sys.modules.setdefault("selenium.webdriver.common", common_pkg)
+sys.modules.setdefault("selenium.webdriver.common.desired_capabilities", dcaps_pkg)
 
 # dummy login module
 login_pkg = types.ModuleType("login")
@@ -48,6 +64,12 @@ login_bgf_pkg.login_bgf = dummy_login_bgf
 login_pkg.login_bgf = login_bgf_pkg
 sys.modules.setdefault("login", login_pkg)
 sys.modules.setdefault("login.login_bgf", login_bgf_pkg)
+
+popup_pkg = types.ModuleType("utils.popup_util")
+def dummy_close_popups_after_delegate(*a, **k):
+    pass
+popup_pkg.close_popups_after_delegate = dummy_close_popups_after_delegate
+sys.modules.setdefault("utils.popup_util", popup_pkg)
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 _spec = importlib.util.spec_from_file_location(
