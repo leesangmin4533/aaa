@@ -69,3 +69,39 @@ def close_focus_popup(driver: WebDriver, timeout: int = 5) -> None:
             log("focus_popup", "DEBUG", f"팝업 탐색 오류 또는 미표시: {e}")
         time.sleep(0.5)
     log("focus_popup", "DEBUG", "대상 팝업을 찾지 못함")
+
+
+def ensure_focus_popup_closed(
+    driver: WebDriver,
+    timeout: int = 5,
+    stable_time: float = 1.0,
+) -> None:
+    """"재택 유선권장 안내" 팝업이 다시 나타나지 않는지 확인하며 닫는다.
+
+    ``stable_time`` 동안 팝업이 감지되지 않으면 종료된 것으로 간주한다.
+    ``timeout`` 이내에 조건이 충족되지 않으면 경고 로그를 남긴다.
+    """
+
+    end_time = time.time() + timeout
+    last_seen = time.time()
+
+    while time.time() < end_time:
+        try:
+            popup = driver.find_element(
+                By.XPATH, "//div[contains(text(), '재택 유선권장 안내')]"
+            )
+            if popup.is_displayed():
+                log("focus_popup", "INFO", "팝업 감지됨: 엔터로 종료 시도")
+                ActionChains(driver).send_keys(Keys.ENTER).perform()
+                last_seen = time.time()
+                log("focus_popup", "INFO", "엔터 키 전송 완료")
+        except Exception:
+            pass
+
+        if time.time() - last_seen >= stable_time:
+            log("focus_popup", "DEBUG", "팝업이 더 이상 나타나지 않음")
+            return
+
+        time.sleep(0.2)
+
+    log("focus_popup", "WARNING", "타임아웃: 팝업 상태 불안정")
