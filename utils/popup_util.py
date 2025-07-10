@@ -105,3 +105,20 @@ def ensure_focus_popup_closed(
         time.sleep(0.2)
 
     log("focus_popup", "WARNING", "타임아웃: 팝업 상태 불안정")
+
+def close_popups_after_delegate(driver: WebDriver, timeout: int = 10) -> None:
+    """TensorFlow Lite delegate 로그 이후 팝업을 다시 닫는다."""
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        try:
+            logs = driver.get_log("browser")
+        except Exception:
+            logs = []
+        for entry in logs:
+            msg = entry.get("message", "") if isinstance(entry, dict) else str(entry)
+            if "Created TensorFlow Lite XNNPACK delegate for CPU" in msg:
+                close_focus_popup(driver)
+                ensure_focus_popup_closed(driver)
+                close_nexacro_popups(driver)
+                return
+        time.sleep(0.5)

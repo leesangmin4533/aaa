@@ -8,8 +8,10 @@ from typing import Any
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from login.login_bgf import login_bgf
+from utils.popup_util import close_popups_after_delegate
 
 
 def click_login_button(driver: webdriver.Chrome) -> None:
@@ -32,7 +34,9 @@ SCRIPT_DIR = Path(__file__).with_name("scripts")
 def create_driver() -> webdriver.Chrome:
     options = Options()
     options.add_experimental_option("detach", True)
-    return webdriver.Chrome(service=Service(), options=options)
+    caps = DesiredCapabilities.CHROME.copy()
+    caps["goog:loggingPrefs"] = {"browser": "ALL"}
+    return webdriver.Chrome(service=Service(), options=options, desired_capabilities=caps)
 
 
 def run_script(driver: webdriver.Chrome, name: str) -> Any:
@@ -75,6 +79,12 @@ def main() -> None:
         print("login failed")
         driver.quit()
         return
+
+    # TensorFlow delegate 초기화 로그 이후 다시 팝업을 닫는다
+    try:
+        close_popups_after_delegate(driver)
+    except Exception as e:
+        print(f"delegate popup close failed: {e}")
 
     # 로그인 버튼 클릭만 필요한 경우를 위해 별도 호출
     click_login_button(driver)
