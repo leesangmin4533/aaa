@@ -25,6 +25,20 @@ def close_nexacro_popups(driver: WebDriver, timeout: int = 5) -> None:
 
     js = """
 try {
+    const chkEls = [...document.querySelectorAll("img[src*='chk_WF_Box']")];
+    chkEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        ['mousedown', 'mouseup', 'click'].forEach(type => {
+            el.dispatchEvent(new MouseEvent(type, {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                clientX: rect.left + rect.width / 2,
+                clientY: rect.top + rect.height / 2
+            }));
+        });
+    });
+
     const closeEls = [...document.querySelectorAll('*')].filter(el => el.innerText?.trim() === '닫기');
     if (closeEls.length > 0) {
         closeEls.forEach(el => {
