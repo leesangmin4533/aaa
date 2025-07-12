@@ -134,5 +134,6 @@ def close_popups_after_delegate(driver: WebDriver, timeout: int = 10) -> None:
                 close_focus_popup(driver)
                 ensure_focus_popup_closed(driver)
                 close_nexacro_popups(driver)
+                log("delegate", "INFO", "팝업 모듈 처리 후 다음 단계 진입")
                 return
         time.sleep(0.5)

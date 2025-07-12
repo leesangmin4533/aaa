@@ -131,6 +131,8 @@ try {
                 close_nexacro_popups(driver)
             except Exception as e:
                 log("login", "WARNING", f"Popup close failed: {e}")
+            else:
+                log("login", "INFO", "팝업 모듈 종료: 다음 단계 진입")
             return True
     log("login", "FAIL", "Login check timeout")
     return False
