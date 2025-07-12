@@ -103,7 +103,18 @@ def test_wait_for_data_polls_parsed_data():
 
 
 def test_save_to_txt_writes_to_date_file(tmp_path):
-    data = [{"code": "1", "name": "a"}]
+    data = [
+        {
+            "midCode": "1",
+            "productCode": "2",
+            "productName": "a",
+            "sales": 3,
+            "order": 4,
+            "purchase": 5,
+            "discard": 6,
+            "stock": 7,
+        }
+    ]
     out_dir = tmp_path / "code_outputs"
     out_dir.mkdir()
     fname = datetime.now().strftime("%Y%m%d") + ".txt"
@@ -112,7 +123,8 @@ def test_save_to_txt_writes_to_date_file(tmp_path):
     returned = main.save_to_txt(data, out_file)
 
     assert returned == out_file
-    assert out_file.read_text(encoding="utf-8").strip() == "1\ta"
+    expected = "\t".join(str(data[0].get(k, "")) for k in main.FIELD_ORDER)
+    assert out_file.read_text(encoding="utf-8").strip() == expected
 
 
 def test_main_calls_navigation():
