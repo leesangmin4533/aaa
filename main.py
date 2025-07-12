@@ -4,6 +4,7 @@ import os
 import time
 from pathlib import Path
 from typing import Any
+from datetime import datetime
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -15,6 +16,7 @@ from utils.popup_util import close_popups_after_delegate
 from analysis import navigate_to_category_mix_ratio
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
+CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 
 
 def create_driver() -> webdriver.Chrome:
@@ -46,8 +48,14 @@ def wait_for_data(driver: webdriver.Chrome, timeout: int = 10):
     return None
 
 
-def save_to_txt(data: Any, output: str | Path = "output.txt") -> Path:
+def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
+    if output is None:
+        CODE_OUTPUT_DIR.mkdir(exist_ok=True)
+        fname = datetime.now().strftime("%Y%m%d") + ".txt"
+        output = CODE_OUTPUT_DIR / fname
     output = Path(output)
+    if output.exists():
+        output.unlink()
     with open(output, "w", encoding="utf-8") as f:
         if isinstance(data, list):
             for row in data:
