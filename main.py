@@ -18,6 +18,18 @@ from analysis import navigate_to_category_mix_ratio
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 
+# output.txt 필드 저장 순서를 지정한다.
+FIELD_ORDER = [
+    "midCode",
+    "productCode",
+    "productName",
+    "sales",
+    "order",
+    "purchase",
+    "discard",
+    "stock",
+]
+
 
 def create_driver() -> webdriver.Chrome:
     options = Options()
@@ -60,7 +72,10 @@ def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
         if isinstance(data, list):
             for row in data:
                 if isinstance(row, dict):
-                    f.write("\t".join(str(v) for v in row.values()) + "\n")
+                    # 필드 순서에 맞춰 값을 가져온 뒤 탭으로 구분하여 기록한다.
+                    f.write(
+                        "\t".join(str(row.get(k, "")) for k in FIELD_ORDER) + "\n"
+                    )
                 else:
                     f.write(str(row) + "\n")
         else:
