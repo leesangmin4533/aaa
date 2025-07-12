@@ -6,8 +6,23 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from utils.log_util import create_logger
 
 
+def _wait_for_list_grid(driver: WebDriver, timeout: int = 5) -> bool:
+    """좌측 그리드 셀이 표시될 때까지 대기한다."""
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        try:
+            exists = driver.execute_script(
+                "return document.querySelector(\"div[id*='gdList.body'][id$='_0:text']\") !== null"
+            )
+            if exists:
+                return True
+        except Exception:
+            pass
+        time.sleep(0.5)
+    return False
+
+
 def navigate_to_category_mix_ratio(driver: WebDriver) -> bool:
-    from utils.log_util import create_logger
     log = create_logger("navigation")
 
     def click_by_text(text, wait=0.5, max_retry=10):
@@ -41,6 +56,11 @@ var rect = arguments[0].getBoundingClientRect();
     log("nav", "INFO", "🔍 '중분류별 매출 구성비' 클릭 시도")
     if not click_by_text("중분류별 매출 구성비"):
         log("nav", "ERROR", "❌ '중분류별 매출 구성비' 클릭 실패")
+        return False
+
+    log("nav", "INFO", "⌛ 좌측 그리드 로딩 대기")
+    if not _wait_for_list_grid(driver, timeout=5):
+        log("nav", "ERROR", "❌ 좌측 그리드 로딩 실패")
         return False
 
     log("nav", "SUCCESS", "✅ 메뉴 진입 완료")

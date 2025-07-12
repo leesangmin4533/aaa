@@ -31,7 +31,7 @@ _spec.loader.exec_module(navigation)
 def test_navigate_success():
     driver = Mock()
     element = object()
-    driver.execute_script.side_effect = [element, None, element, None]
+    driver.execute_script.side_effect = [element, None, element, None, True]
 
     with patch.object(navigation.time, "sleep"), patch.object(navigation, "create_logger", return_value=lambda *a: None):
         assert navigation.navigate_to_category_mix_ratio(driver) is True
