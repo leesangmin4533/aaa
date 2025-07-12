@@ -100,12 +100,9 @@ BGF_PASSWORD=46513
 python -m aaa  # 또는 python main.py
 ```
 
-`main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더에 있는 JavaScript
-파일을 순차적으로 실행합니다. 기본 제공 스크립트는 다음 세 가지입니다.
-
-1. `click_all_mid_categories.js`
-2. `wait_for_detail_grid.js`
-3. `extract_detail_data.js`
+`main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더의 JavaScript 파일을
+실행합니다. 기본 제공 스크립트는 `click_and_extract.js` 한 가지이며,
+중분류를 클릭한 뒤 상품 데이터를 차례로 추출합니다.
 
 실행이 끝나면 파싱된 데이터가 `output.txt` 에 저장됩니다. 다른 동작이 필요하면
 `scripts/` 폴더에 스크립트를 추가하고 `main.py` 의 스크립트 목록에 파일 이름을
