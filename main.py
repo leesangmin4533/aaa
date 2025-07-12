@@ -81,13 +81,17 @@ def main() -> None:
 
 
 
-    scripts = [
-        "click_all_mid_categories.js",
-        "wait_for_detail_grid.js",
-        "extract_detail_data.js",
-    ]
-    for name in scripts:
-        run_script(driver, name)
+    # 중분류 클릭 후 로그를 수집한다
+    run_script(driver, "click_all_mid_categories.js")
+    logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+    print("중분류 클릭 로그:", logs)
+
+    # 우측 그리드가 준비됐는지 확인한다
+    run_script(driver, "wait_for_detail_grid.js")
+    print("grid ready:", driver.execute_script("return window.__gridReady"))
+
+    # 최종 데이터를 추출한다
+    run_script(driver, "extract_detail_data.js")
 
     data = wait_for_data(driver, timeout=15)
     if data:
