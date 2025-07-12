@@ -113,3 +113,19 @@ def test_save_to_txt_writes_to_date_file(tmp_path):
 
     assert returned == out_file
     assert out_file.read_text(encoding="utf-8").strip() == "1\ta"
+
+
+def test_main_calls_navigation():
+    driver = Mock()
+
+    with (
+        patch.object(main, "create_driver", return_value=driver),
+        patch.object(main, "login_bgf", return_value=True),
+        patch.object(main, "close_popups_after_delegate"),
+        patch.object(main, "navigate_to_category_mix_ratio", return_value=True) as nav,
+        patch.object(main, "run_script"),
+        patch.object(main, "wait_for_data", return_value=None),
+    ):
+        main.main()
+
+    nav.assert_called_once_with(driver)

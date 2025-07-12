@@ -12,6 +12,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
+from analysis import navigate_to_category_mix_ratio
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 
@@ -72,6 +73,11 @@ def main() -> None:
         close_popups_after_delegate(driver)
     except Exception as e:
         print(f"delegate popup close failed: {e}")
+    # 매출분석 화면으로 이동한다
+    if not navigate_to_category_mix_ratio(driver):
+        print("navigation failed")
+        driver.quit()
+        return
 
 
 
