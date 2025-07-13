@@ -4,6 +4,7 @@
   const seenMidCodes = new Set();
   const logs = [];
   const scrollLogs = [];
+  const rowLogs = [];
   const finalData = [];
 
   const parseNumber = cell => {
@@ -35,13 +36,48 @@
 
   const parseRow = (midCode, idx) => {
     const codeCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_0'][id$=':text']`);
-    if (!codeCell) return null;
+    if (!codeCell) {
+      rowLogs.push({ midCode, idx, cell: 'code', status: 'not-found' });
+      console.warn(`❌ 코드 셀 탐색 실패 → ${midCode} / ${idx}`);
+      return null;
+    }
+
     const nameCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_1'][id$=':text']`);
+    if (!nameCell) {
+      rowLogs.push({ midCode, idx, cell: 'name', status: 'not-found' });
+      console.warn(`❌ 이름 셀 탐색 실패 → ${midCode} / ${idx}`);
+    }
+
     const salesCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_2'][id$=':text']`);
+    if (!salesCell) {
+      rowLogs.push({ midCode, idx, cell: 'sales', status: 'not-found' });
+      console.warn(`❌ 판매 셀 탐색 실패 → ${midCode} / ${idx}`);
+    }
+
     const orderCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_3'][id$=':text']`);
+    if (!orderCell) {
+      rowLogs.push({ midCode, idx, cell: 'order', status: 'not-found' });
+      console.warn(`❌ 주문 셀 탐색 실패 → ${midCode} / ${idx}`);
+    }
+
     const purchaseCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_4'][id$=':text']`);
+    if (!purchaseCell) {
+      rowLogs.push({ midCode, idx, cell: 'purchase', status: 'not-found' });
+      console.warn(`❌ 매입 셀 탐색 실패 → ${midCode} / ${idx}`);
+    }
+
     const discardCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_5'][id$=':text']`);
+    if (!discardCell) {
+      rowLogs.push({ midCode, idx, cell: 'discard', status: 'not-found' });
+      console.warn(`❌ 폐기 셀 탐색 실패 → ${midCode} / ${idx}`);
+    }
+
     const stockCell = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${idx}_6'][id$=':text']`);
+    if (!stockCell) {
+      rowLogs.push({ midCode, idx, cell: 'stock', status: 'not-found' });
+      console.warn(`❌ 재고 셀 탐색 실패 → ${midCode} / ${idx}`);
+    }
+
     return {
       midCode,
       productCode: codeCell.innerText.trim(),
@@ -137,5 +173,6 @@
 
   window.__midCategoryLogs__ = logs;
   window.__scrollLogs__ = scrollLogs;
+  window.__rowLogs__ = rowLogs;
   window.__parsedData__ = finalData;
 })();
