@@ -108,7 +108,9 @@ def main() -> None:
     # 새로운 스크롤 전체 탐색 로직을 담은 스크립트를 실행한다
     run_script(driver, "click_and_extract_full.js")
     logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+    scroll_logs = driver.execute_script("return window.__scrollLogs__ || []")
     print("중분류 클릭 로그:", logs)
+    print("스크롤 클릭 로그:", scroll_logs)
 
     data = wait_for_data(driver, timeout=15)
     if data:

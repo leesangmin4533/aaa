@@ -3,6 +3,7 @@
 
   const seenMidCodes = new Set();
   const logs = [];
+  const scrollLogs = [];
   const finalData = [];
 
   const parseNumber = cell => {
@@ -25,8 +26,10 @@
         })
       ));
       await delay(1000);
+      scrollLogs.push({ selector, status: 'success' });
       return true;
     }
+    scrollLogs.push({ selector, status: 'not-found' });
     return false;
   };
 
@@ -133,5 +136,6 @@
   }
 
   window.__midCategoryLogs__ = logs;
+  window.__scrollLogs__ = scrollLogs;
   window.__parsedData__ = finalData;
 })();
