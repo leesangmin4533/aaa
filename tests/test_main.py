@@ -127,6 +127,27 @@ def test_save_to_txt_writes_to_date_file(tmp_path):
     assert out_file.read_text(encoding="utf-8").strip() == expected
 
 
+def test_save_to_txt_field_order(tmp_path):
+    data = [
+        {
+            "midCode": "001",
+            "productCode": "123",
+            "productName": "abc",
+            "sales": 1,
+            "order": 2,
+            "purchase": 3,
+            "discard": 4,
+            "stock": 5,
+        }
+    ]
+    out_file = tmp_path / "out.txt"
+
+    main.save_to_txt(data, out_file)
+
+    contents = out_file.read_text(encoding="utf-8").strip().split("\t")
+    assert contents == [str(data[0].get(k, "")) for k in main.FIELD_ORDER]
+
+
 def test_main_calls_navigation():
     driver = Mock()
 
