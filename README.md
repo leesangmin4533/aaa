@@ -101,8 +101,8 @@ python -m aaa  # 또는 python main.py
 ```
 
 `main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더의 JavaScript 파일을
-실행합니다. 기본 제공 스크립트는 `click_and_extract.js` 한 가지이며,
-중분류를 클릭한 뒤 상품 데이터를 차례로 추출합니다.
+실행합니다. 기본 제공 스크립트는 `click_and_extract_full.js` 로,
+중분류와 상품코드를 스크롤을 포함해 전수 탐색하며 데이터를 추출합니다.
 
 실행이 끝나면 파싱된 데이터가 `output.txt` 에 저장됩니다. 각 행에는 중분류 코드,
 상품코드, 상품명 외에도 매출ㆍ발주ㆍ매입ㆍ폐기ㆍ현재고 값이 함께 기록됩니다. 빈 셀은
