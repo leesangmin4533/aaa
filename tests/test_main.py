@@ -38,10 +38,6 @@ class DesiredCapabilities:
     CHROME = {}
 dcaps_pkg.DesiredCapabilities = DesiredCapabilities
 
-class DesiredCapabilities:
-    CHROME = {}
-dcaps_pkg.DesiredCapabilities = DesiredCapabilities
-
 selenium_pkg.webdriver = webdriver_pkg
 sys.modules.setdefault("selenium", selenium_pkg)
 sys.modules.setdefault("selenium.webdriver", webdriver_pkg)
