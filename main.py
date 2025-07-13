@@ -43,6 +43,10 @@ def create_driver() -> webdriver.Chrome:
 
 def run_script(driver: webdriver.Chrome, name: str) -> Any:
     path = SCRIPT_DIR / name
+    if not path.exists():
+        msg = f"script file not found: {path}"
+        print(msg)
+        raise FileNotFoundError(msg)
     with open(path, "r", encoding="utf-8") as f:
         js = f.read()
     return driver.execute_script(js)

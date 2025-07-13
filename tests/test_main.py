@@ -4,6 +4,7 @@ import sys
 import types
 from datetime import datetime
 from unittest.mock import Mock, patch
+import pytest
 
 # Create minimal fake selenium package
 selenium_pkg = types.ModuleType("selenium")
@@ -85,6 +86,15 @@ def test_run_script_reads_and_executes(tmp_path):
         main.run_script(driver, "sample.js")
 
     driver.execute_script.assert_called_once_with(js_text)
+
+
+def test_run_script_missing_file_raises(tmp_path):
+    driver = Mock()
+    with patch.object(main, "SCRIPT_DIR", tmp_path):
+        with pytest.raises(FileNotFoundError):
+            main.run_script(driver, "missing.js")
+
+    driver.execute_script.assert_not_called()
 
 
 def test_wait_for_data_polls_parsed_data():
