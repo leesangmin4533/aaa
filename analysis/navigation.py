@@ -26,23 +26,46 @@ def navigate_to_category_mix_ratio(driver: WebDriver) -> bool:
     log = create_logger("navigation")
 
     def click_by_text(text, wait=0.5, max_retry=10):
+        """주어진 텍스트와 일치하는 메뉴를 찾아 클릭한다."""
+
         for _ in range(max_retry):
-            el = driver.execute_script("""
-return [...document.querySelectorAll('div')].find(el =>
-  el.innerText?.trim() === arguments[0] &&
-  el.offsetParent !== null);
-""", text)
+            el = driver.execute_script(
+                r"""
+const norm = arguments[0]
+  .toString()
+  .replace(/\s+/g, ' ')
+  .trim()
+  .toLowerCase();
+const xpath =
+  "//div[contains(@class,'nexatextitem') and " +
+  "translate(normalize-space(text()), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', " +
+  "'abcdefghijklmnopqrstuvwxyz')='" + norm + "']";
+return document.evaluate(
+  xpath,
+  document,
+  null,
+  XPathResult.FIRST_ORDERED_NODE_TYPE,
+  null
+).singleNodeValue;
+""",
+                text,
+            )
             if el:
-                driver.execute_script("""
+                driver.execute_script(
+                    """
 var rect = arguments[0].getBoundingClientRect();
 ['mousedown', 'mouseup', 'click'].forEach(type => {
   arguments[0].dispatchEvent(new MouseEvent(type, {
-    bubbles: true, cancelable: true, view: window,
+    bubbles: true,
+    cancelable: true,
+    view: window,
     clientX: rect.left + rect.width / 2,
     clientY: rect.top + rect.height / 2
   }));
 });
-""", el)
+""",
+                    el,
+                )
                 return True
             time.sleep(wait)
         return False
