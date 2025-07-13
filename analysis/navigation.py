@@ -34,12 +34,8 @@ def navigate_to_category_mix_ratio(driver: WebDriver) -> bool:
 const norm = arguments[0]
   .toString()
   .replace(/\s+/g, ' ')
-  .trim()
-  .toLowerCase();
-const xpath =
-  "//div[contains(@class,'nexatextitem') and " +
-  "translate(normalize-space(text()), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', " +
-  "'abcdefghijklmnopqrstuvwxyz')='" + norm + "']";
+  .trim();
+const xpath = "//*[contains(normalize-space(string(.)), '" + norm + "')]";
 return document.evaluate(
   xpath,
   document,
