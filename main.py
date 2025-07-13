@@ -105,7 +105,8 @@ def main() -> None:
 
 
     # 중분류별 클릭과 데이터 추출을 한 번에 수행한다
-    run_script(driver, "click_and_extract.js")
+    # 새로운 스크롤 전체 탐색 로직을 담은 스크립트를 실행한다
+    run_script(driver, "click_and_extract_full.js")
     logs = driver.execute_script("return window.__midCategoryLogs__ || []")
     print("중분류 클릭 로그:", logs)
 
