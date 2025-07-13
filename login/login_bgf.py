@@ -2,7 +2,14 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pathlib import Path
 import json
 import os
+import sys
 import time
+
+# ``login_bgf.py`` 파일을 스크립트로 실행할 때도 상위 디렉터리의 모듈을
+# 찾을 수 있도록 ``sys.path`` 에 프로젝트 루트 경로를 추가한다.
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from utils.log_util import create_logger
 from utils.popup_util import (
