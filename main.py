@@ -66,6 +66,7 @@ def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
         fname = datetime.now().strftime("%Y%m%d") + ".txt"
         output = CODE_OUTPUT_DIR / fname
     output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
     if output.exists():
         output.unlink()
     with open(output, "w", encoding="utf-8") as f:

@@ -148,6 +148,12 @@ def test_save_to_txt_field_order(tmp_path):
     assert contents == [str(data[0].get(k, "")) for k in main.FIELD_ORDER]
 
 
+def test_save_to_txt_creates_parent_dir(tmp_path):
+    out_file = tmp_path / "nested" / "dir" / "out.txt"
+    main.save_to_txt(["a"], out_file)
+    assert out_file.exists()
+
+
 def test_main_calls_navigation():
     driver = Mock()
 
