@@ -17,7 +17,9 @@ def _wait_for_list_grid(driver: WebDriver, timeout: int = 5) -> bool:
     while time.time() < end_time:
         try:
             exists = driver.execute_script(
-                "return document.querySelector(\"div[id*='gdList.body'][id$='_0:text']\") !== null"
+                r"""
+return document.querySelector("div[id*='gdList.body'][id$='_0:text']") !== null
+"""
             )
             if exists:
                 return True
@@ -35,7 +37,7 @@ def navigate_to_category_mix_ratio(driver: WebDriver) -> bool:
 
         return bool(
             driver.execute_script(
-                """
+                r"""
 const el = document.getElementById(arguments[0]);
 if (!el) return false;
 const r = el.getBoundingClientRect();
@@ -63,7 +65,7 @@ return true;
     log("nav", "INFO", "🔍 '중분류별 매출 구성비' 클릭 시도")
 
     clicked = driver.execute_script(
-        """
+        r"""
 const txt = arguments[0].replace(/\s+/g, '').toLowerCase();
 const snapshot = document.evaluate(
   "//div[contains(@class, 'nexatextitem')]",
