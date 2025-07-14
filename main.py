@@ -18,7 +18,7 @@ from analysis import navigate_to_category_mix_ratio
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 
-# output.txt 필드 저장 순서를 지정한다.
+# code_outputs/날짜.txt 필드 저장 순서를 지정한다.
 FIELD_ORDER = [
     "midCode",
     "productCode",
