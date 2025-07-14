@@ -5,6 +5,15 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from utils.log_util import create_logger
 
+# 메뉴 버튼 고정 ID 상수
+MAIN_MENU_ID = (
+    "mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.form.btn_saleAnalysis"
+)
+# 실제 서비스 환경에서 확인한 '중분류별 매출 구성비' 버튼 ID
+SUB_MENU_ID = (
+    "mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.form.btn_mixRatioByMid"
+)
+
 
 def _wait_for_list_grid(driver: WebDriver, timeout: int = 5) -> bool:
     """좌측 그리드 셀이 표시될 때까지 대기한다."""
@@ -25,55 +34,38 @@ def _wait_for_list_grid(driver: WebDriver, timeout: int = 5) -> bool:
 def navigate_to_category_mix_ratio(driver: WebDriver) -> bool:
     log = create_logger("navigation")
 
-    def click_by_text(text, wait=0.5, max_retry=10):
-        """주어진 텍스트와 일치하는 메뉴를 찾아 클릭한다."""
+    def click_by_id(el_id: str) -> bool:
+        """주어진 ID의 요소를 찾아 클릭 이벤트를 전송한다."""
 
-        for _ in range(max_retry):
-            el = driver.execute_script(
-                r"""
-const norm = arguments[0]
-  .toString()
-  .replace(/\s+/g, ' ')
-  .trim();
-const xpath = "//*[contains(normalize-space(string(.)), '" + norm + "')]";
-return document.evaluate(
-  xpath,
-  document,
-  null,
-  XPathResult.FIRST_ORDERED_NODE_TYPE,
-  null
-).singleNodeValue;
-""",
-                text,
-            )
-            if el:
-                driver.execute_script(
-                    """
-var rect = arguments[0].getBoundingClientRect();
-['mousedown', 'mouseup', 'click'].forEach(type => {
-  arguments[0].dispatchEvent(new MouseEvent(type, {
+        return bool(
+            driver.execute_script(
+                """
+const el = document.getElementById(arguments[0]);
+if (!el) return false;
+const r = el.getBoundingClientRect();
+['mousedown','mouseup','click'].forEach(type =>
+  el.dispatchEvent(new MouseEvent(type, {
     bubbles: true,
     cancelable: true,
     view: window,
-    clientX: rect.left + rect.width / 2,
-    clientY: rect.top + rect.height / 2
-  }));
-});
+    clientX: r.left + r.width / 2,
+    clientY: r.top + r.height / 2
+  }))
+);
+return true;
 """,
-                    el,
-                )
-                return True
-            time.sleep(wait)
-        return False
+                el_id,
+            )
+        )
 
     log("nav", "INFO", "🔍 '매출분석' 클릭 시도")
-    if not click_by_text("매출분석"):
+    if not click_by_id(MAIN_MENU_ID):
         log("nav", "ERROR", "❌ '매출분석' 클릭 실패")
         return False
 
     time.sleep(2)  # 메뉴 확장 시간 고려
     log("nav", "INFO", "🔍 '중분류별 매출 구성비' 클릭 시도")
-    if not click_by_text("중분류별 매출 구성비"):
+    if not click_by_id(SUB_MENU_ID):
         log("nav", "ERROR", "❌ '중분류별 매출 구성비' 클릭 실패")
         return False
 
