@@ -9,10 +9,6 @@ from utils.log_util import create_logger
 MAIN_MENU_ID = (
     "mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.form.btn_saleAnalysis"
 )
-# 실제 서비스 환경에서 확인한 '중분류별 매출 구성비' 버튼 ID
-SUB_MENU_ID = (
-    "mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.form.btn_mixRatioByMid"
-)
 
 
 def _wait_for_list_grid(driver: WebDriver, timeout: int = 5) -> bool:
@@ -65,7 +61,44 @@ return true;
 
     time.sleep(2)  # 메뉴 확장 시간 고려
     log("nav", "INFO", "🔍 '중분류별 매출 구성비' 클릭 시도")
-    if not click_by_id(SUB_MENU_ID):
+
+    clicked = driver.execute_script(
+        """
+const txt = arguments[0].replace(/\s+/g, '').toLowerCase();
+const snapshot = document.evaluate(
+  "//div[contains(@class, 'nexatextitem')]",
+  document,
+  null,
+  XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+  null
+);
+let target = null;
+for (let i = 0; i < snapshot.snapshotLength; i++) {
+  const el = snapshot.snapshotItem(i);
+  if (!el) continue;
+  const normalized = (el.innerText || '').replace(/\s+/g, '').toLowerCase();
+  if (normalized.includes(txt) && el.offsetParent !== null) {
+    target = el;
+    break;
+  }
+}
+if (!target) return false;
+const r = target.getBoundingClientRect();
+['mousedown','mouseup','click'].forEach(type =>
+  target.dispatchEvent(new MouseEvent(type, {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+    clientX: r.left + r.width / 2,
+    clientY: r.top + r.height / 2
+  }))
+);
+return true;
+""",
+        "중분류"
+    )
+
+    if not clicked:
         log("nav", "ERROR", "❌ '중분류별 매출 구성비' 클릭 실패")
         return False
 
