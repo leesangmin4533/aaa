@@ -10,6 +10,11 @@ MAIN_MENU_ID = (
     "mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.form.btn_saleAnalysis"
 )
 
+# '중분류별 매출 구성비' 버튼 ID
+MIDDLE_MENU_ID = (
+    "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB010_M0.form.div_workForm.form.div2.form.div_search.form.btnMiddle"
+)
+
 
 
 
@@ -45,46 +50,10 @@ return true;
         log("nav", "ERROR", "❌ '매출분석' 클릭 실패")
         return False
 
-    time.sleep(2)  # 메뉴 확장 시간 고려
+    time.sleep(3.5)  # 메뉴가 동적으로 로드될 때까지 대기
     log("nav", "INFO", "🔍 '중분류별 매출 구성비' 클릭 시도")
 
-    clicked = driver.execute_script(
-        r"""
-const txt = arguments[0].replace(/\s+/g, '').toLowerCase();
-const snapshot = document.evaluate(
-  "//div[contains(@class, 'nexatextitem')]",
-  document,
-  null,
-  XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-  null
-);
-let target = null;
-for (let i = 0; i < snapshot.snapshotLength; i++) {
-  const el = snapshot.snapshotItem(i);
-  if (!el) continue;
-  const normalized = (el.innerText || '').replace(/\s+/g, '').toLowerCase();
-  if (normalized.includes(txt) && el.offsetParent !== null) {
-    target = el;
-    break;
-  }
-}
-if (!target) return false;
-const r = target.getBoundingClientRect();
-['mousedown','mouseup','click'].forEach(type =>
-  target.dispatchEvent(new MouseEvent(type, {
-    bubbles: true,
-    cancelable: true,
-    view: window,
-    clientX: r.left + r.width / 2,
-    clientY: r.top + r.height / 2
-  }))
-);
-return true;
-""",
-        "중분류"
-    )
-
-    if not clicked:
+    if not click_by_id(MIDDLE_MENU_ID):
         log("nav", "ERROR", "❌ '중분류별 매출 구성비' 클릭 실패")
         return False
 
