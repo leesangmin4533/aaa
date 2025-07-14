@@ -109,6 +109,9 @@ def main() -> None:
 
 
 
+    # 모든 중분류를 클릭하거나 특정 코드만 클릭한다
+    run_script(driver, "click_all_mid_categories.js")
+
     # 중분류별 클릭과 데이터 추출을 한 번에 수행한다
     # 새로운 스크롤 전체 탐색 로직을 담은 스크립트를 실행한다
     run_script(driver, "click_and_extract_full.js")

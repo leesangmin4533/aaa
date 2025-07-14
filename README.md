@@ -18,16 +18,27 @@ if navigate_to_category_mix_ratio(driver):
 
     # 원하는 중분류 코드를 찾아 클릭한다.
     driver.execute_script(
-        """const cell = [...document.querySelectorAll("div[id*='gdList.body'][id$='_0:text']")].find(el => el.innerText.trim() === '201');
-if (cell) {
-    const target = document.getElementById(cell.id.replace(':text', ''));
-    if (target) {
-        target.click();
-        return true;
-    }
-}
-return false;
-"""
+        """(() => {
+  const code = '201';
+  const cell = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")]
+    .find(el => el.innerText?.trim() === code);
+  if (!cell) {
+    console.warn('⛔ 중분류 코드 셀 찾을 수 없음:', code);
+    return false;
+  }
+  const clickEl = document.getElementById(cell.id.replace(':text', ''));
+  const rect = clickEl.getBoundingClientRect();
+  ['mousedown', 'mouseup', 'click'].forEach(type =>
+    clickEl.dispatchEvent(new MouseEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      clientX: rect.left + rect.width / 2,
+      clientY: rect.top + rect.height / 2
+    }))
+  );
+  return true;
+})();"""
         )
 
     # 상품 셀이 렌더링될 때까지 최대 2초간 대기한다.
