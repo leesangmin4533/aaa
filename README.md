@@ -21,8 +21,12 @@ if navigate_to_category_mix_ratio(driver):
         """const cell = [...document.querySelectorAll("div[id*='gdList.body'][id$='_0:text']")].find(el => el.innerText.trim() === '201');
 if (cell) {
     const target = document.getElementById(cell.id.replace(':text', ''));
-    if (target) target.click();
+    if (target) {
+        target.click();
+        return true;
+    }
 }
+return false;
 """
         )
 
