@@ -109,7 +109,14 @@ def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
                         "\t".join(str(row.get(k, "")) for k in FIELD_ORDER) + "\n"
                     )
                 else:
-                    f.write(str(row) + "\n")
+                    text = str(row).rstrip("\n")
+                    parts = text.split("\t")
+                    if len(parts) >= 3:
+                        for i in range(3, len(parts)):
+                            if parts[i] == "":
+                                parts[i] = "0"
+                        text = "\t".join(parts)
+                    f.write(text + "\n")
         else:
             f.write(str(data))
     return output
