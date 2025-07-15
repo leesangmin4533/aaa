@@ -118,12 +118,10 @@ python -m aaa  # 또는 python main.py
 `main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더에 존재하는 모든
 JavaScript 파일을 이름순으로 실행합니다. 기본 제공 스크립트는
 `click_and_extract.js` 로,
-중분류 코드를 클릭한 뒤 상세 데이터를 추출합니다. 상품을 클릭할 때마다
-`collectVisibleProducts()` 가 호출되어 현재 선택된 중분류 코드와 그때 화면에
-표시된 상품 행을 읽어 `window.__productList` 배열에 누적합니다. 모든 작업이 끝나면
-스크립트에서 `window.__parsedData__` 라는 배열을 새로 만들어 Python 코드가 값을 바로
-읽을 수 있도록 합니다. 호출 위치는 `autoClickAllProductCodes()` 함수의
-`await delay(300);` 다음입니다.
+중분류를 클릭한 뒤 상품 목록을 스크롤하며 한 번에 읽어 저장합니다.
+`collectAllProducts()` 함수에서 이미 수집한 상품코드는 `Set` 으로 중복을 방지합니다.
+모든 작업이 끝나면 스크립트에서 `window.__parsedData__` 배열을 만들어
+Python 코드가 값을 바로 읽을 수 있습니다.
 
 실행이 끝나면 수집된 데이터가 `code_outputs/<YYYYMMDD>.txt` 파일로 저장됩니다.
 각 행은 중분류 코드, 상품코드, 상품명과 매출ㆍ발주ㆍ매입ㆍ폐기ㆍ현재고 값을 탭 문자(`\t`)로 구분하여 기록합니다.
