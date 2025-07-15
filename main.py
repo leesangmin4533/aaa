@@ -64,6 +64,23 @@ def wait_for_data(driver: webdriver.Chrome, timeout: int = 10):
     return None
 
 
+def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool:
+    """중분류별 매출 구성비 화면의 그리드가 나타날 때까지 대기한다."""
+    js = (
+        "return document.querySelector("
+        "\"div[id*='gdList.body'][id*='cell_'][id$='_0:text']\""
+        ") !== null;"
+    )
+    for _ in range(timeout * 2):
+        try:
+            if driver.execute_script(js):
+                return True
+        except Exception:
+            pass
+        time.sleep(0.5)
+    return False
+
+
 def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
     if output is None:
         CODE_OUTPUT_DIR.mkdir(exist_ok=True)
@@ -104,6 +121,11 @@ def main() -> None:
     # 매출분석 화면으로 이동한다
     if not navigate_to_category_mix_ratio(driver):
         print("navigation failed")
+        driver.quit()
+        return
+
+    if not wait_for_mix_ratio_page(driver):
+        print("page load timeout")
         driver.quit()
         return
 
