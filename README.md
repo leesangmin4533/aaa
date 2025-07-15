@@ -130,6 +130,11 @@ Python 코드가 값을 바로 읽을 수 있습니다.
 새로운 스크립트를 `scripts/` 폴더에 추가하면 별도 수정 없이 자동으로 실행 대상에
 포함됩니다.
 
+웹 브라우저에서 바로 파일을 받고 싶다면 `download_with_blob.js` 스크립트를 사용하면 됩니다.
+해당 스크립트는 `window.__parsedData__` 값이 이미 존재하면 그 내용을 이용해 즉시 `product_list.txt` 파일을 내려받고,
+없을 경우 전체 중분류를 순회해 데이터를 수집한 뒤 저장합니다.
+따라서 기본 스크립트인 `click_and_extract.js` 후에 자동으로 실행되도록 두면 중복 수집 없이 다운로드만 수행됩니다.
+
 중분류 일부만 수집하려면 예시 스크립트 `mid_range_collect.js` 를 사용할 수 있습니다.
 파일 맨 아래의 `autoClickMidRange(startRow, endRow)` 호출 구간을 원하는 범위로
 수정한 뒤 `main.py` 에서 해당 파일명을 지정해 실행하면 됩니다.
