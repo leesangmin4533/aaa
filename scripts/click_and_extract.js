@@ -67,37 +67,65 @@
     }
   }
 
-  async function autoClickAllProductCodes() {
-    const seen = new Set();
+  async function collectAllProducts() {
+    const list = (window.__productList = window.__productList || []);
+    const seen = new Set(list.map(row => row.productCode));
     let scrollCount = 0;
 
     while (true) {
-      const textCells = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
-      const newCodes = [];
+      const rows = [
+        ...document.querySelectorAll(
+          "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
+        ),
+      ];
 
-      for (const textEl of textCells) {
-        const code = textEl.innerText?.trim();
+      let newCount = 0;
+      const midCell = document.querySelector(
+        "div[id*='gdList.body'][id*='cell_'][id$='_0:text'].nexagridcellfocused, " +
+          "div[id*='gdList.body'][id*='cell_'][id$='_0:text'].nexagridselected"
+      );
+      const midCode = midCell?.innerText?.trim() || '';
+      let midText = '';
+      if (midCell) {
+        const nameId = midCell.id.replace('_0:text', '_1:text');
+        const nameEl = document.getElementById(nameId);
+        midText = nameEl?.innerText?.trim() || '';
+      }
+
+      for (const codeEl of rows) {
+        const match = codeEl.id.match(/cell_(\d+)_0:text$/);
+        if (!match) continue;
+        const rowIdx = match[1];
+
+        const code = codeEl.innerText?.trim();
         if (!/^\d{13}$/.test(code)) continue;
         if (seen.has(code)) continue;
 
-        const clickId = textEl.id.replace(":text", "");
-        const clicked = await clickElementById(clickId);
-        if (!clicked) {
-          console.warn("❌ 상품 클릭 대상 없음 → ID:", clickId);
-          continue;
-        }
+        const getText = col =>
+          document.querySelector(
+            `div[id*='gdDetail.body'][id*='cell_${rowIdx}_${col}:text']`
+          )?.innerText?.trim() || '';
 
+        list.push({
+          midCode,
+          midText,
+          productCode: code,
+          productName: getText(1),
+          sales: getText(2),
+          order: getText(3),
+          purchase: getText(4),
+          discard: getText(5),
+          stock: getText(6),
+        });
         seen.add(code);
-        newCodes.push(code);
-        console.log(`✅ 상품 클릭 완료: ${code}`);
-        await delay(300);
-        // 화면에 표시된 상품 정보를 수집한다
-        collectVisibleProducts();
+        newCount++;
       }
 
-      if (newCodes.length === 0) break;
+      if (newCount === 0) break;
 
-      const scrollBtn = document.querySelector("div[id$='gdDetail.vscrollbar.incbutton:icontext']");
+      const scrollBtn = document.querySelector(
+        "div[id$='gdDetail.vscrollbar.incbutton:icontext']"
+      );
       if (!scrollBtn) break;
 
       await clickElementById(scrollBtn.id);
@@ -106,7 +134,7 @@
       await delay(1000);
     }
 
-    console.log("🎉 상품코드 클릭 완료");
+    console.log(`🎉 상품 ${seen.size}건 수집 완료`);
   }
 
   async function autoClickAllMidCodesAndProducts() {
@@ -134,7 +162,7 @@
         console.log(`✅ 중분류 클릭 완료: ${code}`);
         await delay(500);
 
-        await autoClickAllProductCodes();
+        await collectAllProducts();
         await delay(300);
       }
 
