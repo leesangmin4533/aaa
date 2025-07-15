@@ -170,16 +170,15 @@ def test_main_calls_navigation():
         patch.object(main, "create_driver", return_value=driver),
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "navigate_to_category_mix_ratio", return_value=True) as nav,
         patch.object(main, "wait_for_mix_ratio_page", return_value=True),
-        patch.object(main, "run_script"),
+        patch.object(main, "run_script") as run_script_mock,
         patch.object(main, "wait_for_data", return_value=None),
         patch.object(main, "append_unique_lines", return_value=0),
     ):
         driver.execute_script.side_effect = [[], [], {}, None]
         main.main()
 
-    nav.assert_called_once_with(driver)
+    run_script_mock.assert_any_call(driver, main.NAVIGATION_SCRIPT)
     driver.get_log.assert_called_once_with("browser")
 
 
@@ -243,13 +242,13 @@ def test_main_prints_mid_category_logs(capsys):
         patch.object(main, "create_driver", return_value=driver),
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "navigate_to_category_mix_ratio", return_value=True),
         patch.object(main, "wait_for_mix_ratio_page", return_value=True),
-        patch.object(main, "run_script"),
+        patch.object(main, "run_script") as run_script_mock,
         patch.object(main, "wait_for_data", return_value=None),
     ):
         main.main()
 
+    run_script_mock.assert_any_call(driver, main.NAVIGATION_SCRIPT)
     driver.execute_script.assert_any_call("return window.__midCategoryLogs__ || []")
     driver.get_log.assert_called_once_with("browser")
     out = capsys.readouterr().out

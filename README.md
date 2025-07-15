@@ -6,14 +6,15 @@
 
 ```python
 from selenium.webdriver.remote.webdriver import WebDriver
-from analysis import navigate_to_category_mix_ratio
+from main import run_script, wait_for_mix_ratio_page, NAVIGATION_SCRIPT
 from utils.log_util import create_logger
 import time
 
 log = create_logger("example")
 
 # driver는 로그인 이후의 WebDriver 인스턴스라고 가정합니다.
-if navigate_to_category_mix_ratio(driver):
+run_script(driver, NAVIGATION_SCRIPT)
+if wait_for_mix_ratio_page(driver):
     log("step", "INFO", "화면 이동 성공")
 
     # 원하는 중분류 코드를 찾아 클릭한다.
