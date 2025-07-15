@@ -14,12 +14,14 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
+from utils import append_unique_lines
 from analysis import navigate_to_category_mix_ratio
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 # 자동 실행할 기본 스크립트 파일명
 DEFAULT_SCRIPT = "auto_collect_mid_products.js"
+LISTENER_SCRIPT = "data_collect_listener.js"
 
 
 def get_script_files() -> list[str]:
@@ -140,38 +142,55 @@ def main() -> None:
 
 
     # 중분류 매출 구성비 화면 진입 후 자동 수집 스크립트를 실행한다
+    output_path = CODE_OUTPUT_DIR / (datetime.now().strftime("%Y%m%d") + ".txt")
+    if output_path.exists():
+        output_path.unlink()
+
     run_script(driver, DEFAULT_SCRIPT)
+    run_script(driver, LISTENER_SCRIPT)
+
     logs = driver.execute_script("return window.__midCategoryLogs__ || []")
     if logs:
         print("중분류 클릭 로그:", logs)
 
-    data = wait_for_data(driver, timeout=15)
-    if data:
-        path = save_to_txt(data)
-        print(f"saved to {path}")
-    else:
-        print("no data found")
-        try:
-            error = driver.execute_script("return window.__parsedDataError__ || null")
-        except Exception:
-            error = None
-        if error:
-            print("스크립트 오류:", error)
-        try:
-            logs = driver.get_log("browser")
-        except Exception as e:
-            print(f"get_log failed: {e}")
-            logs = None
-        if logs:
-            lines = extract_tab_lines(logs)
-            if lines:
-                print("추출된 로그 데이터:")
-                for line in lines:
-                    print(line)
-            else:
-                print("브라우저 콘솔 로그:")
-                for entry in logs:
-                    print(entry)
+    while True:
+        lines = driver.execute_script(
+            "var d = window.__liveData__ || []; window.__liveData__ = []; return d;"
+        )
+        if lines:
+            added = append_unique_lines(output_path, lines)
+            print(f"appended {added} lines")
+
+        parsed = driver.execute_script("return window.__parsedData__ || null")
+        if parsed is not None:
+            break
+        time.sleep(0.5)
+
+    print(f"saved to {output_path}")
+
+    error = None
+    try:
+        error = driver.execute_script("return window.__parsedDataError__ || null")
+    except Exception:
+        pass
+    if error:
+        print("스크립트 오류:", error)
+
+    try:
+        logs = driver.get_log("browser")
+    except Exception as e:
+        print(f"get_log failed: {e}")
+        logs = None
+    if logs:
+        lines = extract_tab_lines(logs)
+        if lines:
+            print("추출된 로그 데이터:")
+            for line in lines:
+                print(line)
+        else:
+            print("브라우저 콘솔 로그:")
+            for entry in logs:
+                print(entry)
 
 
 if __name__ == "__main__":

@@ -172,7 +172,9 @@ def test_main_calls_navigation():
         patch.object(main, "wait_for_mix_ratio_page", return_value=True),
         patch.object(main, "run_script"),
         patch.object(main, "wait_for_data", return_value=None),
+        patch.object(main, "append_unique_lines", return_value=0),
     ):
+        driver.execute_script.side_effect = [[], [], {}, None]
         main.main()
 
     nav.assert_called_once_with(driver)
