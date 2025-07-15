@@ -2,6 +2,9 @@
   window.__liveData__ = window.__liveData__ || [];
   const seen = new Set(window.__liveData__);
 
+  let currentMidCode = '';
+  let currentMidName = '';
+
   function getText(row, col) {
     const el = document.querySelector(
       `div[id*='gdDetail.body'][id*='cell_${row}_${col}'][id$=':text']`
@@ -20,6 +23,8 @@
       const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
       if (!row) continue;
       const line = [
+        currentMidCode || '0',
+        currentMidName || '',
         getText(row, 0) || '0',
         getText(row, 1) || '0',
         getText(row, 2) || '0',
@@ -39,6 +44,10 @@
     }
   }
 
-  document.addEventListener('mid-clicked', () => setTimeout(collectLines, 100));
+  document.addEventListener('mid-clicked', event => {
+    currentMidCode = event.detail?.code || '';
+    currentMidName = event.detail?.midName || '';
+    setTimeout(collectLines, 100);
+  });
   document.addEventListener('product-scroll', () => setTimeout(collectLines, 100));
 })();

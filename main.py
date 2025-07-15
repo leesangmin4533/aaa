@@ -31,6 +31,7 @@ def get_script_files() -> list[str]:
 # code_outputs/날짜.txt 필드 저장 순서를 지정한다.
 FIELD_ORDER = [
     "midCode",
+    "midName",
     "productCode",
     "productName",
     "sales",

@@ -112,6 +112,7 @@ def test_save_to_txt_writes_to_date_file(tmp_path):
     data = [
         {
             "midCode": "1",
+            "midName": "m",
             "productCode": "2",
             "productName": "a",
             "sales": 3,
@@ -137,6 +138,7 @@ def test_save_to_txt_field_order(tmp_path):
     data = [
         {
             "midCode": "001",
+            "midName": "abc-mid",
             "productCode": "123",
             "productName": "abc",
             "sales": 1,
@@ -189,6 +191,7 @@ def test_run_script_collects_data(tmp_path):
     expected = [
         {
             "midCode": "1",
+            "midName": "m",
             "productCode": "2",
             "productName": "a",
             "sales": 3,

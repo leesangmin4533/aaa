@@ -125,6 +125,12 @@ python -m aaa  # 또는 python main.py
 같은 날짜의 파일이 이미 존재하면 처음 시작 시 한 번만 삭제 후 새로 생성하며,
 이후에는 이벤트가 발생할 때마다 중복되지 않는 새 라인만 이어서 기록합니다.
 
+각 줄은 다음 순서의 필드가 탭 문자로 구분되어 저장됩니다.
+
+```
+midCode    midName    productCode    productName    sales    order    purchase    discard    stock
+```
+
 웹 브라우저에서 바로 파일을 받고 싶다면 기존 `download_with_blob.js` 를 사용할 수 있으나,
 통합 스크립트만으로도 데이터를 얻을 수 있으므로 선택 사항입니다.
 
