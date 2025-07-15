@@ -17,6 +17,56 @@
     return true;
   }
 
+  /**
+   * 현재 선택된 중분류 행과 화면에 표시된 상품 행들을 읽어
+   * window.__productList 배열에 누적 저장한다.
+   */
+  function collectVisibleProducts() {
+    const list = (window.__productList = window.__productList || []);
+
+    const midCodeCell = document.querySelector(
+      "div[id*='gdList.body'][id*='cell_'][id$='_0:text'].nexagridcellfocused, " +
+        "div[id*='gdList.body'][id*='cell_'][id$='_0:text'].nexagridselected"
+    );
+    const midCode = midCodeCell?.innerText?.trim() || '';
+
+    let midText = '';
+    if (midCodeCell) {
+      const nameId = midCodeCell.id.replace('_0:text', '_1:text');
+      const nameEl = document.getElementById(nameId);
+      midText = nameEl?.innerText?.trim() || '';
+    }
+
+    const rows = [
+      ...document.querySelectorAll(
+        "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
+      ),
+    ];
+
+    for (const codeEl of rows) {
+      const rowIndexMatch = codeEl.id.match(/cell_(\d+)_0:text$/);
+      if (!rowIndexMatch) continue;
+      const rowIdx = rowIndexMatch[1];
+
+      const getText = col =>
+        document.querySelector(
+          `div[id*='gdDetail.body'][id*='cell_${rowIdx}_${col}:text']`
+        )?.innerText?.trim() || '';
+
+      list.push({
+        midCode,
+        midText,
+        productCode: getText(0),
+        productName: getText(1),
+        sales: getText(2),
+        order: getText(3),
+        purchase: getText(4),
+        discard: getText(5),
+        stock: getText(6),
+      });
+    }
+  }
+
   async function autoClickAllProductCodes() {
     const seen = new Set();
     let scrollCount = 0;
@@ -41,6 +91,8 @@
         newCodes.push(code);
         console.log(`✅ 상품 클릭 완료: ${code}`);
         await delay(300);
+        // 화면에 표시된 상품 정보를 수집한다
+        collectVisibleProducts();
       }
 
       if (newCodes.length === 0) break;
@@ -98,6 +150,8 @@
     }
 
     console.log("🎉 전체 작업 완료: 중분류 수", seenMid.size);
+    // Python 측에서 읽을 수 있도록 전역 변수에 저장한다
+    window.__parsedData__ = window.__productList;
   }
 
   autoClickAllMidCodesAndProducts();
