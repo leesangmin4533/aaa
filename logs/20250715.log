@@ -188,3 +188,41 @@ Stacktrace:
 [navigation][nav][INFO] 🔍 '매출분석' 클릭 시도
 [navigation][nav][INFO] 🔍 '중분류별 매출 구성비' 클릭 시도
 [navigation][nav][INFO] ✅ 메뉴 진입 완료
+[login_bgf][login][INFO] Login script executed
+[login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login_bgf][login][INFO] Login succeeded
+[popup_util][focus_popup][DEBUG] 팝업 탐색 오류 또는 미표시: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(), '재택 유선권장 안내')]"}
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6fff26f75+76917]
+	GetHandleVerifier [0x0x7ff6fff26fd0+77008]
+	(No symbol) [0x0x7ff6ffcd9dea]
+	(No symbol) [0x0x7ff6ffd30256]
+	(No symbol) [0x0x7ff6ffd3050c]
+	(No symbol) [0x0x7ff6ffd83887]
+	(No symbol) [0x0x7ff6ffd584af]
+	(No symbol) [0x0x7ff6ffd8065c]
+	(No symbol) [0x0x7ff6ffd58243]
+	(No symbol) [0x0x7ff6ffd21431]
+	(No symbol) [0x0x7ff6ffd221c3]
+	GetHandleVerifier [0x0x7ff7001fd2ad+3051437]
+	GetHandleVerifier [0x0x7ff7001f7903+3028483]
+	GetHandleVerifier [0x0x7ff70021589d+3151261]
+	GetHandleVerifier [0x0x7ff6fff4183e+185662]
+	GetHandleVerifier [0x0x7ff6fff496ff+218111]
+	GetHandleVerifier [0x0x7ff6fff2faf4+112628]
+	GetHandleVerifier [0x0x7ff6fff2fca9+113065]
+	GetHandleVerifier [0x0x7ff6fff16c78+10616]
+	BaseThreadInitThunk [0x0x7fff5f7ce8d7+23]
+	RtlUserThreadStart [0x0x7fff60dbc34c+44]
+
+[popup_util][focus_popup][INFO] 팝업 감지됨: 엔터로 종료 시도
+[popup_util][focus_popup][INFO] 엔터 키 전송 완료
+[popup_util][focus_popup][DEBUG] 팝업이 더 이상 나타나지 않음
+[popup_util][close][WARNING] '닫기' 요소 대기 실패: Message: 
+
+[popup_util][close][INFO] 팝업 처리 결과: not found
+[login_bgf][login][INFO] 팝업 모듈 종료: 다음 단계 진입
+[navigation][nav][INFO] 🔍 '매출분석' 클릭 시도
+[navigation][nav][INFO] 🔍 '중분류별 매출 구성비' 클릭 시도
+[navigation][nav][INFO] ✅ 메뉴 진입 완료
