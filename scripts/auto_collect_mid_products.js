@@ -36,6 +36,15 @@
     const rowIndices = Array.from(new Set(rowEls.map(el => el.id.match(/cell_(\d+)_0:text/)?.[1])));
 
     for (const row of rowIndices) {
+      // 상품코드 셀 클릭 후 텍스트 수집
+      const codeCellId = [...document.querySelectorAll(`div[id*='gdDetail.body'][id*='cell_${row}_0'][id$=':text']`)][0]?.id;
+      const clickId = codeCellId?.split(":text")[0];
+      if (clickId) {
+        await clickElementById(clickId);
+      } else {
+        console.warn("❌ 상품코드 셀 ID 찾을 수 없음:", row);
+      }
+
       const line = [
         midCode,
         midName,
@@ -48,6 +57,8 @@
         getText(row, 6)
       ].join("\t");
       productLines.push(line);
+
+      await delay(100);
     }
 
     midCodeDataList.push(...productLines);
