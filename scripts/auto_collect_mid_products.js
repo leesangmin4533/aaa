@@ -139,12 +139,14 @@
         if (!/^\d{3}$/.test(code) || seenMid.has(code)) continue;
         if ((startCode && code < startCode) || (endCode && code > endCode)) continue;
 
-        const row = textEl.closest("div[id*='gdList.body'][id*='gridrow_']");
+        const rowIdx = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
 
-        async function getMidName(el, attempts = 5) {
+        async function getMidName(rowIdx, attempts = 10) {
           for (let i = 0; i < attempts; i++) {
-            const nameEl = el?.querySelector("div[id$='_1:text']");
-            const name = nameEl?.innerText?.trim();
+            const el = document.querySelector(
+              `div[id*='gdList.body'][id*='cell_${rowIdx}_1'][id$=':text']`
+            );
+            const name = el?.innerText?.trim();
             if (name) return name;
             await delay(300);
           }
@@ -158,7 +160,7 @@
           continue;
         }
 
-        const midName = await getMidName(row);
+        const midName = await getMidName(rowIdx);
 
         seenMid.add(code);
         newMids.push(code);
