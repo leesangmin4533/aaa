@@ -139,8 +139,8 @@
         if (!/^\d{3}$/.test(code) || seenMid.has(code)) continue;
         if ((startCode && code < startCode) || (endCode && code > endCode)) continue;
 
-        const rowIdx = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
-        const midNameEl = document.querySelector(`div[id*='gdList.body'][id*='cell_${rowIdx}_1'][id$=':text']`);
+        const row = textEl.closest("div[id*='gdList.body'][id*='row_']");
+        const midNameEl = row?.querySelector("div[id$='_1:text']");
         const midName = midNameEl?.innerText?.trim() || '';
 
         const clickId = textEl.id.split(":text")[0];
