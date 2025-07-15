@@ -2,6 +2,23 @@
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const midCodeDataList = [];
 
+  function waitForMidGrid(maxWait = 10000) {
+    return new Promise((resolve, reject) => {
+      const start = Date.now();
+      const check = () => {
+        const cells = document.querySelectorAll(
+          "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
+        );
+        if (cells.length > 0) return resolve(true);
+        if (Date.now() - start > maxWait) {
+          return reject('⛔ gdList 로딩 시간 초과');
+        }
+        setTimeout(check, 300);
+      };
+      check();
+    });
+  }
+
   function getText(row, col) {
     const el = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${row}_${col}'][id$=':text']`);
     return el?.innerText?.trim() || '';
@@ -101,5 +118,12 @@
     window.__parsedData__ = midCodeDataList;
   }
 
-  autoCollectAllMidCodes();
+  (async () => {
+    try {
+      await waitForMidGrid();
+      await autoCollectAllMidCodes();
+    } catch (e) {
+      console.warn(e);
+    }
+  })();
 })();
