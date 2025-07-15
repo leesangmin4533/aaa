@@ -57,5 +57,8 @@ return true;
         log("nav", "ERROR", "❌ '중분류별 매출 구성비' 클릭 실패")
         return False
 
+    # 화면이 완전히 로드될 시간을 준다
+    time.sleep(1)
+
     log("nav", "SUCCESS", "✅ 메뉴 진입 완료")
     return True
