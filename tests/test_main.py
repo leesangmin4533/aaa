@@ -220,3 +220,29 @@ def test_run_script_collects_data(tmp_path):
 
     contents = out_file.read_text(encoding="utf-8").strip()
     assert contents == "\t".join(str(expected[0].get(k, "")) for k in main.FIELD_ORDER)
+
+
+def test_main_prints_mid_category_logs(capsys):
+    driver = Mock()
+
+    def exec_script(arg):
+        if arg == "return window.__midCategoryLogs__ || []":
+            return ["log1", "log2"]
+
+    driver.execute_script.side_effect = exec_script
+
+    with (
+        patch.object(main, "create_driver", return_value=driver),
+        patch.object(main, "login_bgf", return_value=True),
+        patch.object(main, "close_popups_after_delegate"),
+        patch.object(main, "navigate_to_category_mix_ratio", return_value=True),
+        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
+        patch.object(main, "run_script"),
+        patch.object(main, "wait_for_data", return_value=None),
+    ):
+        main.main()
+
+    driver.execute_script.assert_any_call("return window.__midCategoryLogs__ || []")
+    out = capsys.readouterr().out
+    assert "중분류 클릭 로그" in out
+    assert "['log1', 'log2']" in out
