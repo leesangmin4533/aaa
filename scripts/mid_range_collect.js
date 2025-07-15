@@ -30,10 +30,13 @@
     const midCode = midCodeEl?.innerText?.trim() || '';
     const midText = midTextEl?.innerText?.trim() || '';
 
+    // 상품 셀 생성까지 대기 (최대 6초)
     let attempts = 0;
     while (
-      !document.querySelector("div[id*='gdDetail.body'][id*='gridrow_0']") &&
-      attempts++ < 15
+      !document.querySelector(
+        "div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']"
+      ) &&
+      attempts++ < 20
     ) {
       await delay(300);
     }
@@ -65,6 +68,8 @@
         stock: getText(6),
       });
     }
+
+    console.log(`✅ [중분류 ${midCode} - ${midText}] 상품 ${rows.length}건 수집됨`);
   }
 
   async function autoClickMidRange(startRow, endRow) {
