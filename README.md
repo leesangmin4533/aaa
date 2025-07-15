@@ -128,4 +128,12 @@ Python 코드에서 바로 활용됩니다.
 웹 브라우저에서 바로 파일을 받고 싶다면 기존 `download_with_blob.js` 를 사용할 수 있으나,
 통합 스크립트만으로도 데이터를 얻을 수 있으므로 선택 사항입니다.
 
-특정 중분류만 수집하려면 `mid_range_collect.js` 처럼 범위를 지정하는 스크립트를 별도로 작성하면 됩니다.
+특정 중분류만 수집하려면 `mid_range_collect.js` 스크립트를 사용할 수 있습니다.
+이 스크립트는 `auto_collect_mid_products.js`에서 제공하는 `collectMidProducts` 함수를 호출해 동작하므로 두 파일을 함께 로드해야 합니다.
+범위는 실행 전에 전역 변수 `__MID_RANGE_START__`, `__MID_RANGE_END__` 값을 설정해 지정합니다.
+
+```javascript
+// 예: 200번대 중분류만 수집하고 싶을 때
+window.__MID_RANGE_START__ = "200";
+window.__MID_RANGE_END__ = "299";
+```
