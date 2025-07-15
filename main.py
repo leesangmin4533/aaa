@@ -15,13 +15,13 @@ from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
 from utils import append_unique_lines
-from analysis import navigate_to_category_mix_ratio
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 # 자동 실행할 기본 스크립트 파일명
 DEFAULT_SCRIPT = "auto_collect_mid_products.js"
 LISTENER_SCRIPT = "data_collect_listener.js"
+NAVIGATION_SCRIPT = "navigation.js"
 
 
 def get_script_files() -> list[str]:
@@ -137,11 +137,7 @@ def main() -> None:
     except Exception as e:
         print(f"delegate popup close failed: {e}")
     # 매출분석 화면으로 이동한다
-    if not navigate_to_category_mix_ratio(driver):
-        print("navigation failed")
-        driver.quit()
-        return
-
+    run_script(driver, NAVIGATION_SCRIPT)
     if not wait_for_mix_ratio_page(driver):
         print("page load timeout")
         driver.quit()

@@ -7,6 +7,4 @@
 
 from __future__ import annotations
 
-from .navigation import navigate_to_category_mix_ratio
-
-__all__ = ["navigate_to_category_mix_ratio"]
+__all__ = []
