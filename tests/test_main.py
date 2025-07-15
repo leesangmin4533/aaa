@@ -168,6 +168,7 @@ def test_main_calls_navigation():
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
         patch.object(main, "navigate_to_category_mix_ratio", return_value=True) as nav,
+        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
         patch.object(main, "run_script"),
         patch.object(main, "wait_for_data", return_value=None),
     ):
