@@ -175,3 +175,48 @@ def test_main_calls_navigation():
         main.main()
 
     nav.assert_called_once_with(driver)
+
+
+def test_run_script_collects_data(tmp_path):
+    js_text = "collect data"
+    script = tmp_path / "collect.js"
+    script.write_text(js_text, encoding="utf-8")
+
+    expected = [
+        {
+            "midCode": "1",
+            "productCode": "2",
+            "productName": "a",
+            "sales": 3,
+            "order": 4,
+            "purchase": 5,
+            "discard": 6,
+            "stock": 7,
+        }
+    ]
+
+    driver = Mock()
+
+    def exec_script(arg):
+        if arg == js_text:
+            driver._parsed = expected
+        elif arg == "return window.__parsedData__ || null":
+            return getattr(driver, "_parsed", None)
+
+    driver.execute_script.side_effect = exec_script
+
+    out_file = tmp_path / "out.txt"
+
+    with (
+        patch.object(main, "SCRIPT_DIR", tmp_path),
+        patch.object(main.time, "sleep"),
+    ):
+        main.run_script(driver, "collect.js")
+        data = main.wait_for_data(driver, timeout=1)
+
+    assert data == expected
+
+    main.save_to_txt(data, out_file)
+
+    contents = out_file.read_text(encoding="utf-8").strip()
+    assert contents == "\t".join(str(expected[0].get(k, "")) for k in main.FIELD_ORDER)
