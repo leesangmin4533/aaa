@@ -70,7 +70,7 @@
     return true;
   }
 
-  async function autoCollectAllMidCodes() {
+  async function collectMidCodes(startCode = null, endCode = null) {
     const seenMid = new Set();
     let scrollCount = 0;
 
@@ -81,6 +81,7 @@
       for (const textEl of textCells) {
         const code = textEl.innerText?.trim();
         if (!/^\d{3}$/.test(code) || seenMid.has(code)) continue;
+        if ((startCode && code < startCode) || (endCode && code > endCode)) continue;
 
         const rowIdx = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
         const midNameEl = document.querySelector(`div[id*='gdList.body'][id*='cell_${rowIdx}_1'][id$=':text']`);
@@ -124,10 +125,12 @@
     window.__parsedData__ = midCodeDataList;
   }
 
+  window.collectMidProducts = collectMidCodes;
+
   (async () => {
     try {
       await waitForMidGrid();
-      await autoCollectAllMidCodes();
+      await collectMidCodes();
     } catch (e) {
       console.warn(e);
     }
