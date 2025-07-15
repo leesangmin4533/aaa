@@ -26,7 +26,7 @@ if navigate_to_category_mix_ratio(driver):
     console.warn('⛔ 중분류 코드 셀 찾을 수 없음:', code);
     return false;
   }
-  const clickEl = document.getElementById(cell.id.replace(':text', ''));
+  const clickEl = document.getElementById(cell.id.split(':text')[0]);
   const rect = clickEl.getBoundingClientRect();
   ['mousedown', 'mouseup', 'click'].forEach(type =>
     clickEl.dispatchEvent(new MouseEvent(type, {

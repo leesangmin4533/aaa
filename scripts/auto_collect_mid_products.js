@@ -86,7 +86,7 @@
         const midNameEl = document.querySelector(`div[id*='gdList.body'][id*='cell_${rowIdx}_1'][id$=':text']`);
         const midName = midNameEl?.innerText?.trim() || '';
 
-        const clickId = textEl.id.replace(":text", "");
+        const clickId = textEl.id.split(":text")[0];
         const clicked = await clickElementById(clickId);
         if (!clicked) {
           console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
