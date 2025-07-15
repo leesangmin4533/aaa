@@ -32,33 +32,69 @@
 
   async function collectProductDataForMid(midCode, midName) {
     const productLines = [];
-    const rowEls = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
-    const rowIndices = Array.from(new Set(rowEls.map(el => el.id.match(/cell_(\d+)_0:text/)?.[1])));
+    const seenCodes = new Set();
 
-    for (const row of rowIndices) {
-      // 상품코드 셀 클릭 후 텍스트 수집
-      const codeCellId = [...document.querySelectorAll(`div[id*='gdDetail.body'][id*='cell_${row}_0'][id$=':text']`)][0]?.id;
-      const clickId = codeCellId?.split(":text")[0];
-      if (clickId) {
-        await clickElementById(clickId);
-      } else {
-        console.warn("❌ 상품코드 셀 ID 찾을 수 없음:", row);
+    while (true) {
+      const rowEls = [
+        ...document.querySelectorAll(
+          "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
+        )
+      ];
+      let newCount = 0;
+
+      for (const el of rowEls) {
+        const code = el.innerText?.trim();
+        const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
+        if (!row || !code || seenCodes.has(code)) continue;
+
+        const clickId = el.id.split(":text")[0];
+        if (clickId) {
+          await clickElementById(clickId);
+        } else {
+          console.warn("❌ 상품코드 셀 ID 찾을 수 없음:", row);
+        }
+
+        const line = [
+          midCode,
+          midName,
+          getText(row, 0),
+          getText(row, 1),
+          getText(row, 2),
+          getText(row, 3),
+          getText(row, 4),
+          getText(row, 5),
+          getText(row, 6)
+        ].join("\t");
+
+        seenCodes.add(code);
+        productLines.push(line);
+        newCount++;
+        await delay(100);
       }
 
-      const line = [
-        midCode,
-        midName,
-        getText(row, 0),
-        getText(row, 1),
-        getText(row, 2),
-        getText(row, 3),
-        getText(row, 4),
-        getText(row, 5),
-        getText(row, 6)
-      ].join("\t");
-      productLines.push(line);
+      const scrollBtn = document.querySelector(
+        "div[id$='gdDetail.vscrollbar.incbutton:icontext']"
+      );
 
-      await delay(100);
+      if (!scrollBtn) break;
+
+      if (newCount === 0) {
+        // 스크롤 전후 변화가 없으면 종료
+        const lastCode = rowEls[rowEls.length - 1]?.innerText?.trim();
+        await clickElementById(scrollBtn.id);
+        await delay(500);
+        const afterRows = [
+          ...document.querySelectorAll(
+            "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
+          )
+        ];
+        const afterLast = afterRows[afterRows.length - 1]?.innerText?.trim();
+        if (afterLast === lastCode) break;
+        continue;
+      }
+
+      await clickElementById(scrollBtn.id);
+      await delay(500);
     }
 
     midCodeDataList.push(...productLines);
