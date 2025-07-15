@@ -139,9 +139,17 @@
         if (!/^\d{3}$/.test(code) || seenMid.has(code)) continue;
         if ((startCode && code < startCode) || (endCode && code > endCode)) continue;
 
-        const row = textEl.closest("div[id*='gdList.body'][id*='row_']");
-        const midNameEl = row?.querySelector("div[id$='_1:text']");
-        const midName = midNameEl?.innerText?.trim() || '';
+        const row = textEl.closest("div[id*='gdList.body'][id*='gridrow_']");
+
+        async function getMidName(el, attempts = 5) {
+          for (let i = 0; i < attempts; i++) {
+            const nameEl = el?.querySelector("div[id$='_1:text']");
+            const name = nameEl?.innerText?.trim();
+            if (name) return name;
+            await delay(300);
+          }
+          return '';
+        }
 
         const clickId = textEl.id.split(":text")[0];
         const clicked = await clickElementById(clickId);
@@ -149,6 +157,8 @@
           console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
           continue;
         }
+
+        const midName = await getMidName(row);
 
         seenMid.add(code);
         newMids.push(code);
