@@ -137,3 +137,114 @@ Python 코드에서 바로 활용됩니다.
 window.__MID_RANGE_START__ = "200";
 window.__MID_RANGE_END__ = "299";
 ```
+
+## JavaScript 자동 클릭 예시
+
+아래 코드는 중분류 코드와 상품코드를 순회하며 차례대로 클릭하는 간단한 스크립트입니다. 실행 후에는 수집된 결과를 `code_outputs/<YYYYMMDD>.txt` 파일에 저장하며, 같은 날짜의 파일이 이미 존재하면 덮어씁니다. 한 번의 실행 과정에서 만들어진 로그는 모두 누적하여 기록됩니다.
+
+```javascript
+(() => {
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
+  async function clickElementById(id) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    ["mousedown", "mouseup", "click"].forEach(type =>
+      el.dispatchEvent(new MouseEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: rect.left + rect.width / 2,
+        clientY: rect.top + rect.height / 2
+      }))
+    );
+    return true;
+  }
+
+  async function autoClickAllProductCodes() {
+    const seen = new Set();
+    let scrollCount = 0;
+
+    while (true) {
+      const textCells = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
+      const newCodes = [];
+
+      for (const textEl of textCells) {
+        const code = textEl.innerText?.trim();
+        if (!/^\d{13}$/.test(code)) continue;
+        if (seen.has(code)) continue;
+
+        const clickId = textEl.id.replace(":text", "");
+        const clicked = await clickElementById(clickId);
+        if (!clicked) {
+          console.warn("❌ 상품 클릭 대상 없음 → ID:", clickId);
+          continue;
+        }
+
+        seen.add(code);
+        newCodes.push(code);
+        console.log(`✅ 상품 클릭 완료: ${code}`);
+        await delay(300);
+      }
+
+      if (newCodes.length === 0) break;
+
+      const scrollBtn = document.querySelector("div[id$='gdDetail.vscrollbar.incbutton:icontext']");
+      if (!scrollBtn) break;
+
+      await clickElementById(scrollBtn.id);
+      scrollCount++;
+      console.log(`🔄 상품 스크롤 ${scrollCount}회`);
+      await delay(1000);
+    }
+
+    console.log("🎉 상품코드 클릭 완료");
+  }
+
+  async function autoClickAllMidCodesAndProducts() {
+    const seenMid = new Set();
+    let scrollCount = 0;
+
+    while (true) {
+      const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
+      const newMids = [];
+
+      for (const textEl of textCells) {
+        const code = textEl.innerText?.trim();
+        if (!/^\d{3}$/.test(code)) continue;
+        if (seenMid.has(code)) continue;
+
+        const clickId = textEl.id.replace(":text", "");
+        const clicked = await clickElementById(clickId);
+        if (!clicked) {
+          console.warn("❌ 중분류 클릭 대상 없음 → ID:", clickId);
+          continue;
+        }
+
+        seenMid.add(code);
+        newMids.push(code);
+        console.log(`✅ 중분류 클릭 완료: ${code}`);
+        await delay(500);  // 중분류 클릭 후 화면 렌더링 대기
+
+        await autoClickAllProductCodes(); // 상품코드 클릭 루프 진입
+        await delay(300); // 다음 중분류 넘어가기 전 딜레이
+      }
+
+      if (newMids.length === 0) break;
+
+      const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
+      if (!scrollBtn) break;
+
+      await clickElementById(scrollBtn.id);
+      scrollCount++;
+      console.log(`🔄 중분류 스크롤 ${scrollCount}회`);
+      await delay(1000);
+    }
+
+    console.log("🎉 전체 작업 완료: 중분류 수", seenMid.size);
+  }
+
+  autoClickAllMidCodesAndProducts(); // 🔰 Entry Point
+})();
+```
