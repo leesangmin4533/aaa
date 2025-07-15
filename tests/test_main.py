@@ -162,6 +162,7 @@ def test_save_to_txt_creates_parent_dir(tmp_path):
 
 def test_main_calls_navigation():
     driver = Mock()
+    driver.get_log = Mock(return_value=[])
 
     with (
         patch.object(main, "create_driver", return_value=driver),
@@ -175,6 +176,7 @@ def test_main_calls_navigation():
         main.main()
 
     nav.assert_called_once_with(driver)
+    driver.get_log.assert_called_once_with("browser")
 
 
 def test_run_script_collects_data(tmp_path):
@@ -224,6 +226,7 @@ def test_run_script_collects_data(tmp_path):
 
 def test_main_prints_mid_category_logs(capsys):
     driver = Mock()
+    driver.get_log = Mock(return_value=[])
 
     def exec_script(arg):
         if arg == "return window.__midCategoryLogs__ || []":
@@ -243,6 +246,7 @@ def test_main_prints_mid_category_logs(capsys):
         main.main()
 
     driver.execute_script.assert_any_call("return window.__midCategoryLogs__ || []")
+    driver.get_log.assert_called_once_with("browser")
     out = capsys.readouterr().out
     assert "중분류 클릭 로그" in out
     assert "['log1', 'log2']" in out
