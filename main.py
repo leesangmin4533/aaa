@@ -18,6 +18,11 @@ from analysis import navigate_to_category_mix_ratio
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 
+
+def get_script_files() -> list[str]:
+    """Return all JavaScript file names in the scripts directory sorted by name."""
+    return sorted(p.name for p in SCRIPT_DIR.glob("*.js"))
+
 # code_outputs/날짜.txt 필드 저장 순서를 지정한다.
 FIELD_ORDER = [
     "midCode",
@@ -131,15 +136,26 @@ def main() -> None:
 
 
 
-    # 중분류 코드 클릭과 데이터 추출을 한 번에 수행한다
-    time.sleep(0.5)
-    run_script(driver, "click_and_extract.js")
-    logs = driver.execute_script("return window.__midCategoryLogs__ || []")
-    print("중분류 클릭 로그:", logs)
+    # scripts 폴더의 모든 스크립트를 순서대로 실행하며 데이터를 누적한다
+    all_data: list[Any] = []
+    for name in get_script_files():
+        time.sleep(0.5)
+        run_script(driver, name)
+        logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+        if logs:
+            print("중분류 클릭 로그:", logs)
 
-    data = wait_for_data(driver, timeout=15)
-    if data:
-        path = save_to_txt(data)
+        data = wait_for_data(driver, timeout=15)
+        if data:
+            if isinstance(data, list):
+                all_data.extend(data)
+            else:
+                all_data.append(data)
+        else:
+            print(f"no data found after {name}")
+
+    if all_data:
+        path = save_to_txt(all_data)
         print(f"saved to {path}")
     else:
         print("no data found")

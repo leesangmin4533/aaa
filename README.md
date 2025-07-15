@@ -115,8 +115,9 @@ BGF_PASSWORD=46513
 python -m aaa  # 또는 python main.py
 ```
 
-`main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더의 JavaScript 파일을
-실행합니다. 기본 제공 스크립트는 `click_and_extract.js` 로,
+`main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더에 존재하는 모든
+JavaScript 파일을 이름순으로 실행합니다. 기본 제공 스크립트는
+`click_and_extract.js` 로,
 중분류 코드를 클릭한 뒤 상세 데이터를 추출합니다. 상품을 클릭할 때마다
 `collectVisibleProducts()` 가 호출되어 현재 선택된 중분류 코드와 그때 화면에
 표시된 상품 행을 읽어 `window.__productList` 배열에 누적합니다. 모든 작업이 끝나면
@@ -128,8 +129,8 @@ python -m aaa  # 또는 python main.py
 각 행은 중분류 코드, 상품코드, 상품명과 매출ㆍ발주ㆍ매입ㆍ폐기ㆍ현재고 값을 탭 문자(`\t`)로 구분하여 기록합니다.
 같은 날짜의 파일이 이미 존재하면 덮어쓰며, 빈 셀은 자동으로 0으로 처리됩니다.
 
-다른 동작이 필요하면 `scripts/` 폴더에 스크립트를 추가하고 `main.py` 의 스크립트
-목록에 파일 이름을 추가하세요.
+새로운 스크립트를 `scripts/` 폴더에 추가하면 별도 수정 없이 자동으로 실행 대상에
+포함됩니다.
 
 중분류 일부만 수집하려면 예시 스크립트 `mid_range_collect.js` 를 사용할 수 있습니다.
 파일 맨 아래의 `autoClickMidRange(startRow, endRow)` 호출 구간을 원하는 범위로
