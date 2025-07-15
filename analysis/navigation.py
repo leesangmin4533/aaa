@@ -10,9 +10,9 @@ MAIN_MENU_ID = (
     "mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.form.btn_saleAnalysis"
 )
 
-# '중분류별 매출 구성비' 버튼 ID
+# '중분류별 매출 구성비' 메뉴의 텍스트 ID (2025-07 기준 화면)
 MIDDLE_MENU_ID = (
-    "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB010_M0.form.div_workForm.form.div2.form.div_search.form.btnMiddle"
+    "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text"
 )
 
 
