@@ -130,3 +130,7 @@ python -m aaa  # 또는 python main.py
 
 다른 동작이 필요하면 `scripts/` 폴더에 스크립트를 추가하고 `main.py` 의 스크립트
 목록에 파일 이름을 추가하세요.
+
+중분류 일부만 수집하려면 예시 스크립트 `mid_range_collect.js` 를 사용할 수 있습니다.
+파일 맨 아래의 `autoClickMidRange(startRow, endRow)` 호출 구간을 원하는 범위로
+수정한 뒤 `main.py` 에서 해당 파일명을 지정해 실행하면 됩니다.
