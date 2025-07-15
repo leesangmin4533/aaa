@@ -13,6 +13,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
+from utils.log_parser import extract_tab_lines
 from analysis import navigate_to_category_mix_ratio
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
@@ -162,9 +163,15 @@ def main() -> None:
             print(f"get_log failed: {e}")
             logs = None
         if logs:
-            print("브라우저 콘솔 로그:")
-            for entry in logs:
-                print(entry)
+            lines = extract_tab_lines(logs)
+            if lines:
+                print("추출된 로그 데이터:")
+                for line in lines:
+                    print(line)
+            else:
+                print("브라우저 콘솔 로그:")
+                for entry in logs:
+                    print(entry)
 
 
 if __name__ == "__main__":
