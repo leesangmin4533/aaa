@@ -17,6 +17,8 @@ from analysis import navigate_to_category_mix_ratio
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
+# 자동 실행할 기본 스크립트 파일명
+DEFAULT_SCRIPT = "auto_collect_mid_products.js"
 
 
 def get_script_files() -> list[str]:
@@ -136,26 +138,15 @@ def main() -> None:
 
 
 
-    # scripts 폴더의 모든 스크립트를 순서대로 실행하며 데이터를 누적한다
-    all_data: list[Any] = []
-    for name in get_script_files():
-        time.sleep(0.5)
-        run_script(driver, name)
-        logs = driver.execute_script("return window.__midCategoryLogs__ || []")
-        if logs:
-            print("중분류 클릭 로그:", logs)
+    # 중분류 매출 구성비 화면 진입 후 자동 수집 스크립트를 실행한다
+    run_script(driver, DEFAULT_SCRIPT)
+    logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+    if logs:
+        print("중분류 클릭 로그:", logs)
 
-        data = wait_for_data(driver, timeout=15)
-        if data:
-            if isinstance(data, list):
-                all_data.extend(data)
-            else:
-                all_data.append(data)
-        else:
-            print(f"no data found after {name}")
-
-    if all_data:
-        path = save_to_txt(all_data)
+    data = wait_for_data(driver, timeout=15)
+    if data:
+        path = save_to_txt(data)
         print(f"saved to {path}")
     else:
         print("no data found")

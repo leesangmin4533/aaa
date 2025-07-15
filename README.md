@@ -115,20 +115,15 @@ BGF_PASSWORD=46513
 python -m aaa  # 또는 python main.py
 ```
 
-`main.py` 는 Chrome 드라이버를 생성하고 `scripts/` 폴더에 존재하는 모든
-JavaScript 파일을 이름순으로 실행합니다. 기본 제공 스크립트는
-`auto_collect_mid_products.js` 로,
-중분류를 차례로 클릭해 상품 목록을 읽고 텍스트 형태로 저장합니다.
-`collectAllProducts()` 함수에서 이미 수집한 상품코드는 `Set` 으로 중복을 방지합니다.
-모든 작업이 끝나면 스크립트에서 `window.__parsedData__` 배열을 만들어
-Python 코드가 값을 바로 읽을 수 있습니다.
+`main.py` 는 Chrome 드라이버로 로그인한 뒤
+"중분류별 매출 구성비" 화면에 진입하면 `scripts/auto_collect_mid_products.js`
+파일을 실행해 모든 중분류의 상품 정보를 읽어 들입니다.
+스크립트 실행 결과는 `window.__parsedData__` 배열에 저장되어
+Python 코드에서 바로 활용됩니다.
 
 실행이 끝나면 수집된 데이터가 `code_outputs/<YYYYMMDD>.txt` 파일로 저장됩니다.
 각 행은 중분류 코드, 상품코드, 상품명과 매출ㆍ발주ㆍ매입ㆍ폐기ㆍ현재고 값을 탭 문자(`\t`)로 구분하여 기록합니다.
 같은 날짜의 파일이 이미 존재하면 덮어쓰며, 빈 셀은 자동으로 0으로 처리됩니다.
-
-새로운 스크립트를 `scripts/` 폴더에 추가하면 별도 수정 없이 자동으로 실행 대상에
-포함됩니다.
 
 웹 브라우저에서 바로 파일을 받고 싶다면 기존 `download_with_blob.js` 를 사용할 수 있으나,
 통합 스크립트만으로도 데이터를 얻을 수 있으므로 선택 사항입니다.
