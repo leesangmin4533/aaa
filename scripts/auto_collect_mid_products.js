@@ -1,4 +1,10 @@
 (() => {
+  window.__midCategoryLogs__ = [];
+  const origConsoleLog = console.log;
+  console.log = function (...args) {
+    window.__midCategoryLogs__.push(args.join(" "));
+    return origConsoleLog.apply(console, args);
+  };
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const midCodeDataList = [];
 
