@@ -1,0 +1,105 @@
+(() => {
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+  const midCodeDataList = [];
+
+  function getText(row, col) {
+    const el = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${row}_${col}'][id$=':text']`);
+    return el?.innerText?.trim() || '';
+  }
+
+  async function collectProductDataForMid(midCode, midName) {
+    const productLines = [];
+    const rowEls = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
+    const rowIndices = Array.from(new Set(rowEls.map(el => el.id.match(/cell_(\d+)_0:text/)?.[1])));
+
+    for (const row of rowIndices) {
+      const line = [
+        midCode,
+        midName,
+        getText(row, 0),
+        getText(row, 1),
+        getText(row, 2),
+        getText(row, 3),
+        getText(row, 4),
+        getText(row, 5),
+        getText(row, 6)
+      ].join("\t");
+      productLines.push(line);
+    }
+
+    midCodeDataList.push(...productLines);
+    console.log(productLines.join("\n"));
+  }
+
+  async function clickElementById(id) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    ["mousedown", "mouseup", "click"].forEach(type =>
+      el.dispatchEvent(new MouseEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: rect.left + rect.width / 2,
+        clientY: rect.top + rect.height / 2
+      }))
+    );
+    return true;
+  }
+
+  async function autoCollectAllMidCodes() {
+    const seenMid = new Set();
+    let scrollCount = 0;
+
+    while (true) {
+      const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
+      const newMids = [];
+
+      for (const textEl of textCells) {
+        const code = textEl.innerText?.trim();
+        if (!/^\d{3}$/.test(code) || seenMid.has(code)) continue;
+
+        const rowIdx = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
+        const midNameEl = document.querySelector(`div[id*='gdList.body'][id*='cell_${rowIdx}_1'][id$=':text']`);
+        const midName = midNameEl?.innerText?.trim() || '';
+
+        const clickId = textEl.id.replace(":text", "");
+        const clicked = await clickElementById(clickId);
+        if (!clicked) {
+          console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
+          continue;
+        }
+
+        seenMid.add(code);
+        newMids.push(code);
+        console.log(`✅ 중분류 클릭: ${code} (${midName})`);
+        await delay(500);
+
+        await collectProductDataForMid(code, midName);
+        await delay(300);
+      }
+
+      if (newMids.length === 0) {
+        console.warn("📌 더 이상 새로운 중분류 없음 → 종료");
+        break;
+      }
+
+      const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
+      if (!scrollBtn) {
+        console.warn("❌ 중분류 스크롤 버튼 없음 → 종료");
+        break;
+      }
+
+      await clickElementById(scrollBtn.id);
+      scrollCount++;
+      console.log(`🔄 중분류 스크롤 ${scrollCount}회`);
+      await delay(1000);
+    }
+
+    console.log("🎉 전체 수집 완료 → 총 중분류 수:", seenMid.size);
+    console.log("📄 전체 데이터 누적:", midCodeDataList.length, "줄");
+    window.__parsedData__ = midCodeDataList;
+  }
+
+  autoCollectAllMidCodes();
+})();
