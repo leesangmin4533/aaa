@@ -138,6 +138,13 @@ window.__MID_RANGE_START__ = "200";
 window.__MID_RANGE_END__ = "299";
 ```
 
+## 데이터가 수집되지 않을 때
+
+수집 스크립트 실행 후 `window.__parsedData__` 값이 비어 있다면
+브라우저 콘솔 로그를 확인해 보세요. `main.py`는 데이터가 없을 경우
+`driver.get_log("browser")` 결과와 `window.__parsedDataError__` 값을 출력하므로
+오류 메시지를 통해 문제 원인을 파악할 수 있습니다.
+
 ## JavaScript 자동 클릭 예시
 
 아래 코드는 중분류 코드와 상품코드를 순회하며 차례대로 클릭하는 간단한 스크립트입니다. 실행 후에는 수집된 결과를 `code_outputs/<YYYYMMDD>.txt` 파일에 저장하며, 같은 날짜의 파일이 이미 존재하면 덮어씁니다. 한 번의 실행 과정에서 만들어진 로그는 모두 누적하여 기록됩니다.

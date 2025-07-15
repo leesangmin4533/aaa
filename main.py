@@ -150,6 +150,21 @@ def main() -> None:
         print(f"saved to {path}")
     else:
         print("no data found")
+        try:
+            error = driver.execute_script("return window.__parsedDataError__ || null")
+        except Exception:
+            error = None
+        if error:
+            print("스크립트 오류:", error)
+        try:
+            logs = driver.get_log("browser")
+        except Exception as e:
+            print(f"get_log failed: {e}")
+            logs = None
+        if logs:
+            print("브라우저 콘솔 로그:")
+            for entry in logs:
+                print(entry)
 
 
 if __name__ == "__main__":

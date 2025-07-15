@@ -180,6 +180,7 @@
       await collectMidCodes();
     } catch (e) {
       console.warn(e);
+      window.__parsedDataError__ = e && e.message ? e.message : String(e);
     }
   })();
 })();
