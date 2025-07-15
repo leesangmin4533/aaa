@@ -20,13 +20,13 @@
       const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
       if (!row) continue;
       const line = [
-        getText(row, 0),
-        getText(row, 1),
-        getText(row, 2),
-        getText(row, 3),
-        getText(row, 4),
-        getText(row, 5),
-        getText(row, 6)
+        getText(row, 0) || '0',
+        getText(row, 1) || '0',
+        getText(row, 2) || '0',
+        getText(row, 3) || '0',
+        getText(row, 4) || '0',
+        getText(row, 5) || '0',
+        getText(row, 6) || '0'
       ].join('\t');
       if (!seen.has(line)) {
         seen.add(line);

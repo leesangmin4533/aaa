@@ -60,13 +60,13 @@
         const line = [
           midCode,
           midName,
-          getText(row, 0),
-          getText(row, 1),
-          getText(row, 2),
-          getText(row, 3),
-          getText(row, 4),
-          getText(row, 5),
-          getText(row, 6)
+          getText(row, 0) || '0',
+          getText(row, 1) || '0',
+          getText(row, 2) || '0',
+          getText(row, 3) || '0',
+          getText(row, 4) || '0',
+          getText(row, 5) || '0',
+          getText(row, 6) || '0'
         ].join("\t");
 
         seenCodes.add(code);
