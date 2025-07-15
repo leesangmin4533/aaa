@@ -31,6 +31,9 @@
   }
 
   async function collectProductDataForMid(midCode, midName) {
+    document.dispatchEvent(
+      new CustomEvent('mid-clicked', { detail: { code: midCode, midName } })
+    );
     const productLines = [];
     const seenCodes = new Set();
 
@@ -83,6 +86,9 @@
         const lastCode = rowEls[rowEls.length - 1]?.innerText?.trim();
         await clickElementById(scrollBtn.id);
         await delay(500);
+        document.dispatchEvent(
+          new CustomEvent('product-scroll', { detail: { midCode } })
+        );
         const afterRows = [
           ...document.querySelectorAll(
             "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
@@ -95,6 +101,9 @@
 
       await clickElementById(scrollBtn.id);
       await delay(500);
+      document.dispatchEvent(
+        new CustomEvent('product-scroll', { detail: { midCode } })
+      );
     }
 
     midCodeDataList.push(...productLines);
