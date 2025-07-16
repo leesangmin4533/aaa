@@ -254,3 +254,30 @@ def test_main_prints_mid_category_logs(capsys):
     out = capsys.readouterr().out
     assert "중분류 클릭 로그" in out
     assert "['log1', 'log2']" in out
+
+
+def test_main_converts_txt_to_excel(tmp_path):
+    driver = Mock()
+    driver.get_log = Mock(return_value=[])
+
+    date_str = datetime.now().strftime("%y%m%d")
+    out_dir = tmp_path / "code_outputs"
+
+    with (
+        patch.object(main, "CODE_OUTPUT_DIR", out_dir),
+        patch.object(main, "create_driver", return_value=driver),
+        patch.object(main, "login_bgf", return_value=True),
+        patch.object(main, "close_popups_after_delegate"),
+        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
+        patch.object(main, "run_script"),
+        patch.object(main, "wait_for_data", return_value=None),
+        patch.object(main, "append_unique_lines", return_value=0),
+        patch.object(main, "convert_txt_to_excel") as convert_mock,
+        patch.object(main.time, "sleep"),
+    ):
+        driver.execute_script.side_effect = [[], [], {}, None]
+        main.main()
+
+    expected_txt = out_dir / f"{date_str}.txt"
+    expected_excel = out_dir / "mid_excel" / f"{date_str}.xlsx"
+    convert_mock.assert_called_once_with(str(expected_txt), str(expected_excel))
