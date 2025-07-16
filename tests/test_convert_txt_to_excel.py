@@ -12,7 +12,7 @@ _spec.loader.exec_module(convert_module)
 
 def test_convert_txt_to_excel(tmp_path):
     txt = tmp_path / "sample.txt"
-    txt.write_text("001|mid|111|prod|1|2|3|4|5\n", encoding="utf-8")
+    txt.write_text("001\tmid\t111\tprod\t1\t2\t3\t4\t5\n", encoding="utf-8")
 
     out_file = tmp_path / "out.xlsx"
     out_path = convert_module.convert_txt_to_excel(str(txt), str(out_file))

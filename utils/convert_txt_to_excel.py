@@ -26,7 +26,7 @@ def convert_txt_to_excel(
         Path to the generated Excel file.
     """
     txt_path = Path(txt_path)
-    df = pd.read_csv(txt_path, sep="|", header=None, encoding=encoding)
+    df = pd.read_csv(txt_path, sep="\t", header=None, encoding=encoding)
     df.columns = [
         "중분류코드",
         "중분류명",
