@@ -204,3 +204,38 @@ Stacktrace:
 
 [popup_util][close][INFO] 팝업 처리 결과: not found
 [login_bgf][login][INFO] 팝업 모듈 종료: 다음 단계 진입
+[login_bgf][login][INFO] Login script executed
+[login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login_bgf][login][INFO] Login succeeded
+[popup_util][focus_popup][DEBUG] 팝업 탐색 오류 또는 미표시: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//div[contains(text(), '재택 유선권장 안내')]"}
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6397ce925+77845]
+	GetHandleVerifier [0x0x7ff6397ce980+77936]
+	(No symbol) [0x0x7ff639589cda]
+	(No symbol) [0x0x7ff6395e06aa]
+	(No symbol) [0x0x7ff6395e095c]
+	(No symbol) [0x0x7ff639633d07]
+	(No symbol) [0x0x7ff63960890f]
+	(No symbol) [0x0x7ff639630b07]
+	(No symbol) [0x0x7ff6396086a3]
+	(No symbol) [0x0x7ff6395d1791]
+	(No symbol) [0x0x7ff6395d2523]
+	GetHandleVerifier [0x0x7ff639aa683d+3059501]
+	GetHandleVerifier [0x0x7ff639aa0bfd+3035885]
+	GetHandleVerifier [0x0x7ff639ac03f0+3164896]
+	GetHandleVerifier [0x0x7ff6397e8c2e+185118]
+	GetHandleVerifier [0x0x7ff6397f053f+216111]
+	GetHandleVerifier [0x0x7ff6397d72d4+113092]
+	GetHandleVerifier [0x0x7ff6397d7489+113529]
+	GetHandleVerifier [0x0x7ff6397be288+10616]
+	BaseThreadInitThunk [0x0x7fff5f7ce8d7+23]
+	RtlUserThreadStart [0x0x7fff60dbc34c+44]
+
+[popup_util][focus_popup][INFO] 팝업 감지됨: 엔터로 종료 시도
+[popup_util][focus_popup][INFO] 엔터 키 전송 완료
+[popup_util][focus_popup][DEBUG] 팝업이 더 이상 나타나지 않음
+[popup_util][close][WARNING] '닫기' 요소 대기 실패: Message: 
+
+[popup_util][close][INFO] 팝업 처리 결과: not found
+[login_bgf][login][INFO] 팝업 모듈 종료: 다음 단계 진입
