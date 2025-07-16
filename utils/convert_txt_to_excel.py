@@ -37,7 +37,13 @@ def convert_txt_to_excel(
     txt_path = Path(txt_path)
     log("convert", "INFO", f"텍스트 파일 읽기 시도: {txt_path}")
     try:
-        df = pd.read_csv(txt_path, sep="\t", header=None, encoding=encoding)
+        df = pd.read_csv(
+            txt_path,
+            sep="\t",
+            header=None,
+            dtype=str,
+            encoding=encoding,
+        )
     except Exception as e:
         log("convert", "ERROR", f"텍스트 파일 읽기 실패: {e}")
         raise
@@ -54,6 +60,9 @@ def convert_txt_to_excel(
         "폐기",
         "현재고",
     ]
+
+    for col in ["매출", "발주", "매입", "폐기", "현재고"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
     if output_path is None:
         out_name = datetime.now().strftime("매출분석_%Y%m%d.xlsx")
         output_path = txt_path.with_name(out_name)
@@ -63,7 +72,12 @@ def convert_txt_to_excel(
 
     log("convert", "INFO", f"엑셀 파일 저장 위치: {output_path}")
     try:
-        df.to_excel(output_path, index=False)
+        with pd.ExcelWriter(
+            output_path,
+            engine="xlsxwriter",
+            engine_kwargs={"options": {"strings_to_numbers": False}},
+        ) as writer:
+            df.to_excel(writer, index=False)
     except Exception as e:
         log("convert", "ERROR", f"엑셀 저장 실패: {e}")
         raise
