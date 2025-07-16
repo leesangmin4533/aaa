@@ -2,7 +2,16 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
+import sys
 import pandas as pd
+
+if __package__:
+    from .log_util import create_logger
+else:  # pragma: no cover - fallback when executed directly
+    sys.path.append(str(Path(__file__).resolve().parent))
+    from log_util import create_logger
+
+log = create_logger("convert_txt_to_excel")
 
 
 def convert_txt_to_excel(
@@ -26,7 +35,14 @@ def convert_txt_to_excel(
         Path to the generated Excel file.
     """
     txt_path = Path(txt_path)
-    df = pd.read_csv(txt_path, sep="\t", header=None, encoding=encoding)
+    log("convert", "INFO", f"텍스트 파일 읽기 시도: {txt_path}")
+    try:
+        df = pd.read_csv(txt_path, sep="\t", header=None, encoding=encoding)
+    except Exception as e:
+        log("convert", "ERROR", f"텍스트 파일 읽기 실패: {e}")
+        raise
+
+    log("convert", "INFO", f"{len(df)}개 행 로드 완료")
     df.columns = [
         "중분류코드",
         "중분류명",
@@ -45,5 +61,11 @@ def convert_txt_to_excel(
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    df.to_excel(output_path, index=False)
+    log("convert", "INFO", f"엑셀 파일 저장 위치: {output_path}")
+    try:
+        df.to_excel(output_path, index=False)
+    except Exception as e:
+        log("convert", "ERROR", f"엑셀 저장 실패: {e}")
+        raise
+    log("convert", "INFO", "엑셀 파일 저장 완료")
     return Path(output_path)
