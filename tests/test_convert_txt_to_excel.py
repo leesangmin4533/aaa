@@ -18,7 +18,7 @@ def test_convert_txt_to_excel(tmp_path):
     out_path = convert_module.convert_txt_to_excel(str(txt), str(out_file))
     assert out_path.exists()
 
-    df = pd.read_excel(out_path)
+    df = pd.read_excel(out_path, dtype=str)
     assert list(df.columns) == [
         "중분류코드",
         "중분류명",
@@ -30,5 +30,15 @@ def test_convert_txt_to_excel(tmp_path):
         "폐기",
         "현재고",
     ]
-    assert df.iloc[0].tolist() == [1, "mid", 111, "prod", 1, 2, 3, 4, 5]
+    assert df.iloc[0].tolist() == [
+        "001",
+        "mid",
+        "111",
+        "prod",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+    ]
 
