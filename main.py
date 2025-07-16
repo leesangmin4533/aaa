@@ -14,7 +14,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
-from utils import append_unique_lines
+from utils import append_unique_lines, convert_txt_to_excel
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
@@ -146,7 +146,8 @@ def main() -> None:
 
 
     # 중분류 매출 구성비 화면 진입 후 자동 수집 스크립트를 실행한다
-    output_path = CODE_OUTPUT_DIR / (datetime.now().strftime("%Y%m%d") + ".txt")
+    date_str = datetime.now().strftime("%y%m%d")
+    output_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
     if output_path.exists():
         output_path.unlink()
 
@@ -171,6 +172,16 @@ def main() -> None:
         time.sleep(0.5)
 
     print(f"saved to {output_path}")
+    time.sleep(3)
+    excel_dir = CODE_OUTPUT_DIR / "mid_excel"
+    excel_dir.mkdir(parents=True, exist_ok=True)
+    excel_path = excel_dir / f"{date_str}.xlsx"
+
+    try:
+        convert_txt_to_excel(str(output_path), str(excel_path))
+        print(f"converted to {excel_path}")
+    except Exception as e:
+        print(f"excel conversion failed: {e}")
 
     error = None
     try:
