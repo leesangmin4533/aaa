@@ -142,6 +142,40 @@ midCode    midName    productCode    productName    sales    order    purchase  
 `driver.get_log("browser")` 결과와 `window.__parsedDataError__` 값을 출력하므로
 오류 메시지를 통해 문제 원인을 파악할 수 있습니다.
 
+## SQLite 기반 자동 저장
+
+`main.py`를 실행하면 현재 날짜를 기준으로 `code_outputs/`\`YYYYMMDD.db\` 파일이
+자동 생성됩니다. 하루 동안 해당 파일을 계속 사용하며, 각 행의 `collected_at` 필드는
+"YYYY-MM-DD HH:00" 형식으로 기록됩니다.
+
+DB에는 `mid_sales` 테이블이 존재하며 대략 다음과 같이 구성됩니다.
+
+```
+id INTEGER PRIMARY KEY AUTOINCREMENT
+collected_at TEXT
+mid_code TEXT
+mid_name TEXT
+product_code TEXT
+product_name TEXT
+sales INTEGER
+order_cnt INTEGER
+purchase INTEGER
+disposal INTEGER
+stock INTEGER
+```
+
+### 1시간 단위 실행 예시
+
+- **Windows 작업 스케줄러**
+  1. 새 작업을 만들고 트리거를 "매 1시간"으로 지정합니다.
+  2. 동작에 파이썬 실행 파일과 `main.py` 경로를 입력하면 됩니다.
+- **서버(cron)**
+  `crontab -e`로 편집하여 다음 줄을 추가하면 정각마다 실행됩니다.
+
+  ```cron
+  0 * * * * /usr/bin/python /경로/main.py
+  ```
+
 ## JavaScript 자동 클릭 예시
 
 아래 코드는 중분류 코드와 상품코드를 순회하며 차례대로 클릭하는 간단한 스크립트입니다. 실행 후에는 수집된 결과를 `code_outputs/<YYYYMMDD>.txt` 파일에 저장하며, 같은 날짜의 파일이 이미 존재하면 덮어씁니다. 한 번의 실행 과정에서 만들어진 로그는 모두 누적하여 기록됩니다.
