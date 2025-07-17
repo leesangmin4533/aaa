@@ -16,6 +16,7 @@ from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
 from utils import append_unique_lines, convert_txt_to_excel
 from utils.db_util import write_sales_data
+from utils.log_util import create_logger
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
@@ -23,6 +24,9 @@ CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 DEFAULT_SCRIPT = "auto_collect_mid_products.js"
 LISTENER_SCRIPT = "data_collect_listener.js"
 NAVIGATION_SCRIPT = "navigation.js"
+
+# Logger used for both console and file output
+log = create_logger("main")
 
 
 def get_script_files() -> list[str]:
@@ -58,6 +62,7 @@ def run_script(driver: webdriver.Chrome, name: str) -> Any:
     if not path.exists():
         msg = f"script file not found: {path}"
         print(msg)
+        log("run_script", "ERROR", msg)
         raise FileNotFoundError(msg)
     with open(path, "r", encoding="utf-8") as f:
         js = f.read()
@@ -129,6 +134,7 @@ def main() -> None:
     cred_path = os.environ.get("CREDENTIAL_FILE")
     if not login_bgf(driver, credential_path=cred_path):
         print("login failed")
+        log("login", "ERROR", "login failed")
         driver.quit()
         return
 
@@ -137,10 +143,12 @@ def main() -> None:
         close_popups_after_delegate(driver)
     except Exception as e:
         print(f"delegate popup close failed: {e}")
+        log("popup", "WARNING", f"delegate popup close failed: {e}")
     # 매출분석 화면으로 이동한다
     run_script(driver, NAVIGATION_SCRIPT)
     if not wait_for_mix_ratio_page(driver):
         print("page load timeout")
+        log("navigation", "ERROR", "page load timeout")
         driver.quit()
         return
 
@@ -158,6 +166,7 @@ def main() -> None:
     logs = driver.execute_script("return window.__midCategoryLogs__ || []")
     if logs:
         print("중분류 클릭 로그:", logs)
+        log("mid_category", "INFO", f"logs: {logs}")
 
     while True:
         lines = driver.execute_script(
@@ -166,6 +175,7 @@ def main() -> None:
         if lines:
             added = append_unique_lines(output_path, lines)
             print(f"appended {added} lines")
+            log("collect", "INFO", f"appended {added} lines")
 
         parsed = driver.execute_script("return window.__parsedData__ || null")
         if parsed is not None:
@@ -176,10 +186,13 @@ def main() -> None:
     try:
         inserted = write_sales_data(parsed, db_path)
         print(f"db saved to {db_path}, inserted {inserted} rows")
+        log("db", "INFO", f"db saved to {db_path}, inserted {inserted} rows")
     except Exception as e:
         print(f"db write failed: {e}")
+        log("db", "ERROR", f"db write failed: {e}")
 
     print(f"saved to {output_path}")
+    log("output", "INFO", f"saved to {output_path}")
     time.sleep(3)
     excel_dir = CODE_OUTPUT_DIR / "mid_excel"
     excel_dir.mkdir(parents=True, exist_ok=True)
@@ -188,8 +201,10 @@ def main() -> None:
     try:
         convert_txt_to_excel(str(output_path), str(excel_path))
         print(f"converted to {excel_path}")
+        log("excel", "INFO", f"converted to {excel_path}")
     except Exception as e:
         print(f"excel conversion failed: {e}")
+        log("excel", "ERROR", f"excel conversion failed: {e}")
 
     error = None
     try:
@@ -198,22 +213,28 @@ def main() -> None:
         pass
     if error:
         print("스크립트 오류:", error)
+        log("script", "ERROR", f"스크립트 오류: {error}")
 
     try:
         logs = driver.get_log("browser")
     except Exception as e:
         print(f"get_log failed: {e}")
+        log("browser_log", "ERROR", f"get_log failed: {e}")
         logs = None
     if logs:
         lines = extract_tab_lines(logs)
         if lines:
             print("추출된 로그 데이터:")
+            log("browser_log", "INFO", "추출된 로그 데이터:")
             for line in lines:
                 print(line)
+                log("browser_log", "INFO", line)
         else:
             print("브라우저 콘솔 로그:")
+            log("browser_log", "INFO", "브라우저 콘솔 로그:")
             for entry in logs:
                 print(entry)
+                log("browser_log", "INFO", str(entry))
 
 
 if __name__ == "__main__":
