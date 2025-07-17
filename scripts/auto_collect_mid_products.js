@@ -30,65 +30,6 @@
     return el?.innerText?.trim() || '';
   }
 
-  async function setPrevDateAndSearch() {
-    const now = new Date();
-    now.setDate(now.getDate() - 1); // 전날
-    const yyyy = now.getFullYear();
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
-    const dd = String(now.getDate()).padStart(2, '0');
-    const prevDateStr = `${yyyy}-${mm}-${dd}`;
-
-    const dateInput = document.getElementById(
-      "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.calFromDay.calendaredit:input"
-    );
-    if (!dateInput) {
-      console.warn("⛔ 날짜 입력 필드 없음");
-      return;
-    }
-
-    // 날짜 입력 및 onchanged 유발을 위해 엔터 키 입력까지 수행
-    dateInput.focus();
-    dateInput.value = prevDateStr;
-    dateInput.dispatchEvent(new Event("input", { bubbles: true }));
-    dateInput.dispatchEvent(new Event("change", { bubbles: true }));
-    ["keydown", "keypress", "keyup"].forEach(evt =>
-      dateInput.dispatchEvent(
-        new KeyboardEvent(evt, {
-          bubbles: true,
-          cancelable: true,
-          key: "Enter",
-          code: "Enter",
-          keyCode: 13,
-          which: 13
-        })
-      )
-    );
-    console.log("📅 전날 날짜 설정 및 엔터 입력 완료:", prevDateStr);
-
-    await delay(300);
-
-    const btn = document.getElementById(
-      "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_cmmbtn.form.F_10:icontext"
-    );
-    if (!btn) {
-      console.warn("⛔ 조회 버튼 없음");
-      return;
-    }
-
-    const rect = btn.getBoundingClientRect();
-    ["mousedown", "mouseup", "click"].forEach(type =>
-      btn.dispatchEvent(
-        new MouseEvent(type, {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-          clientX: rect.left + rect.width / 2,
-          clientY: rect.top + rect.height / 2
-        })
-      )
-    );
-    console.log("🔍 조회 버튼 클릭 완료");
-  }
 
   async function collectProductDataForMid(midCode, midName) {
     document.dispatchEvent(
@@ -258,8 +199,6 @@
   (async () => {
     try {
       await waitForMidGrid();
-      await setPrevDateAndSearch();
-      await delay(1500);
       await collectMidCodes();
     } catch (e) {
       console.warn(e);
