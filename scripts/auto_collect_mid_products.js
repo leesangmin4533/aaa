@@ -30,6 +30,52 @@
     return el?.innerText?.trim() || '';
   }
 
+  async function setPrevDateAndSearch() {
+    const now = new Date();
+    now.setDate(now.getDate() - 1);
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const prevDateStr = `${yyyy}-${mm}-${dd}`;
+
+    const dateInput = document.getElementById(
+      "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.div_search.form.calFromDay.calendaredit:input"
+    );
+    if (!dateInput) {
+      console.warn("⛔ 날짜 입력 필드 없음");
+      return;
+    }
+
+    dateInput.value = prevDateStr;
+    dateInput.dispatchEvent(new Event("input", { bubbles: true }));
+    dateInput.dispatchEvent(new Event("change", { bubbles: true }));
+    console.log("📅 전날 날짜 설정:", prevDateStr);
+
+    await delay(300);
+
+    const btn = document.getElementById(
+      "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_cmmbtn.form.F_10:icontext"
+    );
+    if (!btn) {
+      console.warn("⛔ 조회 버튼 없음");
+      return;
+    }
+
+    const rect = btn.getBoundingClientRect();
+    ["mousedown", "mouseup", "click"].forEach(type =>
+      btn.dispatchEvent(
+        new MouseEvent(type, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          clientX: rect.left + rect.width / 2,
+          clientY: rect.top + rect.height / 2
+        })
+      )
+    );
+    console.log("🔍 조회 버튼 클릭 완료");
+  }
+
   async function collectProductDataForMid(midCode, midName) {
     document.dispatchEvent(
       new CustomEvent('mid-clicked', { detail: { code: midCode, midName } })
@@ -198,6 +244,8 @@
   (async () => {
     try {
       await waitForMidGrid();
+      await setPrevDateAndSearch();
+      await delay(1500);
       await collectMidCodes();
     } catch (e) {
       console.warn(e);
