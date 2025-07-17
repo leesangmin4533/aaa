@@ -15,6 +15,7 @@ from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
 from utils import append_unique_lines, convert_txt_to_excel
+from utils.db_util import write_sales_data
 
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
@@ -170,6 +171,13 @@ def main() -> None:
         if parsed is not None:
             break
         time.sleep(0.5)
+
+    db_path = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
+    try:
+        inserted = write_sales_data(parsed, db_path)
+        print(f"db saved to {db_path}, inserted {inserted} rows")
+    except Exception as e:
+        print(f"db write failed: {e}")
 
     print(f"saved to {output_path}")
     time.sleep(3)
