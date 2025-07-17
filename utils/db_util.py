@@ -5,6 +5,16 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import sys
+
+if __package__:
+    from .log_util import create_logger
+else:  # pragma: no cover - fallback when executed directly
+    sys.path.append(str(Path(__file__).resolve().parent))
+    from log_util import create_logger
+
+log = create_logger("db_util")
+
 
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS mid_sales (
@@ -71,7 +81,10 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
         row = cur.fetchone()
         last_sales = row[0] if row else None
         if last_sales is not None and isinstance(sales, (int, float)) and sales <= last_sales:
+            log("write", "DEBUG", f"{product_code}: prev={last_sales}, new={sales} -> skipped")
             continue
+        if last_sales is not None:
+            log("write", "INFO", f"{product_code}: prev={last_sales}, new={sales}")
         cur.execute(
             """
             INSERT INTO mid_sales (
@@ -95,4 +108,5 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
         inserted += 1
     conn.commit()
     conn.close()
+    log("write", "INFO", f"inserted {inserted} rows")
     return inserted
