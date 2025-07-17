@@ -66,7 +66,7 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
         Number of rows inserted.
     """
     conn = init_db(db_path)
-    now = datetime.now().strftime("%Y-%m-%d %H:00")
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
     cur = conn.cursor()
     inserted = 0
     for rec in records:
