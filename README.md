@@ -12,6 +12,8 @@ import time
 
 log = create_logger("example")
 
+# 로그 파일은 매 실행 시 덮어쓰며 logs/\<YYYYMMDD\>.log 형태로 저장됩니다.
+
 # driver는 로그인 이후의 WebDriver 인스턴스라고 가정합니다.
 run_script(driver, NAVIGATION_SCRIPT)
 if wait_for_mix_ratio_page(driver):
