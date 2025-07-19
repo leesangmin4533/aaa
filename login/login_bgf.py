@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import time
+from dotenv import load_dotenv
 
 # ``login_bgf.py`` 파일을 스크립트로 실행할 때도 상위 디렉터리의 모듈을
 # 찾을 수 있도록 ``sys.path`` 에 프로젝트 루트 경로를 추가한다.
@@ -12,64 +13,36 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from utils.log_util import create_logger
-from utils.popup_util import (
-    close_nexacro_popups,
-    close_focus_popup,
-    ensure_focus_popup_closed,
-)
+from utils.popup_util import close_all_modals
 
 log = create_logger("login_bgf")
 
 
-def _read_env_file(env_path: Path) -> dict:
-    env: dict[str, str] = {}
-    try:
-        with env_path.open("r", encoding="utf-8") as f:
-            for line in f:
-                if not line.strip() or line.strip().startswith("#"):
-                    continue
-                if "=" not in line:
-                    continue
-                key, value = line.strip().split("=", 1)
-                env[key] = value
-    except Exception:
-        pass
-    return env
-
-
 def load_credentials(path: str | None = None) -> dict:
-    """Load login credentials from environment, ``.env`` file, or a JSON file.
+    """Load login credentials from a JSON file or environment variables.
 
-    환경 변수 ``BGF_USER_ID`` 와 ``BGF_PASSWORD`` 가 존재하면 이를 우선 사용한다.
-    다음으로 현재 디렉터리의 ``.env`` 파일을 찾아 값을 읽는다. ``path`` 인자가
-    주어지면 해당 JSON 파일을 읽어 로그인 정보를 반환한다. 세 방법 모두 실패하면
-    :class:`RuntimeError` 를 발생시킨다.
+    If a path to a JSON file is provided, it loads credentials from that file.
+    Otherwise, it loads credentials from environment variables, which can be
+    populated from a .env file.
     """
+    load_dotenv()  # .env 파일에서 환경 변수 로드
 
-    env_id = os.environ.get("BGF_USER_ID")
-    env_pw = os.environ.get("BGF_PASSWORD")
+    user_id = os.environ.get("BGF_USER_ID")
+    password = os.environ.get("BGF_PASSWORD")
 
-    if not (env_id and env_pw):
-        env_path = Path(".env")
-        if env_path.is_file():
-            env = _read_env_file(env_path)
-            env_id = env_id or env.get("BGF_USER_ID")
-            env_pw = env_pw or env.get("BGF_PASSWORD")
+    if user_id and password:
+        return {"id": user_id, "password": password}
 
-    if env_id and env_pw:
-        return {"id": env_id, "password": env_pw}
+    if path:
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            raise RuntimeError(f"Failed to load credentials from {path}: {e}")
 
-    if path is None:
-        raise RuntimeError(
-            "Credentials not provided. Set BGF_USER_ID/BGF_PASSWORD or specify a file"
-        )
-
-    path = Path(path)
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        raise RuntimeError(f"Failed to load credentials from {path}: {e}")
+    raise RuntimeError(
+        "Credentials not provided. Set BGF_USER_ID/BGF_PASSWORD in .env or specify a JSON file."
+    )
 
 
 def login_bgf(
@@ -133,13 +106,10 @@ try {
         if success:
             log("login", "SUCCESS", "Login succeeded")
             try:
-                close_focus_popup(driver)
-                ensure_focus_popup_closed(driver)
-                close_nexacro_popups(driver)
+                closed_count = close_all_modals(driver)
+                log("login", "INFO", f"Closed {closed_count} popups after login.")
             except Exception as e:
-                log("login", "WARNING", f"Popup close failed: {e}")
-            else:
-                log("login", "INFO", "팝업 모듈 종료: 다음 단계 진입")
+                log("login", "WARNING", f"An error occurred during popup closing: {e}")
             return True
     log("login", "FAIL", "Login check timeout")
     return False
