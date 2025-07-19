@@ -1,8 +1,13 @@
 (() => {
-  window.__midCategoryLogs__ = [];
+  window.automation = {
+    logs: [],
+    parsedData: null,
+    error: null,
+    window.collectMidProducts = collectMidCodes;
+  };
   const origConsoleLog = console.log;
   console.log = function (...args) {
-    window.__midCategoryLogs__.push(args.join(" "));
+    window.automation.logs.push(args.join(" "));
     return origConsoleLog.apply(console, args);
   };
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -191,7 +196,7 @@
 
     console.log("🎉 전체 수집 완료 → 총 중분류 수:", seenMid.size);
     console.log("📄 전체 데이터 누적:", midCodeDataList.length, "줄");
-    window.__parsedData__ = midCodeDataList;
+    window.automation.parsedData = midCodeDataList;
   }
 
   window.collectMidProducts = collectMidCodes;
@@ -202,7 +207,7 @@
       await collectMidCodes();
     } catch (e) {
       console.warn(e);
-      window.__parsedDataError__ = e && e.message ? e.message : String(e);
+      window.automation.error = e && e.message ? e.message : String(e);
     }
   })();
 })();
