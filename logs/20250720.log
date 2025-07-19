@@ -147,3 +147,282 @@ TypeError: 'Logger' object is not callable
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][main][CRITICAL] Critical error during collection cycle: name 'TimeoutException' is not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 126, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cb6de925+77845]
+	GetHandleVerifier [0x0x7ff6cb6de980+77936]
+	(No symbol) [0x0x7ff6cb499cda]
+	(No symbol) [0x0x7ff6cb4f06aa]
+	(No symbol) [0x0x7ff6cb4f095c]
+	(No symbol) [0x0x7ff6cb543d07]
+	(No symbol) [0x0x7ff6cb51890f]
+	(No symbol) [0x0x7ff6cb540b07]
+	(No symbol) [0x0x7ff6cb5186a3]
+	(No symbol) [0x0x7ff6cb4e1791]
+	(No symbol) [0x0x7ff6cb4e2523]
+	GetHandleVerifier [0x0x7ff6cb9b683d+3059501]
+	GetHandleVerifier [0x0x7ff6cb9b0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6cb9d03f0+3164896]
+	GetHandleVerifier [0x0x7ff6cb6f8c2e+185118]
+	GetHandleVerifier [0x0x7ff6cb70053f+216111]
+	GetHandleVerifier [0x0x7ff6cb6e72d4+113092]
+	GetHandleVerifier [0x0x7ff6cb6e7489+113529]
+	GetHandleVerifier [0x0x7ff6cb6ce288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 285, in _run_collection_cycle
+    if not _navigate_and_prepare_collection(driver):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 159, in _navigate_and_prepare_collection
+    if not wait_for_mix_ratio_page(driver, PAGE_LOAD_TIMEOUT):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 131, in wait_for_mix_ratio_page
+    except TimeoutException:
+           ^^^^^^^^^^^^^^^^
+NameError: name 'TimeoutException' is not defined
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][main][CRITICAL] Critical error during collection cycle: name 'TimeoutException' is not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 126, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cb6de925+77845]
+	GetHandleVerifier [0x0x7ff6cb6de980+77936]
+	(No symbol) [0x0x7ff6cb499cda]
+	(No symbol) [0x0x7ff6cb4f06aa]
+	(No symbol) [0x0x7ff6cb4f095c]
+	(No symbol) [0x0x7ff6cb543d07]
+	(No symbol) [0x0x7ff6cb51890f]
+	(No symbol) [0x0x7ff6cb540b07]
+	(No symbol) [0x0x7ff6cb5186a3]
+	(No symbol) [0x0x7ff6cb4e1791]
+	(No symbol) [0x0x7ff6cb4e2523]
+	GetHandleVerifier [0x0x7ff6cb9b683d+3059501]
+	GetHandleVerifier [0x0x7ff6cb9b0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6cb9d03f0+3164896]
+	GetHandleVerifier [0x0x7ff6cb6f8c2e+185118]
+	GetHandleVerifier [0x0x7ff6cb70053f+216111]
+	GetHandleVerifier [0x0x7ff6cb6e72d4+113092]
+	GetHandleVerifier [0x0x7ff6cb6e7489+113529]
+	GetHandleVerifier [0x0x7ff6cb6ce288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 285, in _run_collection_cycle
+    if not _navigate_and_prepare_collection(driver):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 159, in _navigate_and_prepare_collection
+    if not wait_for_mix_ratio_page(driver, PAGE_LOAD_TIMEOUT):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 131, in wait_for_mix_ratio_page
+    except TimeoutException:
+           ^^^^^^^^^^^^^^^^
+NameError: name 'TimeoutException' is not defined
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][main][CRITICAL] Critical error during collection cycle: name 'TimeoutException' is not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 126, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cb6de925+77845]
+	GetHandleVerifier [0x0x7ff6cb6de980+77936]
+	(No symbol) [0x0x7ff6cb499cda]
+	(No symbol) [0x0x7ff6cb4f06aa]
+	(No symbol) [0x0x7ff6cb4f095c]
+	(No symbol) [0x0x7ff6cb543d07]
+	(No symbol) [0x0x7ff6cb51890f]
+	(No symbol) [0x0x7ff6cb540b07]
+	(No symbol) [0x0x7ff6cb5186a3]
+	(No symbol) [0x0x7ff6cb4e1791]
+	(No symbol) [0x0x7ff6cb4e2523]
+	GetHandleVerifier [0x0x7ff6cb9b683d+3059501]
+	GetHandleVerifier [0x0x7ff6cb9b0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6cb9d03f0+3164896]
+	GetHandleVerifier [0x0x7ff6cb6f8c2e+185118]
+	GetHandleVerifier [0x0x7ff6cb70053f+216111]
+	GetHandleVerifier [0x0x7ff6cb6e72d4+113092]
+	GetHandleVerifier [0x0x7ff6cb6e7489+113529]
+	GetHandleVerifier [0x0x7ff6cb6ce288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 285, in _run_collection_cycle
+    if not _navigate_and_prepare_collection(driver):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 159, in _navigate_and_prepare_collection
+    if not wait_for_mix_ratio_page(driver, PAGE_LOAD_TIMEOUT):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 131, in wait_for_mix_ratio_page
+    except TimeoutException:
+           ^^^^^^^^^^^^^^^^
+NameError: name 'TimeoutException' is not defined
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] 300 seconds wait completed. Starting next cycle.
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][main][CRITICAL] Critical error during collection cycle: name 'TimeoutException' is not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 126, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    time.sleep(self._poll)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 285, in _run_collection_cycle
+    if not _navigate_and_prepare_collection(driver):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 159, in _navigate_and_prepare_collection
+    if not wait_for_mix_ratio_page(driver, PAGE_LOAD_TIMEOUT):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 131, in wait_for_mix_ratio_page
+    except TimeoutException:
+           ^^^^^^^^^^^^^^^^
+NameError: name 'TimeoutException' is not defined
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] 300 seconds wait completed. Starting next cycle.
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][main][CRITICAL] Critical error during collection cycle: name 'TimeoutException' is not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 126, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cb6de925+77845]
+	GetHandleVerifier [0x0x7ff6cb6de980+77936]
+	(No symbol) [0x0x7ff6cb499cda]
+	(No symbol) [0x0x7ff6cb4f06aa]
+	(No symbol) [0x0x7ff6cb4f095c]
+	(No symbol) [0x0x7ff6cb543d07]
+	(No symbol) [0x0x7ff6cb51890f]
+	(No symbol) [0x0x7ff6cb540b07]
+	(No symbol) [0x0x7ff6cb5186a3]
+	(No symbol) [0x0x7ff6cb4e1791]
+	(No symbol) [0x0x7ff6cb4e2523]
+	GetHandleVerifier [0x0x7ff6cb9b683d+3059501]
+	GetHandleVerifier [0x0x7ff6cb9b0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6cb9d03f0+3164896]
+	GetHandleVerifier [0x0x7ff6cb6f8c2e+185118]
+	GetHandleVerifier [0x0x7ff6cb70053f+216111]
+	GetHandleVerifier [0x0x7ff6cb6e72d4+113092]
+	GetHandleVerifier [0x0x7ff6cb6e7489+113529]
+	GetHandleVerifier [0x0x7ff6cb6ce288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 285, in _run_collection_cycle
+    if not _navigate_and_prepare_collection(driver):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 159, in _navigate_and_prepare_collection
+    if not wait_for_mix_ratio_page(driver, PAGE_LOAD_TIMEOUT):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 131, in wait_for_mix_ratio_page
+    except TimeoutException:
+           ^^^^^^^^^^^^^^^^
+NameError: name 'TimeoutException' is not defined
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
