@@ -2,9 +2,9 @@
   window.automation = {
     logs: [],
     parsedData: null,
-    error: null,
-    window.collectMidProducts = collectMidCodes;
+    error: null
   };
+  window.collectMidProducts = collectMidCodes;
   const origConsoleLog = console.log;
   console.log = function (...args) {
     window.automation.logs.push(args.join(" "));
@@ -133,11 +133,14 @@
   }
 
   async function collectMidCodes(startCode = null, endCode = null) {
+    console.log("🚀 collectMidCodes 시작");
     const seenMid = new Set();
     let scrollCount = 0;
 
     while (true) {
+      console.log("🔄 중분류 목록 스캔 시작");
       const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
+      console.log(`Found ${textCells.length} mid-category cells.`);
       const newMids = [];
 
       for (const textEl of textCells) {
@@ -160,6 +163,7 @@
         }
 
         const clickId = textEl.id.split(":text")[0];
+        console.log(`Attempting to click mid-category: ${code} with ID: ${clickId}`);
         const clicked = await clickElementById(clickId);
         if (!clicked) {
           console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
@@ -173,7 +177,9 @@
         console.log(`✅ 중분류 클릭: ${code} (${midName})`);
         await delay(500);
 
+        console.log(`Collecting product data for mid-category: ${code}`);
         await collectProductDataForMid(code, midName);
+        console.log(`Finished collecting product data for mid-category: ${code}`);
         await delay(300);
       }
 
