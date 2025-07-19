@@ -30,7 +30,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Local imports - 프로젝트 내부 모듈
 from login.login_bgf import login_bgf
-from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
 from utils import append_unique_lines, convert_txt_to_excel
 from utils.db_util import write_sales_data
@@ -185,14 +184,8 @@ def _initialize_driver_and_login(cred_path: str | None) -> webdriver.Chrome | No
 
 
 def _navigate_and_prepare_collection(driver: webdriver.Chrome) -> bool:
-    """Handle popups and navigate to the target page for data collection."""
-    log("navigation", "INFO", "Handling popups and navigating to sales page...")
-    try:
-        close_popups_after_delegate(driver)
-    except Exception as e:
-        log("popup", "WARNING", f"Popup handling failed: {e}")
-        print(f"팝업 처리 실패: {e}")
-
+    """Navigate to the target page for data collection."""
+    log("navigation", "INFO", "Navigating to sales page...")
     run_script(driver, NAVIGATION_SCRIPT)
     if not wait_for_mix_ratio_page(driver):
         log("navigation", "ERROR", "Page load timed out.")
@@ -225,6 +218,11 @@ def _collect_data(driver: webdriver.Chrome) -> Any | None:
 
 def _save_results(parsed_data: Any, date_str: str) -> None:
     """Save the collected data to TXT, DB, and Excel files."""
+    if not isinstance(parsed_data, list) or not all(isinstance(item, str) for item in parsed_data):
+        log("output", "ERROR", f"Invalid data format received: {type(parsed_data)}")
+        print(f"잘못된 데이터 형식: {type(parsed_data)}")
+        return
+
     output_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
     db_path = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
     excel_dir = CODE_OUTPUT_DIR / "mid_excel"
@@ -239,16 +237,28 @@ def _save_results(parsed_data: Any, date_str: str) -> None:
     except Exception as e:
         log("output", "ERROR", f"Failed to save TXT file: {e}")
         print(f"텍스트 파일 저장 실패: {e}")
-        return # Stop if we can't even save the raw text
+        return  # Stop if we can't even save the raw text
+
+    # Convert string data to list of dictionaries for DB insertion
+    records_for_db = []
+    for line in parsed_data:
+        values = line.strip().split('\t')
+        if len(values) == len(FIELD_ORDER):
+            records_for_db.append(dict(zip(FIELD_ORDER, values)))
+        else:
+            log("db", "WARNING", f"Skipping malformed line for DB: {line}")
 
     # Save to DB
-    try:
-        inserted = write_sales_data(parsed_data, db_path)
-        log("db", "INFO", f"DB saved to {db_path}, inserted {inserted} rows")
-        print(f"db saved to {db_path}, inserted {inserted} rows")
-    except Exception as e:
-        log("db", "ERROR", f"DB write failed: {e}")
-        print(f"db write failed: {e}")
+    if records_for_db:
+        try:
+            inserted = write_sales_data(records_for_db, db_path)
+            log("db", "INFO", f"DB saved to {db_path}, inserted {inserted} rows")
+            print(f"db saved to {db_path}, inserted {inserted} rows")
+        except Exception as e:
+            log("db", "ERROR", f"DB write failed: {e}")
+            print(f"db write failed: {e}")
+    else:
+        log("db", "WARNING", "No valid records found to save to the database.")
 
     time.sleep(3)
 
