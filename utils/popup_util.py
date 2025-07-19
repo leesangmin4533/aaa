@@ -133,7 +133,7 @@ def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
                 log.info("Successfully simulated click on a popup close element.", extra={'tag': 'modal_closer'})
                 closed_count += 1
                 found_and_closed_popup = True
-                time.sleep(1)  # Give time for the popup to disappear
+                time.sleep(2)  # Give time for the popup to disappear
             else:
                 log.info("No more popups found in this attempt.", extra={'tag': 'modal_closer'})
                 break # Exit the loop if no popups were found and closed
