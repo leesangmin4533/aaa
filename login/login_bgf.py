@@ -6,16 +6,19 @@ import sys
 import time
 from dotenv import load_dotenv
 
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 # ``login_bgf.py`` 파일을 스크립트로 실행할 때도 상위 디렉터리의 모듈을
 # 찾을 수 있도록 ``sys.path`` 에 프로젝트 루트 경로를 추가한다.
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from utils.log_util import create_logger
+from utils.log_util import get_logger
 from utils.popup_util import close_all_modals
 
-log = create_logger("login_bgf")
+log = get_logger(__name__)
 
 
 def load_credentials(path: str | None = None) -> dict:
@@ -54,7 +57,13 @@ def login_bgf(
     """
     url = "https://store.bgfretail.com/websrc/deploy/index.html"
     driver.get(url)
-    time.sleep(3)  # Wait for Nexacro app to load
+    try:
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return nexacro.getApplication() && nexacro.getApplication().mainframe")
+        )
+    except Exception as e:
+        log("login", "ERROR", f"Nexacro application did not load: {e}")
+        return False
 
     creds = load_credentials(credential_path)
     user_id = creds.get("id")
@@ -95,21 +104,17 @@ try {
         log("login", "ERROR", f"JavaScript execution failed: {e}")
         return False
 
-    for _ in range(timeout):
-        time.sleep(1)
+    try:
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return nexacro.getApplication().GV_CHANNELTYPE === 'HOME';")
+        )
+        log("login", "INFO", "Login succeeded")
         try:
-            success = driver.execute_script(
-                "return nexacro.getApplication().GV_CHANNELTYPE === 'HOME';"
-            )
-        except Exception:
-            success = False
-        if success:
-            log("login", "SUCCESS", "Login succeeded")
-            try:
-                closed_count = close_all_modals(driver)
-                log("login", "INFO", f"Closed {closed_count} popups after login.")
-            except Exception as e:
-                log("login", "WARNING", f"An error occurred during popup closing: {e}")
-            return True
-    log("login", "FAIL", "Login check timeout")
-    return False
+            closed_count = close_all_modals(driver)
+            log("login", "INFO", f"Closed {closed_count} popups after login.")
+        except Exception as e:
+            log("login", "WARNING", f"An error occurred during popup closing: {e}")
+        return True
+    except Exception:
+        log("login", "ERROR", "Login check timeout or failed")
+        return False
