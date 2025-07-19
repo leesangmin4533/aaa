@@ -52,20 +52,33 @@
   }
 
   async function goToMidMixRatio() {
+    console.log("🚀 goToMidMixRatio 시작");
     // 1. 매출분석 탭 클릭
     const topMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext";
+    console.log(`Attempting to click top menu: ${topMenuId}`);
     const ok1 = await clickByExactId(topMenuId, "매출분석");
-    if (!ok1) return;
-    await delay(1000);
+    if (!ok1) {
+      console.error("❌ 매출분석 탭 클릭 실패");
+      return;
+    }
+    console.log("✅ 매출분석 탭 클릭 성공");
+    await delay(2000);
 
     // 2. 중분류별 매출 구성비 메뉴 클릭
     const subMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text";
+    console.log(`Attempting to click sub menu: ${subMenuId}`);
     const ok2 = await clickByExactId(subMenuId, "중분류별 매출 구성비");
-    if (!ok2) return;
-    await delay(1500);
+    if (!ok2) {
+      console.error("❌ 중분류별 매출 구성비 메뉴 클릭 실패");
+      return;
+    }
+    console.log("✅ 중분류별 매출 구성비 메뉴 클릭 성공");
+    await delay(3000);
 
     // 3. 중분류 리스트 첫행 클릭
+    console.log("Attempting to click first row of mid-category list.");
     await pollAndClickMidFirstRow();
+    console.log("✅ 중분류 리스트 첫행 클릭 시도 완료");
   }
 
   // ✅ 엔트리 포인트
