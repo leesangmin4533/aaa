@@ -1,0 +1,149 @@
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[__main__][main][CRITICAL] Critical error during collection cycle: 'Logger' object is not callable
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\login\login_bgf.py", line 61, in login_bgf
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 129, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\login\login_bgf.py", line 62, in <lambda>
+    lambda d: d.execute_script("return nexacro.getApplication() && nexacro.getApplication().mainframe")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 544, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.JavascriptException: Message: javascript error: circular reference
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6cb6de925+77845]
+	GetHandleVerifier [0x0x7ff6cb6de980+77936]
+	(No symbol) [0x0x7ff6cb499cda]
+	(No symbol) [0x0x7ff6cb4a1679]
+	(No symbol) [0x0x7ff6cb4a4a61]
+	(No symbol) [0x0x7ff6cb541e4b]
+	(No symbol) [0x0x7ff6cb5188ca]
+	(No symbol) [0x0x7ff6cb540b07]
+	(No symbol) [0x0x7ff6cb5186a3]
+	(No symbol) [0x0x7ff6cb4e1791]
+	(No symbol) [0x0x7ff6cb4e2523]
+	GetHandleVerifier [0x0x7ff6cb9b683d+3059501]
+	GetHandleVerifier [0x0x7ff6cb9b0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6cb9d03f0+3164896]
+	GetHandleVerifier [0x0x7ff6cb6f8c2e+185118]
+	GetHandleVerifier [0x0x7ff6cb70053f+216111]
+	GetHandleVerifier [0x0x7ff6cb6e72d4+113092]
+	GetHandleVerifier [0x0x7ff6cb6e7489+113529]
+	GetHandleVerifier [0x0x7ff6cb6ce288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 274, in _run_collection_cycle
+    driver = _initialize_driver_and_login(cred_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 140, in _initialize_driver_and_login
+    if not login_bgf(driver, credential_path=cred_path):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\login\login_bgf.py", line 65, in login_bgf
+    log("login", "ERROR", f"Nexacro application did not load: {e}")
+TypeError: 'Logger' object is not callable
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][ERROR] JavaScript execution failed: 'Logger' object is not callable
+[__main__][login][ERROR] Login failed.
+[__main__][main][ERROR] Driver initialization or login failed. Skipping collection cycle.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][WARNING] An error occurred during popup closing: 'Logger' object is not callable
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][ERROR] Page load timed out.
+[__main__][main][ERROR] Navigation or preparation failed. Skipping collection cycle.
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] 300 seconds wait completed. Starting next cycle.
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][WARNING] An error occurred during popup closing: 'Logger' object is not callable
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][ERROR] Page load timed out.
+[__main__][main][ERROR] Navigation or preparation failed. Skipping collection cycle.
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][ERROR] Page load timed out.
+[__main__][main][ERROR] Navigation or preparation failed. Skipping collection cycle.
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][ERROR] Page load timed out.
+[__main__][main][ERROR] Navigation or preparation failed. Skipping collection cycle.
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
+[__main__][main][INFO] 300 seconds wait completed. Starting next cycle.
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][ERROR] Page load timed out.
+[__main__][main][ERROR] Navigation or preparation failed. Skipping collection cycle.
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 300 seconds...
