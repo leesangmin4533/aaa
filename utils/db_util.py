@@ -20,12 +20,12 @@ from typing import Any
 import sys
 
 if __package__:
-    from .log_util import create_logger
+    from .log_util import get_logger
 else:  # pragma: no cover - fallback when executed directly
     sys.path.append(str(Path(__file__).resolve().parent))
     from log_util import create_logger
 
-log = create_logger("db_util")
+log = get_logger(__name__)
 
 
 # 매출 데이터 테이블 스키마
