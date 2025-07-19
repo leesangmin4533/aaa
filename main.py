@@ -149,7 +149,7 @@ def _collect_data(driver: webdriver.Chrome) -> Any | None:
         log("mid_category", "INFO", f"logs: {logs}")
         print("중분류 클릭 로그:", logs)
 
-    parsed_data = wait_for_data(driver, 120)  # 120-second timeout
+    parsed_data = wait_for_data(driver, 240)  # 240-second timeout
     if not parsed_data:
         log("collect", "ERROR", "Data collection timed out or failed.")
         print("데이터 수집 시간 초과 또는 실패")
