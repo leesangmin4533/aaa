@@ -1,0 +1,24 @@
+{
+    "db_file": "all_sales_data.db",
+    "scripts": {
+        "default": "auto_collect_mid_products.js",
+        "listener": "data_collect_listener.js",
+        "navigation": "navigation.js"
+    },
+    "field_order": [
+        "midCode",
+        "midName",
+        "productCode",
+        "productName",
+        "sales",
+        "order",
+        "purchase",
+        "discard",
+        "stock"
+    ],
+    "timeouts": {
+        "data_collection": 240,
+        "page_load": 10
+    },
+    "cycle_interval_seconds": 300
+}
