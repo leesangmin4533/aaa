@@ -5,9 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
 
-from .log_util import create_logger
+from .log_util import get_logger
 
-log = create_logger("popup_util")
+log = get_logger(__name__)
 
 def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
     """Closes all modal popups by simulating mouse events on common close buttons.
@@ -27,7 +27,7 @@ def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
     """
     closed_count = 0
     for attempt in range(max_attempts):
-        log("modal_closer", "INFO", f"Attempt {attempt + 1}/{max_attempts} to find and close popups.")
+        log.info(f"Attempt {attempt + 1}/{max_attempts} to find and close popups.", extra={'tag': 'modal_closer'})
         found_and_closed_popup = False
 
         # JavaScript to find and click elements by simulating mouse events
@@ -130,17 +130,17 @@ def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
             # Execute the JavaScript to find and click a popup button
             clicked_a_popup = driver.execute_script(js_script)
             if clicked_a_popup:
-                log("modal_closer", "INFO", "Successfully simulated click on a popup close element.")
+                log.info("Successfully simulated click on a popup close element.", extra={'tag': 'modal_closer'})
                 closed_count += 1
                 found_and_closed_popup = True
                 time.sleep(1)  # Give time for the popup to disappear
             else:
-                log("modal_closer", "INFO", "No more popups found in this attempt.")
+                log.info("No more popups found in this attempt.", extra={'tag': 'modal_closer'})
                 break # Exit the loop if no popups were found and closed
 
         except Exception as e:
-            log("modal_closer", "ERROR", f"An unexpected error occurred during JavaScript execution: {e}")
+            log.error(f"An unexpected error occurred during JavaScript execution: {e}", extra={'tag': 'modal_closer'})
             break
     
-    log("modal_closer", "INFO", f"Finished popup closing process. Total closed: {closed_count}")
+    log.info(f"Finished popup closing process. Total closed: {closed_count}", extra={'tag': 'modal_closer'})
     return closed_count
