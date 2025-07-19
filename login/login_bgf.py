@@ -59,10 +59,10 @@ def login_bgf(
     driver.get(url)
     try:
         WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return nexacro.getApplication() && nexacro.getApplication().mainframe")
+            lambda d: d.execute_script("return nexacro.getApplication().mainframe ? true : false")
         )
     except Exception as e:
-        log("login", "ERROR", f"Nexacro application did not load: {e}")
+        log.error(f"Nexacro application did not load: {e}", extra={'tag': 'login'})
         return False
 
     creds = load_credentials(credential_path)
@@ -89,7 +89,7 @@ try {{
 """
     try:
         driver.execute_script(js)
-        log("login", "INFO", "Login script executed")
+        log.info("Login script executed", extra={'tag': 'login'})
         pw_value = driver.execute_script(
             """
 try {
@@ -99,21 +99,21 @@ try {
 }
 """
         )
-        log("login", "DEBUG", f"[검증] 비밀번호 필드 값: {pw_value}")
+        log.debug(f"[검증] 비밀번호 필드 값: {pw_value}", extra={'tag': 'login'})
     except Exception as e:
-        log("login", "ERROR", f"JavaScript execution failed: {e}")
+        log.error(f"JavaScript execution failed: {e}", extra={'tag': 'login'})
         return False
 
     try:
         WebDriverWait(driver, timeout).until(
             lambda d: d.execute_script("return nexacro.getApplication().GV_CHANNELTYPE === 'HOME';")
         )
-        log("login", "INFO", "Login succeeded")
+        log.info("Login succeeded", extra={'tag': 'login'})
         try:
             closed_count = close_all_modals(driver)
-            log("login", "INFO", f"Closed {closed_count} popups after login.")
+            log.info(f"Closed {closed_count} popups after login.", extra={'tag': 'login'})
         except Exception as e:
-            log("login", "WARNING", f"An error occurred during popup closing: {e}")
+            log.warning(f"An error occurred during popup closing: {e}", extra={'tag': 'login'})
         return True
     except Exception:
         log("login", "ERROR", "Login check timeout or failed")
