@@ -1,6 +1,7 @@
 (() => {
-  window.__liveData__ = window.__liveData__ || [];
-  const seen = new Set(window.__liveData__);
+  window.automation = window.automation || {};
+  window.automation.liveData = window.automation.liveData || [];
+  const seen = new Set(window.automation.liveData);
 
   let currentMidCode = '';
   let currentMidName = '';
@@ -39,8 +40,10 @@
       }
     }
     if (lines.length) {
-      window.__liveData__.push(...lines);
-      console.log(`📥 listener added ${lines.length} lines`);
+      window.automation.liveData.push(...lines);
+      if (window.automation.logs) {
+        window.automation.logs.push(`📥 listener added ${lines.length} lines`);
+      }
     }
   }
 
