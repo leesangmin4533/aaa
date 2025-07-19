@@ -27,6 +27,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
 import json
 
@@ -174,7 +175,7 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
         logs = driver.execute_script("return window.automation && window.automation.logs ? window.automation.logs : []")
         if logs:
             log.info(f"mid_category logs: {logs}", extra={'tag': 'mid_category'})
-            print("중분류 클릭 로그:", logs)
+            # print("중분류 클릭 로그:", logs)
 
         parsed_data = wait_for_data(driver, DATA_COLLECTION_TIMEOUT)
         if parsed_data is None:
@@ -312,9 +313,9 @@ def main() -> None:
     while True:
         log.info("Starting new data collection cycle...", extra={'tag': 'main'})
         _run_collection_cycle()
-        log.info("Data collection cycle finished. Waiting for {} seconds...".format(CYCLE_INTERVAL), extra={'tag': 'main'})
-        time.sleep(CYCLE_INTERVAL)
-        log.info("{} seconds wait completed. Starting next cycle.".format(CYCLE_INTERVAL), extra={'tag': 'main'})
+        log.info("Data collection cycle finished. Waiting for 30 minutes...", extra={'tag': 'main'})
+        time.sleep(1800) # Wait for 30 minutes
+        log.info("30 minutes wait completed. Starting next cycle.", extra={'tag': 'main'})
 
 if __name__ == "__main__":
     main()
