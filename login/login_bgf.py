@@ -110,11 +110,12 @@ try {
         )
         log.info("Login succeeded", extra={'tag': 'login'})
         try:
+            time.sleep(1) # Give time for popups to appear after login
             closed_count = close_all_modals(driver)
             log.info(f"Closed {closed_count} popups after login.", extra={'tag': 'login'})
         except Exception as e:
             log.warning(f"An error occurred during popup closing: {e}", extra={'tag': 'login'})
         return True
     except Exception:
-        log("login", "ERROR", "Login check timeout or failed")
+        log.error("Login check timeout or failed", extra={'tag': 'login'})
         return False
