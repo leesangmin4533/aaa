@@ -9,131 +9,138 @@ from .log_util import create_logger
 
 log = create_logger("popup_util")
 
+def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
+    """Closes all modal popups by simulating mouse events on common close buttons.
 
-def close_nexacro_popups(driver: WebDriver, timeout: int = 5) -> None:
-    """'닫기' 텍스트가 있는 모든 DOM 요소가 나타날 때까지 기다렸다가 클릭 이벤트를 발생시킨다."""
+    This function iteratively searches for and simulates mouse events on elements
+    that are likely to close modal dialogs, such as buttons with '닫기', '확인',
+    '취소', or 'x' characters, or specific IDs like 'btn_topClose', 'btnClose'.
+    It continues until no more such buttons are found or the maximum number of
+    attempts is reached.
 
-    # '닫기' 텍스트가 포함된 요소가 표시될 때까지 대기
-    try:
-        WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script(
-                "return [...document.querySelectorAll('*')].some(el => el.innerText?.trim() === '닫기');"
-            )
-        )
-    except Exception as e:
-        log("close", "WARNING", f"'닫기' 요소 대기 실패: {e}")
+    Args:
+        driver: The Selenium WebDriver instance.
+        max_attempts: The maximum number of times to loop and close popups.
 
-    js = """
-try {
-    const chkEls = [...document.querySelectorAll("img[src*='chk_WF_Box']")];
-    chkEls.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        ['mousedown', 'mouseup', 'click'].forEach(type => {
-            el.dispatchEvent(new MouseEvent(type, {
+    Returns:
+        The total number of popups closed.
+    """
+    closed_count = 0
+    for attempt in range(max_attempts):
+        log("modal_closer", "INFO", f"Attempt {attempt + 1}/{max_attempts} to find and close popups.")
+        found_and_closed_popup = False
+
+        # JavaScript to find and click elements by simulating mouse events
+        js_script = """
+        function simulateClick(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const eventOptions = {
                 bubbles: true,
                 cancelable: true,
                 view: window,
-                clientX: rect.left + rect.width / 2,
-                clientY: rect.top + rect.height / 2
-            }));
-        });
-    });
+                clientX: centerX,
+                clientY: centerY
+            };
 
-    const closeEls = [...document.querySelectorAll('*')].filter(el => el.innerText?.trim() === '닫기');
-    if (closeEls.length > 0) {
-        closeEls.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            ['mousedown', 'mouseup', 'click'].forEach(type => {
-                el.dispatchEvent(new MouseEvent(type, {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window,
-                    clientX: rect.left + rect.width / 2,
-                    clientY: rect.top + rect.height / 2
-                }));
-            });
-        });
-        return 'clicked:' + closeEls.length;
-    }
-    return 'not found';
-} catch (e) {
-    return 'error: ' + e.toString();
-}
-"""
-    try:
-        result = driver.execute_script(js)
-        log("close", "INFO", f"팝업 처리 결과: {result}")
-    except Exception as e:
-        log("close", "ERROR", f"스크립트 실행 실패: {e}")
+            element.dispatchEvent(new MouseEvent('mousedown', eventOptions));
+            element.dispatchEvent(new MouseEvent('mouseup', eventOptions));
+            element.dispatchEvent(new MouseEvent('click', eventOptions));
+            return true;
+        }
 
+        const textSelectors = [
+            '닫기', '확인', '취소', 'Close', 'OK', 'Cancel', '×', 'X'
+        ];
+        const idSelectors = [
+            'btn_topClose', 'btnClose'
+        ];
+        const classSelectors = [
+            'close', 'popup-close'
+        ];
+        const ariaLabelSelectors = [
+            'Close'
+        ];
 
-def close_focus_popup(driver: WebDriver, timeout: int = 5) -> None:
-    """"재택 유선권장 안내" 팝업을 엔터 키로 닫는다."""
+        let clicked = false;
 
-    end_time = time.time() + timeout
-    while time.time() < end_time:
+        // Search by ID
+        for (const id of idSelectors) {
+            const element = document.getElementById(id);
+            if (element && element.offsetParent !== null) {
+                const style = window.getComputedStyle(element);
+                if (style.display !== 'none' && style.visibility !== 'hidden') {
+                    if (simulateClick(element)) {
+                        clicked = true;
+                        return clicked;
+                    }
+                }
+            }
+        }
+
+        // Search by text content
+        for (const text of textSelectors) {
+            const elements = document.querySelectorAll('button, a, div'); // Search common elements for text
+            for (const element of elements) {
+                const style = window.getComputedStyle(element);
+                if (style.display !== 'none' && style.visibility !== 'hidden' && element.offsetParent !== null) {
+                    if (element.innerText && element.innerText.trim() === text) {
+                        if (simulateClick(element)) {
+                            clicked = true;
+                            return clicked;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Search by class name
+        for (const cls of classSelectors) {
+            const elements = document.querySelectorAll('[class*="' + cls + '"]');
+            for (const element of elements) {
+                const style = window.getComputedStyle(element);
+                if (style.display !== 'none' && style.visibility !== 'hidden' && element.offsetParent !== null) {
+                    if (simulateClick(element)) {
+                        clicked = true;
+                        return clicked;
+                    }
+                }
+            }
+        }
+
+        // Search by aria-label
+        for (const label of ariaLabelSelectors) {
+            const elements = document.querySelectorAll('[aria-label*="' + label + '"]');
+            for (const element of elements) {
+                const style = window.getComputedStyle(element);
+                if (style.display !== 'none' && style.visibility !== 'hidden' && element.offsetParent !== null) {
+                    if (simulateClick(element)) {
+                        clicked = true;
+                        return clicked;
+                    }
+                }
+            }
+        }
+
+        return clicked;
+        """
         try:
-            popup = driver.find_element(By.XPATH, "//div[contains(text(), '재택 유선권장 안내')]")
-            if popup.is_displayed():
-                log("focus_popup", "INFO", "팝업 감지됨: 엔터로 종료 시도")
-                ActionChains(driver).send_keys(Keys.ENTER).perform()
-                log("focus_popup", "INFO", "엔터 키 전송 완료")
-                return
+            # Execute the JavaScript to find and click a popup button
+            clicked_a_popup = driver.execute_script(js_script)
+            if clicked_a_popup:
+                log("modal_closer", "INFO", "Successfully simulated click on a popup close element.")
+                closed_count += 1
+                found_and_closed_popup = True
+                time.sleep(1)  # Give time for the popup to disappear
+            else:
+                log("modal_closer", "INFO", "No more popups found in this attempt.")
+                break # Exit the loop if no popups were found and closed
+
         except Exception as e:
-            log("focus_popup", "DEBUG", f"팝업 탐색 오류 또는 미표시: {e}")
-        time.sleep(0.5)
-    log("focus_popup", "DEBUG", "대상 팝업을 찾지 못함")
-
-
-def ensure_focus_popup_closed(
-    driver: WebDriver,
-    timeout: int = 5,
-    stable_time: float = 1.0,
-) -> None:
-    """"재택 유선권장 안내" 팝업이 다시 나타나지 않는지 확인하며 닫는다.
-
-    ``stable_time`` 동안 팝업이 감지되지 않으면 종료된 것으로 간주한다.
-    ``timeout`` 이내에 조건이 충족되지 않으면 경고 로그를 남긴다.
-    """
-
-    end_time = time.time() + timeout
-    last_seen = time.time()
-
-    while time.time() < end_time:
-        try:
-            popup = driver.find_element(
-                By.XPATH, "//div[contains(text(), '재택 유선권장 안내')]"
-            )
-            if popup.is_displayed():
-                log("focus_popup", "INFO", "팝업 감지됨: 엔터로 종료 시도")
-                ActionChains(driver).send_keys(Keys.ENTER).perform()
-                last_seen = time.time()
-                log("focus_popup", "INFO", "엔터 키 전송 완료")
-        except Exception:
-            pass
-
-        if time.time() - last_seen >= stable_time:
-            log("focus_popup", "DEBUG", "팝업이 더 이상 나타나지 않음")
-            return
-
-        time.sleep(0.2)
-
-    log("focus_popup", "WARNING", "타임아웃: 팝업 상태 불안정")
-
-def close_popups_after_delegate(driver: WebDriver, timeout: int = 10) -> None:
-    """TensorFlow Lite delegate 로그 이후 팝업을 다시 닫는다."""
-    end_time = time.time() + timeout
-    while time.time() < end_time:
-        try:
-            logs = driver.get_log("browser")
-        except Exception:
-            logs = []
-        for entry in logs:
-            msg = entry.get("message", "") if isinstance(entry, dict) else str(entry)
-            if "Created TensorFlow Lite XNNPACK delegate for CPU" in msg:
-                close_focus_popup(driver)
-                ensure_focus_popup_closed(driver)
-                close_nexacro_popups(driver)
-                log("delegate", "INFO", "팝업 모듈 처리 후 다음 단계 진입")
-                return
-        time.sleep(0.5)
+            log("modal_closer", "ERROR", f"An unexpected error occurred during JavaScript execution: {e}")
+            break
+    
+    log("modal_closer", "INFO", f"Finished popup closing process. Total closed: {closed_count}")
+    return closed_count
