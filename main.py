@@ -23,7 +23,10 @@ from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Local imports - 프로젝트 내부 모듈
 from login.login_bgf import login_bgf
@@ -86,33 +89,26 @@ def run_script(driver: webdriver.Chrome, name: str) -> Any:
     return driver.execute_script(js)
 
 
-def wait_for_data(driver: webdriver.Chrome, timeout: int = 10):
-    for _ in range(timeout * 2):
-        try:
-            data = driver.execute_script("return window.__parsedData__ || null")
-            if data:
-                return data
-        except Exception:
-            pass
-        time.sleep(0.5)
-    return None
+def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
+    """Wait for the __parsedData__ variable to be available on the window object."""
+    try:
+        return WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return window.__parsedData__ || null")
+        )
+    except Exception:
+        return None
 
 
 def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool:
     """중분류별 매출 구성비 화면의 그리드가 나타날 때까지 대기한다."""
-    js = (
-        "return document.querySelector("
-        "\"div[id*='gdList.body'][id*='cell_'][id$='_0:text']\""
-        ") !== null;"
-    )
-    for _ in range(timeout * 2):
-        try:
-            if driver.execute_script(js):
-                return True
-        except Exception:
-            pass
-        time.sleep(0.5)
-    return False
+    selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
+    try:
+        WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+        )
+        return True
+    except Exception:
+        return False
 
 
 def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
@@ -175,120 +171,156 @@ def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
     return output
 
 
-def main() -> None:
-    """
-    메인 실행 함수: 브라우저를 실행하고 데이터를 수집하여 저장합니다.
-    """
-    # 브라우저 드라이버 초기화 및 로그인
+def _initialize_driver_and_login(cred_path: str | None) -> webdriver.Chrome | None:
+    """Create and initialize the Chrome driver, then log in."""
+    log("init", "INFO", "Initializing Chrome driver...")
     driver = create_driver()
-    cred_path = os.environ.get("CREDENTIAL_FILE")
     if not login_bgf(driver, credential_path=cred_path):
+        log("login", "ERROR", "Login failed.")
         print("로그인 실패")
-        log("login", "ERROR", "로그인 실패")
         driver.quit()
-        return
+        return None
+    log("login", "INFO", "Login successful.")
+    return driver
 
-    # 팝업 처리 및 페이지 네비게이션
+
+def _navigate_and_prepare_collection(driver: webdriver.Chrome) -> bool:
+    """Handle popups and navigate to the target page for data collection."""
+    log("navigation", "INFO", "Handling popups and navigating to sales page...")
     try:
-        close_popups_after_delegate(driver)  # TensorFlow delegate 초기화 후 팝업 처리
+        close_popups_after_delegate(driver)
     except Exception as e:
+        log("popup", "WARNING", f"Popup handling failed: {e}")
         print(f"팝업 처리 실패: {e}")
-        log("popup", "WARNING", f"팝업 처리 실패: {e}")
 
-    # 매출분석 화면으로 이동
     run_script(driver, NAVIGATION_SCRIPT)
     if not wait_for_mix_ratio_page(driver):
+        log("navigation", "ERROR", "Page load timed out.")
         print("페이지 로드 시간 초과")
-        log("navigation", "ERROR", "페이지 로드 시간 초과")
-        driver.quit()
-        return
+        return False
+    log("navigation", "INFO", "Successfully navigated to sales page.")
+    return True
 
 
-
-    # 중분류 매출 구성비 화면 진입 후 자동 수집 스크립트를 실행한다
-    date_str = datetime.now().strftime("%y%m%d")
-    output_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
-    if output_path.exists():
-        output_path.unlink()
-
+def _collect_data(driver: webdriver.Chrome) -> Any | None:
+    """Run collection scripts and wait for the data."""
+    log("collect", "INFO", "Starting data collection scripts...")
     run_script(driver, DEFAULT_SCRIPT)
     run_script(driver, LISTENER_SCRIPT)
 
     logs = driver.execute_script("return window.__midCategoryLogs__ || []")
     if logs:
-        print("중분류 클릭 로그:", logs)
         log("mid_category", "INFO", f"logs: {logs}")
+        print("중분류 클릭 로그:", logs)
 
-    while True:
-        lines = driver.execute_script(
-            "var d = window.__liveData__ || []; window.__liveData__ = []; return d;"
-        )
-        if lines:
-            added = append_unique_lines(output_path, lines)
-            print(f"appended {added} lines")
-            log("collect", "INFO", f"appended {added} lines")
+    parsed_data = wait_for_data(driver, 120)  # 120-second timeout
+    if not parsed_data:
+        log("collect", "ERROR", "Data collection timed out or failed.")
+        print("데이터 수집 시간 초과 또는 실패")
+        return None
+    
+    log("collect", "INFO", "Data collection complete.")
+    return parsed_data
 
-        parsed = driver.execute_script("return window.__parsedData__ || null")
-        if parsed is not None:
-            break
-        time.sleep(0.5)
 
+def _save_results(parsed_data: Any, date_str: str) -> None:
+    """Save the collected data to TXT, DB, and Excel files."""
+    output_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
     db_path = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
-    try:
-        inserted = write_sales_data(parsed, db_path)
-        print(f"db saved to {db_path}, inserted {inserted} rows")
-        log("db", "INFO", f"db saved to {db_path}, inserted {inserted} rows")
-    except Exception as e:
-        print(f"db write failed: {e}")
-        log("db", "ERROR", f"db write failed: {e}")
-
-    print(f"saved to {output_path}")
-    log("output", "INFO", f"saved to {output_path}")
-    time.sleep(3)
     excel_dir = CODE_OUTPUT_DIR / "mid_excel"
     excel_dir.mkdir(parents=True, exist_ok=True)
     excel_path = excel_dir / f"{date_str}.xlsx"
 
+    # Save to TXT
+    try:
+        save_to_txt(parsed_data, output_path)
+        log("output", "INFO", f"Saved to {output_path}")
+        print(f"saved to {output_path}")
+    except Exception as e:
+        log("output", "ERROR", f"Failed to save TXT file: {e}")
+        print(f"텍스트 파일 저장 실패: {e}")
+        return # Stop if we can't even save the raw text
+
+    # Save to DB
+    try:
+        inserted = write_sales_data(parsed_data, db_path)
+        log("db", "INFO", f"DB saved to {db_path}, inserted {inserted} rows")
+        print(f"db saved to {db_path}, inserted {inserted} rows")
+    except Exception as e:
+        log("db", "ERROR", f"DB write failed: {e}")
+        print(f"db write failed: {e}")
+
+    time.sleep(3)
+
+    # Convert to Excel
     try:
         convert_txt_to_excel(str(output_path), str(excel_path))
+        log("excel", "INFO", f"Converted to {excel_path}")
         print(f"converted to {excel_path}")
-        log("excel", "INFO", f"converted to {excel_path}")
     except Exception as e:
+        log("excel", "ERROR", f"Excel conversion failed: {e}")
         print(f"excel conversion failed: {e}")
-        log("excel", "ERROR", f"excel conversion failed: {e}")
 
-    error = None
-    # 스크립트 오류 확인
+
+def _handle_final_logs(driver: webdriver.Chrome) -> None:
+    """Check for script errors and collect browser logs at the end."""
+    # Check for script errors
     try:
         error = driver.execute_script("return window.__parsedDataError__ || null")
         if error:
+            log("script", "ERROR", f"Script error: {error}")
             print("스크립트 오류:", error)
-            log("script", "ERROR", f"스크립트 오류: {error}")
     except Exception:
         pass
 
-    # 브라우저 로그 수집 및 분석
+    # Collect browser logs
     try:
         logs = driver.get_log("browser")
-        if logs:
-            # 탭으로 구분된 데이터 라인 추출
-            lines = extract_tab_lines(logs)
-            if lines:
-                print("추출된 로그 데이터:")
-                log("browser_log", "INFO", "추출된 로그 데이터:")
-                for line in lines:
-                    print(line)
-                    log("browser_log", "INFO", line)
-            else:
-                # 일반 브라우저 콘솔 로그 출력
-                print("브라우저 콘솔 로그:")
-                log("browser_log", "INFO", "브라우저 콘솔 로그:")
-                for entry in logs:
-                    print(entry)
-                    log("browser_log", "INFO", str(entry))
+        if not logs:
+            return
+        
+        lines = extract_tab_lines(logs)
+        if lines:
+            log("browser_log", "INFO", "Extracted log data:")
+            print("추출된 로그 데이터:")
+            for line in lines:
+                log("browser_log", "INFO", line)
+                print(line)
+        else:
+            log("browser_log", "INFO", "Browser console logs:")
+            print("브라우저 콘솔 로그:")
+            for entry in logs:
+                log("browser_log", "INFO", str(entry))
+                print(entry)
     except Exception as e:
+        log("browser_log", "ERROR", f"Failed to collect browser logs: {e}")
         print(f"브라우저 로그 수집 실패: {e}")
-        log("browser_log", "ERROR", f"브라우저 로그 수집 실패: {e}")
+
+
+def main() -> None:
+    """
+    Main execution function: runs the browser, collects data, and saves it.
+    """
+    cred_path = os.environ.get("CREDENTIAL_FILE")
+    driver = _initialize_driver_and_login(cred_path)
+    if not driver:
+        return
+
+    try:
+        if not _navigate_and_prepare_collection(driver):
+            return
+
+        date_str = datetime.now().strftime("%y%m%d")
+        parsed_data = _collect_data(driver)
+        
+        if parsed_data:
+            _save_results(parsed_data, date_str)
+
+        _handle_final_logs(driver)
+
+    finally:
+        log("main", "INFO", "Closing Chrome driver.")
+        driver.quit()
 
 
 if __name__ == "__main__":
