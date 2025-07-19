@@ -307,9 +307,9 @@ def _handle_final_logs(driver: webdriver.Chrome) -> None:
         print(f"브라우저 로그 수집 실패: {e}")
 
 
-def main() -> None:
+def _run_collection_cycle() -> None:
     """
-    Main execution function: runs the browser, collects data, and saves it.
+    Performs a single cycle of data collection and saving.
     """
     cred_path = os.environ.get("CREDENTIAL_FILE")
     driver = _initialize_driver_and_login(cred_path)
@@ -332,6 +332,16 @@ def main() -> None:
         log("main", "INFO", "Closing Chrome driver.")
         driver.quit()
 
+
+def main() -> None:
+    """
+    Main execution function: runs the browser, collects data, and saves it hourly.
+    """
+    while True:
+        log("main", "INFO", "Starting new data collection cycle...")
+        _run_collection_cycle()
+        log("main", "INFO", "Data collection cycle finished. Waiting for 1 hour...")
+        time.sleep(3600) # Wait for 1 hour
 
 if __name__ == "__main__":
     main()
