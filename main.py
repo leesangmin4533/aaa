@@ -37,6 +37,7 @@ from utils.log_util import create_logger
 # Directory configuration
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
+ALL_SALES_DB_FILE = "all_sales_data.db"
 
 # Script file configuration
 DEFAULT_SCRIPT = "auto_collect_mid_products.js"  # 자동 데이터 수집 스크립트
