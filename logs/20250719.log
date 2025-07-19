@@ -1,44 +1,17 @@
 [convert_txt_to_excel][convert][INFO] 텍스트 파일 읽기 시도: c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\250719.txt
-[convert_txt_to_excel][convert][INFO] 76개 행 로드 완료
+[convert_txt_to_excel][convert][INFO] 85개 행 로드 완료
 [convert_txt_to_excel][convert][INFO] 엑셀 파일 저장 위치: c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\mid_excel\250719.xlsx
 [convert_txt_to_excel][convert][INFO] 엑셀 파일 저장 완료
-s
-[main][collect][INFO] appended 2 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 6 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 2 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 3 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 9 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 2 lines
-[main][collect][INFO] appended 2 lines
-[main][collect][INFO] appended 2 lines
-[main][collect][INFO] appended 4 lines
-[main][collect][INFO] appended 4 lines
-[main][collect][INFO] appended 2 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 5 lines
-[main][collect][INFO] appended 4 lines
-[main][collect][INFO] appended 3 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 1 lines
-[main][collect][INFO] appended 5 lines
-[main][collect][INFO] appended 3 lines
-[main][db][INFO] db saved to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250719.db, inserted 0 rows
-[main][output][INFO] saved to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\250719.txt
-[main][excel][INFO] converted to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\mid_excel\250719.xlsx
-[main][browser_log][INFO] 추출된 로그 데이터:
+��먹밥\t8800279672579\t주)오일컷담백참치삼각1\t1\t1\t0\t0\t0', '002\t주먹밥\t8809948346629\t주)참치마요김치제육더블1\t1\t1\t0\t0\t0', '010\t제조음료\t2202000107644\t25뉴get아이스아메XL\t1\t0\t0\t0\t-113', '012\t빵\t8801068409215\t삼립)�[main][db][INFO] DB saved to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250719.db, inserted 0 rows
+[main][excel][INFO] Converted to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\mid_excel\250719.xlsx
+[main][browser_log][INFO] Extracted log data:
 [main][browser_log][INFO] 002	주먹밥	8800275320290	주)계란버터간장삼각1	1	1	0	0	-1\n002	주먹밥	8800271903275	주)고들빼기낙지젓갈1	1	1	0	0	0\n002	주먹밥	8800279672357	주)뉴3XL동원고추참치1	1	1	0	0	0\n002	주먹밥	8800279672579	주)오일컷담백참치삼각1	1	1	0	0	0\n002	주먹밥	8809948346629	주)참치마요김치제육더블1	1	1	0	0	0
 [main][browser_log][INFO] 010	제조음료	2202000107644	25뉴get아이스아메XL	1	0	0	0	-113
 [main][browser_log][INFO] 012	빵	8801068409215	삼립)찰옥수수이야기	1	0	0	0	1
 [main][browser_log][INFO] 014	디저트	8801753108478	연세)우유생크림빵	1	0	0	0	1
 [main][browser_log][INFO] 016	스낵류	8801151112107	서울)허니뻥이요스낵90g	2	0	0	0	8\n016	스낵류	8801117784409	오리온)꼬북칩콘스프맛	1	0	0	0	8
 [main][browser_log][INFO] 017	시리얼	8852756055610	켈로그)크런치넛에너지바	6	0	0	0	5
+[main][browser_log][INFO] 019	초콜릿	8801019204951	해태)자유시간초콜릿바	1	0	0	0	6
 [main][browser_log][INFO] 020	캔디	8990800000053	농심)멘토스푸르티	1	0	0	0	12\n020	캔디	8859623800397	매크로)하이츄복숭아맛	1	0	0	0	5\n020	캔디	8437004492838	스위트)트롤리계란후라이	1	0	0	0	3\n020	캔디	8436556395932	스위트)트롤리키스	1	0	0	0	2\n020	캔디	8801117339708	오리온)마이구미포도66g	1	0	0	0	9\n020	캔디	8801111187893	크라운)마이쮸포도	1	0	0	0	11
 [main][browser_log][INFO] 022	마른안주류	8803622102471	한양)숏바디버터불고기40g	1	2	0	0	1
 [main][browser_log][INFO] 023	육가공류	8801123307289	롯데)의성마늘핫바70g	1	0	0	0	2\n023	육가공류	8803465070685	흥생)구운계란2입	1	3	0	0	1
@@ -48,18 +21,183 @@ s
 [main][browser_log][INFO] 032	면류	8801043015837	농심)너구리소컵	1	0	0	0	6\n032	면류	8801043015967	농심)새우탕큰사발컵	1	0	0	0	5\n032	면류	8801043014809	농심)신라면	5	0	0	0	14\n032	면류	8801043016049	농심)짜파게티큰사발컵	1	0	0	0	12\n032	면류	8801043016070	농심)튀김우동큰사발컵	1	0	0	0	11\n032	면류	6921555529218	라황샹 중경식 마라탕면	1	0	0	0	4\n032	면류	8801073210363	삼양)불닭볶음면컵	1	0	0	0	16\n032	면류	8809695250958	팔도)틈새라면매운김치컵	1	0	0	0	7\n032	면류	8801085884354	한일)정통냉우동	1	0	0	0	5
 [main][browser_log][INFO] 034	냉동즉석식	8809350321818	HEYROO순살치킨득템매콤C	1	1	0	0	2
 [main][browser_log][INFO] 035	냉장즉석식	8809015114663	디엔비)통통새우고로케	1	1	0	0	0\n035	냉장즉석식	8800279674580	팔도한끼)소곱창전골&라면	1	1	0	0	0
-[main][browser_log][INFO] 036	의약외품	8806011615408	동아)박카스F병120ml	10	0	0	0	13\n036	의약외품	8801105914382	해태)영진구론산병150ml	1	0	0	0	25
+[main][browser_log][INFO] 036	의약외품	8804227021600	가디언)탄력붕대	1	0	0	0	1\n036	의약외품	8806011615408	동아)박카스F병120ml	10	0	0	0	13\n036	의약외품	8801105914382	해태)영진구론산병150ml	1	0	0	0	25
 [main][browser_log][INFO] 037	건강기능	8809422043884	HK)컨디션스틱18g	1	0	0	0	4\n037	건강기능	8809422044904	HK)컨디션스틱망고18g	1	0	0	0	9
-[main][browser_log][INFO] 040	기능건강음료	8806002001845	광동)비타500병100ml	2	0	0	0	13\n040	기능건강음료	8801097250079	동아)포카리스웨트P620ml	1	0	0	0	7\n040	기능건강음료	8801056002701	롯데)2프로복숭아캔240ml	2	1	0	0	2\n040	기능건강음료	8801094362706	코카)파워에이드P600ml	3	1	0	0	2
+[main][browser_log][INFO] 040	기능건강음료	8806002001845	광동)비타500병100ml	2	0	0	0	13\n040	기능건강음료	8801097250079	동아)포카리스웨트P620ml	1	0	0	0	7\n040	기능건강음료	8801056002701	롯데)2프로복숭아캔240ml	2	1	0	0	2\n040	기능건강음료	8801056249212	롯데)핫식스더킹애플캔355	1	0	0	0	8\n040	기능건강음료	8801056240998	롯데)핫식스더킹퍼플캔355	1	0	0	0	7\n040	기능건강음료	8801094362706	코카)파워에이드P600ml	3	1	0	0	2
 [main][browser_log][INFO] 042	커피음료	8809685311027	미루꾸)플랫너티라떼	1	0	0	0	3\n042	커피음료	8809685311010	미루꾸)플랫슈패너라떼	1	0	0	0	3\n042	커피음료	8801115382003	스벅)카페라떼컵320ml	1	0	0	0	2\n042	커피음료	8809388464471	이디야)쇼콜라모카300ml	1	0	0	0	2
-[main][browser_log][INFO] 044	탄산음료	8801056249892	롯데)마운틴듀제로캔355ml	2	1	0	0	4\n044	탄산음료	8801094082406	코카)코카콜라제로P1.5L	2	2	0	0	-1
+[main][browser_log][INFO] 044	탄산음료	8801056249892	롯데)마운틴듀제로캔355ml	2	1	0	0	4\n044	탄산음료	8801056175955	롯데)펩시제로라임P500ml	2	0	0	0	11\n044	탄산음료	8801094082406	코카)코카콜라제로P1.5L	2	2	0	0	-1
 [main][browser_log][INFO] 045	아이스드링크	8809253649453	24del)헤이즐넛향340ml	1	0	0	0	5
 [main][browser_log][INFO] 047	우유	8801069185194	남양)초코에몽250ml	3	3	0	0	0\n047	우유	8801155721954	동원)소화잘되는우유900ml	1	1	0	0	1\n047	우유	8801115134220	서울)초코우유300ml	3	3	0	0	2\n047	우유	8801115114390	서울)후레쉬우유900ml	1	0	0	0	1\n047	우유	8801115114154	서울)흰우유1L	1	3	0	0	5
 [main][browser_log][INFO] 048	얼음	8809197840107	del)빅컵얼음230g	1	0	12	0	24\n048	얼음	8809418770107	del)빅컵얼음230g	1	0	0	0	24\n048	얼음	8809197840091	del)컵얼음180g	1	0	15	0	26\n048	얼음	8809404250088	동양)아이스웰얼음2.5kg	1	1	1	0	1
-[main][browser_log][INFO] 049	맥주	5000213027301	기네스콜드브루캔440ml	3	1	0	0	3\n049	맥주	4901004006813	아사히캔500ml	1	0	0	0	12\n049	맥주	8801119241511	필라이트후레쉬캔500ml	3	1	0	0	8
-[main][browser_log][INFO] 050	소주	8801048101023	진로이즈백병360ml	1	0	0	0	24
+[main][browser_log][INFO] 049	맥주	5000213027301	기네스콜드브루캔440ml	3	1	0	0	3\n049	맥주	4901004006813	아사히캔500ml	1	0	0	0	12\n049	맥주	8801858048198	카스레몬스퀴즈캔355ml	1	0	0	0	6\n049	맥주	8801119241511	필라이트후레쉬캔500ml	3	1	0	0	8
+[main][browser_log][INFO] 050	소주	8801048101023	진로이즈백병360ml	1	0	0	0	24\n050	소주	8801152136843	처음처럼새로P640ml	1	0	0	0	33
 [main][browser_log][INFO] 056	목욕세면	8801046846087	2080)치약	2	0	0	0	2
 [main][browser_log][INFO] 058	의류용품	8806366734519	남성발목양말	1	0	0	0	35
 [main][browser_log][INFO] 060	홈/주방용품	2200000079947	종량(가정)20L	1	0	0	0	-14
-[main][browser_log][INFO] 072	담배	8801116000456	더원블루1mg	1	1	0	0	16\n072	담배	8801116006830	레종프렌치블랙3mg	1	0	0	0	30\n072	담배	8801116007257	에쎄체인지업	2	0	0	0	12\n072	담배	8801116015887	에쎄체인지프로즌	1	0	0	0	16\n072	담배	0000088011967	에쎄프라임4mg	1	0	0	0	24
+[main][browser_log][INFO] 072	담배	8801116000456	더원블루1mg	1	1	0	0	16\n072	담배	8801116006830	레종프렌치블랙3mg	1	0	0	0	30\n072	담배	0000088023465	말보로비스타썸머스플래시	1	0	0	0	14\n072	담배	8801116007257	에쎄체인지업	2	0	0	0	12\n072	담배	8801116015887	에쎄체인지프로즌	1	0	0	0	16\n072	담배	0000088011967	에쎄프라임4mg	1	0	0	0	24
 [main][browser_log][INFO] 073	전자담배	8801116012176	LIL액상카트리지	11	5	0	0	70\n073	전자담배	0000088024745	센티아클래식그린	1	0	0	0	9\n073	전자담배	0000088024134	테리아오아시스펄	1	0	0	0	21
+[main][browser_log][INFO] 900	소모품	2201148653150	친환경봉투판매용	1	0	0	0	-1,683
+[main][main][INFO] Closing Chrome driver.
+s 'NoneType'>)
+[db_util][write][WARNING] Record 4: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 5: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 5: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 6: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 6: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 7: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 7: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 8: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 8: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 9: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 9: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 10: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 10: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 11: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 11: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 12: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 12: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 13: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 13: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 14: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 14: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 15: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 15: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 16: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 16: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 17: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 17: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 18: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 18: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 19: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 19: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 20: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 20: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 21: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 21: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 22: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 22: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 23: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 23: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 24: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 24: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 25: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 25: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 26: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 26: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 27: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 27: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 28: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 28: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 29: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 29: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 30: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 30: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 31: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 31: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 32: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 32: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 33: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 33: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 34: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 34: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 35: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 35: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 36: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 36: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 37: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 37: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 38: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 38: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 39: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 39: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 40: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 40: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 41: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 41: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 42: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 42: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 43: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 43: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 44: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 44: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 45: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 45: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 46: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 46: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 47: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 47: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 48: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 48: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 49: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 49: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 50: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 50: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 51: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 51: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 52: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 52: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 53: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 53: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 54: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 54: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 55: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 55: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 56: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 56: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 57: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 57: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 58: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 58: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 59: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 59: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 60: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 60: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 61: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 61: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 62: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 62: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 63: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 63: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 64: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 64: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 65: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 65: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 66: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 66: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 67: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 67: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 68: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 68: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 69: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 69: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 70: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 70: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 71: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 71: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 72: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 72: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 73: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 73: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 74: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 74: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 75: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 75: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 76: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 76: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 77: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 77: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 78: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 78: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 79: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 79: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 80: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 80: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 81: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 81: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 82: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 82: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 83: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 83: Skipped due to missing product_code or sales.
+[db_util][write][DEBUG] Record 84: product_code='None', sales_raw='None' (type: <class 'NoneType'>)
+[db_util][write][WARNING] Record 84: Skipped due to missing product_code or sales.
+[db_util][write][INFO] Finished writing. Inserted 0 new rows into c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250719.db
