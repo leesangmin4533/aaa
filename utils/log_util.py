@@ -12,7 +12,7 @@ def _setup_logger(name: str) -> logging.Logger:
 
     logger.setLevel(logging.DEBUG)
 
-    fmt = logging.Formatter(f"[{name}][%(tag)s][%(levelname)s] %(message)s")
+    fmt = logging.Formatter("[%(name)s][%(tag)s][%(levelname)s] %(message)s")
 
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(fmt)
@@ -31,7 +31,7 @@ def _setup_logger(name: str) -> logging.Logger:
         log_dir.mkdir(exist_ok=True)
         file_name = datetime.now().strftime("%Y%m%d") + ".log"
         file_handler = logging.FileHandler(
-            log_dir / file_name, mode="w", encoding="utf-8"
+            log_dir / file_name, mode="a", encoding="utf-8"
         )
         file_handler.setFormatter(fmt)
         logger.addHandler(file_handler)
@@ -39,19 +39,5 @@ def _setup_logger(name: str) -> logging.Logger:
     return logger
 
 
-def create_logger(module_name: str) -> Callable[[str, str, str], None]:
-    logger = _setup_logger(module_name)
-
-    def log(tag: str, level: str, message: str) -> None:
-        level = level.upper()
-        extra = {"tag": tag}
-        if level == "DEBUG":
-            logger.debug(message, extra=extra)
-        elif level in {"INFO", "SUCCESS"}:
-            logger.info(message, extra=extra)
-        elif level in {"WARN", "WARNING"}:
-            logger.warning(message, extra=extra)
-        else:
-            logger.error(message, extra=extra)
-
-    return log
+def get_logger(name: str) -> logging.Logger:
+    return _setup_logger(name)
