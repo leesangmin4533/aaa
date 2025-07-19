@@ -31,7 +31,6 @@ from selenium.webdriver.support import expected_conditions as EC
 # Local imports - 프로젝트 내부 모듈
 from login.login_bgf import login_bgf
 from utils.log_parser import extract_tab_lines
-from utils import append_unique_lines, convert_txt_to_excel
 from utils.db_util import write_sales_data
 from utils.log_util import create_logger
 
@@ -110,64 +109,7 @@ def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool
         return False
 
 
-def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
-    """
-    수집된 데이터를 텍스트 파일로 저장합니다.
-    
-    데이터 저장 규칙:
-    1. 기본 파일명: YYYYMMDD.txt (예: 20250718.txt)
-    2. 필드 구분자: 탭(\t)
-    3. 필드 순서: FIELD_ORDER에 정의된 순서대로 저장
-    4. 빈 값 처리: sales 관련 필드의 빈 값은 "0"으로 처리
-    
-    Parameters
-    ----------
-    data : Any
-        저장할 데이터 (리스트 또는 딕셔너리)
-    output : str | Path | None
-        저장할 파일 경로 (없으면 자동 생성)
-        
-    Returns
-    -------
-    Path
-        저장된 파일의 경로
-    """
-    # 파일 경로 설정
-    if output is None:
-        CODE_OUTPUT_DIR.mkdir(exist_ok=True)
-        fname = datetime.now().strftime("%Y%m%d") + ".txt"
-        output = CODE_OUTPUT_DIR / fname
-        
-    output = Path(output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    
-    # 기존 파일이 있으면 삭제
-    if output.exists():
-        output.unlink()
-        
-    # 데이터 저장
-    with open(output, "w", encoding="utf-8") as f:
-        if isinstance(data, list):
-            for row in data:
-                if isinstance(row, dict):
-                    # 정의된 필드 순서대로 데이터 저장
-                    f.write(
-                        "\t".join(str(row.get(k, "")) for k in FIELD_ORDER) + "\n"
-                    )
-                else:
-                    # 텍스트 데이터 처리 (빈 값은 0으로 변환)
-                    text = str(row).rstrip("\n")
-                    parts = text.split("\t")
-                    if len(parts) >= 3:
-                        for i in range(3, len(parts)):
-                            if parts[i] == "":
-                                parts[i] = "0"
-                        text = "\t".join(parts)
-                    f.write(text + "\n")
-        else:
-            # 단일 데이터 저장
-            f.write(str(data))
-    return output
+
 
 
 def _initialize_driver_and_login(cred_path: str | None) -> webdriver.Chrome | None:
@@ -217,27 +159,13 @@ def _collect_data(driver: webdriver.Chrome) -> Any | None:
 
 
 def _save_results(parsed_data: Any, date_str: str) -> None:
-    """Save the collected data to TXT, DB, and Excel files."""
+    """Save the collected data to DB."""
     if not isinstance(parsed_data, list) or not all(isinstance(item, str) for item in parsed_data):
         log("output", "ERROR", f"Invalid data format received: {type(parsed_data)}")
         print(f"잘못된 데이터 형식: {type(parsed_data)}")
         return
 
-    output_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
-    db_path = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
-    excel_dir = CODE_OUTPUT_DIR / "mid_excel"
-    excel_dir.mkdir(parents=True, exist_ok=True)
-    excel_path = excel_dir / f"{date_str}.xlsx"
-
-    # Save to TXT
-    try:
-        save_to_txt(parsed_data, output_path)
-        log("output", "INFO", f"Saved to {output_path}")
-        print(f"saved to {output_path}")
-    except Exception as e:
-        log("output", "ERROR", f"Failed to save TXT file: {e}")
-        print(f"텍스트 파일 저장 실패: {e}")
-        return  # Stop if we can't even save the raw text
+    db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
 
     # Convert string data to list of dictionaries for DB insertion
     records_for_db = []
@@ -259,17 +187,6 @@ def _save_results(parsed_data: Any, date_str: str) -> None:
             print(f"db write failed: {e}")
     else:
         log("db", "WARNING", "No valid records found to save to the database.")
-
-    time.sleep(3)
-
-    # Convert to Excel
-    try:
-        convert_txt_to_excel(str(output_path), str(excel_path))
-        log("excel", "INFO", f"Converted to {excel_path}")
-        print(f"converted to {excel_path}")
-    except Exception as e:
-        log("excel", "ERROR", f"Excel conversion failed: {e}")
-        print(f"excel conversion failed: {e}")
 
 
 def _handle_final_logs(driver: webdriver.Chrome) -> None:
