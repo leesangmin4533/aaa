@@ -122,31 +122,23 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
     int
         실제로 저장된 레코드 수
     """
-    log("write", "INFO", f"Received {len(records)} records to write to {db_path}")
-    log("write", "DEBUG", f"Full records data: {records}")
-
-    # DB 연결 및 시각 기록 준비
     conn = init_db(db_path)
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")  # 분 단위까지 기록
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
     cur = conn.cursor()
     inserted = 0
 
-    # 각 레코드 처리
-    for i, rec in enumerate(records):
+    for rec in records:
         product_code = _get_value(rec, "productCode", "product_code")
         sales_raw = _get_value(rec, "sales")
-        
-        log("write", "DEBUG", f"Record {i}: product_code='{product_code}', sales_raw='{sales_raw}' (type: {type(sales_raw)})")
 
         if product_code is None or sales_raw is None:
-            log("write", "WARNING", f"Record {i}: Skipped due to missing product_code or sales.")
             continue
-        
+
         try:
+            # sales 값을 정수로 변환
             sales = int(sales_raw)
         except (ValueError, TypeError):
-            log("write", "WARNING", f"Record {i}: Could not convert sales '{sales_raw}' to int. Skipping.")
-            continue
+            continue  # 정수로 변환할 수 없는 값은 건너뛰기
 
         cur.execute(
             "SELECT sales FROM mid_sales WHERE product_code=? ORDER BY id DESC LIMIT 1",
@@ -154,15 +146,11 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
         )
         row = cur.fetchone()
         last_sales = row[0] if row else None
-        
-        log("write", "DEBUG", f"Record {i}: last_sales for {product_code} is {last_sales}")
 
+        # 새로운 sales 값이 기존 값보다 큰 경우에만 저장
         if last_sales is not None and sales <= last_sales:
-            log("write", "INFO", f"Record {i}: Skipped. New sales ({sales}) is not greater than last sales ({last_sales}).")
             continue
-        
-        log("write", "INFO", f"Record {i}: Inserting new sales data for {product_code}. New: {sales}, Prev: {last_sales}")
-        
+
         cur.execute(
             """
             INSERT INTO mid_sales (
@@ -184,8 +172,7 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
             ),
         )
         inserted += 1
-        
+
     conn.commit()
     conn.close()
-    log("write", "INFO", f"Finished writing. Inserted {inserted} new rows into {db_path}")
     return inserted
