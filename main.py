@@ -121,12 +121,18 @@ def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
 def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool:
     """중분류별 매출 구성비 화면의 그리드가 나타날 때까지 대기한다."""
     selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
+    log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={'tag': 'navigation'})
     try:
         WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, selector))
         )
+        log.debug("Mix ratio page grid found.", extra={'tag': 'navigation'})
         return True
-    except Exception:
+    except TimeoutException:
+        log.error(f"Mix ratio page grid not found within {timeout} seconds.", extra={'tag': 'navigation'}, exc_info=True)
+        return False
+    except Exception as e:
+        log.error(f"An unexpected error occurred while waiting for mix ratio page: {e}", extra={'tag': 'navigation'}, exc_info=True)
         return False
 
 
