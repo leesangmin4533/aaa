@@ -1,16 +1,19 @@
 from __future__ import annotations
 
+# Standard library imports
 import os
 import time
 from pathlib import Path
 from typing import Any
 from datetime import datetime
 
+# Third-party imports
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
+# Local imports
 from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
 from utils.log_parser import extract_tab_lines
@@ -18,12 +21,14 @@ from utils import append_unique_lines, convert_txt_to_excel
 from utils.db_util import write_sales_data
 from utils.log_util import create_logger
 
+# Directory configuration
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
-# 자동 실행할 기본 스크립트 파일명
-DEFAULT_SCRIPT = "auto_collect_mid_products.js"
-LISTENER_SCRIPT = "data_collect_listener.js"
-NAVIGATION_SCRIPT = "navigation.js"
+
+# Script file configuration
+DEFAULT_SCRIPT = "auto_collect_mid_products.js"  # 자동 데이터 수집 스크립트
+LISTENER_SCRIPT = "data_collect_listener.js"     # 데이터 수집 이벤트 리스너
+NAVIGATION_SCRIPT = "navigation.js"              # 페이지 네비게이션 스크립트
 
 # Logger used for both console and file output
 log = create_logger("main")
@@ -130,25 +135,30 @@ def save_to_txt(data: Any, output: str | Path | None = None) -> Path:
 
 
 def main() -> None:
+    """
+    메인 실행 함수: 브라우저를 실행하고 데이터를 수집하여 저장합니다.
+    """
+    # 브라우저 드라이버 초기화 및 로그인
     driver = create_driver()
     cred_path = os.environ.get("CREDENTIAL_FILE")
     if not login_bgf(driver, credential_path=cred_path):
-        print("login failed")
-        log("login", "ERROR", "login failed")
+        print("로그인 실패")
+        log("login", "ERROR", "로그인 실패")
         driver.quit()
         return
 
-    # TensorFlow delegate 초기화 로그 이후 다시 팝업을 닫는다
+    # 팝업 처리 및 페이지 네비게이션
     try:
-        close_popups_after_delegate(driver)
+        close_popups_after_delegate(driver)  # TensorFlow delegate 초기화 후 팝업 처리
     except Exception as e:
-        print(f"delegate popup close failed: {e}")
-        log("popup", "WARNING", f"delegate popup close failed: {e}")
-    # 매출분석 화면으로 이동한다
+        print(f"팝업 처리 실패: {e}")
+        log("popup", "WARNING", f"팝업 처리 실패: {e}")
+
+    # 매출분석 화면으로 이동
     run_script(driver, NAVIGATION_SCRIPT)
     if not wait_for_mix_ratio_page(driver):
-        print("page load timeout")
-        log("navigation", "ERROR", "page load timeout")
+        print("페이지 로드 시간 초과")
+        log("navigation", "ERROR", "페이지 로드 시간 초과")
         driver.quit()
         return
 
