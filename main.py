@@ -229,13 +229,16 @@ def _run_collection_cycle() -> None:
     """
     Performs a single cycle of data collection and saving.
     """
+    log("main", "INFO", "_run_collection_cycle started.")
     cred_path = os.environ.get("CREDENTIAL_FILE")
     driver = _initialize_driver_and_login(cred_path)
     if not driver:
+        log("main", "ERROR", "Driver initialization or login failed. Skipping collection cycle.")
         return
 
     try:
         if not _navigate_and_prepare_collection(driver):
+            log("main", "ERROR", "Navigation or preparation failed. Skipping collection cycle.")
             return
 
         date_str = datetime.now().strftime("%y%m%d")
@@ -243,12 +246,15 @@ def _run_collection_cycle() -> None:
         
         if parsed_data:
             _save_results(parsed_data, date_str)
+        else:
+            log("main", "WARNING", "No parsed data collected. Skipping save results.")
 
         _handle_final_logs(driver)
 
     finally:
         log("main", "INFO", "Closing Chrome driver.")
         driver.quit()
+        log("main", "INFO", "_run_collection_cycle finished.")
 
 
 def main() -> None:
@@ -259,7 +265,8 @@ def main() -> None:
         log("main", "INFO", "Starting new data collection cycle...")
         _run_collection_cycle()
         log("main", "INFO", "Data collection cycle finished. Waiting for 1 hour...")
-        time.sleep(3600) # Wait for 1 hour
+        time.sleep(300) # Wait for 5 minutes
+        log("main", "INFO", "1 hour wait completed. Starting next cycle.")
 
 if __name__ == "__main__":
     main()
