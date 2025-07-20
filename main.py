@@ -36,6 +36,8 @@ from login.login_bgf import login_bgf
 from utils.log_parser import extract_tab_lines
 from utils.db_util import write_sales_data
 from utils.log_util import get_logger
+from utils.convert_txt_to_excel import convert_txt_to_excel
+from utils.file_util import append_unique_lines
 
 # --- Configuration Loading ---
 def load_config() -> dict:
@@ -87,6 +89,25 @@ FIELD_ORDER = [
 ]
 
 
+def save_to_txt(data: list[dict[str, Any]] | list[str], path: Path) -> Path:
+    """Save records to a text file with fields ordered by ``FIELD_ORDER``."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        for record in data:
+            if isinstance(record, dict):
+                line = "\t".join(str(record.get(k, "")) for k in FIELD_ORDER)
+            else:
+                line = str(record)
+            f.write(line + "\n")
+    return path
+
+
+def close_popups_after_delegate(delegate, *args, **kwargs):
+    """Run ``delegate`` and return its result. Placeholder for popup cleanup."""
+    return delegate(*args, **kwargs)
+
+
 def create_driver() -> webdriver.Chrome:
     options = Options()
     options.add_experimental_option("detach", True)
@@ -110,13 +131,14 @@ def run_script(driver: webdriver.Chrome, name: str) -> Any:
 
 
 def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
-    """Wait for the __parsedData__ variable to be available on the window object."""
-    try:
-        return WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return window.automation && window.automation.parsedData")
-        )
-    except Exception:
-        return None
+    """Poll for ``window.__parsedData__`` until available or timeout."""
+    start = time.time()
+    while time.time() - start < timeout:
+        data = driver.execute_script("return window.__parsedData__ || null")
+        if data is not None:
+            return data
+        time.sleep(0.5)
+    return None
 
 
 def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool:
