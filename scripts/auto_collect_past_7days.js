@@ -15,6 +15,22 @@
     throw new Error(`Timeout: Element not found - ${selector}`);
   }
 
+  async function waitForMainForm(timeout = 10000) {
+    const start = Date.now();
+    while (Date.now() - start < timeout) {
+      try {
+        const app = window.nexacro.getApplication();
+        const form =
+          app.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
+        if (form) return form;
+      } catch (e) {
+        // ignore and retry
+      }
+      await delay(300);
+    }
+    throw new Error('Timeout: Main form not ready');
+  }
+
   function getPastDates(n = 7) {
     const dates = [];
     const today = new Date();
@@ -42,10 +58,9 @@
 
   async function inputDateAndSearch(dateStr) {
     try {
-      // ✅ Nexacro API 기반 날짜 설정
-      const app = window.nexacro.getApplication();
-      app.mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form
-        .div_workForm.form.div_search.form.calFromDay.set_value(dateStr);
+      // ✅ Nexacro API 기반 날짜 설정 (form 로딩 대기)
+      const form = await waitForMainForm();
+      form.div_workForm.form.div_search.form.calFromDay.set_value(dateStr);
       await delay(300);
 
       // ✅ 조회 버튼 클릭
