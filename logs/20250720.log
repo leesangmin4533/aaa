@@ -2283,3 +2283,72 @@ FileNotFoundError: [Errno 2] No such file or directory: 'c:\\Users\\kanur\\OneDr
 [__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
 [__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\data_collect_listener.js
 [__main__][mid_category][INFO] mid_category logs: ['🚀 collectMidCodes 시작', '🔄 중분류 목록 스캔 시작', 'Found 22 mid-category cells.', 'Attempting to click mid-category: 001 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720163310)', '*********** 트랜잭션 호출 전 httptimeout : 60', '✅ 중분류 클릭: 001 (도시락)']
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][ERROR] Nexacro application did not load: Message: javascript error: Cannot read properties of undefined (reading 'mainframe')
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff773e7e925+77845]
+	GetHandleVerifier [0x0x7ff773e7e980+77936]
+	(No symbol) [0x0x7ff773c39cda]
+	(No symbol) [0x0x7ff773c41679]
+	(No symbol) [0x0x7ff773c44a61]
+	(No symbol) [0x0x7ff773ce1e4b]
+	(No symbol) [0x0x7ff773cb88ca]
+	(No symbol) [0x0x7ff773ce0b07]
+	(No symbol) [0x0x7ff773cb86a3]
+	(No symbol) [0x0x7ff773c81791]
+	(No symbol) [0x0x7ff773c82523]
+	GetHandleVerifier [0x0x7ff77415683d+3059501]
+	GetHandleVerifier [0x0x7ff774150bfd+3035885]
+	GetHandleVerifier [0x0x7ff7741703f0+3164896]
+	GetHandleVerifier [0x0x7ff773e98c2e+185118]
+	GetHandleVerifier [0x0x7ff773ea053f+216111]
+	GetHandleVerifier [0x0x7ff773e872d4+113092]
+	GetHandleVerifier [0x0x7ff773e87489+113529]
+	GetHandleVerifier [0x0x7ff773e6e288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][login][ERROR] Login failed.
+[__main__][main][ERROR] Driver initialization or login failed. Skipping collection cycle.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][INFO] auto_collect_past_7days.js completed successfully.
+[__main__][collect][INFO] Starting data collection scripts.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\data_collect_listener.js
+[__main__][mid_category][INFO] mid_category logs: ['🚀 collectMidCodes 시작', '🔄 중분류 목록 스캔 시작', 'Found 22 mid-category cells.', 'Attempting to click mid-category: 001 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720163446)', '*********** 트랜잭션 호출 전 httptimeout : 60', '✅ 중분류 클릭: 001 (도시락)']
