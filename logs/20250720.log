@@ -2608,3 +2608,407 @@ Stacktrace:
 [__main__][main][ERROR] Driver initialization or login failed. Skipping collection cycle.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][CRITICAL] Critical error during collection cycle: 'cp949' codec can't encode character '\U0001f50d' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
+  File "C:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 347, in _run_collection_cycle
+    print("🔍 SCRIPT_DIR =", SCRIPT_DIR)
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f50d' in position 0: illegal multibyte sequence
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][CRITICAL] Critical error during collection cycle: 'cp949' codec can't encode character '\U0001f4dc' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
+  File "C:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 367, in _run_collection_cycle
+    print(log_entry)
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f4dc' in position 0: illegal multibyte sequence
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][CRITICAL] Critical error during collection cycle: 'cp949' codec can't encode character '\U0001f4dc' in position 0: illegal multibyte sequence
+Traceback (most recent call last):
+  File "C:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 367, in _run_collection_cycle
+    print(log_entry)
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f4dc' in position 0: illegal multibyte sequence
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][CRITICAL] Critical error during collection cycle: Message: javascript error: missing ) after argument list
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff7bbebe925+77845]
+	GetHandleVerifier [0x0x7ff7bbebe980+77936]
+	(No symbol) [0x0x7ff7bbc79cda]
+	(No symbol) [0x0x7ff7bbc81679]
+	(No symbol) [0x0x7ff7bbc84a61]
+	(No symbol) [0x0x7ff7bbd21e4b]
+	(No symbol) [0x0x7ff7bbcf88ca]
+	(No symbol) [0x0x7ff7bbd20b07]
+	(No symbol) [0x0x7ff7bbcf86a3]
+	(No symbol) [0x0x7ff7bbcc1791]
+	(No symbol) [0x0x7ff7bbcc2523]
+	GetHandleVerifier [0x0x7ff7bc19683d+3059501]
+	GetHandleVerifier [0x0x7ff7bc190bfd+3035885]
+	GetHandleVerifier [0x0x7ff7bc1b03f0+3164896]
+	GetHandleVerifier [0x0x7ff7bbed8c2e+185118]
+	GetHandleVerifier [0x0x7ff7bbee053f+216111]
+	GetHandleVerifier [0x0x7ff7bbec72d4+113092]
+	GetHandleVerifier [0x0x7ff7bbec7489+113529]
+	GetHandleVerifier [0x0x7ff7bbeae288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+Traceback (most recent call last):
+  File "C:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 351, in _run_collection_cycle
+    run_script(driver, "auto_collect_past_7days.js")
+  File "C:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 135, in run_script
+    return driver.execute_script(js)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 544, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.JavascriptException: Message: javascript error: missing ) after argument list
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff7bbebe925+77845]
+	GetHandleVerifier [0x0x7ff7bbebe980+77936]
+	(No symbol) [0x0x7ff7bbc79cda]
+	(No symbol) [0x0x7ff7bbc81679]
+	(No symbol) [0x0x7ff7bbc84a61]
+	(No symbol) [0x0x7ff7bbd21e4b]
+	(No symbol) [0x0x7ff7bbcf88ca]
+	(No symbol) [0x0x7ff7bbd20b07]
+	(No symbol) [0x0x7ff7bbcf86a3]
+	(No symbol) [0x0x7ff7bbcc1791]
+	(No symbol) [0x0x7ff7bbcc2523]
+	GetHandleVerifier [0x0x7ff7bc19683d+3059501]
+	GetHandleVerifier [0x0x7ff7bc190bfd+3035885]
+	GetHandleVerifier [0x0x7ff7bc1b03f0+3164896]
+	GetHandleVerifier [0x0x7ff7bbed8c2e+185118]
+	GetHandleVerifier [0x0x7ff7bbee053f+216111]
+	GetHandleVerifier [0x0x7ff7bbec72d4+113092]
+	GetHandleVerifier [0x0x7ff7bbec7489+113529]
+	GetHandleVerifier [0x0x7ff7bbeae288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][INFO] auto_collect_past_7days.js completed successfully.
+[__main__][collect][INFO] Starting data collection scripts.
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\data_collect_listener.js
+[__main__][mid_category][INFO] mid_category logs: ['collectMidCodes 시작', 'collectMidCodes 시작', '🔄 중분류 목록 스캔 시작', '🔄 중분류 목록 스캔 시작', 'Found 22 mid-category cells.', 'Found 22 mid-category cells.', 'Attempting to click mid-category: 002 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', 'Attempting to click mid-category: 002 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720190959)', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720190959)', '*********** 트랜잭션 호출 전 httptimeout : 60', '*********** 트랜잭션 호출 전 httptimeout : 60', '중분류 클릭: 002 (주먹밥)', '중분류 클릭: 002 (주먹밥)']
+[__main__][collect][INFO] Using liveData as fallback for parsedData.
+[__main__][collect][INFO] Data collection complete.
+[__main__][db][INFO] DB saved to C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\past_7days.db, inserted 0 rows
+[utils.convert_txt_to_excel][convert][INFO] 텍스트 파일 읽기 시도: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\250720.txt
+[utils.convert_txt_to_excel][convert][INFO] 285개 행 로드 완료
+[utils.convert_txt_to_excel][convert][INFO] 엑셀 파일 저장 위치: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\mid_excel\250720.xlsx
+[utils.convert_txt_to_excel][convert][INFO] 엑셀 파일 저장 완료
+[__main__][browser_log][INFO] Extracted log data:
+[__main__][browser_log][INFO] 002	주먹밥	8809948346506	주)3XL베이컨참치마요1	1	0	1	0	0\n002	주먹밥	8800275320290	주)계란버터간장삼각1	2	1	1	0	-1\n002	주먹밥	8800271903275	주)고들빼기낙지젓갈1	1	1	0	0	0\n002	주먹밥	8800279672357	주)뉴3XL동원고추참치1	1	1	1	0	1\n002	주먹밥	8800279673279	주)백종원스페셜우삼겹1	2	0	1	0	0\n002	주먹밥	8800279672579	주)오일컷담백참치삼각1	1	1	0	0	0\n002	주먹밥	8801771034223	주)오징어씨앗젓갈1	1	0	0	0	0\n002	주먹밥	8809948346629	주)참치마요김치제육더블1	2	1	1	0	-1
+[__main__][browser_log][INFO] 003	김밥	8800279676867	김)맛초킹치킨김밥1	1	0	1	0	0\n003	김밥	8800279676607	김)압도적뉴참치마요1	2	0	1	0	0\n003	김밥	8800279677161	김)압도적치즈계란김밥1	1	0	0	0	0\n003	김밥	8800279677260	김)압도적치즈불고기김밥1	1	0	1	0	0
+[__main__][browser_log][INFO] 004	샌드위치류	8800271902117	샌)더뉴대만식연유1	1	0	1	0	0\n004	샌드위치류	8800279675624	샌)크랩마요샌드1	1	0	0	0	0
+[__main__][browser_log][INFO] 010	제조음료	2202000107644	25뉴get아이스아메XL	2	0	0	0	-115
+[__main__][browser_log][INFO] 012	빵	8801068934182	삼립)끼리초당옥수수호떡	1	0	0	0	1\n012	빵	8801068934229	삼립)끼리크림치즈보름달	1	0	0	0	0\n012	빵	8801068933857	삼립)얼그레이카스테라	1	0	0	0	1\n012	빵	8801068409215	삼립)찰옥수수이야기	1	0	0	0	1\n012	빵	8801068402285	삼립)포켓몬로켓초코롤	1	0	0	0	0\n012	빵	8801068402254	삼립)포켓몬파이리핫소스	2	0	0	0	0\n012	빵	8801068933871	삼립)흑임자이야기	1	0	0	0	1
+[__main__][browser_log][INFO] 014	디저트	8809692957966	405)피스타치오수건케이크	1	0	0	0	0\n014	디저트	8802259024880	롯데)바닐라푸딩	1	0	0	0	0\n014	디저트	8809523624845	연세)레드벨벳롤케익	1	0	0	0	0\n014	디저트	8801753113960	연세)레드벨벳생크림빵	1	0	0	0	-1\n014	디저트	8801753112963	연세)메론생크림빵	2	1	1	0	-1\n014	디저트	8801753108478	연세)우유생크림빵	1	0	0	0	1\n014	디저트	8801753108775	연세)초코생크림빵	1	0	0	0	0\n014	디저트	8801753114691	연세)크림맘모스	1	0	0	0	0\n014	디저트	8801753114639	연세)피넛초코생크림빵	1	1	1	0	0
+[__main__][browser_log][INFO] 015	비스켓/쿠키	8801037088168	동서)오레오화이트크림	1	1	1	0	3\n015	비스켓/쿠키	8802259020370	롯데)베이크쿠키크랜베리	1	0	0	0	5\n015	비스켓/쿠키	8801117158118	오리온)비쵸비125g	1	0	0	0	2\n015	비스켓/쿠키	8801117282202	오리온)예감오리지널	1	0	0	0	1\n015	비스켓/쿠키	8801117446901	오리온)초코송이	1	0	0	0	2\n015	비스켓/쿠키	8801117392604	오리온)초코송이딸기45g	1	0	0	0	3\n015	비스켓/쿠키	8801019306907	해태)에이스	1	0	0	0	3
+[__main__][browser_log][INFO] 016	스낵류	8801043036078	농심)매운새우깡90g	1	0	0	0	12\n016	스낵류	8801043068314	농심)먹태깡청양마요맛60g	1	0	0	0	6\n016	스낵류	8801043036634	농심)바나나킥75g	1	0	0	0	5\n016	스낵류	8801043036337	농심)오징어집78g	2	0	0	0	14\n016	스낵류	8801043036238	농심)자갈치90g	1	0	0	0	9\n016	스낵류	8801043031431	농심)쫄병매콤한맛	1	3	3	0	4\n016	스낵류	8801043005814	농심)포테토칩60g	1	0	0	0	16\n016	스낵류	8801062380114	롯데)꼬깔콘고소한맛	1	0	0	0	7\n016	스낵류	8801728108519	베어스)나쵸앤살사	1	0	0	0	4\n016	스낵류	8801151112107	서울)허니뻥이요스낵90g	2	0	0	0	8\n016	스낵류	8801045652573	오뚜기)순후추팝콘55g	2	0	0	0	1\n016	스낵류	8801045851945	오뚜기)콘크림스프팝콘55g	1	0	0	0	8\n016	스낵류	8801117784409	오리온)꼬북칩콘스프맛	1	0	0	0	8\n016	스낵류	8801117777609	오리온)눈을감자56g	1	0	0	0	8\n016	스낵류	8801117783303	오리온)도도한나쵸사워92g	1	0	0	0	4\n016	스낵류	8801117765903	오리온)도도한나쵸치즈92g	2	0	0	0	3\n016	스낵류	8801117775001	오리온)스윙칩고추장60g	1	0	0	0	3\n016	스낵류	8801117197100	오리온)스윙칩빨간오뎅60g	1	0	0	0	1\n016	스낵류	8801117760304	오리온)포카칩어니언66g	1	0	0	0	2\n016	스낵류	8801117760106	오리온)포카칩오리지널66g	1	0	0	0	6\n016	스낵류	8801111610636	크라운)죠리퐁	1	0	0	0	9\n016	스낵류	8801111180993	크라운)콘초	1	0	0	0	17\n016	스낵류	8801111183062	크라운)콘치크림치즈	1	0	0	0	12\n016	스낵류	8801019606328	해태)오사쯔60g	1	0	0	0	4\n016	스낵류	8801019606540	해태)허니버터칩60g	3	0	0	0	9\n016	스낵류	8801019613074	해태)허니버터칩캐슬갈릭	1	0	0	0	2
+[__main__][browser_log][INFO] 017	시리얼	8801037096576	동서)오레오오즈컵30g	1	0	0	0	2\n017	시리얼	8801037096552	동서)콘푸라이트컵30g	2	0	0	0	1\n017	시리얼	8852756055610	켈로그)크런치넛에너지바	6	0	0	0	5
+[__main__][browser_log][INFO] 018	껌	8801062321773	롯데)왓따콜라풍선껌	2	0	0	0	16\n018	껌	8801117650605	오리온)와우블랙레몬	1	0	0	0	8
+[__main__][browser_log][INFO] 019	초콜릿	8801062636884	롯데)가나마일드초콜릿34g	1	0	0	0	9\n019	초콜릿	8801062634330	롯데)아몬드초코볼46g	1	1	10	0	10\n019	초콜릿	6914973603189	마즈)엠앤엠밀크초콜릿37g	1	0	0	0	9\n019	초콜릿	6914973603202	마즈)엠앤엠피넛초콜릿37g	2	0	0	0	5\n019	초콜릿	0000080768258	매일)킨더초콜릿조이걸	1	0	0	0	5\n019	초콜릿	8801019204951	해태)자유시간초콜릿바	1	0	0	0	6
+[__main__][browser_log][INFO] 020	캔디	8800280531414	SA)오로라핑비밀캔디포도	1	0	0	0	7\n020	캔디	8990800000053	농심)멘토스푸르티	1	0	0	0	12\n020	캔디	8410031920093	농심)츄파춥스12g	6	0	0	0	214\n020	캔디	6925425474653	농심)츄파춥스게코젤리	2	0	0	0	1\n020	캔디	6926106108447	대진)요거트향츄잉캔디12g	1	0	0	0	18\n020	캔디	8801062335633	롯데)밀크카라멜50g	1	0	0	0	13\n020	캔디	8859623800397	매크로)하이츄복숭아맛	1	0	0	0	5\n020	캔디	8691216096370	삼경)하리보해피콜라사워	1	5	5	0	5\n020	캔디	8809963482531	선우)퐁퐁마시멜로무지개	1	0	0	0	10\n020	캔디	8437004492838	스위트)트롤리계란후라이	1	0	0	0	3\n020	캔디	8436556395932	스위트)트롤리키스	1	0	0	0	2\n020	캔디	8801117339708	오리온)마이구미포도66g	1	0	0	0	8\n020	캔디	5011053024214	일신)메가푸쉬팝	1	0	0	0	5\n020	캔디	8809555860631	코코)단짝캔디46g	2	0	0	0	2\n020	캔디	8801111187893	크라운)마이쮸포도	1	0	0	0	11
+[__main__][browser_log][INFO] 021	일반아이스크림	8809599361057	라라스윗)딸기요거트바	1	0	0	0	10\n021	일반아이스크림	8809599360470	라라스윗)바닐라초코바	1	0	0	0	28\n021	일반아이스크림	8809599361217	라라스윗)복숭아요거트바	1	0	0	0	8\n021	일반아이스크림	8809599360692	라라스윗)쿠앤크초코바	1	0	0	0	9\n021	일반아이스크림	8801062623471	롯데)월드콘	3	0	0	0	10\n021	일반아이스크림	8801104123280	빙그레)메로나	2	0	0	0	8\n021	일반아이스크림	8809713220048	해태)폴라포포도	3	0	0	0	32
+[__main__][browser_log][INFO] 022	마른안주류	8800279451266	990)하루견과블루	1	0	0	0	2\n022	마른안주류	8809050566298	고려)제주등심육포40g	1	0	0	0	2\n022	마른안주류	8801133007209	머거본)실속커피땅콩100g	1	0	0	0	1\n022	마른안주류	8809617947010	바프)허니로스티드땅콩	1	0	0	0	5\n022	마른안주류	8801308460334	정화)훈연오징어진공50g	2	0	0	0	3\n022	마른안주류	8803622000159	한양)꽃보다오징어160g	1	3	3	0	2\n022	마른안주류	8803622102471	한양)숏바디버터불고기40g	2	2	2	0	2
+[__main__][browser_log][INFO] 023	육가공류	8801123307289	롯데)의성마늘핫바70g	1	0	0	0	1\n023	육가공류	8801066019447	사조)숯불후랑크꼬치바70g	1	0	0	0	3\n023	육가공류	8809220375781	푸르샨)불맛직화불막창	1	0	0	0	0\n023	육가공류	8801492391995	하림)마늘후랑크70g	2	0	0	0	2\n023	육가공류	8803465070685	흥생)구운계란2입	1	3	0	0	1
+[__main__][browser_log][INFO] 027	농산식재료	8801114119075	풀무원)소가찌개두부290g	1	1	0	0	1
+[__main__][browser_log][INFO] 028	축수산식재료	8803465001764	PBICK)계란득템15입	2	2	0	0	2\n028	축수산식재료	8801155834616	동원)덴마크스트링치즈	4	0	0	0	0\n028	축수산식재료	8801155601034	동원)체다치즈5매입	1	0	0	0	2\n028	축수산식재료	8809136851096	제니코)치즈파티모짜렐라	1	0	0	0	0
+[__main__][browser_log][INFO] 029	조미료류	8801007052984	CJ)해찬들초고추장170g	1	0	0	0	1\n029	조미료류	8801045202105	오뚜기)사과식초360ml	1	0	0	0	1
+[__main__][browser_log][INFO] 031	반찬류	8801007512259	CJ)스팸200g	1	0	0	0	1\n031	반찬류	8801075010923	사조)살코기참치150g	3	0	0	0	3
+[__main__][browser_log][INFO] 032	면류	8801043015639	농심)김치사발면	2	0	0	0	5\n032	면류	8801043015837	농심)너구리소컵	1	0	0	0	5\n032	면류	8801043015967	농심)새우탕큰사발컵	1	0	0	0	5\n032	면류	8801043014809	농심)신라면	6	0	0	0	13\n032	면류	8801043015653	농심)육개장사발면	4	1	24	0	20\n032	면류	8801043016049	농심)짜파게티큰사발컵	1	0	0	0	12\n032	면류	8801043062480	농심)카구리컵	1	0	0	0	8\n032	면류	8801043016070	농심)튀김우동큰사발컵	1	0	0	0	10\n032	면류	6921555529218	라황샹 중경식 마라탕면	1	0	0	0	4\n032	면류	8801073211469	삼양)까르보불닭큰컵	1	1	16	0	14\n032	면류	8801073212619	삼양)로제불닭볶음면컵	1	0	0	0	2\n032	면류	8801073210363	삼양)불닭볶음면컵	2	0	0	0	14\n032	면류	8801073216624	삼양)푸팟퐁커리불닭컵	2	0	0	0	1\n032	면류	8801045571416	오뚜기)스파게티컵	1	0	0	0	8\n032	면류	8801045555041	오뚜기)열튀김우동컵	1	0	0	0	3\n032	면류	8801045702643	오뚜기)육개장사발면	5	0	0	0	2\n032	면류	8801045520124	오뚜기)진라면매운맛	2	0	0	0	11\n032	면류	8809695253669	팔도)뽀로로짜장중컵	2	0	0	0	3\n032	면류	8809695250958	팔도)틈새라면매운김치컵	2	0	0	0	6\n032	면류	8801128503037	팔도)팔도비빔면	5	0	0	0	6\n032	면류	8801085884354	한일)정통냉우동	1	0	0	0	5
+[__main__][browser_log][INFO] 033	상온즉석식	8801392032998	CJ)소고기듬뿍미역국	2	0	0	0	1\n033	상온즉석식	8801007054186	CJ)큰햇반300g	3	0	0	0	3
+[__main__][browser_log][INFO] 034	냉동즉석식	8809350321818	HEYROO순살치킨득템매콤C	1	1	0	0	3\n034	냉동즉석식	8801045751245	오뚜기)우노피자불고기	1	0	0	0	0
+[__main__][browser_log][INFO] 035	냉장즉석식	8805684011531	MDS)명란마요파스타	1	0	0	0	0\n035	냉장즉석식	8805684010657	MDS)투움바파스타N	1	0	0	0	0\n035	냉장즉석식	8809015114731	디엔비)두툼불고기고로케	1	0	0	0	1\n035	냉장즉석식	8809015114663	디엔비)통통새우고로케	1	1	0	0	0\n035	냉장즉석식	8800279674580	팔도한끼)소곱창전골&라면	1	1	0	0	1
+[__main__][browser_log][INFO] 036	의약외품	8804227021600	가디언)탄력붕대	1	0	0	0	1\n036	의약외품	8806011615408	동아)박카스F병120ml	10	0	0	0	13\n036	의약외품	8806016310018	동화)부채표까스활병75ml	2	0	0	0	14\n036	의약외품	8801105914382	해태)영진구론산병150ml	1	0	0	0	25
+[__main__][browser_log][INFO] 037	건강기능	8809422043884	HK)컨디션스틱18g	1	0	0	0	4\n037	건강기능	8809422044904	HK)컨디션스틱망고18g	1	0	0	0	9
+[__main__][browser_log][INFO] 039	과일야채음료	8809288634967	BR)레인보우샤베트워터500	1	1	6	0	7\n039	과일야채음료	8809288634974	BR)피치요거트워터P500	1	0	0	0	8\n039	과일야채음료	8801056475017	롯데)델몬트포도P1.5L	1	0	0	0	4\n039	과일야채음료	8801121043561	매일)피크닉사과240ml	1	5	5	0	1\n039	과일야채음료	8801382150770	웅진)티니핑밀크P200ml	1	0	0	0	8
+[__main__][browser_log][INFO] 040	기능건강음료	8806002001845	광동)비타500병100ml	2	0	0	0	13\n040	기능건강음료	4005906404835	농심)파워오투오렌지P500	1	1	6	0	13\n040	기능건강음료	8801097150034	동아)포카리스웨트P1.5L	1	0	0	0	6\n040	기능건강음료	8801097250079	동아)포카리스웨트P620ml	1	0	0	0	7\n040	기능건강음료	8801056002701	롯데)2프로복숭아캔240ml	3	1	6	0	7\n040	기능건강음료	8801056249212	롯데)핫식스더킹애플캔355	1	0	0	0	8\n040	기능건강음료	8801056240998	롯데)핫식스더킹퍼플캔355	3	0	0	0	3\n040	기능건강음료	8801094362706	코카)파워에이드P600ml	3	1	6	0	8
+[__main__][browser_log][INFO] 041	생수	8801056075385	HEYROO미네랄워터P1L	2	0	0	0	9\n041	생수	8801056169817	HEYROO미네랄워터P500ml	6	0	0	0	2\n041	생수	8801056049904	롯데)아이시스8.0P2L	1	0	0	0	5
+[__main__][browser_log][INFO] 042	커피음료	8801056018979	레쓰비)캔200ml	1	0	0	0	4\n042	커피음료	8809685311027	미루꾸)플랫너티라떼	1	0	0	0	3\n042	커피음료	8809685311010	미루꾸)플랫슈패너라떼	1	0	0	0	3\n042	커피음료	8801115382003	스벅)카페라떼컵320ml	1	0	0	0	2\n042	커피음료	8809388464471	이디야)쇼콜라모카300ml	1	0	1	0	2\n042	커피음료	8801056094591	콘트라)블랙P500ml	1	0	0	0	5
+[__main__][browser_log][INFO] 043	차음료	8801047284482	동원)복숭아제로아이스500	2	0	0	0	1\n043	차음료	8801047284550	동원)사과제로아이스티500	4	0	0	0	2
+[__main__][browser_log][INFO] 044	탄산음료	8809713919508	OKF)제로딸기탄산캔500	1	0	0	0	8\n044	탄산음료	8809713919522	OKF)제로오렌지탄산캔500	1	0	0	0	4\n044	탄산음료	8801056249892	롯데)마운틴듀제로캔355ml	2	1	6	0	10\n044	탄산음료	8801056175955	롯데)펩시제로라임P500ml	2	0	0	0	5\n044	탄산음료	8801056193010	롯데)펩시콜라P600ml	1	0	0	0	8\n044	탄산음료	8801094043278	코카)닥터페퍼제로캔350ml	2	0	0	0	10\n044	탄산음료	8801094203207	코카)스프라이트캔350ml	1	0	0	0	8\n044	탄산음료	8801094017606	코카)코카콜라P500ml	1	0	0	0	9\n044	탄산음료	8801094082406	코카)코카콜라제로P1.5L	2	2	12	0	11\n044	탄산음료	8801094082604	코카)코카콜라제로P500ml	2	1	6	0	12\n044	탄산음료	8801094000394	코카)환타멜론P600ml	2	0	0	0	8
+[__main__][browser_log][INFO] 045	아이스드링크	8809253649453	24del)헤이즐넛향340ml	1	0	0	0	5
+[__main__][browser_log][INFO] 046	요구르트	8801128281003	hy)야쿠르트750ml	1	0	0	0	0\n046	요구르트	8801155418113	동원)쿨피스복숭아930ml	1	0	0	0	0\n046	요구르트	8801121024737	매일)엔요280ml	2	0	0	0	4\n046	요구르트	8801115212713	서울)비요뜨초코링	3	0	0	0	3
+[__main__][browser_log][INFO] 047	우유	8801069420745	PBICK)우유득템1.8L	1	0	0	0	0\n047	우유	8801069185194	남양)초코에몽250ml	3	3	3	0	3\n047	우유	8801155745387	동원)가나디초코우유500ml	1	3	3	0	1\n047	우유	8801155721954	동원)소화잘되는우유900ml	1	1	1	0	2\n047	우유	8801121190197	매일)허쉬초코드링크235ml	1	0	0	0	3\n047	우유	8801121044698	매일)허쉬초코딸기190ml	1	0	0	0	2\n047	우유	0000088002798	빙그레)바나나우유240ml	2	0	0	0	10\n047	우유	8801115115113	서울)멸균우유200ml	4	0	0	0	1\n047	우유	8801115134220	서울)초코우유300ml	3	3	3	0	5\n047	우유	8801115114390	서울)후레쉬우유900ml	1	0	0	0	1\n047	우유	8801115114154	서울)흰우유1L	2	3	3	0	5\n047	우유	8801115114727	서울)흰우유300ml	2	0	0	0	0
+[__main__][browser_log][INFO] 048	얼음	8809197840107	del)빅컵얼음230g	1	0	12	0	19\n048	얼음	8809418770107	del)빅컵얼음230g	2	0	0	0	19\n048	얼음	8809197840091	del)컵얼음180g	1	0	15	0	23\n048	얼음	8809404250088	동양)아이스웰얼음2.5kg	1	1	1	0	2
+[__main__][browser_log][INFO] 049	맥주	5000213027301	기네스콜드브루캔440ml	3	1	4	0	7\n049	맥주	8801022023181	롯데)크러시P1.6L	2	0	0	0	5\n049	맥주	8809613593099	부루)생레몬맥주캔500ml	1	0	0	0	3\n049	맥주	4901004058379	아사히생맥주캔485ml	5	4	24	0	22\n049	맥주	4901004006813	아사히캔500ml	1	0	0	0	11\n049	맥주	8801858041984	카스P1L	1	0	0	0	12\n049	맥주	8801858011048	카스라이트캔355ml	4	0	0	0	11\n049	맥주	8801858042769	카스라이트캔500ml	2	0	0	0	16\n049	맥주	8801858048167	카스레몬스퀴즈7.0캔500ml	1	1	4	0	8\n049	맥주	8801858048198	카스레몬스퀴즈캔355ml	1	0	0	0	6\n049	맥주	8801858011017	카스캔355ml	1	0	0	0	10\n049	맥주	8801858011024	카스캔500ml	16	1	24	0	71\n049	맥주	8801119740014	테라캔355ml	1	0	0	0	7\n049	맥주	8801119241511	필라이트후레쉬캔500ml	8	1	6	0	8\n049	맥주	8712000052973	하이네켄슈퍼캔710ml	3	0	0	0	3\n049	맥주	8712000900045	하이네켄캔500ml	1	0	0	0	21
+[__main__][browser_log][INFO] 050	소주	8801022025277	롯데)새로다래병360ml	1	0	0	0	19\n050	소주	8801048951017	신참이슬병360ml지함	2	1	20	0	22\n050	소주	8801048101115	진로이즈백P640ml	1	0	0	0	6\n050	소주	8801048101023	진로이즈백병360ml	3	0	0	0	22\n050	소주	8801048953301	참이슬P640ml	5	1	20	0	30\n050	소주	8801152233764	처음처럼P640ml	2	0	0	0	15\n050	소주	8801152136843	처음처럼새로P640ml	5	0	0	0	26\n050	소주	8801152136676	처음처럼새로병360ml	2	0	0	0	21\n050	소주	8801798011061	한라산소주P640ml	1	0	0	0	9
+[__main__][browser_log][INFO] 051	전통주	8809065655116	장수)생막걸리영등포750ml	3	0	0	0	14
+[__main__][browser_log][INFO] 056	목욕세면	8801046846087	2080)치약	2	0	0	0	2
+[__main__][browser_log][INFO] 057	위생용품	8801260418602	순수한면)유기농순면대14P	2	0	0	0	2
+[__main__][browser_log][INFO] 058	의류용품	8806366734519	남성발목양말	1	0	0	0	35
+[__main__][browser_log][INFO] 060	홈/주방용품	2200000079930	종량(가정)10L	1	0	0	0	-233\n060	홈/주방용품	2200000079947	종량(가정)20L	29	0	0	0	-45\n060	홈/주방용품	2200000079961	종량(가정)50L	2	0	0	0	3\n060	홈/주방용품	2200000079985	종량(가정)75L	2	0	0	0	198
+[__main__][browser_log][INFO] 061	문구류	8801222700189	포유)테이팩스투명테이프	1	0	0	0	1
+[__main__][browser_log][INFO] 062	전기연료	8803651000045	에이스)일회용돌라이터	1	0	0	0	47
+[__main__][browser_log][INFO] 063	우천용상품	8809728302036	비닐)투명무민우산60	1	0	0	0	1\n063	우천용상품	8803249240334	서림)비닐화이트우산60	1	0	0	0	2
+[__main__][browser_log][INFO] 064	완구류	8809955833563	산리오)라이팅피규어키링	1	0	0	0	4\n064	완구류	8809571201630	포켓몬)쌓기랜덤피규어2	1	0	0	0	8
+[__main__][browser_log][INFO] 072	담배	8801116000456	더원블루1mg	2	1	10	0	25\n072	담배	0000088022666	던힐6mg	1	1	10	0	33\n072	담배	8801116008551	디스아프리카아이스잭5mg	1	0	0	0	6\n072	담배	0000088006604	디스플러스5mg	4	0	0	0	19\n072	담배	0000088011189	레종블루3mg	1	0	0	0	13\n072	담배	8801116006830	레종프렌치블랙3mg	1	0	0	0	28\n072	담배	8801116008131	레종휘바3mg	1	1	10	0	17\n072	담배	0000088023465	말보로비스타썸머스플래시	1	0	0	0	14\n072	담배	0000088023403	말보로비스타트로피컬	1	0	0	0	2\n072	담배	0000088024516	메비우스LBS아이스피즈SS	1	0	0	0	12\n072	담배	8809741171817	몽스알포2.0ml	1	0	0	0	3\n072	담배	8801116007417	보헴시가리브레5㎎	1	1	10	0	14\n072	담배	8888075097918	뷰즈고슬림퍼플스무스	1	0	0	0	1\n072	담배	0000088023434	비스타수퍼슬림트로피컬	1	1	10	0	15\n072	담배	8801116001712	에쎄수0.1mg	1	0	0	0	21\n072	담배	8801116005314	에쎄체인지1mg	2	1	10	0	17\n072	담배	8801116007257	에쎄체인지업	2	0	0	0	10\n072	담배	8801116015887	에쎄체인지프로즌	1	0	0	0	15\n072	담배	0000088011967	에쎄프라임4mg	1	0	0	0	24\n072	담배	0000088021997	켄트스위치1mg신	3	0	0	0	14\n072	담배	0000088013114	팔리아멘트아쿠아1mg	1	0	0	0	13\n072	담배	0000088014463	팔리아멘트아쿠아3mg	1	0	0	0	11
+[__main__][browser_log][INFO] 073	전자담배	8801116012176	LIL액상카트리지	14	5	50	0	97\n073	전자담배	8801116013234	MIIX아이스더블	2	1	10	0	22\n073	전자담배	8801116056644	MIIX아이스모아	1	1	10	0	19\n073	전자담배	0000088024745	센티아클래식그린	1	0	0	0	9\n073	전자담배	0000088023014	테리아블루	2	0	0	0	21\n073	전자담배	0000088024134	테리아오아시스펄	2	0	0	0	18\n073	전자담배	0000088021492	테리아퍼플웨이브	1	1	10	0	26
+[__main__][browser_log][INFO] 086	안전상비의약품	8806521017242	훼스탈플러스	1	0	0	0	3
+[__main__][browser_log][INFO] 100	RI아이스크림	8802259022169	롯데)저당티코초코15입	1	0	0	0	0\n100	RI아이스크림	3415587403293	하겐)바닐라카라멜바	1	0	0	0	3\n100	RI아이스크림	3415581101294	하겐)바닐라파인트	1	0	0	0	1\n100	RI아이스크림	3415587405297	하겐)스트로베리크림바	1	0	0	0	7
+[__main__][browser_log][INFO] 605	기타주류	8809613593013	생자몽하이볼캔500ml	3	0	0	0	6
+[__main__][browser_log][INFO] 900	소모품	2201148653150	친환경봉투판매용	8	0	0	0	-1,708
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (1) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][INFO] auto_collect_past_7days.js completed successfully.
+[__main__][collect][INFO] Starting data collection scripts.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\data_collect_listener.js
+[__main__][mid_category][INFO] mid_category logs: ['collectMidCodes 시작', 'collectMidCodes 시작', '🔄 중분류 목록 스캔 시작', '🔄 중분류 목록 스캔 시작', 'Found 22 mid-category cells.', 'Found 22 mid-category cells.', 'Attempting to click mid-category: 002 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', 'Attempting to click mid-category: 002 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720191803)', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720191803)', '*********** 트랜잭션 호출 전 httptimeout : 60', '*********** 트랜잭션 호출 전 httptimeout : 60', '중분류 클릭: 002 (주먹밥)', '중분류 클릭: 002 (주먹밥)']
+[__main__][collect][INFO] Using liveData as fallback for parsedData.
+[__main__][collect][INFO] Data collection complete.
+[__main__][db][INFO] DB saved to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\past_7days.db, inserted 0 rows
+[utils.convert_txt_to_excel][convert][INFO] 텍스트 파일 읽기 시도: c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\250720.txt
+[utils.convert_txt_to_excel][convert][INFO] 285개 행 로드 완료
+[utils.convert_txt_to_excel][convert][INFO] 엑셀 파일 저장 위치: c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\mid_excel\250720.xlsx
+[utils.convert_txt_to_excel][convert][INFO] 엑셀 파일 저장 완료
+[__main__][browser_log][INFO] Extracted log data:
+[__main__][browser_log][INFO] 002	주먹밥	8809948346506	주)3XL베이컨참치마요1	1	0	1	0	0\n002	주먹밥	8800275320290	주)계란버터간장삼각1	2	1	1	0	0\n002	주먹밥	8800271903275	주)고들빼기낙지젓갈1	1	1	0	0	1\n002	주먹밥	8800279672357	주)뉴3XL동원고추참치1	1	1	1	0	2\n002	주먹밥	8800279673279	주)백종원스페셜우삼겹1	2	0	1	0	0\n002	주먹밥	8800279672579	주)오일컷담백참치삼각1	1	1	0	0	1\n002	주먹밥	8801771034223	주)오징어씨앗젓갈1	1	0	0	0	0\n002	주먹밥	8809948346629	주)참치마요김치제육더블1	2	1	1	0	0
+[__main__][browser_log][INFO] 003	김밥	8800279676867	김)맛초킹치킨김밥1	1	0	1	0	0\n003	김밥	8800279676607	김)압도적뉴참치마요1	2	0	1	0	0\n003	김밥	8800279677161	김)압도적치즈계란김밥1	1	0	0	0	0\n003	김밥	8800279677260	김)압도적치즈불고기김밥1	1	0	1	0	0
+[__main__][browser_log][INFO] 004	샌드위치류	8800271902117	샌)더뉴대만식연유1	1	0	1	0	0\n004	샌드위치류	8800279675624	샌)크랩마요샌드1	1	0	0	0	0
+[__main__][browser_log][INFO] 010	제조음료	2202000107644	25뉴get아이스아메XL	2	0	0	0	-115
+[__main__][browser_log][INFO] 012	빵	8801068934182	삼립)끼리초당옥수수호떡	1	0	0	0	1\n012	빵	8801068934229	삼립)끼리크림치즈보름달	1	0	0	0	1\n012	빵	8801068933857	삼립)얼그레이카스테라	1	0	0	0	2\n012	빵	8801068409215	삼립)찰옥수수이야기	1	0	0	0	2\n012	빵	8801068402285	삼립)포켓몬로켓초코롤	1	0	0	0	2\n012	빵	8801068402254	삼립)포켓몬파이리핫소스	2	0	0	0	2\n012	빵	8801068933871	삼립)흑임자이야기	1	0	0	0	2
+[__main__][browser_log][INFO] 014	디저트	8809692957966	405)피스타치오수건케이크	1	0	0	0	0\n014	디저트	8802259024880	롯데)바닐라푸딩	1	0	0	0	1\n014	디저트	8809523624845	연세)레드벨벳롤케익	1	0	0	0	0\n014	디저트	8801753113960	연세)레드벨벳생크림빵	1	0	0	0	0\n014	디저트	8801753112963	연세)메론생크림빵	2	1	1	0	0\n014	디저트	8801753108478	연세)우유생크림빵	1	0	0	0	1\n014	디저트	8801753108775	연세)초코생크림빵	1	0	0	0	1\n014	디저트	8801753114691	연세)크림맘모스	1	0	0	0	0\n014	디저트	8801753114639	연세)피넛초코생크림빵	1	1	1	0	1
+[__main__][browser_log][INFO] 015	비스켓/쿠키	8801037088168	동서)오레오화이트크림	1	1	1	0	3\n015	비스켓/쿠키	8802259020370	롯데)베이크쿠키크랜베리	1	0	0	0	5\n015	비스켓/쿠키	8801117158118	오리온)비쵸비125g	1	0	0	0	2\n015	비스켓/쿠키	8801117282202	오리온)예감오리지널	1	0	0	0	1\n015	비스켓/쿠키	8801117446901	오리온)초코송이	1	0	0	0	2\n015	비스켓/쿠키	8801117392604	오리온)초코송이딸기45g	1	0	0	0	3\n015	비스켓/쿠키	8801019306907	해태)에이스	1	0	0	0	3
+[__main__][browser_log][INFO] 016	스낵류	8801043036078	농심)매운새우깡90g	1	0	0	0	12\n016	스낵류	8801043068314	농심)먹태깡청양마요맛60g	1	0	0	0	6\n016	스낵류	8801043036634	농심)바나나킥75g	1	0	0	0	5\n016	스낵류	8801043036337	농심)오징어집78g	2	0	0	0	14\n016	스낵류	8801043036238	농심)자갈치90g	1	0	0	0	9\n016	스낵류	8801043031431	농심)쫄병매콤한맛	1	3	3	0	4\n016	스낵류	8801043005814	농심)포테토칩60g	1	0	0	0	16\n016	스낵류	8801062380114	롯데)꼬깔콘고소한맛	1	0	0	0	7\n016	스낵류	8801728108519	베어스)나쵸앤살사	1	0	0	0	4\n016	스낵류	8801151112107	서울)허니뻥이요스낵90g	2	0	0	0	8\n016	스낵류	8801045652573	오뚜기)순후추팝콘55g	2	0	0	0	1\n016	스낵류	8801045851945	오뚜기)콘크림스프팝콘55g	1	0	0	0	8\n016	스낵류	8801117784409	오리온)꼬북칩콘스프맛	1	0	0	0	8\n016	스낵류	8801117777609	오리온)눈을감자56g	1	0	0	0	8\n016	스낵류	8801117783303	오리온)도도한나쵸사워92g	1	0	0	0	4\n016	스낵류	8801117765903	오리온)도도한나쵸치즈92g	2	0	0	0	3\n016	스낵류	8801117775001	오리온)스윙칩고추장60g	1	0	0	0	3\n016	스낵류	8801117197100	오리온)스윙칩빨간오뎅60g	1	0	0	0	1\n016	스낵류	8801117760304	오리온)포카칩어니언66g	1	0	0	0	2\n016	스낵류	8801117760106	오리온)포카칩오리지널66g	1	0	0	0	6\n016	스낵류	8801111610636	크라운)죠리퐁	1	0	0	0	9\n016	스낵류	8801111180993	크라운)콘초	1	0	0	0	17\n016	스낵류	8801111183062	크라운)콘치크림치즈	1	0	0	0	12\n016	스낵류	8801019606328	해태)오사쯔60g	1	0	0	0	4\n016	스낵류	8801019606540	해태)허니버터칩60g	3	0	0	0	9\n016	스낵류	8801019613074	해태)허니버터칩캐슬갈릭	1	0	0	0	2
+[__main__][browser_log][INFO] 017	시리얼	8801037096576	동서)오레오오즈컵30g	1	0	0	0	2\n017	시리얼	8801037096552	동서)콘푸라이트컵30g	2	0	0	0	1\n017	시리얼	8852756055610	켈로그)크런치넛에너지바	6	0	0	0	5
+[__main__][browser_log][INFO] 018	껌	8801062321773	롯데)왓따콜라풍선껌	2	0	0	0	16\n018	껌	8801117650605	오리온)와우블랙레몬	1	0	0	0	8
+[__main__][browser_log][INFO] 019	초콜릿	8801062636884	롯데)가나마일드초콜릿34g	1	0	0	0	9\n019	초콜릿	8801062634330	롯데)아몬드초코볼46g	1	1	10	0	10\n019	초콜릿	6914973603189	마즈)엠앤엠밀크초콜릿37g	1	0	0	0	9\n019	초콜릿	6914973603202	마즈)엠앤엠피넛초콜릿37g	2	0	0	0	5\n019	초콜릿	0000080768258	매일)킨더초콜릿조이걸	1	0	0	0	5\n019	초콜릿	8801019204951	해태)자유시간초콜릿바	1	0	0	0	6
+[__main__][browser_log][INFO] 020	캔디	8800280531414	SA)오로라핑비밀캔디포도	1	0	0	0	7\n020	캔디	8990800000053	농심)멘토스푸르티	1	0	0	0	12\n020	캔디	8410031920093	농심)츄파춥스12g	6	0	0	0	214\n020	캔디	6925425474653	농심)츄파춥스게코젤리	2	0	0	0	1\n020	캔디	6926106108447	대진)요거트향츄잉캔디12g	1	0	0	0	18\n020	캔디	8801062335633	롯데)밀크카라멜50g	1	0	0	0	13\n020	캔디	8859623800397	매크로)하이츄복숭아맛	1	0	0	0	5\n020	캔디	8691216096370	삼경)하리보해피콜라사워	1	5	5	0	5\n020	캔디	8809963482531	선우)퐁퐁마시멜로무지개	1	0	0	0	10\n020	캔디	8437004492838	스위트)트롤리계란후라이	1	0	0	0	3\n020	캔디	8436556395932	스위트)트롤리키스	1	0	0	0	2\n020	캔디	8801117339708	오리온)마이구미포도66g	1	0	0	0	8\n020	캔디	5011053024214	일신)메가푸쉬팝	1	0	0	0	5\n020	캔디	8809555860631	코코)단짝캔디46g	2	0	0	0	2\n020	캔디	8801111187893	크라운)마이쮸포도	1	0	0	0	11
+[__main__][browser_log][INFO] 021	일반아이스크림	8809599361057	라라스윗)딸기요거트바	1	0	0	0	10\n021	일반아이스크림	8809599360470	라라스윗)바닐라초코바	1	0	0	0	28\n021	일반아이스크림	8809599361217	라라스윗)복숭아요거트바	1	0	0	0	8\n021	일반아이스크림	8809599360692	라라스윗)쿠앤크초코바	1	0	0	0	9\n021	일반아이스크림	8801062623471	롯데)월드콘	3	0	0	0	10\n021	일반아이스크림	8801104123280	빙그레)메로나	2	0	0	0	8\n021	일반아이스크림	8809713220048	해태)폴라포포도	3	0	0	0	32
+[__main__][browser_log][INFO] 022	마른안주류	8800279451266	990)하루견과블루	1	0	0	0	2\n022	마른안주류	8809050566298	고려)제주등심육포40g	1	0	0	0	2\n022	마른안주류	8801133007209	머거본)실속커피땅콩100g	1	0	0	0	1\n022	마른안주류	8809617947010	바프)허니로스티드땅콩	1	0	0	0	5\n022	마른안주류	8801308460334	정화)훈연오징어진공50g	2	0	0	0	3\n022	마른안주류	8803622000159	한양)꽃보다오징어160g	1	3	3	0	2\n022	마른안주류	8803622102471	한양)숏바디버터불고기40g	2	2	2	0	2
+[__main__][browser_log][INFO] 023	육가공류	8801123307289	롯데)의성마늘핫바70g	1	0	0	0	1\n023	육가공류	8801066019447	사조)숯불후랑크꼬치바70g	1	0	0	0	3\n023	육가공류	8809220375781	푸르샨)불맛직화불막창	1	0	0	0	0\n023	육가공류	8801492391995	하림)마늘후랑크70g	2	0	0	0	2\n023	육가공류	8803465070685	흥생)구운계란2입	1	3	0	0	1
+[__main__][browser_log][INFO] 027	농산식재료	8801114119075	풀무원)소가찌개두부290g	1	1	0	0	1
+[__main__][browser_log][INFO] 028	축수산식재료	8803465001764	PBICK)계란득템15입	2	2	0	0	2\n028	축수산식재료	8801155834616	동원)덴마크스트링치즈	4	0	0	0	10\n028	축수산식재료	8801155601034	동원)체다치즈5매입	1	0	0	0	3\n028	축수산식재료	8809136851096	제니코)치즈파티모짜렐라	1	0	0	0	0
+[__main__][browser_log][INFO] 029	조미료류	8801007052984	CJ)해찬들초고추장170g	1	0	0	0	1\n029	조미료류	8801045202105	오뚜기)사과식초360ml	1	0	0	0	1
+[__main__][browser_log][INFO] 031	반찬류	8801007512259	CJ)스팸200g	1	0	0	0	1\n031	반찬류	8801075010923	사조)살코기참치150g	3	0	0	0	3
+[__main__][browser_log][INFO] 032	면류	8801043015639	농심)김치사발면	2	0	0	0	5\n032	면류	8801043015837	농심)너구리소컵	1	0	0	0	5\n032	면류	8801043015967	농심)새우탕큰사발컵	1	0	0	0	5\n032	면류	8801043014809	농심)신라면	6	0	0	0	13\n032	면류	8801043015653	농심)육개장사발면	4	1	24	0	20\n032	면류	8801043016049	농심)짜파게티큰사발컵	1	0	0	0	12\n032	면류	8801043062480	농심)카구리컵	1	0	0	0	8\n032	면류	8801043016070	농심)튀김우동큰사발컵	1	0	0	0	10\n032	면류	6921555529218	라황샹 중경식 마라탕면	1	0	0	0	4\n032	면류	8801073211469	삼양)까르보불닭큰컵	1	1	16	0	14\n032	면류	8801073212619	삼양)로제불닭볶음면컵	1	0	0	0	2\n032	면류	8801073210363	삼양)불닭볶음면컵	2	0	0	0	14\n032	면류	8801073216624	삼양)푸팟퐁커리불닭컵	2	0	0	0	1\n032	면류	8801045571416	오뚜기)스파게티컵	1	0	0	0	8\n032	면류	8801045555041	오뚜기)열튀김우동컵	1	0	0	0	3\n032	면류	8801045702643	오뚜기)육개장사발면	5	0	0	0	2\n032	면류	8801045520124	오뚜기)진라면매운맛	2	0	0	0	11\n032	면류	8809695253669	팔도)뽀로로짜장중컵	2	0	0	0	3\n032	면류	8809695250958	팔도)틈새라면매운김치컵	2	0	0	0	6\n032	면류	8801128503037	팔도)팔도비빔면	5	0	0	0	6\n032	면류	8801085884354	한일)정통냉우동	1	0	0	0	5
+[__main__][browser_log][INFO] 033	상온즉석식	8801392032998	CJ)소고기듬뿍미역국	2	0	0	0	1\n033	상온즉석식	8801007054186	CJ)큰햇반300g	3	0	0	0	3
+[__main__][browser_log][INFO] 034	냉동즉석식	8809350321818	HEYROO순살치킨득템매콤C	1	1	0	0	3\n034	냉동즉석식	8801045751245	오뚜기)우노피자불고기	1	0	0	0	0
+[__main__][browser_log][INFO] 035	냉장즉석식	8805684011531	MDS)명란마요파스타	1	0	0	0	0\n035	냉장즉석식	8805684010657	MDS)투움바파스타N	1	0	0	0	0\n035	냉장즉석식	8809015114731	디엔비)두툼불고기고로케	1	0	0	0	1\n035	냉장즉석식	8809015114663	디엔비)통통새우고로케	1	1	0	0	0\n035	냉장즉석식	8800279674580	팔도한끼)소곱창전골&라면	1	1	0	0	1
+[__main__][browser_log][INFO] 036	의약외품	8804227021600	가디언)탄력붕대	1	0	0	0	1\n036	의약외품	8806011615408	동아)박카스F병120ml	10	0	0	0	13\n036	의약외품	8806016310018	동화)부채표까스활병75ml	2	0	0	0	14\n036	의약외품	8801105914382	해태)영진구론산병150ml	1	0	0	0	25
+[__main__][browser_log][INFO] 037	건강기능	8809422043884	HK)컨디션스틱18g	1	0	0	0	4\n037	건강기능	8809422044904	HK)컨디션스틱망고18g	1	0	0	0	9
+[__main__][browser_log][INFO] 039	과일야채음료	8809288634967	BR)레인보우샤베트워터500	1	1	6	0	7\n039	과일야채음료	8809288634974	BR)피치요거트워터P500	1	0	0	0	8\n039	과일야채음료	8801056475017	롯데)델몬트포도P1.5L	1	0	0	0	4\n039	과일야채음료	8801121043561	매일)피크닉사과240ml	1	5	5	0	3\n039	과일야채음료	8801382150770	웅진)티니핑밀크P200ml	1	0	0	0	8
+[__main__][browser_log][INFO] 040	기능건강음료	8806002001845	광동)비타500병100ml	2	0	0	0	13\n040	기능건강음료	4005906404835	농심)파워오투오렌지P500	1	1	6	0	13\n040	기능건강음료	8801097150034	동아)포카리스웨트P1.5L	1	0	0	0	6\n040	기능건강음료	8801097250079	동아)포카리스웨트P620ml	1	0	0	0	7\n040	기능건강음료	8801056002701	롯데)2프로복숭아캔240ml	3	1	6	0	7\n040	기능건강음료	8801056249212	롯데)핫식스더킹애플캔355	1	0	0	0	8\n040	기능건강음료	8801056240998	롯데)핫식스더킹퍼플캔355	3	0	0	0	3\n040	기능건강음료	8801094362706	코카)파워에이드P600ml	3	1	6	0	8
+[__main__][browser_log][INFO] 041	생수	8801056075385	HEYROO미네랄워터P1L	2	0	0	0	9\n041	생수	8801056169817	HEYROO미네랄워터P500ml	6	0	0	0	2\n041	생수	8801056049904	롯데)아이시스8.0P2L	1	0	0	0	5
+[__main__][browser_log][INFO] 042	커피음료	8801056018979	레쓰비)캔200ml	1	0	0	0	4\n042	커피음료	8809685311027	미루꾸)플랫너티라떼	1	0	0	0	3\n042	커피음료	8809685311010	미루꾸)플랫슈패너라떼	1	0	0	0	3\n042	커피음료	8801115382003	스벅)카페라떼컵320ml	1	0	0	0	4\n042	커피음료	8809388464471	이디야)쇼콜라모카300ml	1	0	1	0	2\n042	커피음료	8801056094591	콘트라)블랙P500ml	1	0	0	0	5
+[__main__][browser_log][INFO] 043	차음료	8801047284482	동원)복숭아제로아이스500	2	0	0	0	1\n043	차음료	8801047284550	동원)사과제로아이스티500	4	0	0	0	2
+[__main__][browser_log][INFO] 044	탄산음료	8809713919508	OKF)제로딸기탄산캔500	1	0	0	0	8\n044	탄산음료	8809713919522	OKF)제로오렌지탄산캔500	1	0	0	0	4\n044	탄산음료	8801056249892	롯데)마운틴듀제로캔355ml	2	1	6	0	10\n044	탄산음료	8801056175955	롯데)펩시제로라임P500ml	2	0	0	0	5\n044	탄산음료	8801056193010	롯데)펩시콜라P600ml	1	0	0	0	8\n044	탄산음료	8801094043278	코카)닥터페퍼제로캔350ml	2	0	0	0	10\n044	탄산음료	8801094203207	코카)스프라이트캔350ml	1	0	0	0	8\n044	탄산음료	8801094017606	코카)코카콜라P500ml	1	0	0	0	9\n044	탄산음료	8801094082406	코카)코카콜라제로P1.5L	2	2	12	0	11\n044	탄산음료	8801094082604	코카)코카콜라제로P500ml	2	1	6	0	12\n044	탄산음료	8801094000394	코카)환타멜론P600ml	2	0	0	0	8
+[__main__][browser_log][INFO] 045	아이스드링크	8809253649453	24del)헤이즐넛향340ml	1	0	0	0	5
+[__main__][browser_log][INFO] 046	요구르트	8801128281003	hy)야쿠르트750ml	1	0	0	0	0\n046	요구르트	8801155418113	동원)쿨피스복숭아930ml	1	0	0	0	1\n046	요구르트	8801121024737	매일)엔요280ml	2	0	0	0	6\n046	요구르트	8801115212713	서울)비요뜨초코링	3	0	0	0	7
+[__main__][browser_log][INFO] 047	우유	8801069420745	PBICK)우유득템1.8L	1	0	0	0	1\n047	우유	8801069185194	남양)초코에몽250ml	3	3	3	0	3\n047	우유	8801155745387	동원)가나디초코우유500ml	1	3	3	0	3\n047	우유	8801155721954	동원)소화잘되는우유900ml	1	1	1	0	2\n047	우유	8801121190197	매일)허쉬초코드링크235ml	1	0	0	0	4\n047	우유	8801121044698	매일)허쉬초코딸기190ml	1	0	0	0	3\n047	우유	0000088002798	빙그레)바나나우유240ml	2	0	0	0	10\n047	우유	8801115115113	서울)멸균우유200ml	4	0	0	0	5\n047	우유	8801115134220	서울)초코우유300ml	3	3	3	0	5\n047	우유	8801115114390	서울)후레쉬우유900ml	1	0	0	0	2\n047	우유	8801115114154	서울)흰우유1L	2	3	3	0	5\n047	우유	8801115114727	서울)흰우유300ml	2	0	0	0	3
+[__main__][browser_log][INFO] 048	얼음	8809197840107	del)빅컵얼음230g	1	0	12	0	19\n048	얼음	8809418770107	del)빅컵얼음230g	2	0	0	0	19\n048	얼음	8809197840091	del)컵얼음180g	1	0	15	0	23\n048	얼음	8809404250088	동양)아이스웰얼음2.5kg	1	1	1	0	2
+[__main__][browser_log][INFO] 049	맥주	5000213027301	기네스콜드브루캔440ml	3	1	4	0	7\n049	맥주	8801022023181	롯데)크러시P1.6L	2	0	0	0	5\n049	맥주	8809613593099	부루)생레몬맥주캔500ml	1	0	0	0	3\n049	맥주	4901004058379	아사히생맥주캔485ml	5	4	24	0	22\n049	맥주	4901004006813	아사히캔500ml	1	0	0	0	11\n049	맥주	8801858041984	카스P1L	1	0	0	0	12\n049	맥주	8801858011048	카스라이트캔355ml	4	0	0	0	11\n049	맥주	8801858042769	카스라이트캔500ml	2	0	0	0	16\n049	맥주	8801858048167	카스레몬스퀴즈7.0캔500ml	1	1	4	0	8\n049	맥주	8801858048198	카스레몬스퀴즈캔355ml	1	0	0	0	6\n049	맥주	8801858011017	카스캔355ml	1	0	0	0	10\n049	맥주	8801858011024	카스캔500ml	16	1	24	0	71\n049	맥주	8801119740014	테라캔355ml	1	0	0	0	7\n049	맥주	8801119241511	필라이트후레쉬캔500ml	8	1	6	0	8\n049	맥주	8712000052973	하이네켄슈퍼캔710ml	3	0	0	0	3\n049	맥주	8712000900045	하이네켄캔500ml	1	0	0	0	21
+[__main__][browser_log][INFO] 050	소주	8801022025277	롯데)새로다래병360ml	1	0	0	0	19\n050	소주	8801048951017	신참이슬병360ml지함	2	1	20	0	22\n050	소주	8801048101115	진로이즈백P640ml	1	0	0	0	6\n050	소주	8801048101023	진로이즈백병360ml	3	0	0	0	22\n050	소주	8801048953301	참이슬P640ml	5	1	20	0	30\n050	소주	8801152233764	처음처럼P640ml	2	0	0	0	15\n050	소주	8801152136843	처음처럼새로P640ml	5	0	0	0	26\n050	소주	8801152136676	처음처럼새로병360ml	2	0	0	0	21\n050	소주	8801798011061	한라산소주P640ml	1	0	0	0	9
+[__main__][browser_log][INFO] 051	전통주	8809065655116	장수)생막걸리영등포750ml	3	0	0	0	14
+[__main__][browser_log][INFO] 056	목욕세면	8801046846087	2080)치약	2	0	0	0	2
+[__main__][browser_log][INFO] 057	위생용품	8801260418602	순수한면)유기농순면대14P	2	0	0	0	2
+[__main__][browser_log][INFO] 058	의류용품	8806366734519	남성발목양말	1	0	0	0	35
+[__main__][browser_log][INFO] 060	홈/주방용품	2200000079930	종량(가정)10L	1	0	0	0	-233\n060	홈/주방용품	2200000079947	종량(가정)20L	29	0	0	0	-45\n060	홈/주방용품	2200000079961	종량(가정)50L	2	0	0	0	3\n060	홈/주방용품	2200000079985	종량(가정)75L	2	0	0	0	198
+[__main__][browser_log][INFO] 061	문구류	8801222700189	포유)테이팩스투명테이프	1	0	0	0	1
+[__main__][browser_log][INFO] 062	전기연료	8803651000045	에이스)일회용돌라이터	1	0	0	0	47
+[__main__][browser_log][INFO] 063	우천용상품	8809728302036	비닐)투명무민우산60	1	0	0	0	1\n063	우천용상품	8803249240334	서림)비닐화이트우산60	1	0	0	0	2
+[__main__][browser_log][INFO] 064	완구류	8809955833563	산리오)라이팅피규어키링	1	0	0	0	4\n064	완구류	8809571201630	포켓몬)쌓기랜덤피규어2	1	0	0	0	8
+[__main__][browser_log][INFO] 072	담배	8801116000456	더원블루1mg	2	1	10	0	25\n072	담배	0000088022666	던힐6mg	1	1	10	0	33\n072	담배	8801116008551	디스아프리카아이스잭5mg	1	0	0	0	6\n072	담배	0000088006604	디스플러스5mg	4	0	0	0	19\n072	담배	0000088011189	레종블루3mg	1	0	0	0	13\n072	담배	8801116006830	레종프렌치블랙3mg	1	0	0	0	28\n072	담배	8801116008131	레종휘바3mg	1	1	10	0	17\n072	담배	0000088023465	말보로비스타썸머스플래시	1	0	0	0	14\n072	담배	0000088023403	말보로비스타트로피컬	1	0	0	0	2\n072	담배	0000088024516	메비우스LBS아이스피즈SS	1	0	0	0	12\n072	담배	8809741171817	몽스알포2.0ml	1	0	0	0	3\n072	담배	8801116007417	보헴시가리브레5㎎	1	1	10	0	14\n072	담배	8888075097918	뷰즈고슬림퍼플스무스	1	0	0	0	1\n072	담배	0000088023434	비스타수퍼슬림트로피컬	1	1	10	0	15\n072	담배	8801116001712	에쎄수0.1mg	1	0	0	0	21\n072	담배	8801116005314	에쎄체인지1mg	2	1	10	0	17\n072	담배	8801116007257	에쎄체인지업	2	0	0	0	10\n072	담배	8801116015887	에쎄체인지프로즌	1	0	0	0	15\n072	담배	0000088011967	에쎄프라임4mg	1	0	0	0	24\n072	담배	0000088021997	켄트스위치1mg신	3	0	0	0	14\n072	담배	0000088013114	팔리아멘트아쿠아1mg	1	0	0	0	13\n072	담배	0000088014463	팔리아멘트아쿠아3mg	1	0	0	0	11
+[__main__][browser_log][INFO] 073	전자담배	8801116012176	LIL액상카트리지	14	5	50	0	97\n073	전자담배	8801116013234	MIIX아이스더블	2	1	10	0	22\n073	전자담배	8801116056644	MIIX아이스모아	1	1	10	0	19\n073	전자담배	0000088024745	센티아클래식그린	1	0	0	0	9\n073	전자담배	0000088023014	테리아블루	2	0	0	0	21\n073	전자담배	0000088024134	테리아오아시스펄	2	0	0	0	18\n073	전자담배	0000088021492	테리아퍼플웨이브	1	1	10	0	26
+[__main__][browser_log][INFO] 086	안전상비의약품	8806521017242	훼스탈플러스	1	0	0	0	3
+[__main__][browser_log][INFO] 100	RI아이스크림	8802259022169	롯데)저당티코초코15입	1	0	0	0	0\n100	RI아이스크림	3415587403293	하겐)바닐라카라멜바	1	0	0	0	3\n100	RI아이스크림	3415581101294	하겐)바닐라파인트	1	0	0	0	1\n100	RI아이스크림	3415587405297	하겐)스트로베리크림바	1	0	0	0	7
+[__main__][browser_log][INFO] 605	기타주류	8809613593013	생자몽하이볼캔500ml	3	0	0	0	6
+[__main__][browser_log][INFO] 900	소모품	2201148653150	친환경봉투판매용	8	0	0	0	-1,708
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
