@@ -64,7 +64,7 @@ def login_bgf(
     driver.get(url)
     try:
         WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return nexacro.getApplication().mainframe ? true : false")
+            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe);")
         )
     except Exception as e:
         log.error(f"Nexacro application did not load: {e}", extra={'tag': 'login'})
