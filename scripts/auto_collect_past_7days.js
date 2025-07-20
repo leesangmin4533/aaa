@@ -119,7 +119,7 @@
           console.log("[collectPast7Days] Found 'autoClickAllMidCodesAndProducts'. Executing now...");
           try {
             await window.automation.autoClickAllMidCodesAndProducts();
-            console.log("[collectPast7Days] Finished executing 'autoClickAllMidCodesAndProducts'.
+            console.log("[collectPast7Days] Finished executing 'autoClickAllMidCodesAndProducts'.");
           } catch (e) {
             console.error(`[collectPast7Days] Error executing autoClickAllMidCodesAndProducts for date ${date}:`, e);
             window.automation.error = `Error executing autoClickAllMidCodesAndProducts for date ${date}: ${e.message}`;
