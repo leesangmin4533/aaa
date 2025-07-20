@@ -38,6 +38,7 @@ from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 from utils.convert_txt_to_excel import convert_txt_to_excel
 from utils.file_util import append_unique_lines
+from utils import execute_collect_past7days
 
 # --- Configuration Loading ---
 def load_config() -> dict:
@@ -55,6 +56,7 @@ log = get_logger(__name__)
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
 ALL_SALES_DB_FILE = config["db_file"]
+PAST7_DB_FILE = config.get("past7_db_file", "past_7days.db")
 
 # Script file configuration
 DEFAULT_SCRIPT = config["scripts"]["default"]
@@ -234,8 +236,16 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
         return None
 
 
-def _process_and_save_data(parsed_data: Any) -> None:
-    """Process and save the collected data to DB."""
+def _process_and_save_data(parsed_data: Any, db_path: Path | None = None) -> None:
+    """Process and save the collected data to DB.
+
+    Parameters
+    ----------
+    parsed_data : Any
+        Data collected from the page.
+    db_path : Path | None, optional
+        Target DB path. If not provided, a daily DB file is used.
+    """
     records_for_db: list[dict[str, Any]] = []
     if isinstance(parsed_data, list):
         if all(isinstance(item, str) for item in parsed_data):
@@ -256,8 +266,9 @@ def _process_and_save_data(parsed_data: Any) -> None:
         print(f"잘못된 데이터 형식: {type(parsed_data)}")
         return
 
-    date_db = datetime.now().strftime("%Y%m%d") + ".db"
-    db_path = CODE_OUTPUT_DIR / date_db
+    if db_path is None:
+        date_db = datetime.now().strftime("%Y%m%d") + ".db"
+        db_path = CODE_OUTPUT_DIR / date_db
 
     # Save to DB
     if records_for_db:
@@ -325,7 +336,8 @@ def _run_collection_cycle() -> None:
             return
 
         # Check if 7 days of data is available in DB
-        if not is_7days_data_available(CODE_OUTPUT_DIR / ALL_SALES_DB_FILE):
+        need_history = not is_7days_data_available(CODE_OUTPUT_DIR / PAST7_DB_FILE)
+        if need_history:
             log.info("Less than 7 days of data in DB. Running auto_collect_past_7days.js", extra={'tag': 'main'})
             script_path = SCRIPT_DIR / "auto_collect_past_7days.js"
             log.info(f"Attempting to run script from: {script_path}", extra={'tag': 'main'})
@@ -336,20 +348,23 @@ def _run_collection_cycle() -> None:
             print("🔍 파일 존재 여부 =", script_path.exists())
 
             run_script(driver, "auto_collect_past_7days.js")
-            driver.execute_script("window.automation.collectPast7Days();")
-            
-            # Check for errors from JavaScript execution
-            js_error = driver.execute_script("return window.automation && window.automation.error")
-            if js_error:
-                log.error(f"JavaScript error during auto_collect_past_7days: {js_error}", extra={'tag': 'main'})
-                print(f"JavaScript 오류 (auto_collect_past_7days): {js_error}")
-            else:
+            result = execute_collect_past7days(driver)
+
+            if result.get("success"):
                 log.info("auto_collect_past_7days.js completed successfully.", extra={'tag': 'main'})
+            else:
+                msg = result.get("message")
+                log.error(
+                    f"JavaScript error during auto_collect_past_7days: {msg}",
+                    extra={'tag': 'main'},
+                )
+                print(f"JavaScript 오류 (auto_collect_past_7days): {msg}")
 
         parsed_data = _execute_data_collection(driver)
-        
+
         if parsed_data:
-            _process_and_save_data(parsed_data)
+            target_db = CODE_OUTPUT_DIR / PAST7_DB_FILE if need_history else None
+            _process_and_save_data(parsed_data, db_path=target_db)
         else:
             log.warning("No parsed data collected. Skipping save results.", extra={'tag': 'main'})
 

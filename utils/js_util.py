@@ -11,7 +11,7 @@ except Exception:  # pragma: no cover - when selenium is unavailable
 def load_collect_past7days(driver: WebDriver, scripts_dir: Path | None = None) -> None:
     """Load the collectPast7Days function onto the page."""
     scripts_dir = scripts_dir or Path(__file__).resolve().parents[1] / "scripts"
-    path = scripts_dir / "collect_past_7_days.js"
+    path = scripts_dir / "auto_collect_past_7days.js"
     with open(path, "r", encoding="utf-8") as f:
         driver.execute_script(f.read())
 
