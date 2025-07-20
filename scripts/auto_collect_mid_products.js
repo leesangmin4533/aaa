@@ -62,6 +62,8 @@
         const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
         if (!row || !code || seenCodes.has(code)) continue;
 
+        console.log(`[collectProductDataForMid] Processing product: ${code} in row ${row}`);
+
         const clickId = el.id.split(":text")[0];
         if (clickId) {
           await clickElementById(clickId);
@@ -183,9 +185,9 @@
         console.log(`중분류 클릭: ${code} (${midName})`);
         await delay(500);
 
-        console.log(`Collecting product data for mid-category: ${code}`);
+        console.log(`[collectMidCodes] Collecting product data for mid-category: ${code}`);
         await collectProductDataForMid(code, midName);
-        console.log(`Finished collecting product data for mid-category: ${code}`);
+        console.log(`[collectMidCodes] Finished collecting product data for mid-category: ${code}`);
         await delay(300);
       }
 
