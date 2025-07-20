@@ -1585,3 +1585,39 @@ Stacktrace:
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Data collection cycle finished. Waiting for 30 minutes...
+[__main__][main][INFO] Starting new data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (2) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][run_script][ERROR] script file not found: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][CRITICAL] Critical error during collection cycle: script file not found: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 315, in _run_collection_cycle
+    run_script(driver, "auto_collect_past_7days.js")
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 127, in run_script
+    raise FileNotFoundError(msg)
+FileNotFoundError: script file not found: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Data collection cycle finished. Waiting for 30 minutes...
