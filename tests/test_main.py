@@ -5,6 +5,8 @@ import types
 from datetime import datetime
 from unittest.mock import Mock, patch
 import pytest
+import subprocess
+import os
 
 # Create minimal fake selenium package
 selenium_pkg = types.ModuleType("selenium")
@@ -16,6 +18,19 @@ service_pkg = types.ModuleType("selenium.webdriver.chrome.service")
 options_pkg = types.ModuleType("selenium.webdriver.chrome.options")
 common_pkg = types.ModuleType("selenium.webdriver.common")
 dcaps_pkg = types.ModuleType("selenium.webdriver.common.desired_capabilities")
+by_pkg = types.ModuleType("selenium.webdriver.common.by")
+support_pkg = types.ModuleType("selenium.webdriver.support")
+ui_pkg = types.ModuleType("selenium.webdriver.support.ui")
+ec_pkg = types.ModuleType("selenium.webdriver.support.expected_conditions")
+support_pkg.ui = ui_pkg
+support_pkg.expected_conditions = ec_pkg
+exceptions_pkg = types.ModuleType("selenium.common.exceptions")
+class TimeoutException(Exception):
+    pass
+class WebDriverException(Exception):
+    pass
+exceptions_pkg.TimeoutException = TimeoutException
+exceptions_pkg.WebDriverException = WebDriverException
 
 class WebDriver: ...
 class Service: ...
@@ -34,23 +49,35 @@ chrome_pkg.service = service_pkg
 chrome_pkg.options = options_pkg
 webdriver_pkg.common = common_pkg
 common_pkg.desired_capabilities = dcaps_pkg
+common_pkg.by = by_pkg
+class By:
+    XPATH = "xpath"
+by_pkg.By = By
+webdriver_pkg.support = support_pkg
+ui_pkg.WebDriverWait = lambda *a, **k: types.SimpleNamespace(until=lambda *a2, **k2: True)
+ec_pkg.presence_of_element_located = lambda *a, **k: (lambda d: True)
 
 class DesiredCapabilities:
     CHROME = {}
 dcaps_pkg.DesiredCapabilities = DesiredCapabilities
 
 selenium_pkg.webdriver = webdriver_pkg
-sys.modules.setdefault("selenium", selenium_pkg)
-sys.modules.setdefault("selenium.webdriver", webdriver_pkg)
-sys.modules.setdefault("selenium.webdriver.remote", remote_pkg)
-sys.modules.setdefault("selenium.webdriver.remote.webdriver", webdriver_module)
-sys.modules.setdefault("selenium.webdriver.chrome", chrome_pkg)
-sys.modules.setdefault("selenium.webdriver.chrome.service", service_pkg)
-sys.modules.setdefault("selenium.webdriver.chrome.options", options_pkg)
-sys.modules.setdefault("selenium.webdriver.common", common_pkg)
-sys.modules.setdefault("selenium.webdriver.common.desired_capabilities", dcaps_pkg)
-sys.modules.setdefault("selenium.webdriver.common", common_pkg)
-sys.modules.setdefault("selenium.webdriver.common.desired_capabilities", dcaps_pkg)
+sys.modules["selenium"] = selenium_pkg
+sys.modules["selenium.webdriver"] = webdriver_pkg
+sys.modules["selenium.webdriver.remote"] = remote_pkg
+sys.modules["selenium.webdriver.remote.webdriver"] = webdriver_module
+sys.modules["selenium.webdriver.chrome"] = chrome_pkg
+sys.modules["selenium.webdriver.chrome.service"] = service_pkg
+sys.modules["selenium.webdriver.chrome.options"] = options_pkg
+sys.modules["selenium.webdriver.common"] = common_pkg
+sys.modules["selenium.webdriver.common.desired_capabilities"] = dcaps_pkg
+sys.modules["selenium.webdriver.common.by"] = by_pkg
+sys.modules["selenium.webdriver.support"] = support_pkg
+sys.modules["selenium.webdriver.support.ui"] = ui_pkg
+sys.modules["selenium.webdriver.support.expected_conditions"] = ec_pkg
+sys.modules["selenium.common.exceptions"] = exceptions_pkg
+sys.modules["selenium.webdriver.common"] = common_pkg
+sys.modules["selenium.webdriver.common.desired_capabilities"] = dcaps_pkg
 
 # dummy login module
 login_pkg = types.ModuleType("login")
@@ -59,14 +86,14 @@ def dummy_login_bgf(*a, **k):
     return True
 login_bgf_pkg.login_bgf = dummy_login_bgf
 login_pkg.login_bgf = login_bgf_pkg
-sys.modules.setdefault("login", login_pkg)
-sys.modules.setdefault("login.login_bgf", login_bgf_pkg)
+sys.modules["login"] = login_pkg
+sys.modules["login.login_bgf"] = login_bgf_pkg
 
 popup_pkg = types.ModuleType("utils.popup_util")
 def dummy_close_popups_after_delegate(*a, **k):
     pass
 popup_pkg.close_popups_after_delegate = dummy_close_popups_after_delegate
-sys.modules.setdefault("utils.popup_util", popup_pkg)
+sys.modules["utils.popup_util"] = popup_pkg
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 _spec = importlib.util.spec_from_file_location(
@@ -272,6 +299,7 @@ def test_main_converts_txt_to_excel(tmp_path):
         patch.object(main, "run_script"),
         patch.object(main, "wait_for_data", return_value=None),
         patch.object(main, "append_unique_lines", return_value=0),
+        patch.object(main, "is_7days_data_available", return_value=True),
         patch.object(main, "convert_txt_to_excel") as convert_mock,
         patch.object(main.time, "sleep"),
     ):
@@ -300,6 +328,7 @@ def test_main_writes_sales_data(tmp_path):
         patch.object(main, "wait_for_data", return_value=None),
         patch.object(main, "append_unique_lines", return_value=0),
         patch.object(main, "convert_txt_to_excel"),
+        patch.object(main, "is_7days_data_available", return_value=True),
         patch.object(main.time, "sleep"),
         patch.object(main, "write_sales_data") as write_mock,
     ):
@@ -308,3 +337,30 @@ def test_main_writes_sales_data(tmp_path):
 
     db_path = out_dir / f"{datetime.now():%Y%m%d}.db"
     write_mock.assert_called_once_with(parsed, db_path)
+
+
+def test_cli_invokes_main(tmp_path):
+    root = pathlib.Path(__file__).resolve().parents[1]
+    sc = tmp_path / "sitecustomize.py"
+    sc.write_text(
+        "import os, sys\n"
+        "if os.environ.get('TEST_MAIN_SUBPROCESS') == '1':\n"
+        "    def trace(frame, event, arg):\n"
+        "        if event == 'call' and frame.f_code.co_name == 'main' and frame.f_globals.get('__name__') == '__main__':\n"
+        "            print('MAIN CALLED')\n"
+        "            raise SystemExit(0)\n"
+        "        return trace\n"
+        "    sys.settrace(trace)\n"
+    )
+    env = os.environ.copy()
+    env['PYTHONPATH'] = str(tmp_path)
+    env['TEST_MAIN_SUBPROCESS'] = '1'
+    result = subprocess.run(
+        [sys.executable, 'main.py'],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    assert result.returncode == 0
+    assert 'MAIN CALLED' in result.stdout
