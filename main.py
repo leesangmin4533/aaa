@@ -120,7 +120,9 @@ def create_driver() -> webdriver.Chrome:
     caps["goog:loggingPrefs"] = {"browser": "ALL"}
     for key, value in caps.items():
         options.set_capability(key, value)
-    return webdriver.Chrome(service=Service(), options=options)
+    driver = webdriver.Chrome(service=Service(), options=options)
+    driver.set_script_timeout(60) # Set script timeout to 60 seconds
+    return driver
 
 
 def run_script(driver: webdriver.Chrome, name: str) -> Any:
@@ -336,6 +338,8 @@ def _run_collection_cycle() -> None:
             log.error("Navigation or preparation failed. Skipping collection cycle.", extra={'tag': 'main'})
             return
 
+        parsed_data = _execute_data_collection(driver)
+
         # Check if 7 days of data is available in DB
         need_history = not is_7days_data_available(CODE_OUTPUT_DIR / PAST7_DB_FILE)
         if need_history:
@@ -390,8 +394,6 @@ def _run_collection_cycle() -> None:
                     extra={'tag': 'main'},
                 )
                 print(f"JavaScript 오류 (auto_collect_past_7days): {msg}")
-
-        parsed_data = _execute_data_collection(driver)
 
         if parsed_data:
             target_db = CODE_OUTPUT_DIR / PAST7_DB_FILE if need_history else None
