@@ -10,7 +10,7 @@ _spec.loader.exec_module(js_util)
 
 
 def test_load_collect_past7days_reads_script(tmp_path):
-    js_file = tmp_path / "collect_past_7_days.js"
+    js_file = tmp_path / "auto_collect_past_7days.js"
     js_file.write_text("console.log('hi');", encoding="utf-8")
 
     driver = Mock()
