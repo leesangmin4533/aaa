@@ -32,8 +32,8 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # Load .env from current working directory only
-    load_dotenv(dotenv_path=Path(".env"))
+    # Load .env from the project root directory
+    load_dotenv(dotenv_path=ROOT_DIR / ".env")
 
     user_id = os.environ.get("BGF_USER_ID")
     password = os.environ.get("BGF_PASSWORD")
@@ -68,6 +68,7 @@ def login_bgf(
         )
     except Exception as e:
         log.error(f"Nexacro application did not load: {e}", extra={'tag': 'login'})
+        print(f"Error: Nexacro application did not load: {e}")
         return False
 
     creds = load_credentials(credential_path)
@@ -107,6 +108,7 @@ try {
         log.debug(f"[검증] 비밀번호 필드 값: {pw_value}", extra={'tag': 'login'})
     except Exception as e:
         log.error(f"JavaScript execution failed: {e}", extra={'tag': 'login'})
+        print(f"Error: JavaScript execution failed: {e}")
         return False
 
     try:
@@ -123,4 +125,5 @@ try {
         return True
     except Exception:
         log.error("Login check timeout or failed", extra={'tag': 'login'})
+        print("Error: Login check timeout or failed")
         return False
