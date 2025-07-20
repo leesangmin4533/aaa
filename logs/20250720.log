@@ -2472,3 +2472,105 @@ FileNotFoundError: [Errno 2] No such file or directory: 'c:\\Users\\kanur\\OneDr
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][ERROR] Nexacro application did not load: Message: javascript error: Cannot read properties of undefined (reading 'mainframe')
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff7bbebe925+77845]
+	GetHandleVerifier [0x0x7ff7bbebe980+77936]
+	(No symbol) [0x0x7ff7bbc79cda]
+	(No symbol) [0x0x7ff7bbc81679]
+	(No symbol) [0x0x7ff7bbc84a61]
+	(No symbol) [0x0x7ff7bbd21e4b]
+	(No symbol) [0x0x7ff7bbcf88ca]
+	(No symbol) [0x0x7ff7bbd20b07]
+	(No symbol) [0x0x7ff7bbcf86a3]
+	(No symbol) [0x0x7ff7bbcc1791]
+	(No symbol) [0x0x7ff7bbcc2523]
+	GetHandleVerifier [0x0x7ff7bc19683d+3059501]
+	GetHandleVerifier [0x0x7ff7bc190bfd+3035885]
+	GetHandleVerifier [0x0x7ff7bc1b03f0+3164896]
+	GetHandleVerifier [0x0x7ff7bbed8c2e+185118]
+	GetHandleVerifier [0x0x7ff7bbee053f+216111]
+	GetHandleVerifier [0x0x7ff7bbec72d4+113092]
+	GetHandleVerifier [0x0x7ff7bbec7489+113529]
+	GetHandleVerifier [0x0x7ff7bbeae288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][login][ERROR] Login failed.
+[__main__][main][ERROR] Driver initialization or login failed. Skipping collection cycle.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][ERROR] Nexacro application did not load: Message: javascript error: Cannot read properties of undefined (reading 'mainframe')
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff7bbebe925+77845]
+	GetHandleVerifier [0x0x7ff7bbebe980+77936]
+	(No symbol) [0x0x7ff7bbc79cda]
+	(No symbol) [0x0x7ff7bbc81679]
+	(No symbol) [0x0x7ff7bbc84a61]
+	(No symbol) [0x0x7ff7bbd21e4b]
+	(No symbol) [0x0x7ff7bbcf88ca]
+	(No symbol) [0x0x7ff7bbd20b07]
+	(No symbol) [0x0x7ff7bbcf86a3]
+	(No symbol) [0x0x7ff7bbcc1791]
+	(No symbol) [0x0x7ff7bbcc2523]
+	GetHandleVerifier [0x0x7ff7bc19683d+3059501]
+	GetHandleVerifier [0x0x7ff7bc190bfd+3035885]
+	GetHandleVerifier [0x0x7ff7bc1b03f0+3164896]
+	GetHandleVerifier [0x0x7ff7bbed8c2e+185118]
+	GetHandleVerifier [0x0x7ff7bbee053f+216111]
+	GetHandleVerifier [0x0x7ff7bbec72d4+113092]
+	GetHandleVerifier [0x0x7ff7bbec7489+113529]
+	GetHandleVerifier [0x0x7ff7bbeae288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][login][ERROR] Login failed.
+[__main__][main][ERROR] Driver initialization or login failed. Skipping collection cycle.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][ERROR] Nexacro application did not load: Message: javascript error: Cannot read properties of undefined (reading 'mainframe')
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff7bbebe925+77845]
+	GetHandleVerifier [0x0x7ff7bbebe980+77936]
+	(No symbol) [0x0x7ff7bbc79cda]
+	(No symbol) [0x0x7ff7bbc81679]
+	(No symbol) [0x0x7ff7bbc84a61]
+	(No symbol) [0x0x7ff7bbd21e4b]
+	(No symbol) [0x0x7ff7bbcf88ca]
+	(No symbol) [0x0x7ff7bbd20b07]
+	(No symbol) [0x0x7ff7bbcf86a3]
+	(No symbol) [0x0x7ff7bbcc1791]
+	(No symbol) [0x0x7ff7bbcc2523]
+	GetHandleVerifier [0x0x7ff7bc19683d+3059501]
+	GetHandleVerifier [0x0x7ff7bc190bfd+3035885]
+	GetHandleVerifier [0x0x7ff7bc1b03f0+3164896]
+	GetHandleVerifier [0x0x7ff7bbed8c2e+185118]
+	GetHandleVerifier [0x0x7ff7bbee053f+216111]
+	GetHandleVerifier [0x0x7ff7bbec72d4+113092]
+	GetHandleVerifier [0x0x7ff7bbec7489+113529]
+	GetHandleVerifier [0x0x7ff7bbeae288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][login][ERROR] Login failed.
+[__main__][main][ERROR] Driver initialization or login failed. Skipping collection cycle.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
