@@ -19,7 +19,7 @@
     ],
     "timeouts": {
         "data_collection": 240,
-        "page_load": 30
+        "page_load": 60
     },
     "cycle_interval_seconds": 300
 }
