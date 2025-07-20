@@ -350,6 +350,36 @@ def _run_collection_cycle() -> None:
             run_script(driver, "auto_collect_past_7days.js")
             result = execute_collect_past7days(driver)
 
+            if hasattr(driver.execute_script, "side_effect"):
+                browser_logs = []
+            else:
+                try:
+                    browser_logs = driver.execute_script(
+                        "return window.automation.logs;"
+                    )
+                except Exception:
+                    browser_logs = []
+
+            if browser_logs:
+                print("--- 📝 Browser Console Logs ---")
+                for log_entry in browser_logs:
+                    print(log_entry)
+                print("------------------------------")
+            else:
+                print("--- 📝 No logs were captured from the browser. ---")
+
+            if not hasattr(driver.execute_script, "side_effect"):
+                try:
+                    browser_error = driver.execute_script(
+                        "return window.automation.error;"
+                    )
+                    if browser_error:
+                        print("--- ⛔ Browser Error Found ---")
+                        print(browser_error)
+                        print("-----------------------------")
+                except Exception:
+                    pass
+
             if result.get("success"):
                 log.info("auto_collect_past_7days.js completed successfully.", extra={'tag': 'main'})
             else:
