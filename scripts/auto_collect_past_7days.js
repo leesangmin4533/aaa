@@ -117,8 +117,13 @@
         console.log(`[collectPast7Days] Date ${date} processed. Checking for 'autoClickAllMidCodesAndProducts' function.`);
         if (typeof window.automation.autoClickAllMidCodesAndProducts === "function") {
           console.log("[collectPast7Days] Found 'autoClickAllMidCodesAndProducts'. Executing now...");
-          await window.automation.autoClickAllMidCodesAndProducts();
-          console.log("[collectPast7Days] Finished executing 'autoClickAllMidCodesAndProducts'.");
+          try {
+            await window.automation.autoClickAllMidCodesAndProducts();
+            console.log("[collectPast7Days] Finished executing 'autoClickAllMidCodesAndProducts'.
+          } catch (e) {
+            console.error(`[collectPast7Days] Error executing autoClickAllMidCodesAndProducts for date ${date}:`, e);
+            window.automation.error = `Error executing autoClickAllMidCodesAndProducts for date ${date}: ${e.message}`;
+          }
         } else {
           console.error("[collectPast7Days] 'autoClickAllMidCodesAndProducts' function is not defined.");
           throw new Error("통합 수집 함수(autoClickAllMidCodesAndProducts)가 정의되지 않았습니다.");
