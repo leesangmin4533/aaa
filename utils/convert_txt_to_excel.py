@@ -9,7 +9,7 @@ if __package__:
     from .log_util import get_logger
 else:  # pragma: no cover - fallback when executed directly
     sys.path.append(str(Path(__file__).resolve().parent))
-    from log_util import create_logger
+    from log_util import get_logger
 
 log = get_logger(__name__)
 
@@ -35,7 +35,7 @@ def convert_txt_to_excel(
         Path to the generated Excel file.
     """
     txt_path = Path(txt_path)
-    log("convert", "INFO", f"텍스트 파일 읽기 시도: {txt_path}")
+    log.info(f"텍스트 파일 읽기 시도: {txt_path}", extra={'tag': 'convert'})
     try:
         df = pd.read_csv(
             txt_path,
@@ -45,10 +45,10 @@ def convert_txt_to_excel(
             encoding=encoding,
         )
     except Exception as e:
-        log("convert", "ERROR", f"텍스트 파일 읽기 실패: {e}")
+        log.error(f"텍스트 파일 읽기 실패: {e}", extra={'tag': 'convert'})
         raise
 
-    log("convert", "INFO", f"{len(df)}개 행 로드 완료")
+    log.info(f"{len(df)}개 행 로드 완료", extra={'tag': 'convert'})
     df.columns = [
         "중분류코드",
         "중분류명",
@@ -70,7 +70,7 @@ def convert_txt_to_excel(
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    log("convert", "INFO", f"엑셀 파일 저장 위치: {output_path}")
+    log.info(f"엑셀 파일 저장 위치: {output_path}", extra={'tag': 'convert'})
     try:
         with pd.ExcelWriter(
             output_path,
@@ -79,7 +79,7 @@ def convert_txt_to_excel(
         ) as writer:
             df.to_excel(writer, index=False)
     except Exception as e:
-        log("convert", "ERROR", f"엑셀 저장 실패: {e}")
+        log.error(f"엑셀 저장 실패: {e}", extra={'tag': 'convert'})
         raise
-    log("convert", "INFO", "엑셀 파일 저장 완료")
+    log.info("엑셀 파일 저장 완료", extra={'tag': 'convert'})
     return Path(output_path)

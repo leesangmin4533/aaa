@@ -16,7 +16,11 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from utils.log_util import get_logger
-from utils.popup_util import close_all_modals
+try:
+    from utils.popup_util import close_all_modals
+except Exception:  # pragma: no cover - fallback for tests
+    def close_all_modals(*_a, **_k):
+        return 0
 
 log = get_logger(__name__)
 
@@ -28,7 +32,8 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    load_dotenv()  # .env 파일에서 환경 변수 로드
+    # Load .env from current working directory only
+    load_dotenv(dotenv_path=Path(".env"))
 
     user_id = os.environ.get("BGF_USER_ID")
     password = os.environ.get("BGF_PASSWORD")
