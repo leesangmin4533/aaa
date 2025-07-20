@@ -1621,3 +1621,7 @@ FileNotFoundError: script file not found: c:\Users\kanur\OneDrive\문서\GitHub\
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Data collection cycle finished. Waiting for 30 minutes...
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
