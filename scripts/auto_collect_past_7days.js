@@ -4,7 +4,6 @@
   if (!window.automation) window.automation = {};
   window.automation.error = null;
 
-  // ✅ wait until a DOM element matching selector exists
   async function waitForElement(selector, timeout = 5000) {
     const start = Date.now();
     while (Date.now() - start < timeout) {
@@ -15,20 +14,23 @@
     throw new Error(`Timeout: Element not found - ${selector}`);
   }
 
-  async function waitForMainForm(timeout = 10000) {
+  async function waitForFullForm(timeout = 10000) {
     const start = Date.now();
     while (Date.now() - start < timeout) {
       try {
         const app = window.nexacro.getApplication();
         const form =
-          app.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
-        if (form) return form;
+          app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
+        const search = form?.div_workForm?.form?.div_search?.form;
+        if (search?.calFromDay && typeof search.calFromDay.set_value === "function") {
+          return search;
+        }
       } catch (e) {
-        // ignore and retry
+        // ignore
       }
       await delay(300);
     }
-    throw new Error('Timeout: Main form not ready');
+    throw new Error("Timeout: search.calFromDay not ready");
   }
 
   function getPastDates(n = 7) {
@@ -58,19 +60,16 @@
 
   async function inputDateAndSearch(dateStr) {
     try {
-      // ✅ Nexacro API 기반 날짜 설정 (form 로딩 대기)
-      const form = await waitForMainForm();
-      form.div_workForm.form.div_search.form.calFromDay.set_value(dateStr);
+      const search = await waitForFullForm();
+      search.calFromDay.set_value(dateStr);
       await delay(300);
 
-      // ✅ 조회 버튼 클릭
       const searchBtnId = "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_cmmbtn.form.F_10";
       const searchBtn = await waitForElement(`#${CSS.escape(searchBtnId)}`);
       clickByElement(searchBtn);
-      console.log(` 조회 실행 - 날짜: ${dateStr}`);
+      console.log(`조회 실행 - 날짜: ${dateStr}`);
       await delay(1500);
 
-      // ✅ 결과 대기 (gdList 렌더링 기준)
       await waitForElement("div[id*='gdList.body'][id$='0_0:text']");
     } catch (err) {
       window.automation.error = `❌ [${dateStr}] 처리 실패: ${err.message}`;
@@ -97,6 +96,5 @@
     }
   }
 
-  //  호출 메서드 등록
   window.automation.collectPast7Days = collectPast7Days;
 })();
