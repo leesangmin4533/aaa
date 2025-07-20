@@ -197,10 +197,15 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
         run_script(driver, DEFAULT_SCRIPT)
         run_script(driver, LISTENER_SCRIPT)
 
-        logs = driver.execute_script("return window.automation && window.automation.logs ? window.automation.logs : []")
-        if logs:
+        logs = driver.execute_script(
+            "return window.automation && window.automation.logs ? window.automation.logs : []"
+        )
+        mid_logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+        if mid_logs:
+            log.info(f"mid_category logs: {mid_logs}", extra={'tag': 'mid_category'})
+            print("중분류 클릭 로그:", mid_logs)
+        elif logs:
             log.info(f"mid_category logs: {logs}", extra={'tag': 'mid_category'})
-            # print("중분류 클릭 로그:", logs)
 
         parsed_data = wait_for_data(driver, DATA_COLLECTION_TIMEOUT)
         if parsed_data is None:
@@ -231,21 +236,28 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
 
 def _process_and_save_data(parsed_data: Any) -> None:
     """Process and save the collected data to DB."""
-    if not isinstance(parsed_data, list) or not all(isinstance(item, str) for item in parsed_data):
+    records_for_db: list[dict[str, Any]] = []
+    if isinstance(parsed_data, list):
+        if all(isinstance(item, str) for item in parsed_data):
+            for line in parsed_data:
+                values = line.strip().split('\t')
+                if len(values) == len(FIELD_ORDER):
+                    records_for_db.append(dict(zip(FIELD_ORDER, values)))
+                else:
+                    log.warning(f"Skipping malformed line for DB: {line}", extra={'tag': 'db'})
+        elif all(isinstance(item, dict) for item in parsed_data):
+            records_for_db = [dict(item) for item in parsed_data]
+        else:
+            log.error(f"Invalid list format received: {type(parsed_data[0])}", extra={'tag': 'output'})
+            print(f"잘못된 데이터 형식: {type(parsed_data[0])}")
+            return
+    else:
         log.error(f"Invalid data format received: {type(parsed_data)}", extra={'tag': 'output'})
         print(f"잘못된 데이터 형식: {type(parsed_data)}")
         return
 
-    db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
-
-    # Convert string data to list of dictionaries for DB insertion
-    records_for_db = []
-    for line in parsed_data:
-        values = line.strip().split('\t')
-        if len(values) == len(FIELD_ORDER):
-            records_for_db.append(dict(zip(FIELD_ORDER, values)))
-        else:
-            log.warning(f"Skipping malformed line for DB: {line}", extra={'tag': 'db'})
+    date_db = datetime.now().strftime("%Y%m%d") + ".db"
+    db_path = CODE_OUTPUT_DIR / date_db
 
     # Save to DB
     if records_for_db:
@@ -337,6 +349,11 @@ def _run_collection_cycle() -> None:
 
         _handle_final_logs(driver)
 
+        date_str = datetime.now().strftime("%y%m%d")
+        txt_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
+        excel_path = CODE_OUTPUT_DIR / "mid_excel" / f"{date_str}.xlsx"
+        convert_txt_to_excel(str(txt_path), str(excel_path))
+
     except Exception as e:
         log.critical(f"Critical error during collection cycle: {e}", extra={'tag': 'main'}, exc_info=True)
         print(f"치명적인 오류 발생: {e}")
@@ -354,3 +371,7 @@ def main() -> None:
     log.info("Starting single data collection cycle...", extra={'tag': 'main'})
     _run_collection_cycle()
     log.info("Single data collection cycle finished.", extra={'tag': 'main'})
+
+
+if __name__ == "__main__":
+    main()

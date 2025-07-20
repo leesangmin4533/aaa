@@ -72,7 +72,9 @@ _spec = importlib.util.spec_from_file_location(
     pathlib.Path(__file__).resolve().parents[1] / "utils" / "popup_util.py",
 )
 popup_util = importlib.util.module_from_spec(_spec)
-sys.modules.setdefault("utils", types.ModuleType("utils"))
+utils_pkg = types.ModuleType("utils")
+utils_pkg.__path__ = [str(pathlib.Path(__file__).resolve().parents[1] / "utils")]
+sys.modules["utils"] = utils_pkg
 _spec.loader.exec_module(popup_util)
 
 
