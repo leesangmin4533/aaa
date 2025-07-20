@@ -28,7 +28,7 @@
         );
         if (cells.length > 0) return resolve(true);
         if (Date.now() - start > maxWait) {
-          return reject('⛔ gdList 로딩 시간 초과');
+          return reject('gdList 로딩 시간 초과');
         }
         setTimeout(check, 300);
       };
@@ -66,7 +66,7 @@
         if (clickId) {
           await clickElementById(clickId);
         } else {
-          console.warn("❌ 상품코드 셀 ID 찾을 수 없음:", row);
+          console.warn("상품코드 셀 ID 찾을 수 없음:", row);
         }
 
         const line = [
@@ -139,7 +139,7 @@
   }
 
   async function collectMidCodes(startCode = null, endCode = null) {
-    console.log("🚀 collectMidCodes 시작");
+    console.log("collectMidCodes 시작");
     const seenMid = new Set();
     let scrollCount = 0;
 
@@ -172,7 +172,7 @@
         console.log(`Attempting to click mid-category: ${code} with ID: ${clickId}`);
         const clicked = await clickElementById(clickId);
         if (!clicked) {
-          console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
+          console.warn("중분류 클릭 실패 → ID:", clickId);
           continue;
         }
 
@@ -180,7 +180,7 @@
 
         seenMid.add(code);
         newMids.push(code);
-        console.log(`✅ 중분류 클릭: ${code} (${midName})`);
+        console.log(`중분류 클릭: ${code} (${midName})`);
         await delay(500);
 
         console.log(`Collecting product data for mid-category: ${code}`);
@@ -190,13 +190,13 @@
       }
 
       if (newMids.length === 0) {
-        console.warn("📌 더 이상 새로운 중분류 없음 → 종료");
+        console.warn("더 이상 새로운 중분류 없음 → 종료");
         break;
       }
 
       const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
       if (!scrollBtn) {
-        console.warn("❌ 중분류 스크롤 버튼 없음 → 종료");
+        console.warn("중분류 스크롤 버튼 없음 → 종료");
         break;
       }
 
