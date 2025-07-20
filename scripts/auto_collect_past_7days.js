@@ -61,7 +61,37 @@
   async function inputDateAndSearch(dateStr) {
     try {
       const search = await waitForFullForm();
-      search.calFromDay.set_value(dateStr);
+      let inputEl = null;
+      try {
+        inputEl = document.querySelector("input[id*='calFromDay']");
+      } catch (e) {
+        inputEl = null;
+      }
+
+      if (inputEl) {
+        clickByElement(inputEl);
+        inputEl.value = "";
+        inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+
+        for (const ch of dateStr) {
+          inputEl.dispatchEvent(new KeyboardEvent("keydown", { key: ch }));
+          inputEl.value += ch;
+          inputEl.dispatchEvent(new KeyboardEvent("keyup", { key: ch }));
+          inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        inputEl.dispatchEvent(
+          new KeyboardEvent("keydown", { key: "Enter", keyCode: 13, which: 13 })
+        );
+        inputEl.dispatchEvent(
+          new KeyboardEvent("keyup", { key: "Enter", keyCode: 13, which: 13 })
+        );
+        await delay(200);
+        if (inputEl.value !== dateStr) {
+          search.calFromDay.set_value(dateStr);
+        }
+      } else {
+        search.calFromDay.set_value(dateStr);
+      }
       await delay(300);
 
       const searchBtnId = "mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_cmmbtn.form.F_10";
