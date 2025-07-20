@@ -17,7 +17,7 @@
     return origConsoleError.apply(console, args);
   };
 
-  async function waitForElement(selector, timeout = 20000) {
+  async function waitForElement(selector, timeout = 60000) {
     console.log(`[waitForElement] Waiting for selector: "${selector}" (Timeout: ${timeout}ms)`);
     const start = Date.now();
     while (Date.now() - start < timeout) {
@@ -32,7 +32,7 @@
     throw new Error(`Timeout: Element not found or not visible - ${selector}`);
   }
 
-  async function waitForFullForm(timeout = 20000) {
+  async function waitForFullForm(timeout = 60000) {
     console.log(`[waitForFullForm] Waiting for Nexacro form to be ready with corrected path... (Timeout: ${timeout}ms)`);
     const start = Date.now();
     while (Date.now() - start < timeout) {
