@@ -148,6 +148,7 @@ def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
 
 def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool:
     """중분류별 매출 구성비 화면의 그리드가 나타날 때까지 대기한다."""
+    from selenium.common.exceptions import TimeoutException
     selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
     log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={'tag': 'navigation'})
     try:
@@ -395,15 +396,16 @@ def _run_collection_cycle() -> None:
         if parsed_data:
             target_db = CODE_OUTPUT_DIR / PAST7_DB_FILE if need_history else None
             _process_and_save_data(parsed_data, db_path=target_db)
+
+            date_str = datetime.now().strftime("%y%m%d")
+            txt_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
+            excel_path = CODE_OUTPUT_DIR / "mid_excel" / f"{date_str}.xlsx"
+            save_to_txt(parsed_data, txt_path)
+            convert_txt_to_excel(str(txt_path), str(excel_path))
         else:
             log.warning("No parsed data collected. Skipping save results.", extra={'tag': 'main'})
 
         _handle_final_logs(driver)
-
-        date_str = datetime.now().strftime("%y%m%d")
-        txt_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
-        excel_path = CODE_OUTPUT_DIR / "mid_excel" / f"{date_str}.xlsx"
-        convert_txt_to_excel(str(txt_path), str(excel_path))
 
     except Exception as e:
         log.critical(f"Critical error during collection cycle: {e}", extra={'tag': 'main'}, exc_info=True)
