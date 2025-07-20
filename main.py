@@ -34,7 +34,7 @@ import json
 # Local imports - 프로젝트 내부 모듈
 from login.login_bgf import login_bgf
 from utils.log_parser import extract_tab_lines
-from utils.db_util import write_sales_data
+from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 from utils.convert_txt_to_excel import convert_txt_to_excel
 from utils.file_util import append_unique_lines
@@ -308,6 +308,20 @@ def _run_collection_cycle() -> None:
         if not _navigate_and_prepare_collection(driver):
             log.error("Navigation or preparation failed. Skipping collection cycle.", extra={'tag': 'main'})
             return
+
+        # Check if 7 days of data is available in DB
+        if not is_7days_data_available(CODE_OUTPUT_DIR / ALL_SALES_DB_FILE):
+            log.info("Less than 7 days of data in DB. Running auto_collect_past_7days.js", extra={'tag': 'main'})
+            run_script(driver, "auto_collect_past_7days.js")
+            driver.execute_script("window.automation.collectPast7Days();")
+            
+            # Check for errors from JavaScript execution
+            js_error = driver.execute_script("return window.automation && window.automation.error")
+            if js_error:
+                log.error(f"JavaScript error during auto_collect_past_7days: {js_error}", extra={'tag': 'main'})
+                print(f"JavaScript 오류 (auto_collect_past_7days): {js_error}")
+            else:
+                log.info("auto_collect_past_7days.js completed successfully.", extra={'tag': 'main'})
 
         parsed_data = _execute_data_collection(driver)
         
