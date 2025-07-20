@@ -344,9 +344,9 @@ def _run_collection_cycle() -> None:
             log.info(f"Attempting to run script from: {script_path}", extra={'tag': 'main'})
 
             # ✅ 추가 확인 코드
-            print("🔍 SCRIPT_DIR =", SCRIPT_DIR)
-            print("🔍 script_path =", script_path)
-            print("🔍 파일 존재 여부 =", script_path.exists())
+            print("SCRIPT_DIR =", SCRIPT_DIR)
+            print("script_path =", script_path)
+            print("파일 존재 여부 =", script_path.exists())
 
             run_script(driver, "auto_collect_past_7days.js")
             result = execute_collect_past7days(driver)
@@ -362,12 +362,12 @@ def _run_collection_cycle() -> None:
                     browser_logs = []
 
             if browser_logs:
-                print("--- 📝 Browser Console Logs ---")
+                print("--- Browser Console Logs ---")
                 for log_entry in browser_logs:
                     print(log_entry)
                 print("------------------------------")
             else:
-                print("--- 📝 No logs were captured from the browser. ---")
+                print("--- No logs were captured from the browser. ---")
 
             if not hasattr(driver.execute_script, "side_effect"):
                 try:
@@ -375,7 +375,7 @@ def _run_collection_cycle() -> None:
                         "return window.automation.error;"
                     )
                     if browser_error:
-                        print("--- ⛔ Browser Error Found ---")
+                        print("--- Browser Error Found ---")
                         print(browser_error)
                         print("-----------------------------")
                 except Exception:
