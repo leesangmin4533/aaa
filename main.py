@@ -49,6 +49,8 @@ def load_config() -> dict:
 
 config = load_config()
 
+log = get_logger(__name__)
+
 # Directory configuration
 SCRIPT_DIR = Path(__file__).with_name("scripts")
 CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
@@ -67,8 +69,9 @@ DATA_COLLECTION_TIMEOUT = config["timeouts"]["data_collection"]
 PAGE_LOAD_TIMEOUT = config["timeouts"]["page_load"]
 CYCLE_INTERVAL = config["cycle_interval_seconds"]
 
-# Logger used for both console and file output
-log = get_logger(__name__)
+log.debug(f"SCRIPT_DIR: {SCRIPT_DIR}", extra={'tag': 'config'})
+
+log.debug(f"SCRIPT_DIR: {SCRIPT_DIR}", extra={'tag': 'config'})
 
 
 def get_script_files() -> list[str]:
@@ -119,13 +122,13 @@ def create_driver() -> webdriver.Chrome:
 
 
 def run_script(driver: webdriver.Chrome, name: str) -> Any:
-    path = SCRIPT_DIR / name
-    if not path.exists():
-        msg = f"script file not found: {path}"
-        print(msg)
+    script_full_path = os.path.join(SCRIPT_DIR, name)
+    log.debug(f"Checking script existence: {script_full_path}", extra={'tag': 'run_script'})
+    if not os.path.exists(script_full_path):
+        msg = f"script file not found: {script_full_path}"
         log.error(msg, extra={'tag': 'run_script'})
         raise FileNotFoundError(msg)
-    with open(path, "r", encoding="utf-8") as f:
+    with open(script_full_path, "r", encoding="utf-8") as f:
         js = f.read()
     return driver.execute_script(js)
 
@@ -312,6 +315,8 @@ def _run_collection_cycle() -> None:
         # Check if 7 days of data is available in DB
         if not is_7days_data_available(CODE_OUTPUT_DIR / ALL_SALES_DB_FILE):
             log.info("Less than 7 days of data in DB. Running auto_collect_past_7days.js", extra={'tag': 'main'})
+            script_path = SCRIPT_DIR / "auto_collect_past_7days.js"
+            log.info(f"Attempting to run script from: {script_path}", extra={'tag': 'main'})
             run_script(driver, "auto_collect_past_7days.js")
             driver.execute_script("window.automation.collectPast7Days();")
             
@@ -344,14 +349,8 @@ def _run_collection_cycle() -> None:
 
 def main() -> None:
     """
-    Main execution function: runs the browser, collects data, and saves it hourly.
+    Main execution function: runs the browser, collects data, and saves it.
     """
-    while True:
-        log.info("Starting new data collection cycle...", extra={'tag': 'main'})
-        _run_collection_cycle()
-        log.info("Data collection cycle finished. Waiting for 30 minutes...", extra={'tag': 'main'})
-        time.sleep(1800) # Wait for 30 minutes
-        log.info("30 minutes wait completed. Starting next cycle.", extra={'tag': 'main'})
-
-if __name__ == "__main__":
-    main()
+    log.info("Starting single data collection cycle...", extra={'tag': 'main'})
+    _run_collection_cycle()
+    log.info("Single data collection cycle finished.", extra={'tag': 'main'})
