@@ -68,7 +68,6 @@ def login_bgf(
         )
     except Exception as e:
         log.error(f"Nexacro application did not load: {e}", extra={'tag': 'login'})
-        print(f"Error: Nexacro application did not load: {e}")
         return False
 
     creds = load_credentials(credential_path)
@@ -108,7 +107,6 @@ try {
         log.debug(f"[검증] 비밀번호 필드 값: {pw_value}", extra={'tag': 'login'})
     except Exception as e:
         log.error(f"JavaScript execution failed: {e}", extra={'tag': 'login'})
-        print(f"Error: JavaScript execution failed: {e}")
         return False
 
     try:
