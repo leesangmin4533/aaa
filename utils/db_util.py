@@ -176,3 +176,47 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
     conn.commit()
     conn.close()
     return inserted
+
+def is_7days_data_available(db_path: Path) -> bool:
+    """
+    Checks if there are at least 7 consecutive days of data in the mid_sales table,
+    starting from the most recent date.
+    """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        # Get all distinct dates, ordered descending
+        cur.execute("SELECT DISTINCT SUBSTR(collected_at, 1, 10) FROM mid_sales ORDER BY SUBSTR(collected_at, 1, 10) DESC")
+        distinct_dates_str = [row[0] for row in cur.fetchall()]
+
+        if len(distinct_dates_str) < 7:
+            log.info(f"Less than 7 distinct dates ({len(distinct_dates_str)}) found in DB.", extra={'tag': 'db'})
+            return False
+
+        # Convert date strings to datetime objects
+        distinct_dates = [datetime.strptime(d, "%Y-%m-%d").date() for d in distinct_dates_str]
+
+        # Check for 7 consecutive days
+        for i in range(6): # Check 6 gaps for 7 consecutive days
+            if i + 1 < len(distinct_dates):
+                diff = (distinct_dates[i] - distinct_dates[i+1]).days
+                if diff != 1:
+                    log.info(f"Gap found between {distinct_dates[i]} and {distinct_dates[i+1]}. Not 7 consecutive days.", extra={'tag': 'db'})
+                    return False
+            else: # Not enough dates to check 6 gaps
+                log.info(f"Not enough dates ({len(distinct_dates)}) to check for 7 consecutive days.", extra={'tag': 'db'})
+                return False
+
+        log.info(f"Found 7 consecutive days of data in DB, ending with {distinct_dates[0]}.", extra={'tag': 'db'})
+        return True
+
+    except sqlite3.Error as e:
+        log.error(f"Database error while checking 7-day data: {e}", extra={'tag': 'db'}, exc_info=True)
+        return False
+    except Exception as e:
+        log.error(f"An unexpected error occurred while checking 7-day data: {e}", extra={'tag': 'db'}, exc_info=True)
+        return False
+    finally:
+        if conn:
+            conn.close()
