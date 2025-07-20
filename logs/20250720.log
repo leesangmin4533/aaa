@@ -1829,3 +1829,105 @@ FileNotFoundError: [Errno 2] No such file or directory: 'c:\\Users\\kanur\\OneDr
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[utils.db_util][db][INFO] Less than 7 distinct dates (2) found in DB.
+[__main__][main][INFO] Less than 7 days of data in DB. Running auto_collect_past_7days.js
+[__main__][main][INFO] Attempting to run script from: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][main][ERROR] JavaScript error during auto_collect_past_7days: ❌ [2025-07-19] 처리 실패: Cannot read properties of undefined (reading 'form')
+[__main__][collect][INFO] Starting data collection scripts.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\data_collect_listener.js
+[__main__][mid_category][INFO] mid_category logs: ['🚀 collectMidCodes 시작', '🔄 중분류 목록 스캔 시작', 'Found 22 mid-category cells.', 'Attempting to click mid-category: 001 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250720133606)', '*********** 트랜잭션 호출 전 httptimeout : 60', '✅ 중분류 클릭: 001 (도시락)']
+[__main__][collect][INFO] Using liveData as fallback for parsedData.
+[__main__][collect][INFO] Data collection complete.
+[__main__][db][INFO] DB saved to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250720.db, inserted 3 rows
+[__main__][browser_log][INFO] Extracted log data:
+[__main__][browser_log][INFO] 001	도시락	8809655891665	도)넘버원양념쌀치킨1	1	1	0	0	0\n001	도시락	8801771031802	도)한끼만족함박앤치킨1	1	1	0	0	0
+[__main__][browser_log][INFO] 002	주먹밥	8809655891665	도)넘버원양념쌀치킨1	1	1	0	0	0\n002	주먹밥	8801771031802	도)한끼만족함박앤치킨1	1	1	0	0	0
+[__main__][browser_log][INFO] 005	햄버거류	8801068933475	햄)3단맥스숯불바베큐1	1	1	0	0	0
+[__main__][browser_log][INFO] 010	제조음료	2202000107644	25뉴get아이스아메XL	1	0	0	0	-115
+[__main__][browser_log][INFO] 015	비스켓/쿠키	8801019306495	해태)초코홈런볼46g	1	0	0	0	3
+[__main__][browser_log][INFO] 016	스낵류	8801043036337	농심)오징어집78g	1	0	0	0	14\n016	스낵류	8801043031431	농심)쫄병매콤한맛	1	0	0	0	4\n016	스낵류	8801062380114	롯데)꼬깔콘고소한맛	1	0	0	0	7\n016	스낵류	8805856103729	미찌)곰표팝콘오리지널맛	1	0	0	0	6\n016	스낵류	8801117760908	오리온)오징어땅콩98g	1	0	0	0	15\n016	스낵류	8886467100055	프링글스)핫스파이시110g	1	0	0	0	2
+[__main__][browser_log][INFO] 018	껌	8801117650605	오리온)와우블랙레몬	1	0	0	0	8
+[__main__][browser_log][INFO] 019	초콜릿	5000159559348	마즈)트윅스쿠키50g	1	0	0	0	11
+[__main__][browser_log][INFO] 020	캔디	8691216099074	삼경)하리보믹스사워	1	0	0	0	5\n020	캔디	8801117339302	오리온)왕꿈틀이젤리67g	3	0	0	0	1
+[__main__][browser_log][INFO] 021	일반아이스크림	8809194491166	삼우)800저당바청포도	1	0	0	0	22
+[__main__][browser_log][INFO] 022	마른안주류	8809081260073	경진)꾸이맨매콤30g	2	0	0	0	2
+[__main__][browser_log][INFO] 023	육가공류	8801123311057	롯데)의성매콤땡초바65g	3	0	0	0	1\n023	육가공류	8801077630709	진주햄)천하매콤후랑크70g	2	0	0	0	2\n023	육가공류	8801898163844	티니핑)뽀뽀핑메추리알5입	1	0	0	0	2\n023	육가공류	8801898162847	행복)메추리알쏙쏙5입	1	0	0	0	2
+[__main__][browser_log][INFO] 027	농산식재료	8801114119075	풀무원)소가찌개두부290g	2	0	0	0	1
+[__main__][browser_log][INFO] 028	축수산식재료	8801155834708	동원)덴마크라이트스트링	5	0	0	0	2\n028	축수산식재료	8801155834616	동원)덴마크스트링치즈	2	2	0	0	0\n028	축수산식재료	8809136851096	제니코)치즈파티모짜렐라	2	0	0	0	1
+[__main__][browser_log][INFO] 032	면류	8801043015639	농심)김치사발면	3	0	0	0	5\n032	면류	8801043014984	농심)너구리얼큰	2	0	0	0	21\n032	면류	8801043014731	농심)안성탕면	5	0	0	0	4\n032	면류	8801043015653	농심)육개장사발면	2	0	0	0	21\n032	면류	8801043015226	농심)짜파게티	5	0	0	0	11\n032	면류	8801043015608	농심)짜파게티범벅소컵	1	0	0	0	7\n032	면류	8801073211469	삼양)까르보불닭큰컵	2	0	0	0	16\n032	면류	8801073210363	삼양)불닭볶음면컵	1	0	0	0	14\n032	면류	8801073210967	삼양)치즈불닭볶음면컵	3	0	0	0	2\n032	면류	8801045570068	오뚜기)진라면순한소컵	1	0	0	0	2\n032	면류	8801045572802	오뚜기)치즈볶이컵	1	0	0	0	6\n032	면류	8809296883531	팔도)김치도시락	1	0	0	0	13\n032	면류	8801128503235	팔도)김치왕뚜껑왕컵	1	0	0	0	8\n032	면류	8801128503211	팔도)왕뚜껑왕컵	2	0	0	0	8\n032	면류	8809695251412	팔도)킹뚜껑	1	0	0	0	4\n032	면류	8801128503037	팔도)팔도비빔면	5	0	0	0	6
+[__main__][browser_log][INFO] 033	상온즉석식	8801007921235	CJ)컵반BIG치즈닭갈비덮밥	1	0	0	0	1\n033	상온즉석식	8801007732442	CJ)컵반스팸마요덮밥	1	0	0	0	1\n033	상온즉석식	8801007608112	CJ)컵반직화불고기덮밥	2	0	0	0	0
+[__main__][browser_log][INFO] 035	냉장즉석식	8805684010640	MDS)베이컨크림파스타N	1	0	0	0	0\n035	냉장즉석식	8809265025214	고래사)어묵탕시원한맛	1	0	0	0	2\n035	냉장즉석식	8809367693113	팔도한끼)정통갈비탕&밥	1	0	0	0	0\n035	냉장즉석식	8809948344021	팔도한끼)짬뽕순두부국밥	1	1	0	0	0
+[__main__][browser_log][INFO] 039	과일야채음료	8801753113199	곽철이)사과제로190ml	1	0	0	0	5\n039	과일야채음료	8801753113205	곽철이)청포도제로190ml	1	0	0	0	5\n039	과일야채음료	8801121043561	매일)피크닉사과240ml	1	2	0	0	4\n039	과일야채음료	8801105907605	코카)레몬에이드P350ml	1	0	0	0	9\n039	과일야채음료	8809695254222	팔도)뽀로로샤인맛P235ml	1	0	0	0	6\n039	과일야채음료	8806371309818	푸르밀)웰치사과에이드	2	0	0	0	2\n039	과일야채음료	8806371309771	푸르밀)웰치포도에이드	2	0	0	0	2\n039	과일야채음료	8801105915709	해태)갈아만든배P500ml	2	0	0	0	7
+[__main__][browser_log][INFO] 040	기능건강음료	4005906404835	농심)파워오투오렌지P500	3	0	0	0	13\n040	기능건강음료	8801056049201	롯데)게토레이레몬600ml	4	0	0	0	8\n040	기능건강음료	8801056052218	롯데)게토레이블루P600ml	2	0	0	0	8\n040	기능건강음료	8801056240998	롯데)핫식스더킹퍼플캔355	2	0	0	0	3\n040	기능건강음료	8809626920295	링티)제로복숭아P500ml	2	0	0	0	3\n040	기능건강음료	4897036691007	코카)몬스터에너지캔355ml	4	0	0	0	7\n040	기능건강음료	4897036694534	코카)몬스터파피용캔355	1	0	0	0	5
+[__main__][browser_log][INFO] 041	생수	8801056169817	HEYROO미네랄워터P500ml	1	0	0	0	5\n041	생수	8801056055189	롯데)트레비라임P500ml	2	0	0	0	3
+[__main__][browser_log][INFO] 042	커피음료	8801104666152	빙그레)오늘의커피라떼	2	0	0	0	0\n042	커피음료	8801115382096	스벅)바닐라라떼컵200ml	2	0	0	0	1\n042	커피음료	8801037020519	스벅)시그니처초콜릿200ml	1	0	0	0	7\n042	커피음료	8801037086942	스벅)카페라떼컵200ml	2	1	0	0	1\n042	커피음료	8809388463931	이디야)돌체콜드브루300ml	3	0	0	0	1\n042	커피음료	8809388464471	이디야)쇼콜라모카300ml	1	0	0	0	2\n042	커피음료	8801037001716	티오피)스모키라떼캔275ml	1	0	0	0	8
+[__main__][browser_log][INFO] 043	차음료	8806002009391	광동)진한헛개차P1.5L	1	0	0	0	2\n043	차음료	8801047284482	동원)복숭아제로아이스500	4	0	0	0	1\n043	차음료	8801104949941	신이어)유기농보리차P600	2	0	0	0	6
+[__main__][browser_log][INFO] 044	탄산음료	8801043065467	농심)웰치제로포도P600	1	0	0	0	7\n044	탄산음료	8801097135413	동아)나랑드사이다캔345ml	1	0	0	0	3\n044	탄산음료	8801056755010	롯데)밀키스P500ml	1	0	0	0	6\n044	탄산음료	8801056177584	롯데)칠성사이다제로P500	2	0	0	0	9\n044	탄산음료	8801223100254	일화)맥콜캔250ml	1	0	0	0	9\n044	탄산음료	8801094017606	코카)코카콜라P500ml	1	0	0	0	9\n044	탄산음료	8801094013004	코카)코카콜라캔250ml	1	0	0	0	7\n044	탄산음료	8809495077793	클룹)제로소다레몬캔500ml	2	0	0	0	5\n044	탄산음료	8809495075478	클룹)제로소다포도캔500ml	2	0	0	0	3\n044	탄산음료	8806004000945	현대)미에로화이스파클500	2	0	0	0	3
+[__main__][browser_log][INFO] 045	아이스드링크	8801056083564	롯데)칸타타블랙아메리230	1	0	0	0	6\n045	아이스드링크	8801056083571	롯데)칸타타헤이즐넛230ml	2	0	0	0	8
+[__main__][browser_log][INFO] 047	우유	8801155745394	동원)가나디딸기우유500ml	1	1	0	0	2\n047	우유	8801155745387	동원)가나디초코우유500ml	1	2	0	0	1\n047	우유	8809846900886	매일)셀렉스프로핏모카250	1	0	0	0	2\n047	우유	8801104942935	빙그레)더단백딸기드링크	3	0	0	0	0\n047	우유	0000088002798	빙그레)바나나우유240ml	2	0	0	0	10\n047	우유	8801115118886	서울)내안의진짜초코280ml	2	2	0	0	2\n047	우유	8801115115113	서울)멸균우유200ml	1	4	0	0	1\n047	우유	8801115114154	서울)흰우유1L	1	0	0	0	6
+[__main__][browser_log][INFO] 048	얼음	8809197840336	del)벤티컵얼음400g	1	0	0	0	8\n048	얼음	8809197840107	del)빅컵얼음230g	4	1	0	0	19\n048	얼음	8809197840091	del)컵얼음180g	3	0	0	0	23
+[__main__][browser_log][INFO] 049	맥주	4901004006813	아사히캔500ml	1	0	0	0	11\n049	맥주	8801858042769	카스라이트캔500ml	1	0	0	0	16\n049	맥주	8801858048167	카스레몬스퀴즈7.0캔500ml	1	0	0	0	8\n049	맥주	8801119241511	필라이트후레쉬캔500ml	1	0	0	0	8
+[__main__][browser_log][INFO] 050	소주	8801048951017	신참이슬병360ml지함	2	0	0	0	23\n050	소주	8801152136676	처음처럼새로병360ml	1	0	0	0	21
+[__main__][browser_log][INFO] 051	전통주	8802521122221	국순당)쌀막걸리750ml	1	0	0	0	8\n051	전통주	8809202631751	지평)생막걸리750ml	1	0	0	0	6
+[__main__][browser_log][INFO] 058	의류용품	8806366723414	여성발목양말	1	0	0	0	26
+[__main__][browser_log][INFO] 060	홈/주방용품	2200000079947	종량(가정)20L	1	0	0	0	-43\n060	홈/주방용품	2200000079985	종량(가정)75L	3	0	0	0	198
+[__main__][browser_log][INFO] 062	전기연료	8803651000045	에이스)일회용돌라이터	1	0	0	0	48
+[__main__][browser_log][INFO] 072	담배	0000088022680	던힐1mg	1	0	0	0	19\n072	담배	0000088022666	던힐6mg	1	0	0	0	33\n072	담배	0000088014128	던힐파인컷1mg	2	0	0	0	14\n072	담배	0000088006604	디스플러스5mg	1	0	0	0	19\n072	담배	0000088011189	레종블루3mg	2	0	0	0	13\n072	담배	8801116036066	레종이오니아아쿠아그린	1	0	0	0	5\n072	담배	8801116006830	레종프렌치블랙3mg	2	0	0	0	28\n072	담배	8801116019397	레종프렌치아이스블랑2mg	1	0	0	0	3\n072	담배	8801116007172	레종프렌치요고1㎎	3	0	0	0	7\n072	담배	0000088011745	말보로골드6mg	1	0	0	0	13\n072	담배	0000088017617	말보로아이스원1mg	1	0	0	0	17\n072	담배	0000088017655	말보로하이브리드5mg	1	0	0	0	23\n072	담배	8809741171619	몽스버블몬빅배몽4.8ml	1	0	0	0	4\n072	담배	0000088011158	시즌2mg	2	0	0	0	13\n072	담배	8801116001194	에쎄수0.5mg	1	0	0	0	9\n072	담배	8801116005314	에쎄체인지1mg	1	0	0	0	17\n072	담배	8801116005574	에쎄체인지4mg	1	0	0	0	10\n072	담배	8801116006007	에쎄체인지W1mg	1	0	0	0	12\n072	담배	8801116008490	에쎄체인지린1mg	1	0	0	0	17\n072	담배	8801116013319	에쎄히말라야1mg	1	0	0	0	37
+[__main__][browser_log][INFO] 073	전자담배	8801116012176	LIL액상카트리지	10	0	0	0	107\n073	전자담배	8801116013234	MIIX아이스더블	3	0	0	0	25\n073	전자담배	0000088024189	테리아블랙루비	2	0	0	0	19\n073	전자담배	0000088023014	테리아블루	1	0	0	0	21\n073	전자담배	0000088024134	테리아오아시스펄	2	0	0	0	18
+[__main__][browser_log][INFO] 900	소모품	2201148653150	친환경봉투판매용	10	0	0	0	-1,700
+[utils.convert_txt_to_excel][convert][INFO] 텍스트 파일 읽기 시도: c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\250720.txt
+[utils.convert_txt_to_excel][convert][ERROR] 텍스트 파일 읽기 실패: [Errno 2] No such file or directory: 'c:\\Users\\kanur\\OneDrive\\문서\\GitHub\\aaa\\code_outputs\\250720.txt'
+[__main__][main][CRITICAL] Critical error during collection cycle: [Errno 2] No such file or directory: 'c:\\Users\\kanur\\OneDrive\\문서\\GitHub\\aaa\\code_outputs\\250720.txt'
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 361, in _run_collection_cycle
+    convert_txt_to_excel(str(txt_path), str(excel_path))
+  File "C:\Users\kanur\OneDrive\문서\GitHub\aaa\utils\convert_txt_to_excel.py", line 40, in convert_txt_to_excel
+    df = pd.read_csv(
+         ^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'c:\\Users\\kanur\\OneDrive\\문서\\GitHub\\aaa\\code_outputs\\250720.txt'
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
