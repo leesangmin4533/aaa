@@ -329,6 +329,12 @@ def _run_collection_cycle() -> None:
             log.info("Less than 7 days of data in DB. Running auto_collect_past_7days.js", extra={'tag': 'main'})
             script_path = SCRIPT_DIR / "auto_collect_past_7days.js"
             log.info(f"Attempting to run script from: {script_path}", extra={'tag': 'main'})
+
+            # ✅ 추가 확인 코드
+            print("🔍 SCRIPT_DIR =", SCRIPT_DIR)
+            print("🔍 script_path =", script_path)
+            print("🔍 파일 존재 여부 =", script_path.exists())
+
             run_script(driver, "auto_collect_past_7days.js")
             driver.execute_script("window.automation.collectPast7Days();")
             
