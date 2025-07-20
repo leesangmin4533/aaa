@@ -38,6 +38,7 @@ from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 from utils.convert_txt_to_excel import convert_txt_to_excel
 from utils.file_util import append_unique_lines
+from utils import execute_collect_past7days
 
 # --- Configuration Loading ---
 def load_config() -> dict:
@@ -336,15 +337,17 @@ def _run_collection_cycle() -> None:
             print("🔍 파일 존재 여부 =", script_path.exists())
 
             run_script(driver, "auto_collect_past_7days.js")
-            driver.execute_script("window.automation.collectPast7Days();")
-            
-            # Check for errors from JavaScript execution
-            js_error = driver.execute_script("return window.automation && window.automation.error")
-            if js_error:
-                log.error(f"JavaScript error during auto_collect_past_7days: {js_error}", extra={'tag': 'main'})
-                print(f"JavaScript 오류 (auto_collect_past_7days): {js_error}")
-            else:
+            result = execute_collect_past7days(driver)
+
+            if result.get("success"):
                 log.info("auto_collect_past_7days.js completed successfully.", extra={'tag': 'main'})
+            else:
+                msg = result.get("message")
+                log.error(
+                    f"JavaScript error during auto_collect_past_7days: {msg}",
+                    extra={'tag': 'main'},
+                )
+                print(f"JavaScript 오류 (auto_collect_past_7days): {msg}")
 
         parsed_data = _execute_data_collection(driver)
         
