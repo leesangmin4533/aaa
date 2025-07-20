@@ -4,7 +4,13 @@
     parsedData: null,
     error: null
   };
+  async function autoClickAllMidCodesAndProducts(startCode = null, endCode = null) {
+    await waitForMidGrid();
+    await collectMidCodes(startCode, endCode);
+  }
+
   window.collectMidProducts = collectMidCodes;
+  window.automation.autoClickAllMidCodesAndProducts = autoClickAllMidCodesAndProducts;
   const origConsoleLog = console.log;
   console.log = function (...args) {
     window.automation.logs.push(args.join(" "));
