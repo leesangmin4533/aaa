@@ -94,7 +94,9 @@
       window.automation.error = null; // Reset error for this run
       window.automation.parsedData = null; // Reset parsedData for this run
 
+      console.log(`[collectSingleDayData] Calling inputDateAndSearch for date: ${dateStr}`);
       await inputDateAndSearch(dateStr);
+      console.log(`[collectSingleDayData] inputDateAndSearch completed for date: ${dateStr}`);
       
       console.log(`[collectSingleDayData] Date ${dateStr} processed. Checking for 'autoClickAllMidCodesAndProducts' function.`);
       if (typeof window.automation.autoClickAllMidCodesAndProducts === "function") {
