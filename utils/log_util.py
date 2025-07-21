@@ -29,9 +29,9 @@ def _setup_logger(name: str) -> logging.Logger:
     else:
         log_dir = Path("logs")
         log_dir.mkdir(exist_ok=True)
-        file_name = datetime.now().strftime("%Y%m%d") + ".log"
+        file_name = "automation.log"
         file_handler = logging.FileHandler(
-            log_dir / file_name, mode="a", encoding="utf-8"
+            log_dir / file_name, mode="w", encoding="utf-8"
         )
         file_handler.setFormatter(fmt)
         logger.addHandler(file_handler)
