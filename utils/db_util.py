@@ -1,231 +1,132 @@
-"""
-매출 데이터 DB 관리 모듈
-
-이 모듈은 다음과 같은 규칙으로 데이터를 관리합니다:
-- DB가 기준이며, 텍스트는 보조 용도입니다.
-- 텍스트의 모든 항목을 DB에 저장합니다.
-- collected_at은 분 단위까지 기록됩니다 (YYYY-MM-DD HH:MM).
-- 실행 시각 기준으로 기록이 남습니다.
-- 같은 날 DB 내에서 product_code가 동일하고 sales가 증가하지 않으면 저장하지 않습니다.
-- 하루에 하나의 DB 파일이 생성됩니다 (예: 20250718.db).
-"""
-
-from __future__ import annotations
-
-import sqlite3
-from datetime import datetime
+from selenium.webdriver.remote.webdriver import WebDriver
 from pathlib import Path
-from typing import Any
-
+import json
+import os
 import sys
+import time
+from dotenv import load_dotenv
 
-if __package__:
-    from .log_util import get_logger
-else:  # pragma: no cover - fallback when executed directly
-    sys.path.append(str(Path(__file__).resolve().parent))
-    from log_util import get_logger
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# ``login_bgf.py`` 파일을 스크립트로 실행할 때도 상위 디렉터리의 모듈을
+# 찾을 수 있도록 ``sys.path`` 에 프로젝트 루트 경로를 추가한다.
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from utils.log_util import get_logger
+try:
+    from utils.popup_util import close_all_modals
+except Exception:  # pragma: no cover - fallback for tests
+    def close_all_modals(*_a, **_k):
+        return 0
 
 log = get_logger(__name__)
 
 
-# 매출 데이터 테이블 스키마
-# - collected_at: 데이터 수집 시각 (YYYY-MM-DD HH:MM)
-# - mid_code/name: 중분류 코드와 이름
-# - product_code/name: 상품 코드와 이름
-# - sales: 매출액
-# - order_cnt: 주문수량
-# - purchase: 매입액
-# - disposal: 폐기액
-# - stock: 재고액
-CREATE_TABLE_SQL = """
-CREATE TABLE IF NOT EXISTS mid_sales (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    collected_at TEXT,        -- 데이터 수집 시각 (YYYY-MM-DD HH:MM)
-    mid_code TEXT,           -- 중분류 코드
-    mid_name TEXT,           -- 중분류명
-    product_code TEXT,       -- 상품 코드
-    product_name TEXT,       -- 상품명
-    sales INTEGER,           -- 매출액
-    order_cnt INTEGER,       -- 주문수량
-    purchase INTEGER,        -- 매입액
-    disposal INTEGER,        -- 폐기액
-    stock INTEGER           -- 재고액
-);
-"""
+def load_credentials(path: str | None = None) -> dict:
+    """Load login credentials from a JSON file or environment variables.
 
-
-def init_db(path: Path) -> sqlite3.Connection:
+    If a path to a JSON file is provided, it loads credentials from that file.
+    Otherwise, it loads credentials from environment variables, which can be
+    populated from a .env file.
     """
-    DB 파일을 열고 mid_sales 테이블이 존재하는지 확인합니다.
-    
-    Parameters
-    ----------
-    path : Path
-        DB 파일 경로 (예: code_outputs/20250718.db)
-        
-    Returns
-    -------
-    sqlite3.Connection
-        초기화된 DB 연결 객체
-    """
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(path)
-    conn.execute(CREATE_TABLE_SQL)
-    conn.commit()
-    return conn
+    # Load .env from the project root directory
+    load_dotenv(dotenv_path=ROOT_DIR / ".env")
 
+    user_id = os.environ.get("BGF_USER_ID")
+    password = os.environ.get("BGF_PASSWORD")
 
-def _get_value(record: dict[str, Any], *keys: str) -> Any:
-    """
-    레코드에서 여러 키 중 존재하는 첫 번째 키의 값을 반환합니다.
-    
-    Parameters
-    ----------
-    record : dict[str, Any]
-        검색할 레코드
-    *keys : str
-        검색할 키 목록 (순서대로 검색)
-        
-    Returns
-    -------
-    Any
-        찾은 값 또는 None
-    """
-    for key in keys:
-        if key in record:
-            return record[key]
-    return None
+    if user_id and password:
+        return {"id": user_id, "password": password}
 
-
-def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None, skip_sales_check: bool = False) -> int:
-    """
-    매출 데이터를 DB에 저장합니다.
-    
-    동작 규칙:
-    1. 모든 수집 결과는 이 함수로 전달됩니다.
-    2. collected_at은 현재 시각(분 단위)으로 기록됩니다.
-    3. 같은 날짜의 DB 내에서 product_code가 동일한 경우:
-       - sales가 증가했다면 새 레코드로 저장
-       - sales가 같거나 감소했다면 저장하지 않음
-    4. DB 파일은 날짜별로 새로 생성됩니다 (예: 20250718.db)
-
-    Parameters
-    ----------
-    records : list[dict[str, Any]]
-        텍스트 파일에서 파싱된 매출 데이터 레코드 목록
-    db_path : Path
-        SQLite DB 파일 경로 (예: code_outputs/20250718.db)
-
-    Returns
-    -------
-    int
-        실제로 저장된 레코드 수
-    """
-    conn = init_db(db_path)
-    collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
-    cur = conn.cursor()
-    inserted = 0
-
-    # If collected_at_override is provided, delete existing records for that date
-    if collected_at_override:
-        date_to_delete = collected_at_override.split(' ')[0] # Extract YYYY-MM-DD
-        log.info(f"Deleting existing records for date: {date_to_delete}", extra={'tag': 'db'})
-        cur.execute("DELETE FROM mid_sales WHERE SUBSTR(collected_at, 1, 10) = ?", (date_to_delete,))
-        conn.commit()
-        log.info(f"Deleted records for {date_to_delete}.", extra={'tag': 'db'})
-
-    for rec in records:
-        product_code = _get_value(rec, "productCode", "product_code")
-        sales_raw = _get_value(rec, "sales")
-
-        if product_code is None or sales_raw is None:
-            continue
-
+    if path:
         try:
-            # sales 값을 정수로 변환
-            sales = int(sales_raw)
-        except (ValueError, TypeError):
-            continue  # 정수로 변환할 수 없는 값은 건너뛰기
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            raise RuntimeError(f"Failed to load credentials from {path}: {e}")
 
-        if not skip_sales_check:
-            cur.execute(
-                "SELECT sales FROM mid_sales WHERE product_code=? ORDER BY id DESC LIMIT 1",
-                (product_code,),
-            )
-            row = cur.fetchone()
-            last_sales = row[0] if row else None
+    raise RuntimeError(
+        "Credentials not provided. Set BGF_USER_ID/BGF_PASSWORD in .env or specify a JSON file."
+    )
 
-            # 새로운 sales 값이 기존 값보다 큰 경우에만 저장
-            if last_sales is not None and sales <= last_sales:
-                continue
 
-        cur.execute(
-            """
-            INSERT INTO mid_sales (
-                collected_at, mid_code, mid_name, product_code, product_name,
-                sales, order_cnt, purchase, disposal, stock
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                collected_at_val,
-                _get_value(rec, "midCode", "mid_code"),
-                _get_value(rec, "midName", "mid_name"),
-                product_code,
-                _get_value(rec, "productName", "product_name"),
-                sales,
-                _get_value(rec, "order", "order_cnt"),
-                _get_value(rec, "purchase"),
-                _get_value(rec, "discard", "disposal"),
-                _get_value(rec, "stock"),
-            ),
-        )
-        inserted += 1
+def login_bgf(
+    driver: WebDriver, credential_path: str | None = None, timeout: int = 30
+) -> bool:
+    """Perform login on BGF Retail store page.
 
-    conn.commit()
-    conn.close()
-    return inserted
-
-def is_7days_data_available(db_path: Path) -> bool:
+    Returns True if login succeeded, False otherwise.
     """
-    Checks if there are at least 7 consecutive days of data in the mid_sales table,
-    starting from the most recent date.
-    """
-    conn = None
+    url = "https://store.bgfretail.com/websrc/deploy/index.html"
+    driver.get(url)
     try:
-        conn = sqlite3.connect(db_path)
-        cur = conn.cursor()
-        # Get all distinct dates, ordered descending
-        cur.execute("SELECT DISTINCT SUBSTR(collected_at, 1, 10) FROM mid_sales ORDER BY SUBSTR(collected_at, 1, 10) DESC")
-        distinct_dates_str = [row[0] for row in cur.fetchall()]
-
-        if len(distinct_dates_str) < 7:
-            log.info(f"Less than 7 distinct dates ({len(distinct_dates_str)}) found in DB.", extra={'tag': 'db'})
-            return False
-
-        # Convert date strings to datetime objects
-        distinct_dates = [datetime.strptime(d, "%Y-%m-%d").date() for d in distinct_dates_str]
-
-        # Check for 7 consecutive days
-        for i in range(6): # Check 6 gaps for 7 consecutive days
-            if i + 1 < len(distinct_dates):
-                diff = (distinct_dates[i] - distinct_dates[i+1]).days
-                if diff != 1:
-                    log.info(f"Gap found between {distinct_dates[i]} and {distinct_dates[i+1]}. Not 7 consecutive days.", extra={'tag': 'db'})
-                    return False
-            else: # Not enough dates to check 6 gaps
-                log.info(f"Not enough dates ({len(distinct_dates)}) to check for 7 consecutive days.", extra={'tag': 'db'})
-                return False
-
-        log.info(f"Found 7 consecutive days of data in DB, ending with {distinct_dates[0]}.", extra={'tag': 'db'})
-        return True
-
-    except sqlite3.Error as e:
-        log.error(f"Database error while checking 7-day data: {e}", extra={'tag': 'db'}, exc_info=True)
-        return False
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe);")
+        )
     except Exception as e:
-        log.error(f"An unexpected error occurred while checking 7-day data: {e}", extra={'tag': 'db'}, exc_info=True)
+        log.error(f"Nexacro application did not load: {e}", extra={'tag': 'login'})
         return False
-    finally:
-        if conn:
-            conn.close()
+
+    creds = load_credentials(credential_path)
+    user_id = creds.get("id")
+    password = creds.get("password")
+
+    js = f"""
+try {{
+    var form = nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form;
+
+    form.edt_id.set_value("{user_id}");
+    form.edt_id.text = "{user_id}";
+    form.edt_id.setFocus();
+
+    form.edt_pw.set_value("{password}");
+    form.edt_pw.text = "{password}";
+    form.edt_pw.setFocus();
+
+    // 지연 실행
+    setTimeout(() => form.btn_login.click(), 300);
+}} catch (e) {{
+    console.error("login error", e);
+}}
+"""
+    try:
+        # Wait for the login form elements to be ready
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form);")
+        )
+        log.info("Login form elements are ready.", extra={'tag': 'login'})
+        driver.execute_script(js)
+        log.info("Login script executed", extra={'tag': 'login'})
+        pw_value = driver.execute_script(
+            """
+try {
+    return nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw.value;
+} catch (e) {
+    return 'error: ' + e.toString();
+}
+"""
+        )
+        log.debug(f"[검증] 비밀번호 필드 값: {pw_value}", extra={'tag': 'login'})
+    except Exception as e:
+        log.error(f"JavaScript execution failed: {e}", extra={'tag': 'login'})
+        return False
+
+    try:
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return nexacro.getApplication().GV_CHANNELTYPE === 'HOME';")
+        )
+        log.info("Login succeeded", extra={'tag': 'login'})
+        try:
+            time.sleep(1) # Give time for popups to appear after login
+            closed_count = close_all_modals(driver)
+            log.info(f"Closed {closed_count} popups after login.", extra={'tag': 'login'})
+        except Exception as e:
+            log.warning(f"An error occurred during popup closing: {e}", extra={'tag': 'login'})
+        return True
+    except Exception:
+        log.error("Login check timeout or failed", extra={'tag': 'login'})
+        print("Error: Login check timeout or failed")
+        return False
