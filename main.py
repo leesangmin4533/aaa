@@ -254,8 +254,7 @@ def _process_and_save_data(parsed_data: Any, db_path: Path | None = None, collec
         return
 
     if db_path is None:
-        date_db = datetime.now().strftime("%Y%m%d") + ".db"
-        db_path = CODE_OUTPUT_DIR / date_db
+        db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
 
     # Save to DB
     if records_for_db:
