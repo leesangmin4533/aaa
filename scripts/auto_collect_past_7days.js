@@ -39,7 +39,6 @@
       try {
         const app = window.nexacro.getApplication();
         const form = app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
-        // Corrected path to include the missing 'div2.form'
         const search = form?.div_workForm?.form?.div2?.form?.div_search?.form;
         if (search?.calFromDay && typeof search.calFromDay.set_value === "function") {
           console.log("[waitForFullForm] Success! Nexacro form is ready with corrected path.");
@@ -54,21 +53,6 @@
     throw new Error("Timeout: Nexacro search form component (calFromDay) not ready.");
   }
 
-  function getPastDates(n = 7) {
-    const dates = [];
-    const today = new Date();
-    for (let i = 1; i <= n; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      dates.push(`${year}${month}${day}`);
-    }
-    console.log(`[getPastDates] Generated dates for the past ${n} days:`, dates);
-    return dates;
-  }
-
   async function inputDateAndSearch(dateStr) {
     console.log(`[inputDateAndSearch] Starting process for date: ${dateStr}`);
     try {
@@ -81,7 +65,6 @@
 
       const app = window.nexacro.getApplication();
       const mainForm = app.mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
-      // The path to the button should be correct as it's on a different form level
       const searchBtn = mainForm.div_cmmbtn.form.F_10;
 
       if (!searchBtn || typeof searchBtn.click !== 'function') {
@@ -104,40 +87,45 @@
     }
   }
 
-  async function collectPast7Days() {
-    console.log("[collectPast7Days] Starting 7-day data collection process.");
+  // New function to collect data for a single date
+  async function collectSingleDayData(dateStr) {
+    console.log(`[collectSingleDayData] Starting collection for date: ${dateStr}`);
     try {
-      window.automation.error = null;
-      const dates = getPastDates(7);
+      window.automation.error = null; // Reset error for this run
+      window.automation.parsedData = null; // Reset parsedData for this run
 
-      for (const date of dates) {
-        console.log(`-------------------- Processing Date: ${date} --------------------`);
-        await inputDateAndSearch(date);
+      await inputDateAndSearch(dateStr);
+      
+      console.log(`[collectSingleDayData] Date ${dateStr} processed. Checking for 'autoClickAllMidCodesAndProducts' function.`);
+      if (typeof window.automation.autoClickAllMidCodesAndProducts === "function") {
+        console.log("[collectSingleDayData] Found 'autoClickAllMidCodesAndProducts'. Executing now...");
+        await window.automation.autoClickAllMidCodesAndProducts(); // This populates window.automation.parsedData
+        console.log("[collectSingleDayData] Finished executing 'autoClickAllMidCodesAndProducts'.");
         
-        console.log(`[collectPast7Days] Date ${date} processed. Checking for 'autoClickAllMidCodesAndProducts' function.`);
-        if (typeof window.automation.autoClickAllMidCodesAndProducts === "function") {
-          console.log("[collectPast7Days] Found 'autoClickAllMidCodesAndProducts'. Executing now...");
-          try {
-            await window.automation.autoClickAllMidCodesAndProducts();
-            console.log("[collectPast7Days] Finished executing 'autoClickAllMidCodesAndProducts'.");
-          } catch (e) {
-            console.error(`[collectPast7Days] Error executing autoClickAllMidCodesAndProducts for date ${date}:`, e);
-            window.automation.error = `Error executing autoClickAllMidCodesAndProducts for date ${date}: ${e.message}`;
-          }
+        if (window.automation.parsedData) {
+          console.log(`[collectSingleDayData] Successfully collected data for ${dateStr}. Data length: ${window.automation.parsedData.length}`);
+          return { success: true, data: window.automation.parsedData };
         } else {
-          console.error("[collectPast7Days] 'autoClickAllMidCodesAndProducts' function is not defined.");
-          throw new Error("통합 수집 함수(autoClickAllMidCodesAndProducts)가 정의되지 않았습니다.");
+          const msg = `No data collected for date ${dateStr}.`;
+          console.warn(`[collectSingleDayData] ${msg}`);
+          return { success: true, data: [], message: msg }; // Return success with empty data if no data
         }
-        await delay(1000);
+      } else {
+        const msg = "'autoClickAllMidCodesAndProducts' function is not defined.";
+        console.error(`[collectSingleDayData] ${msg}`);
+        window.automation.error = msg;
+        return { success: false, message: msg };
       }
-      console.log("[collectPast7Days] Successfully completed collection for all 7 days.");
     } catch (err) {
-      console.error("[collectPast7Days] An error occurred during the 7-day collection process:", err.message);
-      window.automation.error = err.message;
+      const errorMessage = `Error during single day collection for ${dateStr}: ${err.message}`;
+      console.error(`[collectSingleDayData] ${errorMessage}`, err);
+      window.automation.error = errorMessage;
+      return { success: false, message: errorMessage };
     }
   }
 
-  window.automation.collectPast7Days = collectPast7Days;
-  console.log("7-Day Collector script updated with corrected component path. Call `window.automation.collectPast7Days()` to start.");
+  // Expose the new function
+  window.automation.collectSingleDayData = collectSingleDayData;
+  console.log("Single Day Collector script updated. Call `window.automation.collectSingleDayData(dateStr)` to start.");
 
 })();
