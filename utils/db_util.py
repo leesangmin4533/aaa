@@ -98,7 +98,7 @@ def _get_value(record: dict[str, Any], *keys: str) -> Any:
     return None
 
 
-def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
+def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None) -> int:
     """
     매출 데이터를 DB에 저장합니다.
     
@@ -123,7 +123,7 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
         실제로 저장된 레코드 수
     """
     conn = init_db(db_path)
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
     cur = conn.cursor()
     inserted = 0
 
@@ -159,7 +159,7 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path) -> int:
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                now,
+                collected_at_val,
                 _get_value(rec, "midCode", "mid_code"),
                 _get_value(rec, "midName", "mid_name"),
                 product_code,
