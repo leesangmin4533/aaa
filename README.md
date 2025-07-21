@@ -134,8 +134,8 @@ python -m aaa  # 또는 python main.py
 midCode    midName    productCode    productName    sales    order    purchase    discard    stock
 ```
 
-웹 브라우저에서 바로 파일을 받고 싶다면 기존 `download_with_blob.js` 를 사용할 수 있으나,
-통합 스크립트만으로도 데이터를 얻을 수 있으므로 선택 사항입니다.
+현재는 `scripts/auto_collect_mid_products.js` 가 결과 파일 저장까지 자동으로 처리합니다.
+따라서 예전에 사용하던 `download_with_blob.js` 는 더 이상 필요하지 않습니다.
 
 ## 데이터가 수집되지 않을 때
 
