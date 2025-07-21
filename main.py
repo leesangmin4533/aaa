@@ -347,6 +347,8 @@ def _run_collection_cycle() -> None:
                 
                 past_dates = get_past_dates(7)
                 for date_str in past_dates:
+                    # Ensure required automation functions remain available
+                    run_script(driver, DEFAULT_SCRIPT)
                     log.info(f"-------------------- 과거 데이터 수집 중: {date_str} --------------------", extra={'tag': '7day_collection'})
                     try:
                         result = execute_collect_single_day_data(driver, date_str)
