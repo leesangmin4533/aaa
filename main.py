@@ -121,8 +121,8 @@ def create_driver() -> webdriver.Chrome:
     for key, value in caps.items():
         options.set_capability(key, value)
     driver = webdriver.Chrome(service=Service(), options=options)
-    driver.set_script_timeout(300) # Set script timeout to 300 seconds (5 minutes) for long-running scripts
-    driver.command_executor.set_timeout(300) # Set command executor timeout to 300 seconds
+    driver.set_script_timeout(600) # Set script timeout to 600 seconds (10 minutes) for long-running scripts
+    driver.command_executor.set_timeout(600) # Set command executor timeout to 600 seconds
     return driver
 
 
@@ -139,10 +139,10 @@ def run_script(driver: webdriver.Chrome, name: str) -> Any:
 
 
 def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
-    """Poll for ``window.__parsedData__`` until available or timeout."""
+    """Poll for ``window.automation.parsedData`` until available or timeout."""
     start = time.time()
     while time.time() - start < timeout:
-        data = driver.execute_script("return window.__parsedData__ || null")
+        data = driver.execute_script("return window.automation && window.automation.parsedData || null")
         if data is not None:
             return data
         time.sleep(0.5)
