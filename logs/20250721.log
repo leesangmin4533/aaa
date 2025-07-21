@@ -25226,3 +25226,286 @@ RuntimeError: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Single data collection cycle finished.
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[__main__][collect][INFO] Starting data collection scripts.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][collect][ERROR] WebDriver error during data collection: Message: javascript error: Invalid or unexpected token
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f01d1679]
+	(No symbol) [0x0x7ff6f01d4a61]
+	(No symbol) [0x0x7ff6f0271e4b]
+	(No symbol) [0x0x7ff6f02488ca]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 185, in _execute_data_collection
+    run_script(driver, DEFAULT_SCRIPT)
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 112, in run_script
+    return driver.execute_script(js)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 544, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.JavascriptException: Message: javascript error: Invalid or unexpected token
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f01d1679]
+	(No symbol) [0x0x7ff6f01d4a61]
+	(No symbol) [0x0x7ff6f0271e4b]
+	(No symbol) [0x0x7ff6f02488ca]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[utils.db_util][db][INFO] Less than 7 distinct dates (2) found in DB.
+[__main__][7day_collection][INFO] 7일치 데이터베이스 기록이 없어 과거 데이터 수집을 시작합니다.
+[__main__][7day_collection][INFO] WebDriver script and command executor timeouts set to 3600 seconds for 7-day collection.
+[__main__][7day_collection][INFO] 과거 데이터 수집 스크립트 실행 시도: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][7day_collection][INFO] 'auto_collect_past_7days.js' 스크립트 실행 완료.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][7day_collection][CRITICAL] 과거 데이터 수집 중 심각한 오류 발생: Message: javascript error: Invalid or unexpected token
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f01d1679]
+	(No symbol) [0x0x7ff6f01d4a61]
+	(No symbol) [0x0x7ff6f0271e4b]
+	(No symbol) [0x0x7ff6f02488ca]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 351, in _run_collection_cycle
+    run_script(driver, DEFAULT_SCRIPT)
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 112, in run_script
+    return driver.execute_script(js)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 544, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.JavascriptException: Message: javascript error: Invalid or unexpected token
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f01d1679]
+	(No symbol) [0x0x7ff6f01d4a61]
+	(No symbol) [0x0x7ff6f0271e4b]
+	(No symbol) [0x0x7ff6f02488ca]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][7day_collection][INFO] WebDriver script and command executor timeouts reverted to 300 seconds.
+[__main__][main][CRITICAL] Critical error during collection cycle: Message: javascript error: Invalid or unexpected token
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f01d1679]
+	(No symbol) [0x0x7ff6f01d4a61]
+	(No symbol) [0x0x7ff6f0271e4b]
+	(No symbol) [0x0x7ff6f02488ca]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 351, in _run_collection_cycle
+    run_script(driver, DEFAULT_SCRIPT)
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 112, in run_script
+    return driver.execute_script(js)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 544, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.JavascriptException: Message: javascript error: Invalid or unexpected token
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f01d1679]
+	(No symbol) [0x0x7ff6f01d4a61]
+	(No symbol) [0x0x7ff6f0271e4b]
+	(No symbol) [0x0x7ff6f02488ca]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][DEBUG] Mix ratio page grid found.
+[__main__][navigation][INFO] Successfully navigated to sales page.
+[__main__][collect][INFO] Starting data collection scripts.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\data_collect_listener.js
+[__main__][mid_category][INFO] mid_category logs: ['collectMidCodes 시작', '🔄 중분류 목록 스캔 시작 (새로운 스크롤 주기)', 'Found 22 mid-category cells in current view.', '[collectMidCodes] Examining mid-category cell: 001', '[collectMidCodes] Identified mid-category: 001 at row index: 0', 'Attempting to click mid-category: 001 with ID: mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.div2.form.gdList.body.gridrow_0.cell_0_0', '*********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250721135237)', '*********** 트랜잭션 호출 전 httptimeout : 60', 'Successfully clicked mid-category: 001.', '[getMidName] Attempting to get mid-category name for row: 0', '[getMidName] Successfully retrieved name: 도시락', '중분류 클릭: 001 (도시락) - Processed 1 in this cycle.']
+[__main__][collect][INFO] Data collection complete.
+[utils.db_util][db][INFO] Less than 7 distinct dates (2) found in DB.
+[__main__][7day_collection][INFO] 7일치 데이터베이스 기록이 없어 과거 데이터 수집을 시작합니다.
+[__main__][7day_collection][INFO] WebDriver script and command executor timeouts set to 3600 seconds for 7-day collection.
+[__main__][7day_collection][INFO] 과거 데이터 수집 스크립트 실행 시도: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_past_7days.js
+[__main__][7day_collection][INFO] 'auto_collect_past_7days.js' 스크립트 실행 완료.
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\auto_collect_mid_products.js
+[__main__][7day_collection][INFO] -------------------- 과거 데이터 수집 중: 20250720 --------------------
+[__main__][7day_collection][DEBUG] 과거 데이터 수집 결과 (20250720): {'message': 'collectSingleDayData not defined', 'success': False}
+[__main__][7day_collection][ERROR] 20250720에 대한 과거 데이터 수집에 실패했습니다: collectSingleDayData not defined
+[__main__][7day_collection][CRITICAL] 20250720 과거 데이터 수집 중 심각한 오류 발생: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 실행 실패: collectSingleDayData not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 367, in _run_collection_cycle
+    raise RuntimeError(f"과거 데이터 수집 스크립트 '{script_name}' 실행 실패: {msg}")
+RuntimeError: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 실행 실패: collectSingleDayData not defined
+[__main__][7day_collection][CRITICAL] 과거 데이터 수집 중 심각한 오류 발생: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 실행 실패: collectSingleDayData not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 367, in _run_collection_cycle
+    raise RuntimeError(f"과거 데이터 수집 스크립트 '{script_name}' 실행 실패: {msg}")
+RuntimeError: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 실행 실패: collectSingleDayData not defined
+[__main__][7day_collection][INFO] WebDriver script and command executor timeouts reverted to 300 seconds.
+[__main__][main][CRITICAL] Critical error during collection cycle: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 실행 실패: collectSingleDayData not defined
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 367, in _run_collection_cycle
+    raise RuntimeError(f"과거 데이터 수집 스크립트 '{script_name}' 실행 실패: {msg}")
+RuntimeError: 과거 데이터 수집 스크립트 'auto_collect_past_7days.js' 실행 실패: collectSingleDayData not defined
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
