@@ -17,7 +17,7 @@ import os
 import time
 from pathlib import Path
 from typing import Any
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Third-party imports - Selenium 관련
 from selenium import webdriver
@@ -37,7 +37,7 @@ from utils.log_parser import extract_tab_lines
 from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 from utils.convert_txt_to_excel import convert_txt_to_excel
-from utils import execute_collect_past7days
+from utils.js_util import execute_collect_single_day_data
 
 # --- Configuration Loading ---
 def load_config() -> dict:
@@ -169,6 +169,14 @@ def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool
 
 
 
+
+def get_past_dates(n: int = 7) -> list[str]:
+    dates = []
+    today = datetime.now()
+    for i in range(1, n + 1):
+        d = today - timedelta(days=i)
+        dates.append(d.strftime("%Y%m%d"))
+    return dates
 
 def _initialize_driver_and_login(cred_path: str | None) -> webdriver.Chrome | None:
     """Create and initialize the Chrome driver, then log in."""
@@ -349,7 +357,7 @@ def _run_collection_cycle() -> None:
             
             # Set timeouts for 7-day collection (1 hour)
             driver.set_script_timeout(3600)
-            driver.command_executor.set_timeout(3600)
+            driver.command_executor._client_config.timeout = 3600
             log.info("WebDriver script and command executor timeouts set to 3600 seconds for 7-day collection.", extra={'tag': '7day_collection'})
 
             try:
@@ -361,46 +369,33 @@ def _run_collection_cycle() -> None:
                 run_script(driver, script_name)
                 log.info(f"'{script_name}' 스크립트 실행 완료.", extra={'tag': '7day_collection'})
                 
-                log.info("과거 데이터 수집 결과 확인 중...", extra={'tag': '7day_collection'})
-                result = execute_collect_past7days(driver)
-                log.debug(f"과거 데이터 수집 결과: {result}", extra={'tag': '7day_collection'})
+                past_dates = get_past_dates(7)
+                for date_str in past_dates:
+                    log.info(f"-------------------- 과거 데이터 수집 중: {date_str} --------------------", extra={'tag': '7day_collection'})
+                    try:
+                        result = execute_collect_single_day_data(driver, date_str)
+                        log.debug(f"과거 데이터 수집 결과 ({date_str}): {result}", extra={'tag': '7day_collection'})
 
-                # 브라우저 로그 수집 및 출력
-                try:
-                    browser_logs = driver.execute_script("return window.automation.logs;")
-                    if browser_logs:
-                        log.info("--- 7일치 데이터 수집 중 브라우저 콘솔 로그 ---", extra={'tag': '7day_browser_log'})
-                        for log_entry in browser_logs:
-                            log.info(log_entry, extra={'tag': '7day_browser_log'})
-                        log.info("------------------------------------------", extra={'tag': '7day_browser_log'})
-                    else:
-                        log.info("브라우저에서 수집된 로그가 없습니다.", extra={'tag': '7day_browser_log'})
-                except Exception as e:
-                    log.warning(f"브라우저 로그 수집 중 오류 발생: {e}", extra={'tag': '7day_browser_log'})
+                        if result and result.get("success"):
+                            historical_data = result.get("data")
+                            if historical_data:
+                                log.info(f"{date_str}에 대해 {len(historical_data)}개의 과거 데이터 레코드를 수집했습니다.", extra={'tag': '7day_collection'})
+                                _process_and_save_data(historical_data, db_path=(CODE_OUTPUT_DIR / PAST7_DB_FILE))
+                            else:
+                                log.warning(f"{date_str}에 대한 과거 데이터 수집은 성공했으나, 수집된 데이터가 없습니다.", extra={'tag': '7day_collection'})
+                        else:
+                            msg = result.get("message", "알 수 없는 오류")
+                            log.error(f"{date_str}에 대한 과거 데이터 수집에 실패했습니다: {msg}", extra={'tag': '7day_collection'})
+                            raise RuntimeError(f"과거 데이터 수집 스크립트 '{script_name}' 실행 실패: {msg}")
 
-                # 브라우저 오류 확인
-                try:
-                    browser_error = driver.execute_script("return window.automation.error;")
-                    if browser_error:
-                        log.error(f"--- 7일치 데이터 수집 중 브라우저 오류 발생 ---", extra={'tag': '7day_browser_error'})
-                        log.error(browser_error, extra={'tag': '7day_browser_error'})
-                        log.error("---------------------------------------------", extra={'tag': '7day_browser_error'})
-                        raise RuntimeError(f"과거 데이터 수집 중 브라우저 스크립트 오류 발생: {browser_error}")
-                except Exception as e:
-                    log.warning(f"브라우저 오류 확인 중 예외 발생: {e}", extra={'tag': '7day_browser_error'})
+                    except (WebDriverException, RuntimeError) as e:
+                        log.critical(f"{date_str} 과거 데이터 수집 중 심각한 오류 발생: {e}", extra={'tag': '7day_collection'}, exc_info=True)
+                        raise
+                    except Exception as e:
+                        log.critical(f"{date_str} 과거 데이터 수집 중 예상치 못한 오류 발생: {e}", extra={'tag': '7day_collection'}, exc_info=True)
+                        raise RuntimeError(f"{date_str} 과거 데이터 수집 중 예상치 못한 오류: {e}")
 
-                if result and result.get("success"):
-                    log.info("과거 7일 데이터 수집에 성공했습니다.", extra={'tag': '7day_collection'})
-                    historical_data = result.get("data")
-                    if historical_data:
-                        log.info(f"{len(historical_data)}개의 과거 데이터 레코드를 수집했습니다.", extra={'tag': '7day_collection'})
-                        _process_and_save_data(historical_data, db_path=(CODE_OUTPUT_DIR / PAST7_DB_FILE))
-                    else:
-                        log.warning("과거 데이터 수집은 성공했으나, 수집된 데이터가 없습니다.", extra={'tag': '7day_collection'})
-                else:
-                    msg = result.get("message", "알 수 없는 오류")
-                    log.error(f"과거 7일 데이터 수집에 실패했습니다: {msg}", extra={'tag': '7day_collection'})
-                    raise RuntimeError(f"과거 데이터 수집 스크립트 '{script_name}' 실행 실패: {msg}")
+                log.info("과거 7일 데이터 수집 완료.", extra={'tag': '7day_collection'})
 
             except (FileNotFoundError, WebDriverException, RuntimeError) as e:
                 log.critical(f"과거 데이터 수집 중 심각한 오류 발생: {e}", extra={'tag': '7day_collection'}, exc_info=True)
@@ -411,7 +406,7 @@ def _run_collection_cycle() -> None:
             finally:
                 # Revert timeouts to original values (300 seconds)
                 driver.set_script_timeout(300)
-                driver.command_executor.set_timeout(300)
+                driver.command_executor._client_config.timeout = 300
                 log.info("WebDriver script and command executor timeouts reverted to 300 seconds.", extra={'tag': '7day_collection'})
 
         if parsed_data:
