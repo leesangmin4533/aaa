@@ -41,15 +41,21 @@
     return el?.innerText?.trim() || '';
   }
 
+  function getMidListText(row, col) {
+    const el = document.querySelector(`div[id*='gdList.body'][id*='cell_${row}_${col}'][id$=':text']`);
+    return el?.innerText?.trim() || '';
+  }
 
-  async function collectProductDataForMid(midCode, midName) {
-    console.log(`[collectProductDataForMid] Starting for mid-category: ${midCode} (${midName})`);
+
+  async function collectProductDataForMid(midCode, midName, expectedTotalOrder) {
+    console.log(`[collectProductDataForMid] Starting for mid-category: ${midCode} (${midName}). Expected total order: ${expectedTotalOrder}`);
     document.dispatchEvent(
       new CustomEvent('mid-clicked', { detail: { code: midCode, midName } })
     );
     const productLines = [];
     const seenCodes = new Set();
-    let consecutiveNoNewDataScrolls = 0; // New counter
+    let consecutiveNoNewDataScrolls = 0;
+    let actualTotalOrder = 0; // Initialize actual total order
 
     while (true) {
       console.log(`[collectProductDataForMid] Scanning products in current view for mid-category: ${midCode}`);
@@ -103,6 +109,12 @@
           getText(row, 5) || '0',
           getText(row, 6) || '0'
         ].join("\t");
+
+        // Add order_cnt to actualTotalOrder
+        const orderCnt = parseInt(getText(row, 3) || '0', 10); // Assuming order_cnt is at index 3 (0-indexed)
+        if (!isNaN(orderCnt)) {
+          actualTotalOrder += orderCnt;
+        }
 
         seenCodes.add(code);
         productLines.push(line);
@@ -170,6 +182,13 @@
 
     midCodeDataList.push(...productLines);
     console.log(`[collectProductDataForMid] Finished for mid-category ${midCode}. Total products collected: ${productLines.length}`);
+
+    // Compare expected and actual total orders
+    if (expectedTotalOrder !== null && actualTotalOrder !== expectedTotalOrder) {
+      console.warn(`[collectProductDataForMid] Mismatch for mid-category ${midCode} (${midName}): Expected total order = ${expectedTotalOrder}, Actual total order = ${actualTotalOrder}`);
+    } else if (expectedTotalOrder !== null) {
+      console.log(`[collectProductDataForMid] Total order matched for mid-category ${midCode} (${midName}): ${actualTotalOrder}`);
+    }
   }
 
   async function clickElementById(id) {
@@ -243,6 +262,10 @@
         console.log(`Successfully clicked mid-category: ${code}.`);
 
         const midName = await getMidName(rowIdx);
+        const expectedTotalOrder = parseInt(getMidListText(rowIdx, 2) || '0', 10); // Assuming total order is in column 2
+        if (isNaN(expectedTotalOrder)) {
+          console.warn(`[collectMidCodes] Could not parse expected total order for mid-category ${code}. Using 0.`);
+        }
 
         seenMid.add(code);
         newMids.push(code);
@@ -251,7 +274,7 @@
         await delay(500);
 
         console.log(`[collectMidCodes] Collecting product data for mid-category: ${code} (${midName})...`);
-        await collectProductDataForMid(code, midName);
+        await collectProductDataForMid(code, midName, expectedTotalOrder);
         console.log(`[collectMidCodes] Finished collecting product data for mid-category: ${code} (${midName}).`);
         await delay(300);
       }
