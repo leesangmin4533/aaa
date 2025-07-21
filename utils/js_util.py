@@ -16,17 +16,18 @@ def load_collect_past7days(driver: WebDriver, scripts_dir: Path | None = None) -
         driver.execute_script(f.read())
 
 
-def execute_collect_past7days(driver: WebDriver) -> dict:
-    """Execute the collectPast7Days function asynchronously."""
+def execute_collect_single_day_data(driver: WebDriver, date_str: str) -> dict:
+    """Execute the collectSingleDayData function asynchronously for a given date."""
     return driver.execute_async_script(
         """
 const callback = arguments[arguments.length - 1];
-if (!window.automation || typeof window.automation.collectPast7Days !== 'function') {
-  callback({ success: false, message: 'collectPast7Days not defined' });
+const dateStr = arguments[0];
+if (!window.automation || typeof window.automation.collectSingleDayData !== 'function') {
+  callback({ success: false, message: 'collectSingleDayData not defined' });
   return;
 }
-window.automation.collectPast7Days()
-  .then(res => callback({ success: true, message: res }))
+window.automation.collectSingleDayData(dateStr)
+  .then(res => callback(res))
   .catch(err => callback({ success: false, message: window.automation.error || err.message }));
-"""
+""", date_str
     )
