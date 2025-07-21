@@ -43,6 +43,7 @@
 
 
   async function collectProductDataForMid(midCode, midName) {
+    console.log(`[collectProductDataForMid] Starting for mid-category: ${midCode} (${midName})`);
     document.dispatchEvent(
       new CustomEvent('mid-clicked', { detail: { code: midCode, midName } })
     );
@@ -51,6 +52,7 @@
     let consecutiveNoNewDataScrolls = 0; // New counter
 
     while (true) {
+      console.log(`[collectProductDataForMid] Scanning products in current view for mid-category: ${midCode}`);
       const rowEls = [
         ...document.querySelectorAll(
           "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
@@ -59,19 +61,33 @@
       let newCount = 0;
       const currentProductCodes = new Set(); // To track products in current view
 
+      if (rowEls.length === 0) {
+        console.log(`[collectProductDataForMid] No product rows found for mid-category: ${midCode}. Ending collection for this mid-category.`);
+        break; // No products found, exit loop
+      }
+
       for (const el of rowEls) {
         const code = el.innerText?.trim();
         const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
-        if (!row || !code) continue; // Skip malformed or empty
+        console.log(`[collectProductDataForMid] Examining product cell: ${code} at row: ${row}`);
+        if (!row || !code) {
+          console.warn("[collectProductDataForMid] Skipping malformed or empty product row.");
+          continue; // Skip malformed or empty
+        }
         currentProductCodes.add(code); // Add to current view set
 
-        if (seenCodes.has(code)) continue; // Skip if already seen and processed
+        if (seenCodes.has(code)) {
+          console.log(`[collectProductDataForMid] Product ${code} already seen. Skipping.`);
+          continue; // Skip if already seen and processed
+        }
 
         console.log(`[collectProductDataForMid] Processing new product: ${code} in row ${row}`);
 
         const clickId = el.id.split(":text")[0];
         if (clickId) {
+          console.log(`[collectProductDataForMid] Attempting to click product element with ID: ${clickId}`);
           await clickElementById(clickId);
+          console.log(`[collectProductDataForMid] Successfully clicked product element.`);
         } else {
           console.warn("상품코드 셀 ID 찾을 수 없음:", row);
         }
@@ -91,6 +107,7 @@
         seenCodes.add(code);
         productLines.push(line);
         newCount++;
+        console.log(`[collectProductDataForMid] Added product ${code}. Total new in this cycle: ${newCount}. Total collected: ${productLines.length}`);
         await delay(100);
       }
 
@@ -99,7 +116,7 @@
       );
 
       if (!scrollBtn) {
-        console.log("[collectProductDataForMid] Product scroll button not found. Ending collection.");
+        console.log("[collectProductDataForMid] Product scroll button not found. Ending collection for this mid-category.");
         break;
       }
 
@@ -112,11 +129,13 @@
         console.log("[collectProductDataForMid] No new products found in current view. Attempting to scroll.");
         const beforeScrollProductCodes = new Set(currentProductCodes); // Snapshot before scroll
 
+        console.log(`[collectProductDataForMid] Clicking product scroll button with ID: ${scrollBtn.id}`);
         await clickElementById(scrollBtn.id);
         await delay(500);
         document.dispatchEvent(
           new CustomEvent('product-scroll', { detail: { midCode } })
         );
+        console.log("[collectProductDataForMid] Scrolled. Checking for new visible products.");
 
         const afterScrollRowEls = [
           ...document.querySelectorAll(
@@ -137,7 +156,7 @@
           consecutiveNoNewDataScrolls++;
           console.log(`[collectProductDataForMid] Scroll did not yield new visible products. Consecutive no-change scrolls: ${consecutiveNoNewDataScrolls}`);
           if (consecutiveNoNewDataScrolls >= 3) {
-            console.log("[collectProductDataForMid] Reached 3 consecutive scrolls with no new visible products. Ending collection.");
+            console.log("[collectProductDataForMid] Reached 3 consecutive scrolls with no new visible products. Ending collection for this mid-category.");
             break; // Break if 3 consecutive scrolls yield no new visible data
           }
         } else {
@@ -150,7 +169,7 @@
     }
 
     midCodeDataList.push(...productLines);
-    console.log(productLines.join("\n"));
+    console.log(`[collectProductDataForMid] Finished for mid-category ${midCode}. Total products collected: ${productLines.length}`);
   }
 
   async function clickElementById(id) {
@@ -175,8 +194,90 @@
     let scrollCount = 0;
 
     while (true) {
-      console.log("🔄 중분류 목록 스캔 시작");
+      console.log("🔄 중분류 목록 스캔 시작 (새로운 스크롤 주기)");
       const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
+      console.log(`Found ${textCells.length} mid-category cells in current view.`);
+      const newMids = [];
+      let processedCountInCycle = 0;
+
+      for (const textEl of textCells) {
+        const code = textEl.innerText?.trim();
+        console.log(`[collectMidCodes] Examining mid-category cell: ${code}`);
+        if (!/^\d{3}$/.test(code) || seenMid.has(code)) {
+          console.log(`[collectMidCodes] Skipping mid-category: ${code} (Invalid format or already seen).`);
+          continue;
+        }
+        if ((startCode && code < startCode) || (endCode && code > endCode)) {
+          console.log(`[collectMidCodes] Skipping mid-category: ${code} (Outside of specified range).`);
+          continue;
+        }
+
+        const rowIdx = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
+        console.log(`[collectMidCodes] Identified mid-category: ${code} at row index: ${rowIdx}`);
+
+        async function getMidName(rowIdx, attempts = 10) {
+          console.log(`[getMidName] Attempting to get mid-category name for row: ${rowIdx}`);
+          for (let i = 0; i < attempts; i++) {
+            const el = document.querySelector(
+              `div[id*='gdList.body'][id*='cell_${rowIdx}_1'][id$=':text']`
+            );
+            const name = el?.innerText?.trim();
+            if (name) {
+              console.log(`[getMidName] Successfully retrieved name: ${name}`);
+              return name;
+            }
+            console.log(`[getMidName] Name not found for row ${rowIdx}, retrying (${i + 1}/${attempts})...`);
+            await delay(300);
+          }
+          console.warn(`[getMidName] Failed to retrieve name for row ${rowIdx} after ${attempts} attempts.`);
+          return '';
+        }
+
+        const clickId = textEl.id.split(":text")[0];
+        console.log(`Attempting to click mid-category: ${code} with ID: ${clickId}`);
+        const clicked = await clickElementById(clickId);
+        if (!clicked) {
+          console.warn("중분류 클릭 실패 → ID:", clickId);
+          continue;
+        }
+        console.log(`Successfully clicked mid-category: ${code}.`);
+
+        const midName = await getMidName(rowIdx);
+
+        seenMid.add(code);
+        newMids.push(code);
+        processedCountInCycle++;
+        console.log(`중분류 클릭: ${code} (${midName}) - Processed ${processedCountInCycle} in this cycle.`);
+        await delay(500);
+
+        console.log(`[collectMidCodes] Collecting product data for mid-category: ${code} (${midName})...`);
+        await collectProductDataForMid(code, midName);
+        console.log(`[collectMidCodes] Finished collecting product data for mid-category: ${code} (${midName}).`);
+        await delay(300);
+      }
+
+      if (processedCountInCycle === 0) {
+        console.warn("더 이상 새로운 중분류 없음 (현재 스크롤 주기에서 처리된 중분류 없음) → 종료");
+        break;
+      }
+
+      const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
+      if (!scrollBtn) {
+        console.warn("중분류 스크롤 버튼 없음 → 종료");
+        break;
+      }
+
+      console.log(`Attempting to click mid-category scroll button with ID: ${scrollBtn.id}`);
+      await clickElementById(scrollBtn.id);
+      scrollCount++;
+      console.log(`🔄 중분류 스크롤 ${scrollCount}회 완료.`);
+      await delay(1000);
+    }
+
+    console.log("🎉 전체 중분류 수집 완료 → 총 중분류 수:", seenMid.size);
+    console.log("📄 전체 데이터 누적:", midCodeDataList.length, "줄");
+    window.automation.parsedData = midCodeDataList;
+  }")];
       console.log(`Found ${textCells.length} mid-category cells.`);
       const newMids = [];
 
