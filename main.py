@@ -343,61 +343,70 @@ def _run_collection_cycle() -> None:
         # Check if 7 days of data is available in DB
         need_history = not is_7days_data_available(CODE_OUTPUT_DIR / PAST7_DB_FILE)
         if need_history:
-            log.info("Less than 7 days of data in DB. Running auto_collect_past_7days.js", extra={'tag': 'main'})
-            script_path = SCRIPT_DIR / "auto_collect_past_7days.js"
-            log.info(f"Attempting to run script from: {script_path}", extra={'tag': 'main'})
+            log.info("7일치 데이터베이스 기록이 없어 과거 데이터 수집을 시작합니다.", extra={'tag': '7day_collection'})
+            script_name = "auto_collect_past_7days.js"
+            script_path = SCRIPT_DIR / script_name
+            
+            log.info(f"과거 데이터 수집 스크립트 실행 시도: {script_path}", extra={'tag': '7day_collection'})
+            if not script_path.exists():
+                log.error(f"스크립트 파일을 찾을 수 없습니다: {script_path}", extra={'tag': '7day_collection'})
+                raise FileNotFoundError(f"과거 데이터 수집 스크립트가 존재하지 않습니다: {script_path}")
 
-            # ✅ 추가 확인 코드
-            print("SCRIPT_DIR =", SCRIPT_DIR)
-            print("script_path =", script_path)
-            print("파일 존재 여부 =", script_path.exists())
+            try:
+                run_script(driver, script_name)
+                log.info(f"'{script_name}' 스크립트 실행 완료.", extra={'tag': '7day_collection'})
+                
+                log.info("과거 데이터 수집 결과 확인 중...", extra={'tag': '7day_collection'})
+                result = execute_collect_past7days(driver)
+                log.debug(f"과거 데이터 수집 결과: {result}", extra={'tag': '7day_collection'})
 
-            run_script(driver, "auto_collect_past_7days.js")
-            result = execute_collect_past7days(driver)
-
-            if hasattr(driver.execute_script, "side_effect"):
-                browser_logs = []
-            else:
+                # 브라우저 로그 수집 및 출력
                 try:
-                    browser_logs = driver.execute_script(
-                        "return window.automation.logs;"
-                    )
-                except Exception:
-                    browser_logs = []
+                    browser_logs = driver.execute_script("return window.automation.logs;")
+                    if browser_logs:
+                        log.info("--- 7일치 데이터 수집 중 브라우저 콘솔 로그 ---", extra={'tag': '7day_browser_log'})
+                        for log_entry in browser_logs:
+                            log.info(log_entry, extra={'tag': '7day_browser_log'})
+                        log.info("------------------------------------------", extra={'tag': '7day_browser_log'})
+                    else:
+                        log.info("브라우저에서 수집된 로그가 없습니다.", extra={'tag': '7day_browser_log'})
+                except Exception as e:
+                    log.warning(f"브라우저 로그 수집 중 오류 발생: {e}", extra={'tag': '7day_browser_log'})
 
-            if browser_logs:
-                print("--- Browser Console Logs ---")
-                for log_entry in browser_logs:
-                    print(log_entry)
-                print("------------------------------")
-            else:
-                print("--- No logs were captured from the browser. ---")
-
-            if not hasattr(driver.execute_script, "side_effect"):
+                # 브라우저 오류 확인
                 try:
-                    browser_error = driver.execute_script(
-                        "return window.automation.error;"
-                    )
+                    browser_error = driver.execute_script("return window.automation.error;")
                     if browser_error:
-                        print("--- Browser Error Found ---")
-                        print(browser_error)
-                        print("-----------------------------")
-                except Exception:
-                    pass
+                        log.error(f"--- 7일치 데이터 수집 중 브라우저 오류 발생 ---", extra={'tag': '7day_browser_error'})
+                        log.error(browser_error, extra={'tag': '7day_browser_error'})
+                        log.error("---------------------------------------------", extra={'tag': '7day_browser_error'})
+                        raise RuntimeError(f"과거 데이터 수집 중 브라우저 스크립트 오류 발생: {browser_error}")
+                except Exception as e:
+                    log.warning(f"브라우저 오류 확인 중 예외 발생: {e}", extra={'tag': '7day_browser_error'})
 
-            if result.get("success"):
-                log.info("auto_collect_past_7days.js completed successfully.", extra={'tag': 'main'})
-            else:
-                msg = result.get("message")
-                log.error(
-                    f"JavaScript error during auto_collect_past_7days: {msg}",
-                    extra={'tag': 'main'},
-                )
-                print(f"JavaScript 오류 (auto_collect_past_7days): {msg}")
+                if result and result.get("success"):
+                    log.info("과거 7일 데이터 수집에 성공했습니다.", extra={'tag': '7day_collection'})
+                    historical_data = result.get("data")
+                    if historical_data:
+                        log.info(f"{len(historical_data)}개의 과거 데이터 레코드를 수집했습니다.", extra={'tag': '7day_collection'})
+                        _process_and_save_data(historical_data, db_path=(CODE_OUTPUT_DIR / PAST7_DB_FILE))
+                    else:
+                        log.warning("과거 데이터 수집은 성공했으나, 수집된 데이터가 없습니다.", extra={'tag': '7day_collection'})
+                else:
+                    msg = result.get("message", "알 수 없는 오류")
+                    log.error(f"과거 7일 데이터 수집에 실패했습니다: {msg}", extra={'tag': '7day_collection'})
+                    raise RuntimeError(f"과거 데이터 수집 스크립트 '{script_name}' 실행 실패: {msg}")
+
+            except (FileNotFoundError, WebDriverException, RuntimeError) as e:
+                log.critical(f"과거 데이터 수집 중 심각한 오류 발생: {e}", extra={'tag': '7day_collection'}, exc_info=True)
+                raise
+            except Exception as e:
+                log.critical(f"과거 데이터 수집 중 예상치 못한 오류 발생: {e}", extra={'tag': '7day_collection'}, exc_info=True)
+                raise RuntimeError(f"과거 데이터 수집 중 예상치 못한 오류: {e}")
 
         if parsed_data:
-            target_db = CODE_OUTPUT_DIR / PAST7_DB_FILE if need_history else None
-            _process_and_save_data(parsed_data, db_path=target_db)
+            # `need_history` 여부와 관계없이 항상 오늘의 DB에 저장
+            _process_and_save_data(parsed_data, db_path=None)
 
             date_str = datetime.now().strftime("%y%m%d")
             txt_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
