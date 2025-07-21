@@ -93,6 +93,11 @@ try {{
 }}
 """
     try:
+        # Wait for the login form elements to be ready
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form);")
+        )
+        log.info("Login form elements are ready.", extra={'tag': 'login'})
         driver.execute_script(js)
         log.info("Login script executed", extra={'tag': 'login'})
         pw_value = driver.execute_script(
