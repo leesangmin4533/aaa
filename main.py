@@ -37,7 +37,6 @@ from utils.log_parser import extract_tab_lines
 from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 from utils.convert_txt_to_excel import convert_txt_to_excel
-from utils.file_util import append_unique_lines
 from utils import execute_collect_past7days
 
 # --- Configuration Loading ---
@@ -416,14 +415,7 @@ def _run_collection_cycle() -> None:
                 log.info("WebDriver script and command executor timeouts reverted to 300 seconds.", extra={'tag': '7day_collection'})
 
         if parsed_data:
-            # `need_history` 여부와 관계없이 항상 오늘의 DB에 저장
             _process_and_save_data(parsed_data, db_path=None)
-
-            date_str = datetime.now().strftime("%y%m%d")
-            txt_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
-            excel_path = CODE_OUTPUT_DIR / "mid_excel" / f"{date_str}.xlsx"
-            save_to_txt(parsed_data, txt_path)
-            convert_txt_to_excel(str(txt_path), str(excel_path))
         else:
             log.warning("No parsed data collected. Skipping save results.", extra={'tag': 'main'})
 
