@@ -55,7 +55,8 @@ def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
             '닫기', '확인', '취소', 'Close', 'OK', 'Cancel', '×', 'X'
         ];
         const idSelectors = [
-            'btn_topClose', 'btnClose'
+            'btn_topClose', 'btnClose',
+            'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_close'
         ];
         const classSelectors = [
             'close', 'popup-close'
