@@ -145,7 +145,7 @@
 
         console.log(`[collectProductDataForMid] Clicking product scroll button with ID: ${scrollBtn.id}`);
         await clickElementById(scrollBtn.id);
-        await delay(500);
+        await delay(1000);
         document.dispatchEvent(
           new CustomEvent('product-scroll', { detail: { midCode } })
         );
@@ -168,7 +168,7 @@
         if (!hasChanged) {
           consecutiveNoNewDataScrolls++;
           console.log(`[collectProductDataForMid] Scroll did not yield new visible products. Consecutive no-change scrolls: ${consecutiveNoNewDataScrolls}`);
-          if (consecutiveNoNewDataScrolls >= 3) {
+          if (consecutiveNoNewDataScrolls >= 5) {
             console.log("[collectProductDataForMid] Reached 3 consecutive scrolls with no new visible products. Ending collection for this mid-category.");
             break;
           }
