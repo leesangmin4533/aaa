@@ -223,7 +223,7 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
         return None
 
 
-def _process_and_save_data(parsed_data: Any, db_path: Path | None = None, collected_at_override: str | None = None) -> None:
+def _process_and_save_data(parsed_data: Any, db_path: Path | None = None, collected_at_override: str | None = None, skip_sales_check: bool = False) -> None:
     """Process and save the collected data to DB.
 
     Parameters
