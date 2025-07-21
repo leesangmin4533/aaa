@@ -49,3 +49,54 @@ Stacktrace:
 [__main__][main][INFO] Closing Chrome driver.
 [__main__][main][INFO] _run_collection_cycle finished.
 [__main__][main][INFO] Single data collection cycle finished.
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][config][DEBUG] SCRIPT_DIR: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts
+[__main__][main][INFO] Starting single data collection cycle...
+[__main__][main][INFO] _run_collection_cycle started.
+[__main__][init][INFO] Initializing Chrome driver...
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[__main__][login][INFO] Login successful.
+[__main__][navigation][INFO] Navigating to sales page...
+[__main__][run_script][DEBUG] Checking script existence: c:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[__main__][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[__main__][navigation][ERROR] Mix ratio page grid not found within 60 seconds.
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 157, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f040e925+77845]
+	GetHandleVerifier [0x0x7ff6f040e980+77936]
+	(No symbol) [0x0x7ff6f01c9cda]
+	(No symbol) [0x0x7ff6f02206aa]
+	(No symbol) [0x0x7ff6f022095c]
+	(No symbol) [0x0x7ff6f0273d07]
+	(No symbol) [0x0x7ff6f024890f]
+	(No symbol) [0x0x7ff6f0270b07]
+	(No symbol) [0x0x7ff6f02486a3]
+	(No symbol) [0x0x7ff6f0211791]
+	(No symbol) [0x0x7ff6f0212523]
+	GetHandleVerifier [0x0x7ff6f06e683d+3059501]
+	GetHandleVerifier [0x0x7ff6f06e0bfd+3035885]
+	GetHandleVerifier [0x0x7ff6f07003f0+3164896]
+	GetHandleVerifier [0x0x7ff6f0428c2e+185118]
+	GetHandleVerifier [0x0x7ff6f043053f+216111]
+	GetHandleVerifier [0x0x7ff6f04172d4+113092]
+	GetHandleVerifier [0x0x7ff6f0417489+113529]
+	GetHandleVerifier [0x0x7ff6f03fe288+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[__main__][navigation][ERROR] Page load timed out.
+[__main__][main][ERROR] Navigation or preparation failed. Skipping collection cycle.
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
