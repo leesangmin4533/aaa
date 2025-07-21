@@ -111,7 +111,9 @@
         ].join("\t");
 
         // Add order_cnt to actualTotalOrder
-        const orderCnt = parseInt(getText(row, 3) || '0', 10); // Assuming order_cnt is at index 3 (0-indexed)
+        const orderCntRaw = getText(row, 3) || '0';
+        const orderCnt = parseInt(orderCntRaw, 10); // Assuming order_cnt is at index 3 (0-indexed)
+        console.log(`[collectProductDataForMid] Product ${code}: orderCntRaw = '${orderCntRaw}', parsed orderCnt = ${orderCnt}`);
         if (!isNaN(orderCnt)) {
           actualTotalOrder += orderCnt;
         }
