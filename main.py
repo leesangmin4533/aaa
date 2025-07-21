@@ -121,7 +121,7 @@ def create_driver() -> webdriver.Chrome:
     for key, value in caps.items():
         options.set_capability(key, value)
     driver = webdriver.Chrome(service=Service(), options=options)
-    driver.set_script_timeout(60) # Set script timeout to 60 seconds
+    driver.set_script_timeout(300) # Set script timeout to 300 seconds (5 minutes) for long-running scripts
     return driver
 
 
