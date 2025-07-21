@@ -70,46 +70,20 @@ DATA_COLLECTION_TIMEOUT = config["timeouts"]["data_collection"]
 PAGE_LOAD_TIMEOUT = config["timeouts"]["page_load"]
 CYCLE_INTERVAL = config["cycle_interval_seconds"]
 
-log.debug(f"SCRIPT_DIR: {SCRIPT_DIR}", extra={'tag': 'config'})
 
-log.debug(f"SCRIPT_DIR: {SCRIPT_DIR}", extra={'tag': 'config'})
 
 
 def get_script_files() -> list[str]:
     """Return all JavaScript file names in the scripts directory sorted by name."""
     return sorted(p.name for p in SCRIPT_DIR.glob("*.js"))
 
-# code_outputs/날짜.txt 필드 저장 순서를 지정한다.
-FIELD_ORDER = [
-    "midCode",
-    "midName",
-    "productCode",
-    "productName",
-    "sales",
-    "order",
-    "purchase",
-    "discard",
-    "stock",
-]
 
 
-def save_to_txt(data: list[dict[str, Any]] | list[str], path: Path) -> Path:
-    """Save records to a text file with fields ordered by ``FIELD_ORDER``."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        for record in data:
-            if isinstance(record, dict):
-                line = "\t".join(str(record.get(k, "")) for k in FIELD_ORDER)
-            else:
-                line = str(record)
-            f.write(line + "\n")
-    return path
 
 
-def close_popups_after_delegate(delegate, *args, **kwargs):
-    """Run ``delegate`` and return its result. Placeholder for popup cleanup."""
-    return delegate(*args, **kwargs)
+
+
+
 
 
 def create_driver() -> webdriver.Chrome:
