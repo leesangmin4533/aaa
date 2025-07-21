@@ -358,7 +358,7 @@ def _run_collection_cycle() -> None:
                             historical_data = result.get("data")
                             if historical_data:
                                 log.info(f"{date_str}에 대해 {len(historical_data)}개의 과거 데이터 레코드를 수집했습니다.", extra={'tag': '7day_collection'})
-                                _process_and_save_data(historical_data, db_path=(CODE_OUTPUT_DIR / ALL_SALES_DB_FILE))
+                                _process_and_save_data(historical_data, db_path=(CODE_OUTPUT_DIR / ALL_SALES_DB_FILE), collected_at_override=datetime.strptime(date_str, "%Y%m%d").strftime("%Y-%m-%d 00:00"))
                             else:
                                 log.warning(f"{date_str}에 대한 과거 데이터 수집은 성공했으나, 수집된 데이터가 없습니다.", extra={'tag': '7day_collection'})
                         else:
