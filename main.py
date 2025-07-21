@@ -223,7 +223,7 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
         return None
 
 
-def _process_and_save_data(parsed_data: Any, db_path: Path | None = None) -> None:
+def _process_and_save_data(parsed_data: Any, db_path: Path | None = None, collected_at_override: str | None = None) -> None:
     """Process and save the collected data to DB.
 
     Parameters
@@ -260,7 +260,7 @@ def _process_and_save_data(parsed_data: Any, db_path: Path | None = None) -> Non
     # Save to DB
     if records_for_db:
         try:
-            inserted = write_sales_data(records_for_db, db_path)
+            inserted = write_sales_data(records_for_db, db_path, collected_at_override)
             log.info(f"DB saved to {db_path}, inserted {inserted} rows", extra={'tag': 'db'})
             print(f"db saved to {db_path}, inserted {inserted} rows")
         except Exception as e:
@@ -347,8 +347,6 @@ def _run_collection_cycle() -> None:
                 
                 past_dates = get_past_dates(7)
                 for date_str in past_dates:
-                    # Ensure required automation functions remain available
-                    run_script(driver, DEFAULT_SCRIPT)
                     log.info(f"-------------------- 과거 데이터 수집 중: {date_str} --------------------", extra={'tag': '7day_collection'})
                     try:
                         result = execute_collect_single_day_data(driver, date_str)
