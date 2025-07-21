@@ -48,6 +48,7 @@
     );
     const productLines = [];
     const seenCodes = new Set();
+    let consecutiveNoNewDataScrolls = 0; // New counter
 
     while (true) {
       const rowEls = [
@@ -56,13 +57,17 @@
         )
       ];
       let newCount = 0;
+      const currentProductCodes = new Set(); // To track products in current view
 
       for (const el of rowEls) {
         const code = el.innerText?.trim();
         const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
-        if (!row || !code || seenCodes.has(code)) continue;
+        if (!row || !code) continue; // Skip malformed or empty
+        currentProductCodes.add(code); // Add to current view set
 
-        console.log(`[collectProductDataForMid] Processing product: ${code} in row ${row}`);
+        if (seenCodes.has(code)) continue; // Skip if already seen and processed
+
+        console.log(`[collectProductDataForMid] Processing new product: ${code} in row ${row}`);
 
         const clickId = el.id.split(":text")[0];
         if (clickId) {
@@ -93,31 +98,55 @@
         "div[id$='gdDetail.vscrollbar.incbutton:icontext']"
       );
 
-      if (!scrollBtn) break;
+      if (!scrollBtn) {
+        console.log("[collectProductDataForMid] Product scroll button not found. Ending collection.");
+        break;
+      }
 
-      if (newCount === 0) {
-        // 스크롤 전후 변화가 없으면 종료
-        const lastCode = rowEls[rowEls.length - 1]?.innerText?.trim();
+      // Check if any new data was found in this iteration
+      if (newCount > 0) {
+        consecutiveNoNewDataScrolls = 0; // Reset counter if new data was found
+        console.log(`[collectProductDataForMid] Found ${newCount} new products. Resetting no-new-data counter.`);
+      } else {
+        // No new products found in the current view. Attempt to scroll and check for changes.
+        console.log("[collectProductDataForMid] No new products found in current view. Attempting to scroll.");
+        const beforeScrollProductCodes = new Set(currentProductCodes); // Snapshot before scroll
+
         await clickElementById(scrollBtn.id);
         await delay(500);
         document.dispatchEvent(
           new CustomEvent('product-scroll', { detail: { midCode } })
         );
-        const afterRows = [
+
+        const afterScrollRowEls = [
           ...document.querySelectorAll(
             "div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']"
           )
         ];
-        const afterLast = afterRows[afterRows.length - 1]?.innerText?.trim();
-        if (afterLast === lastCode) break;
-        continue;
-      }
+        const afterScrollProductCodes = new Set();
+        for (const el of afterScrollRowEls) {
+          const code = el.innerText?.trim();
+          if (code) afterScrollProductCodes.add(code);
+        }
 
-      await clickElementById(scrollBtn.id);
-      await delay(500);
-      document.dispatchEvent(
-        new CustomEvent('product-scroll', { detail: { midCode } })
-      );
+        // Check if the set of visible product codes changed after scrolling
+        const hasChanged = !(beforeScrollProductCodes.size === afterScrollProductCodes.size &&
+                             [...beforeScrollProductCodes].every(code => afterScrollProductCodes.has(code)));
+
+        if (!hasChanged) {
+          consecutiveNoNewDataScrolls++;
+          console.log(`[collectProductDataForMid] Scroll did not yield new visible products. Consecutive no-change scrolls: ${consecutiveNoNewDataScrolls}`);
+          if (consecutiveNoNewDataScrolls >= 3) {
+            console.log("[collectProductDataForMid] Reached 3 consecutive scrolls with no new visible products. Ending collection.");
+            break; // Break if 3 consecutive scrolls yield no new visible data
+          }
+        } else {
+          consecutiveNoNewDataScrolls = 0; // Reset if scroll yielded new visible data
+          console.log("[collectProductDataForMid] Scroll yielded new visible products. Resetting no-new-data counter.");
+        }
+      }
+      // If we reached here, either new data was found, or we scrolled and are checking again.
+      // Continue the loop to re-evaluate the visible elements.
     }
 
     midCodeDataList.push(...productLines);
