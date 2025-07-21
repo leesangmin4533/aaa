@@ -54,6 +54,8 @@
     document.dispatchEvent(
       new CustomEvent('mid-clicked', { detail: { code: midCode, midName } })
     );
+    // Wait for gdDetail grid to load for the current mid-category
+    await waitForElement(`div[id*='gdDetail.body'][id*='cell_0_0'][id$=':text']`, 15000); // Wait for the first cell of gdDetail
     const productLines = [];
     const seenCodes = new Set();
     let consecutiveNoNewDataScrolls = 0;
