@@ -18,7 +18,7 @@
         "stock"
     ],
     "timeouts": {
-        "data_collection": 240,
+        "data_collection": 600,
         "page_load": 120
     },
     "cycle_interval_seconds": 60
