@@ -343,15 +343,4 @@
     window.automation.parsedData = midCodeDataList;
   }
 
-  window.collectMidProducts = collectMidCodes;
-
-  (async () => {
-    try {
-      await waitForMidGrid();
-      await collectMidCodes();
-    } catch (e) {
-      console.warn(e);
-      window.automation.error = e && e.message ? e.message : String(e);
-    }
   })();
-})();
