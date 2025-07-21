@@ -38,7 +38,9 @@
 
   function getText(row, col) {
     const el = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${row}_${col}'][id$=':text']`);
-    return el?.innerText?.trim() || '';
+    const text = el?.innerText?.trim() || '';
+    console.log(`[getText] Row: ${row}, Col: ${col}, Text: '${text}'`); // 디버그 로그 유지
+    return text;
   }
 
   function getMidListText(row, col) {
@@ -47,15 +49,15 @@
   }
 
 
-  async function collectProductDataForMid(midCode, midName, expectedTotalOrder) {
-    console.log(`[collectProductDataForMid] Starting for mid-category: ${midCode} (${midName}). Expected total order: ${expectedTotalOrder}`);
+  async function collectProductDataForMid(midCode, midName, expectedTotalSales) { // 변수명 변경
+    console.log(`[collectProductDataForMid] Starting for mid-category: ${midCode} (${midName}). Expected total sales: ${expectedTotalSales}`); // 로그 메시지 변경
     document.dispatchEvent(
       new CustomEvent('mid-clicked', { detail: { code: midCode, midName } })
     );
     const productLines = [];
     const seenCodes = new Set();
     let consecutiveNoNewDataScrolls = 0;
-    let actualTotalOrder = 0; // Initialize actual total order
+    let actualTotalSales = 0; // 변수명 변경
 
     while (true) {
       console.log(`[collectProductDataForMid] Scanning products in current view for mid-category: ${midCode}`);
@@ -65,11 +67,11 @@
         )
       ];
       let newCount = 0;
-      const currentProductCodes = new Set(); // To track products in current view
+      const currentProductCodes = new Set();
 
       if (rowEls.length === 0) {
         console.log(`[collectProductDataForMid] No product rows found for mid-category: ${midCode}. Ending collection for this mid-category.`);
-        break; // No products found, exit loop
+        break;
       }
 
       for (const el of rowEls) {
@@ -78,13 +80,13 @@
         console.log(`[collectProductDataForMid] Examining product cell: ${code} at row: ${row}`);
         if (!row || !code) {
           console.warn("[collectProductDataForMid] Skipping malformed or empty product row.");
-          continue; // Skip malformed or empty
+          continue;
         }
-        currentProductCodes.add(code); // Add to current view set
+        currentProductCodes.add(code);
 
         if (seenCodes.has(code)) {
           console.log(`[collectProductDataForMid] Product ${code} already seen. Skipping.`);
-          continue; // Skip if already seen and processed
+          continue;
         }
 
         console.log(`[collectProductDataForMid] Processing new product: ${code} in row ${row}`);
@@ -103,19 +105,19 @@
           midName,
           getText(row, 0) || '0',
           getText(row, 1) || '0',
-          getText(row, 2) || '0',
-          getText(row, 3) || '0',
-          getText(row, 4) || '0',
-          getText(row, 5) || '0',
-          getText(row, 6) || '0'
+          getText(row, 2) || '0', // 매출
+          getText(row, 3) || '0', // 발주
+          getText(row, 4) || '0', // 매입
+          getText(row, 5) || '0', // 폐기
+          getText(row, 6) || '0'  // 현재고
         ].join("\t");
 
-        // Add order_cnt to actualTotalOrder
-        const orderCntRaw = getText(row, 5) || '0'; // Corrected index to 5 for order_cnt
-        const orderCnt = parseInt(orderCntRaw, 10);
-        console.log(`[collectProductDataForMid] Product ${code}: orderCntRaw = '${orderCntRaw}', parsed orderCnt = ${orderCnt}`);
-        if (!isNaN(orderCnt)) {
-          actualTotalOrder += orderCnt;
+        // Add sales to actualTotalSales (매출액을 합산)
+        const salesValRaw = getText(row, 2) || '0'; // 매출액은 인덱스 2
+        const salesVal = parseInt(salesValRaw, 10);
+        console.log(`[collectProductDataForMid] Product ${code}: salesValRaw = '${salesValRaw}', parsed salesVal = ${salesVal}`); // 디버그 로그 유지
+        if (!isNaN(salesVal)) {
+          actualTotalSales += salesVal;
         }
 
         seenCodes.add(code);
@@ -134,14 +136,12 @@
         break;
       }
 
-      // Check if any new data was found in this iteration
       if (newCount > 0) {
-        consecutiveNoNewDataScrolls = 0; // Reset counter if new data was found
+        consecutiveNoNewDataScrolls = 0;
         console.log(`[collectProductDataForMid] Found ${newCount} new products. Resetting no-new-data counter.`);
       } else {
-        // No new products found in the current view. Attempt to scroll and check for changes.
         console.log("[collectProductDataForMid] No new products found in current view. Attempting to scroll.");
-        const beforeScrollProductCodes = new Set(currentProductCodes); // Snapshot before scroll
+        const beforeScrollProductCodes = new Set(currentProductCodes);
 
         console.log(`[collectProductDataForMid] Clicking product scroll button with ID: ${scrollBtn.id}`);
         await clickElementById(scrollBtn.id);
@@ -162,7 +162,6 @@
           if (code) afterScrollProductCodes.add(code);
         }
 
-        // Check if the set of visible product codes changed after scrolling
         const hasChanged = !(beforeScrollProductCodes.size === afterScrollProductCodes.size &&
                              [...beforeScrollProductCodes].every(code => afterScrollProductCodes.has(code)));
 
@@ -171,25 +170,23 @@
           console.log(`[collectProductDataForMid] Scroll did not yield new visible products. Consecutive no-change scrolls: ${consecutiveNoNewDataScrolls}`);
           if (consecutiveNoNewDataScrolls >= 3) {
             console.log("[collectProductDataForMid] Reached 3 consecutive scrolls with no new visible products. Ending collection for this mid-category.");
-            break; // Break if 3 consecutive scrolls yield no new visible data
+            break;
           }
         } else {
-          consecutiveNoNewDataScrolls = 0; // Reset if scroll yielded new visible data
+          consecutiveNoNewDataScrolls = 0;
           console.log("[collectProductDataForMid] Scroll yielded new visible products. Resetting no-new-data counter.");
         }
       }
-      // If we reached here, either new data was found, or we scrolled and are checking again.
-      // Continue the loop to re-evaluate the visible elements.
     }
 
     midCodeDataList.push(...productLines);
     console.log(`[collectProductDataForMid] Finished for mid-category ${midCode}. Total products collected: ${productLines.length}`);
 
-    // Compare expected and actual total orders
-    if (expectedTotalOrder !== null && actualTotalOrder !== expectedTotalOrder) {
-      console.warn(`[collectProductDataForMid] Mismatch for mid-category ${midCode} (${midName}): Expected total order = ${expectedTotalOrder}, Actual total order = ${actualTotalOrder}`);
-    } else if (expectedTotalOrder !== null) {
-      console.log(`[collectProductDataForMid] Total order matched for mid-category ${midCode} (${midName}): ${actualTotalOrder}`);
+    // Compare expected and actual total sales (매출 총합 비교)
+    if (expectedTotalSales !== null && actualTotalSales !== expectedTotalSales) {
+      console.warn(`[collectProductDataForMid] Mismatch for mid-category ${midCode} (${midName}): Expected total sales = ${expectedTotalSales}, Actual total sales = ${actualTotalSales}`); // 로그 메시지 변경
+    } else if (expectedTotalSales !== null) {
+      console.log(`[collectProductDataForMid] Total sales matched for mid-category ${midCode} (${midName}): ${actualTotalSales}`); // 로그 메시지 변경
     }
   }
 
@@ -264,9 +261,9 @@
         console.log(`Successfully clicked mid-category: ${code}.`);
 
         const midName = await getMidName(rowIdx);
-        const expectedTotalOrder = parseInt(getMidListText(rowIdx, 2) || '0', 10); // Assuming total order is in column 2
-        if (isNaN(expectedTotalOrder)) {
-          console.warn(`[collectMidCodes] Could not parse expected total order for mid-category ${code}. Using 0.`);
+        const expectedTotalSales = parseInt(getMidListText(rowIdx, 2) || '0', 10); // 중분류 총 매출은 인덱스 2 (사용자 제공 정보)
+        if (isNaN(expectedTotalSales)) {
+          console.warn(`[collectMidCodes] Could not parse expected total sales for mid-category ${code}. Using 0.`);
         }
 
         seenMid.add(code);
@@ -276,7 +273,7 @@
         await delay(500);
 
         console.log(`[collectMidCodes] Collecting product data for mid-category: ${code} (${midName})...`);
-        await collectProductDataForMid(code, midName, expectedTotalOrder);
+        await collectProductDataForMid(code, midName, expectedTotalSales); // expectedTotalSales 전달
         console.log(`[collectMidCodes] Finished collecting product data for mid-category: ${code} (${midName}).`);
         await delay(300);
       }
