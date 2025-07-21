@@ -36,7 +36,7 @@ from login.login_bgf import login_bgf
 from utils.log_parser import extract_tab_lines
 from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
-from utils.convert_txt_to_excel import convert_txt_to_excel
+
 from utils.js_util import execute_collect_single_day_data
 
 # --- Configuration Loading ---
