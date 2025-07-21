@@ -55,8 +55,11 @@ def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
             '닫기', '확인', '취소', 'Close', 'OK', 'Cancel', '×', 'X'
         ];
         const idSelectors = [
-            'btn_topClose', 'btnClose',
-            'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_close'
+            'btn_topClose',
+            'btnClose',
+            'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_close',
+            'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_closeTop',
+            'mainframe.HFrameSet00.VFrameSet00.TopFrame.STZZ210_P0.form.btn_enter'
         ];
         const classSelectors = [
             'close', 'popup-close'
@@ -145,22 +148,6 @@ def close_all_modals(driver: WebDriver, max_attempts: int = 5) -> int:
     
     log.info(f"Finished popup closing process. Total closed: {closed_count}", extra={'tag': 'modal_closer'})
     return closed_count
-
-
-def ensure_focus_popup_closed(driver: WebDriver, timeout: float = 3.0, stable_time: float = 0.5) -> None:
-    """Continuously send ENTER to dismiss focus popups until gone."""
-    end = time.time() + timeout
-    while time.time() < end:
-        try:
-            popup = driver.find_element(By.XPATH, "//div[contains(text(), '재택 유선권장 안내')]")
-            if popup.is_displayed():
-                ActionChains(driver).send_keys(Keys.ENTER).perform()
-                time.sleep(stable_time)
-            else:
-                return
-        except Exception:
-            return
-
 
 def close_popups_after_delegate(func, *args, **kwargs):
     """Execute ``func`` and return its result."""
