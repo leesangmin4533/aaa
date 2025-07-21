@@ -7,10 +7,10 @@
 ```python
 from selenium.webdriver.remote.webdriver import WebDriver
 from main import run_script, wait_for_mix_ratio_page, NAVIGATION_SCRIPT
-from utils.log_util import create_logger
+from utils.log_util import get_logger
 import time
 
-log = create_logger("example")
+log = get_logger("example")
 
 # 로그 파일은 매 실행 시 덮어쓰며 logs/\<YYYYMMDD\>.log 형태로 저장됩니다.
 
