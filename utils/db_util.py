@@ -98,7 +98,7 @@ def _get_value(record: dict[str, Any], *keys: str) -> Any:
     return None
 
 
-def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None) -> int:
+def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None, skip_sales_check: bool = False) -> int:
     """
     매출 데이터를 DB에 저장합니다.
     
@@ -148,16 +148,17 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
         except (ValueError, TypeError):
             continue  # 정수로 변환할 수 없는 값은 건너뛰기
 
-        cur.execute(
-            "SELECT sales FROM mid_sales WHERE product_code=? ORDER BY id DESC LIMIT 1",
-            (product_code,),
-        )
-        row = cur.fetchone()
-        last_sales = row[0] if row else None
+        if not skip_sales_check:
+            cur.execute(
+                "SELECT sales FROM mid_sales WHERE product_code=? ORDER BY id DESC LIMIT 1",
+                (product_code,),
+            )
+            row = cur.fetchone()
+            last_sales = row[0] if row else None
 
-        # 새로운 sales 값이 기존 값보다 큰 경우에만 저장
-        if last_sales is not None and sales <= last_sales:
-            continue
+            # 새로운 sales 값이 기존 값보다 큰 경우에만 저장
+            if last_sales is not None and sales <= last_sales:
+                continue
 
         cur.execute(
             """
