@@ -215,13 +215,14 @@
     console.log("collectMidCodes 시작");
     const seenMid = new Set();
     let scrollCount = 0;
+    let consecutiveNoNewMidScrolls = 0;
 
-    while (true) {
+    while (consecutiveNoNewMidScrolls < 5) { // Exit condition
       console.log("🔄 중분류 목록 스캔 시작 (새로운 스크롤 주기)");
       const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
       console.log(`Found ${textCells.length} mid-category cells in current view.`);
-      const newMids = [];
-      let processedCountInCycle = 0;
+      
+      let foundAndProcessedNewMid = false;
 
       for (const textEl of textCells) {
         const code = textEl.innerText?.trim();
@@ -235,6 +236,7 @@
           continue;
         }
 
+        // Found a new mid-category to process
         const rowIdx = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
         console.log(`[collectMidCodes] Identified mid-category: ${code} at row index: ${rowIdx}`);
 
@@ -266,39 +268,58 @@
         console.log(`Successfully clicked mid-category: ${code}.`);
 
         const midName = await getMidName(rowIdx);
-        const expectedTotalSales = parseInt(getMidListText(rowIdx, 2) || '0', 10); // 중분류 총 매출은 인덱스 2 (사용자 제공 정보)
+        const expectedTotalSales = parseInt(getMidListText(rowIdx, 2) || '0', 10);
         if (isNaN(expectedTotalSales)) {
           console.warn(`[collectMidCodes] Could not parse expected total sales for mid-category ${code}. Using 0.`);
         }
 
         seenMid.add(code);
-        newMids.push(code);
-        processedCountInCycle++;
-        console.log(`중분류 클릭: ${code} (${midName}) - Processed ${processedCountInCycle} in this cycle.`);
+        console.log(`중분류 클릭: ${code} (${midName})`);
         await delay(500);
 
         console.log(`[collectMidCodes] Collecting product data for mid-category: ${code} (${midName})...`);
-        await collectProductDataForMid(code, midName, expectedTotalSales); // expectedTotalSales 전달
+        await collectProductDataForMid(code, midName, expectedTotalSales);
         console.log(`[collectMidCodes] Finished collecting product data for mid-category: ${code} (${midName}).`);
-        await delay(300);
+        
+        foundAndProcessedNewMid = true;
+        // Break the inner for-loop to restart the scan from the top of the while-loop
+        // This ensures we always work with a fresh list of elements
+        break; 
       }
 
-      if (processedCountInCycle === 0) {
-        console.warn("더 이상 새로운 중분류 없음 (현재 스크롤 주기에서 처리된 중분류 없음) → 종료");
-        break;
+      if (foundAndProcessedNewMid) {
+        consecutiveNoNewMidScrolls = 0; // Reset scroll counter
+        continue; // Restart the while loop to scan for the next item
       }
 
+      // If we reach here, no new mid-categories were found in the current view. We need to scroll.
+      console.log("현재 뷰에 새로운 중분류 없음. 스크롤 시도.");
       const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
       if (!scrollBtn) {
         console.warn("중분류 스크롤 버튼 없음 → 종료");
         break;
       }
 
+      const lastCodeBeforeScroll = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")].pop()?.innerText?.trim();
+
       console.log(`Attempting to click mid-category scroll button with ID: ${scrollBtn.id}`);
       await clickElementById(scrollBtn.id);
       scrollCount++;
       console.log(`🔄 중분류 스크롤 ${scrollCount}회 완료.`);
-      await delay(1000);
+      await delay(1000); // Wait for scroll to take effect
+
+      const lastCodeAfterScroll = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")].pop()?.innerText?.trim();
+
+      if (lastCodeBeforeScroll === lastCodeAfterScroll) {
+        consecutiveNoNewMidScrolls++;
+        console.log(`스크롤 후에도 새로운 중분류가 표시되지 않음. 연속 ${consecutiveNoNewMidScrolls}회.`);
+      } else {
+        consecutiveNoNewMidScrolls = 0;
+      }
+    }
+
+    if(consecutiveNoNewMidScrolls >= 5) {
+        console.log("5회 연속 스크롤해도 새로운 중분류가 없어 수집을 종료합니다.");
     }
 
     console.log("🎉 전체 중분류 수집 완료 → 총 중분류 수:", seenMid.size);
