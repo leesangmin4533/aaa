@@ -142,6 +142,7 @@
       } else {
         console.log("[collectProductDataForMid] No new products found in current view. Attempting to scroll.");
         const beforeScrollProductCodes = new Set(currentProductCodes);
+        console.log(`[collectProductDataForMid] Before scroll products: ${Array.from(beforeScrollProductCodes).join(', ')}`);
 
         console.log(`[collectProductDataForMid] Clicking product scroll button with ID: ${scrollBtn.id}`);
         await clickElementById(scrollBtn.id);
@@ -161,6 +162,7 @@
           const code = el.innerText?.trim();
           if (code) afterScrollProductCodes.add(code);
         }
+        console.log(`[collectProductDataForMid] After scroll products: ${Array.from(afterScrollProductCodes).join(', ')}`);
 
         const hasChanged = !(beforeScrollProductCodes.size === afterScrollProductCodes.size &&
                              [...beforeScrollProductCodes].every(code => afterScrollProductCodes.has(code)));
