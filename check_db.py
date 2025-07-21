@@ -9,10 +9,10 @@ else:
     try:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT COUNT(DISTINCT SUBSTR(collected_at, 1, 10)) FROM mid_sales')
+        cursor.execute("SELECT COUNT(*) FROM mid_sales WHERE mid_code = '002' AND SUBSTR(collected_at, 1, 10) = '2025-07-14'")
         result = cursor.fetchone()[0]
         conn.close()
-        print(f'Distinct dates in all_sales_data.db: {result}')
+        print(f"Count of mid_code '002' for 2025-07-14: {result}")
     except sqlite3.OperationalError as e:
         print(f"Database error: {e}. This might happen if the table does not exist yet.")
     except Exception as e:
