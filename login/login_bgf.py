@@ -54,7 +54,7 @@ def load_credentials(path: str | None = None) -> dict:
 
 
 def login_bgf(
-    driver: WebDriver, credential_path: str | None = None, timeout: int = 10
+    driver: WebDriver, credential_path: str | None = None, timeout: int = 30
 ) -> bool:
     """Perform login on BGF Retail store page.
 
