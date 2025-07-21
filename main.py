@@ -121,8 +121,8 @@ def create_driver() -> webdriver.Chrome:
     for key, value in caps.items():
         options.set_capability(key, value)
     driver = webdriver.Chrome(service=Service(), options=options)
-    driver.set_script_timeout(600) # Set script timeout to 600 seconds (10 minutes) for long-running scripts
-    driver.command_executor.set_timeout(600) # Set command executor timeout to 600 seconds
+    driver.set_script_timeout(300) # Set script timeout to 300 seconds (5 minutes) for general operations
+    driver.command_executor.set_timeout(300) # Set command executor timeout to 300 seconds for general operations
     return driver
 
 
@@ -348,12 +348,17 @@ def _run_collection_cycle() -> None:
             script_name = "auto_collect_past_7days.js"
             script_path = SCRIPT_DIR / script_name
             
-            log.info(f"과거 데이터 수집 스크립트 실행 시도: {script_path}", extra={'tag': '7day_collection'})
-            if not script_path.exists():
-                log.error(f"스크립트 파일을 찾을 수 없습니다: {script_path}", extra={'tag': '7day_collection'})
-                raise FileNotFoundError(f"과거 데이터 수집 스크립트가 존재하지 않습니다: {script_path}")
+            # Set timeouts for 7-day collection (1 hour)
+            driver.set_script_timeout(3600)
+            driver.command_executor.set_timeout(3600)
+            log.info("WebDriver script and command executor timeouts set to 3600 seconds for 7-day collection.", extra={'tag': '7day_collection'})
 
             try:
+                log.info(f"과거 데이터 수집 스크립트 실행 시도: {script_path}", extra={'tag': '7day_collection'})
+                if not script_path.exists():
+                    log.error(f"스크립트 파일을 찾을 수 없습니다: {script_path}", extra={'tag': '7day_collection'})
+                    raise FileNotFoundError(f"과거 데이터 수집 스크립트가 존재하지 않습니다: {script_path}")
+
                 run_script(driver, script_name)
                 log.info(f"'{script_name}' 스크립트 실행 완료.", extra={'tag': '7day_collection'})
                 
@@ -404,6 +409,11 @@ def _run_collection_cycle() -> None:
             except Exception as e:
                 log.critical(f"과거 데이터 수집 중 예상치 못한 오류 발생: {e}", extra={'tag': '7day_collection'}, exc_info=True)
                 raise RuntimeError(f"과거 데이터 수집 중 예상치 못한 오류: {e}")
+            finally:
+                # Revert timeouts to original values (300 seconds)
+                driver.set_script_timeout(300)
+                driver.command_executor.set_timeout(300)
+                log.info("WebDriver script and command executor timeouts reverted to 300 seconds.", extra={'tag': '7day_collection'})
 
         if parsed_data:
             # `need_history` 여부와 관계없이 항상 오늘의 DB에 저장
