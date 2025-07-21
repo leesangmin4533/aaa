@@ -127,6 +127,14 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
     cur = conn.cursor()
     inserted = 0
 
+    # If collected_at_override is provided, delete existing records for that date
+    if collected_at_override:
+        date_to_delete = collected_at_override.split(' ')[0] # Extract YYYY-MM-DD
+        log.info(f"Deleting existing records for date: {date_to_delete}", extra={'tag': 'db'})
+        cur.execute("DELETE FROM mid_sales WHERE SUBSTR(collected_at, 1, 10) = ?", (date_to_delete,))
+        conn.commit()
+        log.info(f"Deleted records for {date_to_delete}.", extra={'tag': 'db'})
+
     for rec in records:
         product_code = _get_value(rec, "productCode", "product_code")
         sales_raw = _get_value(rec, "sales")
