@@ -275,11 +275,13 @@
 
         seenMid.add(code);
         console.log(`중분류 클릭: ${code} (${midName})`);
+        console.log(`[DEBUG] Before delay after mid-category click.`);
         await delay(500);
+        console.log(`[DEBUG] After delay after mid-category click.`);
 
-        console.log(`[collectMidCodes] Collecting product data for mid-category: ${code} (${midName})...`);
+        console.log(`[DEBUG] Before calling collectProductDataForMid for ${code} (${midName})...`);
         await collectProductDataForMid(code, midName, expectedTotalSales);
-        console.log(`[collectMidCodes] Finished collecting product data for mid-category: ${code} (${midName}).`);
+        console.log(`[DEBUG] After calling collectProductDataForMid for ${code} (${midName}).`);
         
         foundAndProcessedNewMid = true;
         // Break the inner for-loop to restart the scan from the top of the while-loop
