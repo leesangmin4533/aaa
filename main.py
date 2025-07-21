@@ -95,8 +95,8 @@ def create_driver() -> webdriver.Chrome:
     for key, value in caps.items():
         options.set_capability(key, value)
     driver = webdriver.Chrome(service=Service(), options=options)
-    driver.set_script_timeout(300) # Set script timeout to 300 seconds (5 minutes) for general operations
-    driver.command_executor.set_timeout(300) # Set command executor timeout to 300 seconds for general operations
+    driver.set_script_timeout(3600) # Set script timeout to 3600 seconds (1 hour) for general operations
+    driver.command_executor.set_timeout(3600) # Set command executor timeout to 3600 seconds (1 hour) for general operations
     return driver
 
 
@@ -123,7 +123,7 @@ def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 10) -> bool:
+def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 60) -> bool:
     """중분류별 매출 구성비 화면의 그리드가 나타날 때까지 대기한다."""
     from selenium.common.exceptions import TimeoutException
     selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
@@ -184,6 +184,7 @@ def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
     try:
         run_script(driver, DEFAULT_SCRIPT)
         run_script(driver, LISTENER_SCRIPT)
+        driver.execute_script("window.automation.autoClickAllMidCodesAndProducts();") # Start initial data collection
 
         logs = driver.execute_script(
             "return window.automation && window.automation.logs ? window.automation.logs : []"
