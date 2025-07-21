@@ -149,6 +149,8 @@ midCode    midName    productCode    productName    sales    order    purchase  
 `main.py`를 실행하면 현재 날짜를 기준으로 `code_outputs/`\`YYYYMMDD.db\` 파일이
 자동 생성됩니다. 하루 동안 해당 파일을 계속 사용하며, 각 행의 `collected_at` 필드는
 "YYYY-MM-DD HH:MM" 형식으로 기록됩니다.
+만약 기존 DB에 최근 7일치 데이터가 없으면 `main.py`는 자동으로 `auto_collect_past_7days.js`를 실행하여 과거 정보를 수집합니다. 이렇게 얻은 데이터는 `code_outputs/past_7days.db` 파일에 저장됩니다.
+
 
 DB에는 `mid_sales` 테이블이 존재하며 대략 다음과 같이 구성됩니다.
 
