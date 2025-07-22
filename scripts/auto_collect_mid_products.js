@@ -33,7 +33,10 @@
     return el?.innerText?.trim() || "";
   }
 
-  // 2. 상품 데이터 수집 함수 (대기 시간 최적화)
+  // 전체 수집 과정에서 이미 처리된 상품 코드를 추적하는 Set
+  const seenAllProductCodes = new Set();
+
+  // 2. 상품 데이터 수집 함수 (대기 시간 최적화 및 전체 상품 코드 중복 방지)
   async function collectProductDataForMid(midCode, midName, expectedQuantity) {
     console.log(`[START] 상품 수집: ${midCode} (${midName}), 기대수량: ${expectedQuantity}`);
     document.dispatchEvent(new CustomEvent("mid-clicked", { detail: { code: midCode, midName } }));
@@ -48,7 +51,7 @@
     })();
 
     const productLines = [];
-    const seenCodes = new Set();
+    const seenCodesInMid = new Set(); // 현재 중분류 내에서만 본 상품 코드
     let actualQuantity = 0;
     let noChangeScrolls = 0;
 
@@ -59,10 +62,13 @@
       for (const el of rowEls) {
         const code = el.innerText?.trim();
         const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
-        if (!row || !code || seenCodes.has(code)) continue;
+        
+        // 현재 중분류 내에서 이미 본 코드이거나, 전체 수집 과정에서 이미 본 코드이면 건너뜀
+        if (!row || !code || seenCodesInMid.has(code) || seenAllProductCodes.has(code)) continue;
 
         newProductsFoundInView = true;
-        seenCodes.add(code);
+        seenCodesInMid.add(code);
+        seenAllProductCodes.add(code); // 전체 상품 코드 Set에 추가
 
         const quantityStr = getText(row, 2);
         const quantity = parseInt(quantityStr.replace(/,/g, ""), 10) || 0;
@@ -81,7 +87,6 @@
       const waitForChange = new Promise((resolve) => {
         const observer = new MutationObserver(() => { observer.disconnect(); resolve(true); });
         observer.observe(gridBody, { childList: true });
-        // 대기 시간 2000ms -> 1500ms로 단축
         setTimeout(() => { observer.disconnect(); resolve(false); }, 1500);
       });
 
@@ -136,7 +141,6 @@
         const expectedQuantity = parseInt(expectedQuantityStr.replace(/,/g, ""), 10) || 0;
 
         await clickElementById(textEl.id.split(":text")[0]);
-        // 대기 시간 500ms -> 250ms로 단축
         await delay(250);
 
         const productData = await collectProductDataForMid(code, midName, expectedQuantity);
@@ -153,7 +157,6 @@
       if (!scrollBtn) break;
       
       await clickElementById(scrollBtn.id);
-      // 대기 시간 1000ms -> 500ms로 단축
       await delay(500);
       noChangeScrolls++;
     }
