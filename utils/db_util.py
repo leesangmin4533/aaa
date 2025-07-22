@@ -69,14 +69,39 @@ def _get_value(record: dict[str, Any], *keys: str) -> Any:
 def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None) -> int:
     """
     매출 데이터를 통합 DB에 저장합니다.
+
+    저장 규칙:
+    1. 수집 시각은 분 단위까지 기록 (YYYY-MM-DD HH:MM)
+    2. 동일 상품(product_code)에 대해:
+       - sales가 증가한 경우에만 새 데이터 저장
+       - sales가 같거나 감소한 경우 저장하지 않음
+    3. (collected_at, product_code) 조합은 고유해야 함
+
+    Parameters
+    ----------
+    records : list[dict[str, Any]]
+        저장할 매출 데이터 레코드 목록
+    db_path : Path
+        통합 DB 파일 경로
+    collected_at_override : str | None
+        수집 시각 오버라이드 (None이면 현재 시각 사용)
+
+    Returns
+    -------
+    int
+        저장된 레코드 수
     """
     conn = init_db(db_path)
     collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
     cur = conn.cursor()
     inserted_count = 0
 
+    # 먼저 날짜만 추출하여 당일 데이터만 비교하도록 함
+    current_date = collected_at_val.split()[0]
+
+    # 새로운 데이터를 저장하되, 같은 날짜의 sales가 더 큰 경우에만 저장
     insert_sql = """
-    INSERT OR IGNORE INTO mid_sales (
+    INSERT INTO mid_sales (
         collected_at, mid_code, mid_name, product_code, product_name,
         sales, order_cnt, purchase, disposal, stock
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
