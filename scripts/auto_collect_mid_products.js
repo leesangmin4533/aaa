@@ -4,6 +4,7 @@
     logs: [],
     parsedData: null,
     error: null,
+    verificationResults: [], // 새로운 검증 결과 저장 배열
   };
 
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -79,10 +80,22 @@
           getText(row, 3), getText(row, 4), getText(row, 5), getText(row, 6),
         ].join("\t");
         productLines.push(line);
+
+        // 수량 일치 시 조기 종료
+        if (actualQuantity === expectedQuantity) {
+            console.log(`[조기 종료] ${midCode} (${midName}): 기대 ${expectedQuantity}, 실제 ${actualQuantity} - 수량 일치로 다음 중분류로 이동.`);
+            noChangeScrolls = 3; // 루프 종료 조건 충족
+            break; // 현재 for 루프 종료
+        }
       }
 
       const scrollBtn = document.querySelector("div[id$='gdDetail.vscrollbar.incbutton:icontext']");
       if (!scrollBtn) break;
+
+      // 조기 종료 조건이 충족되었다면 더 이상 스크롤하지 않음
+      if (actualQuantity === expectedQuantity) {
+          break;
+      }
 
       const waitForChange = new Promise((resolve) => {
         const observer = new MutationObserver(() => { observer.disconnect(); resolve(true); });
@@ -100,10 +113,23 @@
       }
     }
 
-    if (expectedQuantity !== actualQuantity) {
-      console.warn(`[수량 불일치] ${midCode} (${midName}): 기대 ${expectedQuantity}, 실제 ${actualQuantity}`);
+    // 검증 결과 저장 및 콘솔 출력
+    const verificationStatus = (expectedQuantity === actualQuantity) ? "일치" : "불일치";
+    const verificationMessage = `[수량 ${verificationStatus}] ${midCode} (${midName}): 기대 ${expectedQuantity}, 실제 ${actualQuantity}`;
+    
+    window.automation.verificationResults.push({
+        midCode: midCode,
+        midName: midName,
+        expectedQuantity: expectedQuantity,
+        actualQuantity: actualQuantity,
+        status: verificationStatus,
+        message: verificationMessage
+    });
+
+    if (verificationStatus === "불일치") {
+        console.warn(verificationMessage);
     } else {
-      console.log(`[수량 일치] ${midCode} (${midName}): ${actualQuantity}`);
+        console.log(verificationMessage);
     }
 
     return productLines;
