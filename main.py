@@ -24,8 +24,7 @@ from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 
 from utils.js_util import execute_collect_single_day_data
-from utils.file_util import append_unique_lines
-from utils.convert_txt_to_excel import convert_txt_to_excel
+
 from utils.popup_util import close_popups_after_delegate
 
 from automation.config import (
@@ -67,20 +66,7 @@ def get_script_files() -> list[str]:
     return sorted(p.name for p in SCRIPT_DIR.glob("*.js"))
 
 
-def save_to_txt(data: list[Any], out_path: str | Path) -> Path:
-    """Save parsed data to a tab-separated text file."""
-    out_path = Path(out_path)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    lines: list[str] = []
-    for item in data:
-        if isinstance(item, str):
-            lines.append(item)
-        elif isinstance(item, dict):
-            lines.append("\t".join(str(item.get(k, "")) for k in FIELD_ORDER))
-        else:
-            lines.append(str(item))
-    out_path.write_text("\n".join(lines), encoding="utf-8")
-    return out_path
+
 
 
 
@@ -166,7 +152,7 @@ def _process_and_save_data(
 
 def _handle_final_logs(driver: Any) -> None:
     """Wrapper for final log handling."""
-    _wf_handle_final_logs(driver, CODE_OUTPUT_DIR, append_unique_lines, convert_txt_to_excel)
+    _wf_handle_final_logs(driver, CODE_OUTPUT_DIR)
 
 
 def _run_collection_cycle() -> None:
@@ -181,8 +167,6 @@ def _run_collection_cycle() -> None:
         wait_for_data,
         write_sales_data,
         is_7days_data_available,
-        append_unique_lines,
-        convert_txt_to_excel,
         execute_collect_single_day_data,
         get_past_dates,
         CODE_OUTPUT_DIR,
