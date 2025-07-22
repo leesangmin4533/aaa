@@ -17,64 +17,47 @@ import os
 import time
 from pathlib import Path
 from typing import Any
-from datetime import datetime, timedelta
-
-# Third-party imports - Selenium 관련
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
-
-import json
 
 # Local imports - 프로젝트 내부 모듈
 from login.login_bgf import login_bgf
-from utils.log_parser import extract_tab_lines
 from utils.db_util import write_sales_data, is_7days_data_available
 from utils.log_util import get_logger
 
-from utils.js_util import (
-    execute_collect_single_day_data,
-    execute_collect_past7days,
-)
-from utils.popup_util import close_popups_after_delegate
+from utils.js_util import execute_collect_single_day_data
 from utils.file_util import append_unique_lines
 from utils.convert_txt_to_excel import convert_txt_to_excel
+from utils.popup_util import close_popups_after_delegate
 
-# --- Configuration Loading ---
-def load_config() -> dict:
-    config_path = Path(__file__).with_name("config.json")
-    if not config_path.exists():
-        raise FileNotFoundError(f"Configuration file not found: {config_path}")
-    with open(config_path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-config = load_config()
+from automation.config import (
+    SCRIPT_DIR,
+    CODE_OUTPUT_DIR,
+    ALL_SALES_DB_FILE,
+    PAST7_DB_FILE,
+    DEFAULT_SCRIPT,
+    LISTENER_SCRIPT,
+    NAVIGATION_SCRIPT,
+    FIELD_ORDER,
+    DATA_COLLECTION_TIMEOUT,
+    PAGE_LOAD_TIMEOUT,
+    CYCLE_INTERVAL,
+)
+from automation.driver import create_driver as _create_driver
+from automation.scripts import (
+    run_script as _run_script,
+    wait_for_data as _wait_for_data,
+    wait_for_mix_ratio_page as _wait_for_mix_ratio_page,
+)
+from automation.workflow import (
+    get_past_dates as _get_past_dates,
+    _initialize_driver_and_login as _wf_initialize_driver_and_login,
+    _navigate_and_prepare_collection as _wf_navigate_and_prepare_collection,
+    _execute_data_collection as _wf_execute_data_collection,
+    _process_and_save_data as _wf_process_and_save_data,
+    _handle_final_logs as _wf_handle_final_logs,
+    _run_collection_cycle as _wf_run_collection_cycle,
+)
 
 log = get_logger(__name__)
-
-# Directory configuration
-SCRIPT_DIR = Path(__file__).with_name("scripts")
-CODE_OUTPUT_DIR = Path(__file__).with_name("code_outputs")
-ALL_SALES_DB_FILE = config["db_file"]
-PAST7_DB_FILE = config.get("past7_db_file", "past_7days.db")
-
-# Script file configuration
-DEFAULT_SCRIPT = config["scripts"]["default"]
-LISTENER_SCRIPT = config["scripts"]["listener"]
-NAVIGATION_SCRIPT = config["scripts"]["navigation"]
-
-# Field order for output
-FIELD_ORDER = config["field_order"]
-
-# Timeouts
-DATA_COLLECTION_TIMEOUT = config["timeouts"]["data_collection"]
-PAGE_LOAD_TIMEOUT = config["timeouts"]["page_load"]
-CYCLE_INTERVAL = config["cycle_interval_seconds"]
 
 
 
@@ -108,286 +91,110 @@ def save_to_txt(data: list[Any], out_path: str | Path) -> Path:
 
 
 
-def create_driver() -> webdriver.Chrome:
-    options = Options()
-    options.add_experimental_option("detach", True)
-    options.add_argument("--disk-cache-size=0") # Disable disk cache
-    caps = DesiredCapabilities.CHROME.copy()
-    caps["goog:loggingPrefs"] = {"browser": "ALL"}
-    for key, value in caps.items():
-        options.set_capability(key, value)
-    driver = webdriver.Chrome(service=Service(), options=options)
-    driver.set_script_timeout(3600) # Set script timeout to 3600 seconds (1 hour) for general operations
-    driver.command_executor.set_timeout(3600) # Set command executor timeout to 3600 seconds (1 hour) for general operations
-    return driver
+def create_driver() -> Any:
+    """Create and configure a Chrome WebDriver."""
+    return _create_driver()
 
 
-def run_script(driver: webdriver.Chrome, name: str) -> Any:
-    script_full_path = os.path.join(SCRIPT_DIR, name)
-    log.debug(f"Checking script existence: {script_full_path}", extra={'tag': 'run_script'})
-    if not os.path.exists(script_full_path):
-        msg = f"script file not found: {script_full_path}"
-        log.error(msg, extra={'tag': 'run_script'})
-        raise FileNotFoundError(msg)
-    with open(script_full_path, "r", encoding="utf-8") as f:
-        js = f.read()
-    return driver.execute_script(js)
+def run_script(driver: Any, name: str) -> Any:
+    """Execute a JavaScript file located in :data:`SCRIPT_DIR`."""
+    return _run_script(driver, name, SCRIPT_DIR)
 
 
-def wait_for_data(driver: webdriver.Chrome, timeout: int = 10) -> Any | None:
-    """Poll for ``window.__parsedData__`` until available or timeout."""
-    start = time.time()
-    while time.time() - start < timeout:
-        data = driver.execute_script("return window.__parsedData__ || null")
-        if data is not None:
-            return data
-        time.sleep(0.5)
-    return None
+def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
+    """Wrapper around :func:`automation.scripts.wait_for_data`."""
+    return _wait_for_data(driver, timeout)
 
 
-def wait_for_mix_ratio_page(driver: webdriver.Chrome, timeout: int = 60) -> bool:
-    """중분류별 매출 구성비 화면의 그리드가 나타날 때까지 대기한다."""
-    from selenium.common.exceptions import TimeoutException
-    selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
-    log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={'tag': 'navigation'})
-    try:
-        WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
-        )
-        log.debug("Mix ratio page grid found.", extra={'tag': 'navigation'})
-        return True
-    except TimeoutException:
-        log.error(f"Mix ratio page grid not found within {timeout} seconds.", extra={'tag': 'navigation'}, exc_info=True)
-        return False
-    except Exception as e:
-        log.error(f"An unexpected error occurred while waiting for mix ratio page: {e}", extra={'tag': 'navigation'}, exc_info=True)
-        return False
+def wait_for_mix_ratio_page(driver: Any, timeout: int = 60) -> bool:
+    """Wrapper around :func:`automation.scripts.wait_for_mix_ratio_page`."""
+    return _wait_for_mix_ratio_page(driver, timeout)
 
 
 
 
 
 def get_past_dates(n: int = 7) -> list[str]:
-    dates = []
-    today = datetime.now()
-    for i in range(1, n + 1):
-        d = today - timedelta(days=i)
-        dates.append(d.strftime("%Y%m%d"))
-    return dates
+    """Return list of date strings for the past ``n`` days."""
+    return _get_past_dates(n)
 
-def _initialize_driver_and_login(cred_path: str | None) -> webdriver.Chrome | None:
-    """Create and initialize the Chrome driver, then log in."""
-    log.info("Initializing Chrome driver...", extra={'tag': 'init'})
-    driver = create_driver()
-    if not login_bgf(driver, credential_path=cred_path):
-        log.error("Login failed.", extra={'tag': 'login'})
-        print("로그인 실패")
-        driver.quit()
-        return None
-    log.info("Login successful.", extra={'tag': 'login'})
-    return driver
+def _initialize_driver_and_login(cred_path: str | None) -> Any | None:
+    """Wrapper for workflow initialization and login."""
+    return _wf_initialize_driver_and_login(cred_path, create_driver, login_bgf)
 
 
-def _navigate_and_prepare_collection(driver: webdriver.Chrome) -> bool:
-    """Navigate to the target page for data collection."""
-    log.info("Navigating to sales page...", extra={'tag': 'navigation'})
-    run_script(driver, NAVIGATION_SCRIPT)
-    if not wait_for_mix_ratio_page(driver, PAGE_LOAD_TIMEOUT):
-        log.error("Page load timed out.", extra={'tag': 'navigation'})
-        print("페이지 로드 시간 초과")
-        return False
-    log.info("Successfully navigated to sales page.", extra={'tag': 'navigation'})
-    return True
+def _navigate_and_prepare_collection(driver: Any) -> bool:
+    """Wrapper for workflow navigation step."""
+    return _wf_navigate_and_prepare_collection(
+        driver,
+        run_script,
+        wait_for_mix_ratio_page,
+        NAVIGATION_SCRIPT,
+        PAGE_LOAD_TIMEOUT,
+    )
 
 
-def _execute_data_collection(driver: webdriver.Chrome) -> Any | None:
-    """Run collection scripts and wait for the data."""
-    log.info("Starting data collection scripts.", extra={'tag': 'collect'})
-    try:
-        run_script(driver, DEFAULT_SCRIPT)
-        run_script(driver, LISTENER_SCRIPT)
-        driver.execute_script("window.automation.autoClickAllMidCodesAndProducts();") # Start initial data collection
-
-        logs = driver.execute_script(
-            "return window.automation && window.automation.logs ? window.automation.logs : []"
-        )
-        mid_logs = driver.execute_script("return window.__midCategoryLogs__ || []")
-        if mid_logs:
-            log.info(f"mid_category logs: {mid_logs}", extra={'tag': 'mid_category'})
-            print("중분류 클릭 로그:", mid_logs)
-        elif logs:
-            log.info(f"mid_category logs: {logs}", extra={'tag': 'mid_category'})
-
-        parsed_data = wait_for_data(driver, DATA_COLLECTION_TIMEOUT)
-        if parsed_data is None:
-            # Fallback to liveData
-            parsed_data = driver.execute_script(
-                "return window.automation && window.automation.liveData ? window.automation.liveData : null"
-            )
-            if not parsed_data and mid_logs:
-                parsed_data = mid_logs
-            if parsed_data:
-                log.info("Using liveData as fallback for parsedData.", extra={'tag': 'collect'})
-            else:
-                log.error("Data collection timed out or failed, and no liveData fallback.", extra={'tag': 'collect'})
-                print("데이터 수집 시간 초과 또는 실패")
-                return None
-    
-        log.info("Data collection complete.", extra={'tag': 'collect'})
-        return parsed_data
-    except TimeoutException:
-        log.error("Data collection timed out while waiting for data.", extra={'tag': 'collect'}, exc_info=True)
-        print("데이터 수집 시간 초과")
-        return None
-    except WebDriverException as e:
-        log.error(f"WebDriver error during data collection: {e}", extra={'tag': 'collect'}, exc_info=True)
-        print(f"WebDriver 오류 발생: {e}")
-        return None
-    except Exception as e:
-        log.error(f"An unexpected error occurred during data collection: {e}", extra={'tag': 'collect'}, exc_info=True)
-        print(f"데이터 수집 중 예상치 못한 오류 발생: {e}")
-        return None
+def _execute_data_collection(driver: Any) -> Any | None:
+    """Wrapper for the data collection step."""
+    return _wf_execute_data_collection(
+        driver,
+        run_script,
+        wait_for_data,
+        DEFAULT_SCRIPT,
+        LISTENER_SCRIPT,
+        DATA_COLLECTION_TIMEOUT,
+    )
 
 
-def _process_and_save_data(parsed_data: Any, db_path: Path | None = None, collected_at_override: str | None = None, skip_sales_check: bool = False) -> None:
-    """Process and save the collected data to DB.
-
-    Parameters
-    ----------
-    parsed_data : Any
-        Data collected from the page.
-    db_path : Path | None, optional
-        Target DB path. If not provided, a daily DB file is used.
-    """
-    records_for_db: list[dict[str, Any]] = []
-    if isinstance(parsed_data, list):
-        if all(isinstance(item, str) for item in parsed_data):
-            for line in parsed_data:
-                values = line.strip().split('\t')
-                if len(values) == len(FIELD_ORDER):
-                    records_for_db.append(dict(zip(FIELD_ORDER, values)))
-                else:
-                    log.warning(f"Skipping malformed line for DB: {line}", extra={'tag': 'db'})
-        elif all(isinstance(item, dict) for item in parsed_data):
-            records_for_db = [dict(item) for item in parsed_data]
-        else:
-            log.error(f"Invalid list format received: {type(parsed_data[0])}", extra={'tag': 'output'})
-            print(f"잘못된 데이터 형식: {type(parsed_data[0])}")
-            return
-    else:
-        log.error(f"Invalid data format received: {type(parsed_data)}", extra={'tag': 'output'})
-        print(f"잘못된 데이터 형식: {type(parsed_data)}")
-        return
-
-    if db_path is None:
-        db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
-
-    # Save to DB
-    if records_for_db:
-        try:
-            if collected_at_override is None:
-                inserted = write_sales_data(records_for_db, db_path)
-            else:
-                inserted = write_sales_data(records_for_db, db_path, collected_at_override)
-            log.info(f"DB saved to {db_path}, inserted {inserted} rows", extra={'tag': 'db'})
-            print(f"db saved to {db_path}, inserted {inserted} rows")
-        except Exception as e:
-            log.error(f"DB write failed: {e}", extra={'tag': 'db'}, exc_info=True)
-            print(f"db write failed: {e}")
-    else:
-        log.warning("No valid records found to save to the database.", extra={'tag': 'db'})
+def _process_and_save_data(
+    parsed_data: Any,
+    db_path: Path | None = None,
+    collected_at_override: str | None = None,
+    skip_sales_check: bool = False,
+) -> None:
+    """Wrapper for saving collected data."""
+    _wf_process_and_save_data(
+        parsed_data,
+        db_path,
+        FIELD_ORDER,
+        CODE_OUTPUT_DIR,
+        ALL_SALES_DB_FILE,
+        write_sales_data,
+        collected_at_override=collected_at_override,
+    )
 
 
-def _handle_final_logs(driver: webdriver.Chrome) -> None:
-    """Check for script errors and collect browser logs at the end."""
-    # Check for script errors
-    try:
-        error = driver.execute_script("return window.automation && window.automation.error")
-        if error:
-            log.error(f"Script error: {error}", extra={'tag': 'script'})
-            print("스크립트 오류:", error)
-    except Exception:
-        pass
-
-    # Collect browser logs
-    try:
-        logs = driver.get_log("browser")
-        lines = extract_tab_lines(logs)
-        if lines:
-            log.info("Extracted log data:", extra={'tag': 'browser_log'})
-            print("추출된 로그 데이터:")
-            for line in lines:
-                log.info(line, extra={'tag': 'browser_log'})
-                print(line)
-        else:
-            log.info("Browser console logs:", extra={'tag': 'browser_log'})
-            print("브라우저 콘솔 로그:")
-            for entry in logs:
-                log.info(str(entry), extra={'tag': 'browser_log'})
-                print(entry)
-
-        # Save log lines to text and convert to Excel
-        date_str = datetime.now().strftime("%y%m%d")
-        txt_path = CODE_OUTPUT_DIR / f"{date_str}.txt"
-        if lines:
-            append_unique_lines(txt_path, lines)
-        else:
-            txt_path.parent.mkdir(parents=True, exist_ok=True)
-            txt_path.touch(exist_ok=True)
-        excel_path = CODE_OUTPUT_DIR / "mid_excel" / f"{date_str}.xlsx"
-        convert_txt_to_excel(str(txt_path), str(excel_path))
-    except Exception as e:
-        log.error(f"Failed to collect browser logs: {e}", extra={'tag': 'browser_log'}, exc_info=True)
-        print(f"브라우저 로그 수집 실패: {e}")
+def _handle_final_logs(driver: Any) -> None:
+    """Wrapper for final log handling."""
+    _wf_handle_final_logs(driver, CODE_OUTPUT_DIR, append_unique_lines, convert_txt_to_excel)
 
 
 def _run_collection_cycle() -> None:
-    """
-    Performs a single cycle of data collection and saving.
-    """
-    log.info("_run_collection_cycle started.", extra={'tag': 'main'})
+    """Wrapper for the full data collection workflow."""
     cred_path = os.environ.get("CREDENTIAL_FILE")
-    driver = None
-    try:
-        driver = _initialize_driver_and_login(cred_path)
-        if not driver:
-            log.error("Driver initialization or login failed. Skipping collection cycle.", extra={'tag': 'main'})
-            return
-
-        if not _navigate_and_prepare_collection(driver):
-            log.error("Navigation or preparation failed. Skipping collection cycle.", extra={'tag': 'main'})
-            return
-
-        parsed_data = _execute_data_collection(driver)
-
-        # Check if 7 days of data is available in DB
-        need_history = not is_7days_data_available(CODE_OUTPUT_DIR / PAST7_DB_FILE)
-        if need_history:
-            log.info("7일치 데이터베이스 기록이 없어 과거 데이터 수집을 시작합니다.", extra={'tag': '7day_collection'})
-            result = execute_collect_past7days(driver)
-            if not (result and result.get("success")):
-                msg = result.get("message", "알 수 없는 오류") if result else "알 수 없는 오류"
-                log.error(f"과거 데이터 수집 실패: {msg}", extra={'tag': '7day_collection'})
-                raise RuntimeError(f"과거 데이터 수집 실패: {msg}")
-            db_target = CODE_OUTPUT_DIR / PAST7_DB_FILE
-        else:
-            db_target = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
-
-        if parsed_data:
-            _process_and_save_data(parsed_data, db_path=db_target)
-        else:
-            log.warning("No parsed data collected. Skipping save results.", extra={'tag': 'main'})
-
-        _handle_final_logs(driver)
-
-    except Exception as e:
-        log.critical(f"Critical error during collection cycle: {e}", extra={'tag': 'main'}, exc_info=True)
-        print(f"치명적인 오류 발생: {e}")
-    finally:
-        if driver:
-            log.info("Closing Chrome driver.", extra={'tag': 'main'})
-            driver.quit()
-        log.info("_run_collection_cycle finished.", extra={'tag': 'main'})
+    _wf_run_collection_cycle(
+        cred_path,
+        create_driver,
+        login_bgf,
+        run_script,
+        wait_for_mix_ratio_page,
+        wait_for_data,
+        write_sales_data,
+        is_7days_data_available,
+        append_unique_lines,
+        convert_txt_to_excel,
+        execute_collect_single_day_data,
+        get_past_dates,
+        CODE_OUTPUT_DIR,
+        PAST7_DB_FILE,
+        ALL_SALES_DB_FILE,
+        DEFAULT_SCRIPT,
+        LISTENER_SCRIPT,
+        NAVIGATION_SCRIPT,
+        FIELD_ORDER,
+        PAGE_LOAD_TIMEOUT,
+        DATA_COLLECTION_TIMEOUT,
+    )
 
 
 def main() -> None:
