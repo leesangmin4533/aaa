@@ -39,7 +39,6 @@ from utils.log_util import get_logger
 
 from utils.js_util import (
     execute_collect_single_day_data,
-    execute_collect_past7days,
 )
 from utils.popup_util import close_popups_after_delegate
 from utils.file_util import append_unique_lines
@@ -364,11 +363,53 @@ def _run_collection_cycle() -> None:
         need_history = not is_7days_data_available(CODE_OUTPUT_DIR / PAST7_DB_FILE)
         if need_history:
             log.info("7일치 데이터베이스 기록이 없어 과거 데이터 수집을 시작합니다.", extra={'tag': '7day_collection'})
-            result = execute_collect_past7days(driver)
-            if not (result and result.get("success")):
-                msg = result.get("message", "알 수 없는 오류") if result else "알 수 없는 오류"
-                log.error(f"과거 데이터 수집 실패: {msg}", extra={'tag': '7day_collection'})
-                raise RuntimeError(f"과거 데이터 수집 실패: {msg}")
+
+            # Set extended timeouts for the 7-day collection
+            driver.set_script_timeout(3600)
+            driver.command_executor.set_timeout(3600)
+            log.info(
+                "WebDriver script and command executor timeouts set to 3600 seconds for 7-day collection.",
+                extra={'tag': '7day_collection'},
+            )
+
+            try:
+                past_dates = get_past_dates(7)
+                for date_str in past_dates:
+                    log.info(
+                        f"-------------------- 과거 데이터 수집 중: {date_str} --------------------",
+                        extra={'tag': '7day_collection'},
+                    )
+                    result = execute_collect_single_day_data(driver, date_str)
+                    if result and result.get("success"):
+                        historical_data = result.get("data")
+                        if historical_data:
+                            _process_and_save_data(
+                                historical_data,
+                                db_path=(CODE_OUTPUT_DIR / PAST7_DB_FILE),
+                                collected_at_override=datetime.strptime(date_str, "%Y%m%d").strftime("%Y-%m-%d 00:00"),
+                            )
+                        else:
+                            log.warning(
+                                f"{date_str}에 대한 과거 데이터 수집은 성공했으나, 수집된 데이터가 없습니다.",
+                                extra={'tag': '7day_collection'},
+                            )
+                    else:
+                        msg = result.get("message", "알 수 없는 오류") if result else "알 수 없는 오류"
+                        log.error(
+                            f"{date_str}에 대한 과거 데이터 수집에 실패했습니다: {msg}",
+                            extra={'tag': '7day_collection'},
+                        )
+                        raise RuntimeError(f"과거 데이터 수집 스크립트 실행 실패: {msg}")
+                log.info("과거 7일 데이터 수집 완료.", extra={'tag': '7day_collection'})
+            finally:
+                # Revert timeouts back to the defaults
+                driver.set_script_timeout(300)
+                driver.command_executor.set_timeout(300)
+                log.info(
+                    "WebDriver script and command executor timeouts reverted to 300 seconds.",
+                    extra={'tag': '7day_collection'},
+                )
+
             db_target = CODE_OUTPUT_DIR / PAST7_DB_FILE
         else:
             db_target = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
