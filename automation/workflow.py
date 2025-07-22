@@ -177,8 +177,6 @@ def _process_and_save_data(
 def _handle_final_logs(
     driver: Any,
     code_output_dir: Path,
-    append_lines_fn: Callable[[Path, list[str]], int],
-    convert_fn: Callable[[str, str], Any],
 ) -> None:
     try:
         error = driver.execute_script("return window.automation && window.automation.error")
@@ -204,15 +202,8 @@ def _handle_final_logs(
                 log.info(str(entry), extra={"tag": "browser_log"})
                 print(entry)
 
-        date_str = datetime.now().strftime("%y%m%d")
-        txt_path = code_output_dir / f"{date_str}.txt"
-        if lines:
-            append_lines_fn(txt_path, lines)
-        else:
-            txt_path.parent.mkdir(parents=True, exist_ok=True)
-            txt_path.touch(exist_ok=True)
-        excel_path = code_output_dir / "mid_excel" / f"{date_str}.xlsx"
-        convert_fn(str(txt_path), str(excel_path))
+        # 기존에는 브라우저 로그를 텍스트 및 엑셀 파일로 저장했으나
+        # 현재는 DB 기록만 남기도록 변경되었다.
     except Exception as e:
         log.error(f"Failed to collect browser logs: {e}", extra={"tag": "browser_log"}, exc_info=True)
         print(f"브라우저 로그 수집 실패: {e}")
@@ -227,8 +218,6 @@ def _run_collection_cycle(
     wait_for_data_fn: Callable[[Any, int], Any | None],
     write_sales_data_fn: Callable[..., int],
     is_7days_available_fn: Callable[[Path], bool],
-    append_lines_fn: Callable[[Path, list[str]], int],
-    convert_fn: Callable[[str, str], Any],
     execute_collect_single_day_data_fn: Callable[[Any, str], Any],
     get_past_dates_fn: Callable[[int], list[str]],
     code_output_dir: Path,
@@ -334,7 +323,7 @@ def _run_collection_cycle(
         else:
             log.warning("No parsed data collected. Skipping save results.", extra={"tag": "main"})
 
-        _handle_final_logs(driver, code_output_dir, append_lines_fn, convert_fn)
+        _handle_final_logs(driver, code_output_dir)
 
     except Exception as e:
         log.critical(f"Critical error during collection cycle: {e}", extra={"tag": "main"}, exc_info=True)

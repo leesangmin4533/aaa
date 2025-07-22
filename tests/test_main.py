@@ -135,58 +135,6 @@ def test_wait_for_data_polls_parsed_data():
     assert driver.execute_script.call_args_list[0][0][0] == "return window.__parsedData__ || null"
 
 
-def test_save_to_txt_writes_to_date_file(tmp_path):
-    data = [
-        {
-            "midCode": "1",
-            "midName": "m",
-            "productCode": "2",
-            "productName": "a",
-            "sales": 3,
-            "order": 4,
-            "purchase": 5,
-            "discard": 6,
-            "stock": 7,
-        }
-    ]
-    out_dir = tmp_path / "code_outputs"
-    out_dir.mkdir()
-    fname = datetime.now().strftime("%Y%m%d") + ".txt"
-    out_file = out_dir / fname
-
-    returned = main.save_to_txt(data, out_file)
-
-    assert returned == out_file
-    expected = "\t".join(str(data[0].get(k, "")) for k in main.FIELD_ORDER)
-    assert out_file.read_text(encoding="utf-8").strip() == expected
-
-
-def test_save_to_txt_field_order(tmp_path):
-    data = [
-        {
-            "midCode": "001",
-            "midName": "abc-mid",
-            "productCode": "123",
-            "productName": "abc",
-            "sales": 1,
-            "order": 2,
-            "purchase": 3,
-            "discard": 4,
-            "stock": 5,
-        }
-    ]
-    out_file = tmp_path / "out.txt"
-
-    main.save_to_txt(data, out_file)
-
-    contents = out_file.read_text(encoding="utf-8").strip().split("\t")
-    assert contents == [str(data[0].get(k, "")) for k in main.FIELD_ORDER]
-
-
-def test_save_to_txt_creates_parent_dir(tmp_path):
-    out_file = tmp_path / "nested" / "dir" / "out.txt"
-    main.save_to_txt(["a"], out_file)
-    assert out_file.exists()
 
 
 def test_main_calls_navigation():
@@ -200,7 +148,6 @@ def test_main_calls_navigation():
         patch.object(main, "wait_for_mix_ratio_page", return_value=True),
         patch.object(main, "run_script") as run_script_mock,
         patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "append_unique_lines", return_value=0),
     ):
         driver.execute_script.side_effect = [[], [], {}, None]
         main.main()
@@ -238,8 +185,6 @@ def test_run_script_collects_data(tmp_path):
 
     driver.execute_script.side_effect = exec_script
 
-    out_file = tmp_path / "out.txt"
-
     with (
         patch.object(main, "SCRIPT_DIR", tmp_path),
         patch.object(main.time, "sleep"),
@@ -248,11 +193,6 @@ def test_run_script_collects_data(tmp_path):
         data = main.wait_for_data(driver, timeout=1)
 
     assert data == expected
-
-    main.save_to_txt(data, out_file)
-
-    contents = out_file.read_text(encoding="utf-8").strip()
-    assert contents == "\t".join(str(expected[0].get(k, "")) for k in main.FIELD_ORDER)
 
 
 def test_main_prints_mid_category_logs(capsys):
@@ -283,34 +223,6 @@ def test_main_prints_mid_category_logs(capsys):
     assert "['log1', 'log2']" in out
 
 
-def test_main_converts_txt_to_excel(tmp_path):
-    driver = Mock()
-    driver.get_log = Mock(return_value=[])
-
-    date_str = datetime.now().strftime("%y%m%d")
-    out_dir = tmp_path / "code_outputs"
-
-    with (
-        patch.object(main, "CODE_OUTPUT_DIR", out_dir),
-        patch.object(main, "create_driver", return_value=driver),
-        patch.object(main, "login_bgf", return_value=True),
-        patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
-        patch.object(main, "run_script"),
-        patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "append_unique_lines", return_value=0),
-        patch.object(main, "is_7days_data_available", return_value=True),
-        patch.object(main, "convert_txt_to_excel") as convert_mock,
-        patch.object(main.time, "sleep"),
-    ):
-        driver.execute_script.side_effect = [[], [], {}, None]
-        main.main()
-
-    expected_txt = out_dir / f"{date_str}.txt"
-    expected_excel = out_dir / "mid_excel" / f"{date_str}.xlsx"
-    convert_mock.assert_called_once_with(str(expected_txt), str(expected_excel))
-
-
 def test_main_writes_sales_data(tmp_path):
     driver = Mock()
     driver.get_log = Mock(return_value=[])
@@ -326,8 +238,6 @@ def test_main_writes_sales_data(tmp_path):
         patch.object(main, "wait_for_mix_ratio_page", return_value=True),
         patch.object(main, "run_script"),
         patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "append_unique_lines", return_value=0),
-        patch.object(main, "convert_txt_to_excel"),
         patch.object(main, "is_7days_data_available", return_value=True),
         patch.object(main.time, "sleep"),
         patch.object(main, "write_sales_data") as write_mock,
@@ -356,8 +266,6 @@ def test_main_writes_past7_db_when_needed(tmp_path):
         patch.object(main, "execute_collect_single_day_data", return_value={"success": True, "data": []}),
         patch.object(main, "get_past_dates", return_value=["20240101"]),
         patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "append_unique_lines", return_value=0),
-        patch.object(main, "convert_txt_to_excel"),
         patch.object(main, "is_7days_data_available", return_value=False),
         patch.object(main.time, "sleep"),
         patch.object(main, "write_sales_data") as write_mock,
