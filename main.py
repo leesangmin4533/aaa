@@ -10,14 +10,15 @@ from __future__ import annotations
 
 import os
 from datetime import datetime
+from functools import partial
 
 from automation.config import (
     ALL_SALES_DB_FILE,
     CODE_OUTPUT_DIR,
-    DATA_COLLECTION_TIMEOUT,
     FIELD_ORDER,
     NAVIGATION_SCRIPT,
     PAGE_LOAD_TIMEOUT,
+    SCRIPT_DIR,
 )
 from automation.driver import create_driver
 from automation.workflow import _run_collection_cycle, get_past_dates
@@ -39,19 +40,22 @@ def main() -> None:
     cred_path = os.environ.get("CREDENTIAL_FILE")
     db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
 
+    # SCRIPT_DIR 경로를 미리 채운 run_script 함수를 생성
+    run_script_with_dir = partial(run_script, scripts_dir=SCRIPT_DIR)
+
     # 1. 과거 데이터 확인 및 수집
     past_dates_to_check = get_past_dates(7) # YYYY-MM-DD 형식
     missing_dates = check_dates_exist(db_path, past_dates_to_check)
 
     if missing_dates:
         log.info(f"Missing data for past dates: {missing_dates}. Starting collection.", extra={"tag": "main"})
-        for date_str in sorted(missing_dates): # 오래된 날짜부터 순서대로 수집
+        for date_str in sorted(missing_dates):
             _run_collection_cycle(
                 date_to_collect=date_str,
                 cred_path=cred_path,
                 create_driver_func=create_driver,
                 login_func=login_bgf,
-                run_script_func=run_script,
+                run_script_func=run_script_with_dir,
                 wait_for_page_func=wait_for_mix_ratio_page,
                 collect_day_data_func=execute_collect_single_day_data,
                 write_data_func=write_sales_data,
@@ -72,7 +76,7 @@ def main() -> None:
         cred_path=cred_path,
         create_driver_func=create_driver,
         login_func=login_bgf,
-        run_script_func=run_script,
+        run_script_func=run_script_with_dir,
         wait_for_page_func=wait_for_mix_ratio_page,
         collect_day_data_func=execute_collect_single_day_data,
         write_data_func=write_sales_data,
