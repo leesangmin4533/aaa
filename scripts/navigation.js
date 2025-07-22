@@ -8,6 +8,9 @@
       return false;
     }
 
+    // 요소가 클릭 가능한 상태가 될 때까지 대기
+    await delay(1000);  // 기본 1초 대기
+
     const rect = el.getBoundingClientRect();
     ["mousedown", "mouseup", "click"].forEach(type =>
       el.dispatchEvent(new MouseEvent(type, {
@@ -18,6 +21,10 @@
         clientY: rect.top + rect.height / 2
       }))
     );
+    
+    // 클릭 후 데이터 로드 대기
+    console.log(`클릭 이벤트 발생 ${label ? " → " + label : ""}: ${id}`);
+    await delay(2000);  // 데이터 로드를 위한 2초 대기
 
     console.log(`클릭 완료${label ? " → " + label : ""}: ${id}`);
     return true;
