@@ -37,10 +37,13 @@
    * @returns {object|null} Nexacro Application 객체
    */
   function getNexacroApp() {
-    if (window.nexacro && typeof window.nexacro.getApplication === 'function') {
-      return window.nexacro.getApplication();
+    const app = window.nexacro && typeof window.nexacro.getApplication === 'function' ? window.nexacro.getApplication() : null;
+    if (app) {
+      console.log("[getNexacroApp] Nexacro Application 객체를 찾았습니다.");
+    } else {
+      console.warn("[getNexacroApp] Nexacro Application 객체를 찾을 수 없습니다.");
     }
-    return null;
+    return app;
   }
 
   /**
@@ -49,7 +52,13 @@
    */
   function getMainForm() {
     const app = getNexacroApp();
-    return app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form || null;
+    const mainForm = app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form || null;
+    if (mainForm) {
+      console.log("[getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.");
+    } else {
+      console.warn("[getMainForm] 메인 폼(STMB011_M0)을 찾을 수 없습니다. 경로 확인 필요.");
+    }
+    return mainForm;
   }
 
   /**
@@ -67,8 +76,10 @@
     while (Date.now() - start < timeout) {
       if (!currentScope) {
         // 초기 스코프가 지정되지 않았으면 메인 폼이 준비될 때까지 기다림
+        console.log(`[getNexacroComponent] Initial scope not provided, attempting to get main form for "${componentId}".`);
         currentScope = getMainForm();
         if (!currentScope) {
+          console.log(`[getNexacroComponent] Main form not yet available for "${componentId}", retrying...`);
           await delay(300);
           continue;
         }
@@ -79,7 +90,11 @@
         if (component) {
           console.log(`[getNexacroComponent] Success! Found component: "${componentId}"`);
           return component;
+        } else {
+          console.log(`[getNexacroComponent] Component "${componentId}" not found in current scope. Retrying...`);
         }
+      } else {
+        console.warn(`[getNexacroComponent] Current scope is invalid or does not have lookup function for "${componentId}". Scope: ${currentScope}`);
       }
       await delay(300);
     }
@@ -93,7 +108,8 @@
    * @param {number} [timeout=60000] - 대기 시간 (ms)
    * @returns {Promise<void>} 트랜잭션 완료 시 resolve되는 Promise
    */
-  function waitForTransaction(svcID, timeout = 60000) {
+  function waitForTransaction(svcID, timeout = 120000) {
+    console.log(`[waitForTransaction] Waiting for service ID: '${svcID}' with timeout: ${timeout}ms`);
     return new Promise((resolve, reject) => {
       const form = getMainForm();
       if (!form) {
@@ -104,6 +120,7 @@
 
       const timeoutId = setTimeout(() => {
         form.fn_callback = originalCallback; // 타임아웃 시 콜백 복원
+        console.error(`[waitForTransaction] Timeout! Service ID '${svcID}' timed out after ${timeout}ms.`);
         reject(new Error(`'${svcID}' 트랜잭션 대기 시간 초과 (${timeout}ms).`));
       }, timeout);
 
@@ -113,6 +130,7 @@
           originalCallback.apply(this, arguments);
         }
 
+        console.log(`[waitForTransaction] fn_callback 호출됨: received serviceID='${serviceID}', expected svcID='${svcID}', errorCode=${errorCode}, errorMsg=${errorMsg}`);
         // 우리가 기다리던 서비스 ID와 일치하는지 확인
         if (serviceID === svcID) {
           clearTimeout(timeoutId);
@@ -124,6 +142,8 @@
             console.error(`[waitForTransaction] '${svcID}' 트랜잭션 실패: ${errorMsg} (코드: ${errorCode})`);
             reject(new Error(`'${svcID}' 트랜잭션 실패: ${errorMsg}`));
           }
+        } else {
+          console.log(`[waitForTransaction] 다른 트랜잭션 완료: received serviceID='${serviceID}'. Still waiting for '${svcID}'.`);
         }
       };
     });
@@ -226,8 +246,26 @@
 
     try {
       // 1. 날짜 입력 및 메인 검색
-      const dateInput = await getNexacroComponent("calFromDay");
-      const searchBtn = await getNexacroComponent("F_10");
+      const mainForm = getMainForm();
+      if (!mainForm) {
+        throw new Error("메인 폼(STMB011_M0)을 찾을 수 없습니다.");
+      }
+
+      // calFromDay.calendaredit 찾기
+      console.log("[runCollectionForDate] calFromDay.calendaredit 컴포넌트 직접 탐색 시작...");
+      const dateInput = mainForm.div_workForm.form.div2.form.div_search.form.calFromDay.calendaredit;
+      if (!dateInput) {
+        throw new Error("날짜 입력 필드(calFromDay.calendaredit)를 찾을 수 없습니다.");
+      }
+      console.log("[runCollectionForDate] calFromDay.calendaredit 컴포넌트 찾기 성공.");
+
+      // F_10:icontext 찾기 (F_10이 버튼 컴포넌트 자체일 가능성이 높음)
+      console.log("[runCollectionForDate] F_10 컴포넌트 직접 탐색 시작...");
+      const searchBtn = mainForm.div_cmmbtn.form.F_10;
+      if (!searchBtn) {
+        throw new Error("검색 버튼(F_10)을 찾을 수 없습니다.");
+      }
+      console.log("[runCollectionForDate] F_10 컴포넌트 찾기 성공.");
 
       if (!dateInput || !searchBtn) {
         throw new Error("날짜 입력 필드 또는 검색 버튼을 찾을 수 없습니다.");
@@ -237,7 +275,21 @@
       console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
 
       const searchTransaction = waitForTransaction("search");
-      searchBtn.click();
+      console.log("메인 검색 버튼 클릭을 시도합니다.");
+      const searchBtnElement = searchBtn.getElement(); // Nexacro 컴포넌트의 실제 DOM 엘리먼트를 가져옴
+      if (!searchBtnElement) {
+        throw new Error("검색 버튼의 실제 DOM 엘리먼트를 찾을 수 없습니다. 컴포넌트 ID: " + searchBtn.id);
+      }
+      const rect = searchBtnElement.getBoundingClientRect();
+      ["mousedown", "mouseup", "click"].forEach(evt =>
+        searchBtnElement.dispatchEvent(new MouseEvent(evt, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          clientX: rect.left + rect.width / 2,
+          clientY: rect.top + rect.height / 2
+        }))
+      );
       console.log("메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...");
       await searchTransaction;
       console.log("중분류 목록 로딩 완료.");
