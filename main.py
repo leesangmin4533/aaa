@@ -2,8 +2,12 @@
 중분류별 매출 데이터 수집 자동화 스크립트 (통합 DB 방식)
 
 데이터 저장 정책:
-1. 단일 통합 DB 사용: 모든 데이터는 하나의 DB 파일에 누적 저장됩니다.
-2. 중복 방지: (수집 시각, 상품 코드) 조합을 기준으로 중복 데이터는 저장되지 않습니다.
+1. 단일 통합 DB: 모든 데이터는 하나의 DB 파일에 누적 저장됩니다.
+2. 저장 시각: collected_at은 분 단위까지 기록됩니다 (YYYY-MM-DD HH:MM).
+3. 중복 방지: 
+   - (collected_at, product_code) 조합은 고유해야 합니다.
+   - 같은 날 동일 product_code의 경우 sales가 증가한 경우에만 저장됩니다.
+4. 과거 데이터: 최근 7일의 누락 데이터를 자동으로 확인하고 수집합니다.
 """
 
 from __future__ import annotations
@@ -40,15 +44,19 @@ def main() -> None:
     cred_path = os.environ.get("CREDENTIAL_FILE")
     db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
 
+    # 통합 DB 경로 설정
+    db_path = CODE_OUTPUT_DIR / "integrated_sales.db"
+    log.info(f"Using integrated DB: {db_path}", extra={"tag": "main"})
+    
     # SCRIPT_DIR 경로를 미리 채운 run_script 함수를 생성
     run_script_with_dir = partial(run_script, scripts_dir=SCRIPT_DIR)
 
-    # 1. 과거 데이터 확인 및 수집
-    past_dates_to_check = get_past_dates(7) # YYYY-MM-DD 형식
+    # 1. 과거 데이터 확인 및 수집 (최근 7일)
+    past_dates_to_check = get_past_dates(7)  # YYYY-MM-DD 형식
     missing_dates = check_dates_exist(db_path, past_dates_to_check)
 
     if missing_dates:
-        log.info(f"Missing data for past dates: {missing_dates}. Starting collection.", extra={"tag": "main"})
+        log.info(f"확인된 누락 데이터: {missing_dates}. 수집 시작", extra={"tag": "main"})
         for date_str in sorted(missing_dates):
             _run_collection_cycle(
                 date_to_collect=date_str,
