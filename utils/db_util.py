@@ -100,6 +100,7 @@ def _get_value(record: dict[str, Any], *keys: str) -> Any:
 
 def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None, skip_sales_check: bool = False) -> int:
     """
+    """
     매출 데이터를 DB에 저장합니다.
 
     동작 규칙:
@@ -119,13 +120,16 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
     collected_at_override : str | None, optional
         수집 시각을 강제로 지정할 때 사용 (YYYY-MM-DD HH:MM). 기본값은 현재 시각.
     skip_sales_check : bool, optional
-        True일 경우 sales 증가 여부 체크를 건너뛰고, 해당 날짜의 product_code 중복만 체크하여 업데이트/삽입.
-        과거 데이터 수집 시 사용됩니다.
+        이 파라미터는 현재 Upsert 로직에 직접적인 영향을 주지 않습니다.
+        과거 데이터 수집 시 `main.py`에서 `True`로 전달되지만,
+        `write_sales_data` 함수는 항상 `product_code`와 날짜를 기준으로
+        중복을 확인하고 업데이트/삽입을 수행합니다.
 
     Returns
     -------
     int
         실제로 처리(삽입 또는 업데이트)된 레코드 수
+    """
     """
     conn = init_db(db_path)
     collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
