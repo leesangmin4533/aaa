@@ -40,7 +40,6 @@
     if (window.nexacro && typeof window.nexacro.getApplication === 'function') {
       return window.nexacro.getApplication();
     }
-    console.error("Nexacro Application을 찾을 수 없습니다.");
     return null;
   }
 
@@ -54,16 +53,38 @@
   }
 
   /**
-   * ID를 사용하여 Nexacro 컴포넌트를 안전하게 찾습니다.
+   * ID를 사용하여 Nexacro 컴포넌트를 안전하게 찾습니다. (대기 로직 강화)
    * @param {string} componentId - 찾을 컴포넌트의 ID
-   * @param {object} [scope=getMainForm()] - 검색을 시작할 범위 (폼 또는 컴포넌트)
-   * @returns {object|null} 찾은 컴포넌트 객체
+   * @param {object} [initialScope=null] - 검색을 시작할 초기 범위 (폼 또는 컴포넌트). 지정하지 않으면 getMainForm()을 기다림.
+   * @param {number} [timeout=15000] - 컴포넌트를 기다릴 최대 시간 (ms)
+   * @returns {Promise<object|null>} 찾은 컴포넌트 객체 또는 null (타임아웃 시)
    */
-  function getNexacroComponent(componentId, scope = getMainForm()) {
-    if (scope && typeof scope.lookup === 'function') {
-      return scope.lookup(componentId);
+  async function getNexacroComponent(componentId, initialScope = null, timeout = 15000) {
+    console.log(`[getNexacroComponent] Waiting for component: "${componentId}" (Timeout: ${timeout}ms)`);
+    const start = Date.now();
+    let currentScope = initialScope;
+
+    while (Date.now() - start < timeout) {
+      if (!currentScope) {
+        // 초기 스코프가 지정되지 않았으면 메인 폼이 준비될 때까지 기다림
+        currentScope = getMainForm();
+        if (!currentScope) {
+          await delay(300);
+          continue;
+        }
+      }
+
+      if (currentScope && typeof currentScope.lookup === 'function') {
+        const component = currentScope.lookup(componentId);
+        if (component) {
+          console.log(`[getNexacroComponent] Success! Found component: "${componentId}"`);
+          return component;
+        }
+      }
+      await delay(300);
     }
-    return null;
+    console.error(`[getNexacroComponent] Timeout! Component not found: "${componentId}"`);
+    return null; // 타임아웃 시 null 반환
   }
 
   /**
@@ -79,12 +100,12 @@
         return reject(new Error("메인 폼을 찾을 수 없어 트랜잭션을 기다릴 수 없습니다."));
       }
 
+      let originalCallback = form.fn_callback; // 기존 콜백 백업
+
       const timeoutId = setTimeout(() => {
         form.fn_callback = originalCallback; // 타임아웃 시 콜백 복원
         reject(new Error(`'${svcID}' 트랜잭션 대기 시간 초과 (${timeout}ms).`));
       }, timeout);
-
-      const originalCallback = form.fn_callback;
 
       form.fn_callback = function(serviceID, errorCode, errorMsg) {
         // 원래의 콜백 함수를 실행하여 기존 로직을 유지
@@ -205,8 +226,8 @@
 
     try {
       // 1. 날짜 입력 및 메인 검색
-      const dateInput = getNexacroComponent("calFromDay");
-      const searchBtn = getNexacroComponent("F_10");
+      const dateInput = await getNexacroComponent("calFromDay");
+      const searchBtn = await getNexacroComponent("F_10");
 
       if (!dateInput || !searchBtn) {
         throw new Error("날짜 입력 필드 또는 검색 버튼을 찾을 수 없습니다.");
@@ -229,7 +250,7 @@
       }
       
       const allProductsMap = new Map();
-      const midGrid = getNexacroComponent("gdList");
+      const midGrid = await getNexacroComponent("gdList");
 
       // 3. 각 중분류를 순회하며 상품 데이터 수집
       for (const mid of midCodesToProcess) {
