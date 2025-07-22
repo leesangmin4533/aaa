@@ -48,22 +48,27 @@ def test_write_sales_data_inserts_records(tmp_path):
     assert not db_path.exists()
 
 
-def test_write_sales_data_inserts_only_when_sales_increase(tmp_path):
+def test_write_sales_data_updates_existing_record(tmp_path):
     db_path = tmp_path / "sales.db"
     record = {"productCode": "222", "sales": 3}
+
+    # 첫 저장
     assert db_util.write_sales_data([record], db_path) == 1
     rows = _read_rows(db_path)
+    assert len(rows) == 1
     assert [r[1:] for r in rows] == [("222", 3)]
 
-    # same sales should not insert
-    assert db_util.write_sales_data([record], db_path) == 0
+    # 동일 sales로 호출 시 레코드가 중복 생성되지 않고 그대로 유지됨
+    assert db_util.write_sales_data([record], db_path) == 1
     rows = _read_rows(db_path)
+    assert len(rows) == 1
     assert [r[1:] for r in rows] == [("222", 3)]
 
-    # increased sales should insert
+    # sales가 증가하면 기존 레코드가 업데이트됨
     higher = {"productCode": "222", "sales": 5}
     assert db_util.write_sales_data([higher], db_path) == 1
     rows = _read_rows(db_path)
-    assert [r[1:] for r in rows] == [("222", 3), ("222", 5)]
+    assert len(rows) == 1
+    assert [r[1:] for r in rows] == [("222", 5)]
     db_path.unlink()
     assert not db_path.exists()

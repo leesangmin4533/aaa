@@ -101,13 +101,13 @@ def _get_value(record: dict[str, Any], *keys: str) -> Any:
 def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None, skip_sales_check: bool = False) -> int:
     """
     매출 데이터를 DB에 저장합니다.
-    
+
     동작 규칙:
     1. 모든 수집 결과는 이 함수로 전달됩니다.
     2. collected_at은 현재 시각(분 단위)으로 기록됩니다.
     3. 같은 날짜의 DB 내에서 product_code가 동일한 경우:
-       - sales가 증가했다면 새 레코드로 저장
-       - sales가 같거나 감소했다면 저장하지 않음
+       - 이미 존재하면 기존 레코드를 업데이트합니다.
+       - 존재하지 않으면 새로운 레코드를 삽입합니다.
     4. DB 파일은 날짜별로 새로 생성됩니다 (예: 20250718.db)
 
     Parameters
@@ -116,80 +116,97 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
         텍스트 파일에서 파싱된 매출 데이터 레코드 목록
     db_path : Path
         SQLite DB 파일 경로 (예: code_outputs/20250718.db)
+    collected_at_override : str | None, optional
+        수집 시각을 강제로 지정할 때 사용 (YYYY-MM-DD HH:MM). 기본값은 현재 시각.
+    skip_sales_check : bool, optional
+        True일 경우 sales 증가 여부 체크를 건너뛰고, 해당 날짜의 product_code 중복만 체크하여 업데이트/삽입.
+        과거 데이터 수집 시 사용됩니다.
 
     Returns
     -------
     int
-        실제로 저장된 레코드 수
+        실제로 처리(삽입 또는 업데이트)된 레코드 수
     """
     conn = init_db(db_path)
     collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
     cur = conn.cursor()
-    inserted = 0
-
+    processed_count = 0
 
     for rec in records:
         product_code = _get_value(rec, "productCode", "product_code")
         sales_raw = _get_value(rec, "sales")
 
         if product_code is None or sales_raw is None:
+            log.warning(f"Skipping record due to missing product_code or sales: {rec}", extra={'tag': 'db'})
             continue
 
         try:
-            # sales 값을 정수로 변환
             sales = int(sales_raw)
         except (ValueError, TypeError):
-            continue  # 정수로 변환할 수 없는 값은 건너뛰기
+            log.warning(f"Skipping record due to invalid sales value: {sales_raw} in {rec}", extra={'tag': 'db'})
+            continue
 
-        if skip_sales_check:  # For historical data, check for existence by date and product_code
-            date_part = collected_at_val.split(' ')[0]  # Extract YYYY-MM-DD
-            cur.execute(
-                "SELECT 1 FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at, 1, 10) = ?",
-                (product_code, date_part),
-            )
-            if cur.fetchone():
-                log.info(
-                    f"Skipping duplicate historical record for {product_code} on {date_part}.",
-                    extra={'tag': 'db'}
-                )
-                continue
-        else:  # For current data, use the sales increase check
-            cur.execute(
-                "SELECT sales FROM mid_sales WHERE product_code=? ORDER BY id DESC LIMIT 1",
-                (product_code,),
-            )
-            row = cur.fetchone()
-            last_sales = row[0] if row else None
+        date_part = collected_at_val.split(' ')[0]  # YYYY-MM-DD 부분 추출
 
-            # 새로운 sales 값이 기존 값보다 큰 경우에만 저장
-            if last_sales is not None and sales <= last_sales:
-                continue
-
+        # 해당 날짜와 product_code로 기존 레코드가 있는지 확인
         cur.execute(
-            """
-            INSERT INTO mid_sales (
-                collected_at, mid_code, mid_name, product_code, product_name,
-                sales, order_cnt, purchase, disposal, stock
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                collected_at_val,
-                _get_value(rec, "midCode", "mid_code"),
-                _get_value(rec, "midName", "mid_name"),
-                product_code,
-                _get_value(rec, "productName", "product_name"),
-                sales,
-                _get_value(rec, "order", "order_cnt"),
-                _get_value(rec, "purchase"),
-                _get_value(rec, "discard", "disposal"),
-                _get_value(rec, "stock"),
-            ),
+            "SELECT id FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at, 1, 10) = ?",
+            (product_code, date_part),
         )
-        inserted += 1
+        existing_id_row = cur.fetchone()
+
+        if existing_id_row:
+            # 레코드가 존재하면 업데이트
+            existing_id = existing_id_row[0]
+            log.debug(f"Updating existing record for product_code={product_code} on {date_part} (ID: {existing_id}).", extra={'tag': 'db'})
+            cur.execute(
+                """
+                UPDATE mid_sales SET
+                    collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?,
+                    sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?
+                WHERE id = ?
+                """,
+                (
+                    collected_at_val,
+                    _get_value(rec, "midCode", "mid_code"),
+                    _get_value(rec, "midName", "mid_name"),
+                    _get_value(rec, "productName", "product_name"),
+                    sales,
+                    _get_value(rec, "order", "order_cnt"),
+                    _get_value(rec, "purchase"),
+                    _get_value(rec, "discard", "disposal"),
+                    _get_value(rec, "stock"),
+                    existing_id
+                ),
+            )
+        else:
+            # 레코드가 존재하지 않으면 삽입
+            log.debug(f"Inserting new record for product_code={product_code} on {date_part}.", extra={'tag': 'db'})
+            cur.execute(
+                """
+                INSERT INTO mid_sales (
+                    collected_at, mid_code, mid_name, product_code, product_name,
+                    sales, order_cnt, purchase, disposal, stock
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    collected_at_val,
+                    _get_value(rec, "midCode", "mid_code"),
+                    _get_value(rec, "midName", "mid_name"),
+                    product_code,
+                    _get_value(rec, "productName", "product_name"),
+                    sales,
+                    _get_value(rec, "order", "order_cnt"),
+                    _get_value(rec, "purchase"),
+                    _get_value(rec, "discard", "disposal"),
+                    _get_value(rec, "stock"),
+                ),
+            )
+        processed_count += 1
 
     conn.commit()
     conn.close()
-    return inserted
+    return processed_count
 
 def is_7days_data_available(db_path: Path) -> bool:
     """
