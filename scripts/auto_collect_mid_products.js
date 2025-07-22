@@ -42,9 +42,13 @@
     const gridBody = await (async () => {
         for (let i = 0; i < 10; i++) {
             const el = document.querySelector("div[id*='gdDetail.body']");
-            if (el) return el;
+            if (el) {
+                console.log(`[DEBUG] 상품 그리드 body 찾음: ${el.id}`);
+                return el;
+            }
             await delay(300);
         }
+        console.error("상품 그리드 body를 찾을 수 없습니다.");
         throw new Error("상품 그리드 body를 찾을 수 없습니다.");
     })();
 
@@ -132,12 +136,17 @@
 
   // 3. 메인 실행 함수 (대기 시간 최적화)
   async function autoClickAllMidCodesAndProducts() {
+    console.log("[DEBUG] autoClickAllMidCodesAndProducts 함수 시작.");
     await (async () => {
         for(let i=0; i<10; i++) {
             const el = document.querySelector("div[id*='gdList.body'][id*='cell_'][id$='_0:text']");
-            if (el) return;
+            if (el) {
+                console.log("[DEBUG] 중분류 그리드 찾음.");
+                return;
+            }
             await delay(300);
         }
+        console.error("중분류 그리드를 찾을 수 없습니다.");
         throw new Error("중분류 그리드를 찾을 수 없습니다.");
     })();
     
@@ -162,8 +171,10 @@
         const expectedQuantityStr = getText(rowIdx, 2, "gdList");
         const expectedQuantity = parseInt(expectedQuantityStr.replace(/,/g, ""), 10) || 0;
 
+        console.log(`[DEBUG] 중분류 클릭 시도: ${code} (${midName})`);
         await clickElementById(textEl.id.split(":text")[0]);
         await delay(250);
+        console.log(`[DEBUG] 중분류 클릭 완료: ${code} (${midName})`);
 
         const productDataForMid = await collectProductDataForMid(code, midName, expectedQuantity);
         
@@ -182,6 +193,7 @@
                 allProductsMap.set(product.productCode, product);
             }
         }
+        console.log(`[DEBUG] 중분류 ${code} (${midName}) 상품 데이터 병합 완료. 현재 총 상품 수: ${allProductsMap.size}`);
         break;
       }
 
@@ -191,10 +203,15 @@
       }
 
       const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
-      if (!scrollBtn) break;
+      if (!scrollBtn) {
+          console.log("[DEBUG] 중분류 스크롤 버튼 없음. 중분류 수집 종료.");
+          break;
+      }
       
+      console.log("[DEBUG] 중분류 스크롤 버튼 클릭 시도.");
       await clickElementById(scrollBtn.id);
       await delay(500);
+      console.log("[DEBUG] 중분류 스크롤 완료.");
       noChangeScrolls++;
     }
 
