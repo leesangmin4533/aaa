@@ -278,6 +278,7 @@ def _run_collection_cycle(
                 extra={"tag": "7day_collection"},
             )
             try:
+                run_script_fn(driver, "auto_collect_past_7days.js")
                 past_dates = get_past_dates_fn(7)
                 for date_str in past_dates:
                     log.info(
