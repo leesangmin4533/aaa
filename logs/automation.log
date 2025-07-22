@@ -24,3 +24,40 @@ igation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.b
 [__main__][7day_collection][INFO] 20250720에 대해 209개의 과거 데이터 레코드를 수집했습니다.
 [__main__][db][INFO] DB saved to c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\all_sales_data.db, inserted 0 rows
 [__main__][7day_collection][INFO] -------------------- 과거 데이터 수집 중: 20250719 --------------------
+[__main__][7day_collection][DEBUG] 과거 데이터 수집 결과 (20250719): None
+[__main__][7day_collection][CRITICAL] 20250719 과거 데이터 수집 중 예상치 못한 오류 발생: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 362, in _run_collection_cycle
+    msg = result.get("message", "알 수 없는 오류")
+          ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+[__main__][7day_collection][CRITICAL] 과거 데이터 수집 중 심각한 오류 발생: 20250719 과거 데이터 수집 중 예상치 못한 오류: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 362, in _run_collection_cycle
+    msg = result.get("message", "알 수 없는 오류")
+          ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 371, in _run_collection_cycle
+    raise RuntimeError(f"{date_str} 과거 데이터 수집 중 예상치 못한 오류: {e}")
+RuntimeError: 20250719 과거 데이터 수집 중 예상치 못한 오류: 'NoneType' object has no attribute 'get'
+[__main__][7day_collection][INFO] WebDriver script and command executor timeouts reverted to 300 seconds.
+[__main__][main][CRITICAL] Critical error during collection cycle: 20250719 과거 데이터 수집 중 예상치 못한 오류: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 362, in _run_collection_cycle
+    msg = result.get("message", "알 수 없는 오류")
+          ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\main.py", line 371, in _run_collection_cycle
+    raise RuntimeError(f"{date_str} 과거 데이터 수집 중 예상치 못한 오류: {e}")
+RuntimeError: 20250719 과거 데이터 수집 중 예상치 못한 오류: 'NoneType' object has no attribute 'get'
+[__main__][main][INFO] Closing Chrome driver.
+[__main__][main][INFO] _run_collection_cycle finished.
+[__main__][main][INFO] Single data collection cycle finished.
