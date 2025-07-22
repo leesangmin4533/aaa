@@ -100,7 +100,6 @@ def _get_value(record: dict[str, Any], *keys: str) -> Any:
 
 def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_override: str | None = None, skip_sales_check: bool = False) -> int:
     """
-    """
     매출 데이터를 DB에 저장합니다.
 
     동작 규칙:
@@ -129,7 +128,6 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
     -------
     int
         실제로 처리(삽입 또는 업데이트)된 레코드 수
-    """
     """
     conn = init_db(db_path)
     collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
