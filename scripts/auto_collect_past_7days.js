@@ -4,7 +4,6 @@
   if (!window.automation) window.automation = {};
   window.automation.error = null;
   window.automation.logs = [];
-  window.automation.errors = [];
 
   const origConsoleLog = console.log;
   console.log = function (...args) {
@@ -15,132 +14,118 @@
   const origConsoleError = console.error;
   console.error = function (...args) {
     window.automation.logs.push("[ERROR] " + args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' '));
-    window.automation.errors.push("[ERROR] " + args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' '));
     return origConsoleError.apply(console, args);
   };
 
-  const log = (...args) => {
-    const message = args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' ');
-    console.log(message);
-    return message;
-  };
-
-  const errorLog = (...args) => {
-    const message = "[오류] " + args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' ');
-    console.error(message);
-    return message;
-  };
-
-  async function waitForSelector(selector, timeout = 120000) {
-    log(`[waitForSelector] 대기중: "${selector}" (시간 초과: ${timeout}ms)`);
+  async function waitForElement(selector, timeout = 120000) {
+    console.log(`[waitForElement] Waiting for selector: "${selector}" (Timeout: ${timeout}ms)`);
     const start = Date.now();
     while (Date.now() - start < timeout) {
       const el = document.querySelector(selector);
       if (el && el.offsetParent !== null) {
-        log(`[waitForSelector] 성공: "${selector}" 발견`);
+        console.log(`[waitForElement] Success! Element found: ${selector}`);
         return el;
       }
       await delay(300);
     }
-    errorLog(`시간 초과: "${selector}"를 찾을 수 없습니다.`);
-    throw new Error(`시간 초과: "${selector}"를 찾을 수 없습니다.`);
+    console.error(`[waitForElement] Timeout! Element not found or not visible: "${selector}"`);
+    throw new Error(`Timeout: Element not found or not visible - ${selector}`);
   }
 
-  async function waitForFullForm(timeout = 120000) {
-    log(`[waitForFullForm] 폼 준비 대기... (시간 초과: ${timeout}ms)`);
+  // Improved function to wait for and retrieve a specific Nexacro component by its ID
+  async function getFormComponent(componentId, timeout = 120000) {
+    console.log(`[getFormComponent] Waiting for component: "${componentId}" (Timeout: ${timeout}ms)`);
     const start = Date.now();
     while (Date.now() - start < timeout) {
       try {
         const app = window.nexacro.getApplication();
-        const form = app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
-        const search = form?.div_workForm?.form?.div2?.form?.div_search?.form;
-        if (search?.calFromDay && typeof search.calFromDay.set_value === "function") {
-          log('[waitForFullForm] 폼 준비 완료');
-          return search;
+        // Path to the main form, which can be adjusted if needed
+        const mainForm = app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
+        if (mainForm && typeof mainForm.lookup === 'function') {
+          const component = mainForm.lookup(componentId);
+          if (component) {
+            console.log(`[getFormComponent] Success! Found component: "${componentId}"`);
+            return component;
+          }
         }
       } catch (e) {
-        // Ignore errors during polling
+        // Ignore errors during polling, as the form might not be ready yet
       }
       await delay(300);
     }
-    errorLog('폼이 준비되지 않았습니다.');
-    throw new Error('폼이 준비되지 않았습니다.');
+    console.error(`[getFormComponent] Timeout! Component not found: "${componentId}"`);
+    throw new Error(`Timeout: Nexacro component not found - ${componentId}`);
   }
 
+  // Refactored to use the robust getFormComponent function
   async function inputDateAndSearch(dateStr) {
-    log(`[inputDateAndSearch] 날짜 처리 시작: ${dateStr}`);
+    console.log(`[inputDateAndSearch] Starting process for date: ${dateStr}`);
     try {
-      const searchForm = await waitForFullForm();
+      // More robustly get components by their ID
+      const dateInput = await getFormComponent("calFromDay");
+      const searchBtn = await getFormComponent("F_10"); // Assumes "F_10" is the unique ID for the search button
 
-      log(`[inputDateAndSearch] 날짜 값 설정 시도: ${dateStr}`);
-      searchForm.calFromDay.set_value(dateStr);
+      console.log(`[inputDateAndSearch] Attempting to set date value to "${dateStr}" using nexacro API.`);
+      dateInput.set_value(dateStr);
       await delay(100);
-      log(`[inputDateAndSearch] 날짜 입력 완료: ${searchForm.calFromDay.value}`);
-
-      const app = window.nexacro.getApplication();
-      const mainForm = app.mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
-      const searchBtn = mainForm.div_cmmbtn.form.F_10;
+      console.log(`[inputDateAndSearch] Successfully set date value. Current value: "${dateInput.value}"`);
 
       if (!searchBtn || typeof searchBtn.click !== 'function') {
-        errorLog('검색 버튼을 찾거나 클릭할 수 없습니다.');
-        throw new Error('검색 버튼을 찾거나 클릭할 수 없습니다.');
+        const errorMsg = "Search button (F_10) component not found or is not clickable.";
+        console.error(`[inputDateAndSearch] ${errorMsg}`);
+        throw new Error(errorMsg);
       }
-      
-      log('[inputDateAndSearch] 검색 버튼 클릭');
-      searchBtn.click();
 
-      await waitForSelector("div[id*='gdList.body'][id$='0_0:text']", 15000);
-      log(`[inputDateAndSearch] 결과 로드 완료: ${dateStr}`);
+      console.log("[inputDateAndSearch] Search button component found. Attempting to click...");
+      searchBtn.click();
+      console.log(`[inputDateAndSearch] Click command issued for search button.`);
+
+      // Wait for search results to appear in the DOM
+      await waitForElement("div[id*='gdList.body'][id$='0_0:text']", 15000);
+      console.log(`[inputDateAndSearch] Result grid loaded for date: ${dateStr}.`);
 
     } catch (err) {
-      const errorMessage = `${dateStr} 검색 실패: ${err.message}`;
+      const errorMessage = `[${dateStr}] 처리 실패: ${err.message}`;
       window.automation.error = errorMessage;
-      errorLog(errorMessage);
+      console.error(`[inputDateAndSearch] Error during process for date ${dateStr}:`, err);
       throw err;
     }
   }
 
-  // New function to collect data for a single date
+  // Refactored to be more streamlined
   async function collectSingleDayData(dateStr) {
-    log(`[collectSingleDayData] 시작: ${dateStr}`);
+    console.log(`[collectSingleDayData] Starting collection for date: ${dateStr}`);
     try {
-      window.automation.error = null; // Reset error for this run
-      window.automation.parsedData = null; // Reset parsedData for this run
+      window.automation.error = null;
+      window.automation.parsedData = null;
 
-      log(`[collectSingleDayData] inputDateAndSearch 호출: ${dateStr}`);
+      console.log(`[collectSingleDayData] Calling inputDateAndSearch for date: ${dateStr}`);
       await inputDateAndSearch(dateStr);
-      log(`[collectSingleDayData] inputDateAndSearch 완료: ${dateStr}`);
-      
-      log(`[collectSingleDayData] ${dateStr} 처리 완료, 상품 수집 시작`);
-      if (typeof window.automation.autoClickAllMidCodesAndProducts === "function") {
-        log("[collectSingleDayData] autoClickAllMidCodesAndProducts 실행");
-        await window.automation.autoClickAllMidCodesAndProducts();
-        log("[collectSingleDayData] autoClickAllMidCodesAndProducts 완료");
-        
-        if (window.automation.parsedData) {
-          log(`[collectSingleDayData] 데이터 수집 성공: ${dateStr}, 길이: ${window.automation.parsedData.length}`);
-          return { success: true, data: window.automation.parsedData };
-        } else {
-          const msg = `데이터가 없습니다: ${dateStr}`;
-          log(`[collectSingleDayData] ${msg}`);
-          return { success: true, data: [], message: msg }; // Return success with empty data if no data
-        }
+      console.log(`[collectSingleDayData] inputDateAndSearch completed for date: ${dateStr}`);
+
+      // Assuming 'autoClickAllMidCodesAndProducts' is loaded and available
+      console.log("[collectSingleDayData] Executing 'autoClickAllMidCodesAndProducts'...");
+      await window.automation.autoClickAllMidCodesAndProducts();
+      console.log("[collectSingleDayData] Finished executing 'autoClickAllMidCodesAndProducts'.");
+
+      if (window.automation.parsedData) {
+        console.log(`[collectSingleDayData] Successfully collected data for ${dateStr}. Data length: ${window.automation.parsedData.length}`);
+        return { success: true, data: window.automation.parsedData };
       } else {
-        const msg = "autoClickAllMidCodesAndProducts 함수가 정의되지 않았습니다.";
-        errorLog(`[collectSingleDayData] ${msg}`);
-        window.automation.error = msg;
-        return { success: false, message: msg };
+        const msg = `No data collected for date ${dateStr}.`;
+        console.warn(`[collectSingleDayData] ${msg}`);
+        return { success: true, data: [], message: msg };
       }
     } catch (err) {
-      const errorMessage = `${dateStr} 처리 실패: ${err.message}`;
+      const errorMessage = `Error during single day collection for ${dateStr}: ${err.message}`;
+      console.error(`[collectSingleDayData] ${errorMessage}`, err);
       window.automation.error = errorMessage;
-      errorLog(errorMessage);
       return { success: false, message: errorMessage };
     }
   }
 
-  // Expose the new function
+  // Expose the primary function for external calls
   window.automation.collectSingleDayData = collectSingleDayData;
-  log('스크립트가 로드되었습니다. 사용 방법: window.automation.collectSingleDayData(dateStr)');
+  console.log("Single Day Collector script updated. Call `window.automation.collectSingleDayData(dateStr)` to start.");
 
 })();
