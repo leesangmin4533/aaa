@@ -215,7 +215,7 @@ def is_7days_data_available(db_path: Path) -> bool:
     Checks if there are at least 7 consecutive days of data in the mid_sales table,
     starting from the most recent date.
     """
-    conn = None
+    conn = init_db(db_path)
     try:
         conn = sqlite3.connect(db_path)
         cur = conn.cursor()
