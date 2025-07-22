@@ -34,9 +34,6 @@
     return el?.innerText?.trim() || "";
   }
 
-  // 전체 수집 과정에서 이미 처리된 상품 코드를 추적하는 Set
-  const seenAllProductCodes = new Set();
-
   // 2. 상품 데이터 수집 함수 (대기 시간 최적화 및 전체 상품 코드 중복 방지)
   async function collectProductDataForMid(midCode, midName, expectedQuantity) {
     console.log(`[START] 상품 수집: ${midCode} (${midName}), 기대수량: ${expectedQuantity}`);
@@ -51,7 +48,7 @@
         throw new Error("상품 그리드 body를 찾을 수 없습니다.");
     })();
 
-    const productLines = [];
+    const productDataForMid = []; // 현재 중분류에서 수집된 상품 데이터 (객체 형태)
     const seenCodesInMid = new Set(); // 현재 중분류 내에서만 본 상품 코드
     let actualQuantity = 0;
     let noChangeScrolls = 0;
@@ -61,41 +58,37 @@
 
       const rowEls = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
       for (const el of rowEls) {
-        const code = el.innerText?.trim();
+        const productCode = el.innerText?.trim();
         const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
         
-        // 현재 중분류 내에서 이미 본 코드이거나, 전체 수집 과정에서 이미 본 코드이면 건너뜀
-        if (!row || !code || seenCodesInMid.has(code) || seenAllProductCodes.has(code)) continue;
+        // 현재 중분류 내에서 이미 본 코드이면 건너뜀
+        if (!row || !productCode || seenCodesInMid.has(productCode)) continue;
 
         newProductsFoundInView = true;
-        seenCodesInMid.add(code);
-        seenAllProductCodes.add(code); // 전체 상품 코드 Set에 추가
+        seenCodesInMid.add(productCode);
 
         const quantityStr = getText(row, 2);
         const quantity = parseInt(quantityStr.replace(/,/g, ""), 10) || 0;
         actualQuantity += quantity;
 
-        const line = [
-          midCode, midName, getText(row, 0), getText(row, 1), quantityStr,
-          getText(row, 3), getText(row, 4), getText(row, 5), getText(row, 6),
-        ].join("\t");
-        productLines.push(line);
+        const productObject = {
+          midCode: midCode,
+          midName: midName,
+          productCode: productCode,
+          productName: getText(row, 1),
+          sales: quantity, // 매출 수량
+          order_cnt: parseInt(getText(row, 3).replace(/,/g, ""), 10) || 0,
+          purchase: parseInt(getText(row, 4).replace(/,/g, ""), 10) || 0,
+          disposal: parseInt(getText(row, 5).replace(/,/g, ""), 10) || 0,
+          stock: parseInt(getText(row, 6).replace(/,/g, ""), 10) || 0,
+        };
+        productDataForMid.push(productObject);
 
-        // 수량 일치 시 조기 종료
-        if (actualQuantity === expectedQuantity) {
-            console.log(`[조기 종료] ${midCode} (${midName}): 기대 ${expectedQuantity}, 실제 ${actualQuantity} - 수량 일치로 다음 중분류로 이동.`);
-            noChangeScrolls = 3; // 루프 종료 조건 충족
-            break; // 현재 for 루프 종료
-        }
+        // 조기 종료 로직 제거: 수량 일치해도 끝까지 스크롤
       }
 
       const scrollBtn = document.querySelector("div[id$='gdDetail.vscrollbar.incbutton:icontext']");
       if (!scrollBtn) break;
-
-      // 조기 종료 조건이 충족되었다면 더 이상 스크롤하지 않음
-      if (actualQuantity === expectedQuantity) {
-          break;
-      }
 
       const waitForChange = new Promise((resolve) => {
         const observer = new MutationObserver(() => { observer.disconnect(); resolve(true); });
@@ -128,24 +121,27 @@
 
     if (verificationStatus === "불일치") {
         console.warn(verificationMessage);
+        // 불일치 시 수집된 상품 라인 전체를 로그에 출력
+        console.warn(`[불일치 상세] ${midCode} (${midName}) 수집된 상품:`, productDataForMid);
     } else {
         console.log(verificationMessage);
     }
 
-    return productLines;
+    return productDataForMid;
   }
 
   // 3. 메인 실행 함수 (대기 시간 최적화)
   async function autoClickAllMidCodesAndProducts() {
     await (async () => {
         for(let i=0; i<10; i++) {
-            if (document.querySelector("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")) return;
+            const el = document.querySelector("div[id*='gdList.body'][id*='cell_'][id$='_0:text']");
+            if (el) return;
             await delay(300);
         }
         throw new Error("중분류 그리드를 찾을 수 없습니다.");
     })();
     
-    const allData = [];
+    const allProductsMap = new Map(); // 상품 코드를 키로 하는 Map
     const seenMid = new Set();
     let noChangeScrolls = 0;
 
@@ -169,8 +165,23 @@
         await clickElementById(textEl.id.split(":text")[0]);
         await delay(250);
 
-        const productData = await collectProductDataForMid(code, midName, expectedQuantity);
-        allData.push(...productData);
+        const productDataForMid = await collectProductDataForMid(code, midName, expectedQuantity);
+        
+        // 수집된 상품 데이터를 allProductsMap에 병합/갱신
+        for (const product of productDataForMid) {
+            if (allProductsMap.has(product.productCode)) {
+                // 이미 존재하는 상품이면 sales 수량만 더함
+                const existingProduct = allProductsMap.get(product.productCode);
+                existingProduct.sales += product.sales;
+                existingProduct.order_cnt += product.order_cnt;
+                existingProduct.purchase += product.purchase;
+                existingProduct.disposal += product.disposal;
+                existingProduct.stock += product.stock;
+            } else {
+                // 새로운 상품이면 그대로 추가
+                allProductsMap.set(product.productCode, product);
+            }
+        }
         break;
       }
 
@@ -187,8 +198,15 @@
       noChangeScrolls++;
     }
 
-    window.automation.parsedData = allData;
-    console.log(`🎉 전체 수집 완료. 총 ${allData.length}개 상품, ${seenMid.size}개 중분류.`);
+    // Map의 값을 다시 탭으로 구분된 문자열 배열로 변환
+    window.automation.parsedData = Array.from(allProductsMap.values()).map(product => {
+        return [
+            product.midCode, product.midName, product.productCode, product.productName,
+            product.sales, product.order_cnt, product.purchase, product.disposal, product.stock
+        ].join("\t");
+    });
+
+    console.log(`🎉 전체 수집 완료. 총 ${window.automation.parsedData.length}개 상품, ${seenMid.size}개 중분류.`);
   }
 
   window.automation.autoClickAllMidCodesAndProducts = autoClickAllMidCodesAndProducts;
