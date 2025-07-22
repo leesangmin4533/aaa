@@ -35,14 +35,21 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
 
 
 def wait_for_mix_ratio_page(driver, timeout: int = 60) -> bool:
-    """중분류별 매출 구성비 화면이 나타날 때까지 대기한다."""
+    """중분류별 매출 구성비 화면이 나타나고 데이터가 로드될 때까지 대기한다."""
     selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
     log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={"tag": "navigation"})
     try:
-        WebDriverWait(driver, timeout).until(
+        # 그리드 요소가 나타날 때까지 대기
+        element = WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, selector))
         )
-        log.debug("Mix ratio page grid found.", extra={"tag": "navigation"})
+        
+        # 그리드에 실제 데이터가 로드될 때까지 대기
+        WebDriverWait(driver, timeout).until(
+            lambda d: len(element.text.strip()) > 0
+        )
+        
+        log.debug("Mix ratio page grid and data found.", extra={"tag": "navigation"})
         return True
     except TimeoutException:
         log.error(f"Mix ratio page grid not found within {timeout} seconds.", extra={"tag": "navigation"}, exc_info=True)
