@@ -31,3 +31,19 @@ window.automation.collectSingleDayData(dateStr)
   .catch(err => callback({ success: false, message: window.automation.error || err.message }));
 """, date_str
     )
+
+
+def execute_collect_past7days(driver: WebDriver) -> dict:
+    """Execute the collectPast7Days function asynchronously."""
+    return driver.execute_async_script(
+        """
+const callback = arguments[arguments.length - 1];
+if (!window.automation || typeof window.automation.collectPast7Days !== 'function') {
+  callback({ success: false, message: 'collectPast7Days not defined' });
+  return;
+}
+window.automation.collectPast7Days()
+  .then(res => callback(res))
+  .catch(err => callback({ success: false, message: window.automation.error || err.message }));
+"""
+    )

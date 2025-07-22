@@ -32,8 +32,8 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # Load .env from the project root directory
-    load_dotenv(dotenv_path=ROOT_DIR / ".env")
+    # Load .env from the current working directory if present
+    load_dotenv(dotenv_path=Path(".env"))
 
     user_id = os.environ.get("BGF_USER_ID")
     password = os.environ.get("BGF_PASSWORD")
