@@ -276,9 +276,10 @@
 
       const searchTransaction = waitForTransaction("search");
       console.log("메인 검색 버튼 클릭을 시도합니다.");
-      const searchBtnElement = searchBtn.getElement(); // Nexacro 컴포넌트의 실제 DOM 엘리먼트를 가져옴
+      const searchBtnId = searchBtn.id; // F_10 컴포넌트의 ID를 가져옴
+      const searchBtnElement = document.getElementById(searchBtnId);
       if (!searchBtnElement) {
-        throw new Error("검색 버튼의 실제 DOM 엘리먼트를 찾을 수 없습니다. 컴포넌트 ID: " + searchBtn.id);
+        throw new Error("검색 버튼의 실제 DOM 엘리먼트를 찾을 수 없습니다. ID: " + searchBtnId);
       }
       const rect = searchBtnElement.getBoundingClientRect();
       ["mousedown", "mouseup", "click"].forEach(evt =>
