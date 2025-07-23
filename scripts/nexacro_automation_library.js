@@ -1,40 +1,47 @@
-
 (() => {
+  try {
   // ==================================================================================
   // 1. 네임스페이스 및 기본 설정
   // ==================================================================================
+  // window.automation 객체가 없으면 초기화하고, 필요한 속성들을 할당합니다.
   if (!window.automation) {
     window.automation = {};
   }
   Object.assign(window.automation, {
-    logs: [],
-    error: null,
-    parsedData: null,
-    isCollecting: false,
+    logs: [],         // 자동화 과정에서 발생하는 모든 로그를 저장
+    errors: [],       // 자동화 과정에서 발생하는 오류 로그만 별도 저장
+    error: null,      // 최종적으로 발생한 오류 메시지 저장
+    parsedData: null, // 최종적으로 파싱된 데이터를 저장
+    isCollecting: false, // 현재 데이터 수집이 진행 중인지 여부
   });
 
+  // 비동기 작업을 위한 딜레이 함수
   const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
-  // 콘솔 로그 후킹
+  // 콘솔 로그를 후킹하여 window.automation.logs에 저장
   const origConsoleLog = console.log;
   console.log = function(...args) {
     window.automation.logs.push(args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' '));
     return origConsoleLog.apply(console, args);
   };
+  // 콘솔 에러를 후킹하여 window.automation.logs 및 window.automation.errors에 저장
   const origConsoleError = console.error;
   console.error = function(...args) {
-    window.automation.logs.push("[ERROR] " + args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' '));
+    const errorMsg = "[ERROR] " + args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' ');
+    window.automation.logs.push(errorMsg);
+    window.automation.errors.push(errorMsg);
     return origConsoleError.apply(console, args);
   };
 
 
   // ==================================================================================
   // 2. Nexacro API 헬퍼 함수
+  //    (넥사크로 내부 컴포넌트 및 트랜잭션에 안정적으로 접근하기 위한 함수들)
   // ==================================================================================
 
   /**
    * Nexacro Application 객체를 안전하게 가져옵니다.
-   * @returns {object|null} Nexacro Application 객체
+   * @returns {object|null} Nexacro Application 객체 또는 null
    */
   function getNexacroApp() {
     const app = window.nexacro && typeof window.nexacro.getApplication === 'function' ? window.nexacro.getApplication() : null;
@@ -47,11 +54,14 @@
   }
 
   /**
-   * 메인 작업 폼(Form) 객체를 가져옵니다. 경로는 환경에 맞게 조정될 수 있습니다.
-   * @returns {object|null} 메인 폼 객체
+   * 메인 작업 폼(Form) 객체를 가져옵니다.
+   * 이 경로는 넥사크로 애플리케이션의 실제 구조에 따라 조정될 수 있습니다.
+   * 현재는 '매출분석 > 중분류별 매출 구성비' 화면의 폼 경로를 가정합니다.
+   * @returns {object|null} 메인 폼 객체 또는 null
    */
   function getMainForm() {
     const app = getNexacroApp();
+    // TODO: 이 경로는 실제 넥사크로 애플리케이션의 메인 폼 경로에 맞게 수정해야 합니다.
     const mainForm = app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form || null;
     if (mainForm) {
       console.log("[getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.");
@@ -62,80 +72,79 @@
   }
 
   /**
-   * ID를 사용하여 Nexacro 컴포넌트를 안전하게 찾습니다. (대기 로직 강화)
-   * @param {string} componentId - 찾을 컴포넌트의 ID
+   * ID를 사용하여 Nexacro 컴포넌트를 안전하게 찾습니다.
+   * Nexacro의 `lookup` 메서드를 사용하여 컴포넌트 계층 구조를 탐색합니다.
+   * @param {string} componentId - 찾을 컴포넌트의 ID (예: "gdList", "calFromDay")
    * @param {object} [initialScope=null] - 검색을 시작할 초기 범위 (폼 또는 컴포넌트). 지정하지 않으면 getMainForm()을 기다림.
    * @param {number} [timeout=15000] - 컴포넌트를 기다릴 최대 시간 (ms)
    * @returns {Promise<object|null>} 찾은 컴포넌트 객체 또는 null (타임아웃 시)
    */
   async function getNexacroComponent(componentId, initialScope = null, timeout = 15000) {
-    console.log(`[getNexacroComponent] Waiting for component: "${componentId}" (Timeout: ${timeout}ms)`);
+    console.log(`[getNexacroComponent] 컴포넌트 대기 중: "${componentId}" (시간 초과: ${timeout}ms)`);
     const start = Date.now();
     let currentScope = initialScope;
 
     while (Date.now() - start < timeout) {
       if (!currentScope) {
         // 초기 스코프가 지정되지 않았으면 메인 폼이 준비될 때까지 기다림
-        console.log(`[getNexacroComponent] Initial scope not provided, attempting to get main form for "${componentId}".`);
         currentScope = getMainForm();
         if (!currentScope) {
-          console.log(`[getNexacroComponent] Main form not yet available for "${componentId}", retrying...`);
-          await delay(300);
+          await delay(300); // 메인 폼이 나타날 때까지 대기
           continue;
         }
       }
 
       if (currentScope && typeof currentScope.lookup === 'function') {
-        const component = currentScope.lookup(componentId);
+        const component = currentScope.lookup(componentId); // Nexacro의 lookup 메서드 사용
         if (component) {
-          console.log(`[getNexacroComponent] Success! Found component: "${componentId}"`);
+          console.log(`[getNexacroComponent] 성공! 컴포넌트 찾음: "${componentId}"`);
           return component;
-        } else {
-          console.log(`[getNexacroComponent] Component "${componentId}" not found in current scope. Retrying...`);
         }
       } else {
-        console.warn(`[getNexacroComponent] Current scope is invalid or does not have lookup function for "${componentId}". Scope: ${currentScope}`);
+        console.warn(`[getNexacroComponent] 현재 스코프가 유효하지 않거나 lookup 함수가 없습니다. 컴포넌트: "${componentId}"`);
       }
-      await delay(300);
+      await delay(300); // 300ms 대기 후 재시도
     }
-    console.error(`[getNexacroComponent] Timeout! Component not found: "${componentId}"`);
+    console.error(`[getNexacroComponent] 시간 초과! 컴포넌트를 찾을 수 없습니다: "${componentId}"`);
     return null; // 타임아웃 시 null 반환
   }
 
   /**
-   * 특정 트랜잭션(통신)이 완료될 때까지 기다리는 Promise를 반환합니다.
-   * @param {string} svcID - 기다릴 서비스(트랜잭션)의 ID
-   * @param {number} [timeout=60000] - 대기 시간 (ms)
+   * 특정 넥사크로 트랜잭션(통신)이 완료될 때까지 기다리는 Promise를 반환합니다.
+   * 넥사크로 폼의 fn_callback 함수를 후킹하여 트랜잭션 완료를 감지합니다.
+   * @param {string} svcID - 기다릴 서비스(트랜잭션)의 ID (예: "search", "searchDetail")
+   * @param {number} [timeout=120000] - 대기 시간 (ms)
    * @returns {Promise<void>} 트랜잭션 완료 시 resolve되는 Promise
    */
   function waitForTransaction(svcID, timeout = 120000) {
-    console.log(`[waitForTransaction] Waiting for service ID: '${svcID}' with timeout: ${timeout}ms`);
+    console.log(`[waitForTransaction] 서비스 ID 대기 중: '${svcID}' (시간 초과: ${timeout}ms)`);
     return new Promise((resolve, reject) => {
       const form = getMainForm();
       if (!form) {
         return reject(new Error("메인 폼을 찾을 수 없어 트랜잭션을 기다릴 수 없습니다."));
       }
 
-      let originalCallback = form.fn_callback; // 기존 콜백 백업
+      let originalCallback = form.fn_callback; // 기존 콜백 함수 백업
 
       const timeoutId = setTimeout(() => {
-        form.fn_callback = originalCallback; // 타임아웃 시 콜백 복원
-        console.error(`[waitForTransaction] Timeout! Service ID '${svcID}' timed out after ${timeout}ms.`);
+        form.fn_callback = originalCallback; // 타임아웃 시 원래 콜백 복원
+        console.error(`[waitForTransaction] 시간 초과! 서비스 ID '${svcID}'가 ${timeout}ms 후 타임아웃되었습니다.`);
         reject(new Error(`'${svcID}' 트랜잭션 대기 시간 초과 (${timeout}ms).`));
       }, timeout);
 
+      // 넥사크로 폼의 fn_callback 함수를 오버라이드
       form.fn_callback = function(serviceID, errorCode, errorMsg) {
-        // 원래의 콜백 함수를 실행하여 기존 로직을 유지
+        // 원래의 콜백 함수를 먼저 실행하여 기존 로직을 유지
         if (typeof originalCallback === 'function') {
           originalCallback.apply(this, arguments);
         }
 
-        console.log(`[waitForTransaction] fn_callback 호출됨: received serviceID='${serviceID}', expected svcID='${svcID}', errorCode=${errorCode}, errorMsg=${errorMsg}`);
+        console.log(`[waitForTransaction] fn_callback 호출됨: 수신 서비스 ID='${serviceID}', 기대 서비스 ID='${svcID}', 에러 코드=${errorCode}, 에러 메시지=${errorMsg}`);
         // 우리가 기다리던 서비스 ID와 일치하는지 확인
         if (serviceID === svcID) {
-          clearTimeout(timeoutId);
-          form.fn_callback = originalCallback; // 콜백 즉시 복원
-          if (errorCode >= 0) {
+          clearTimeout(timeoutId); // 타임아웃 타이머 해제
+          form.fn_callback = originalCallback; // 콜백 함수 즉시 복원
+          if (errorCode >= 0) { // 에러 코드가 0 이상이면 성공으로 간주
             console.log(`[waitForTransaction] '${svcID}' 트랜잭션 성공적으로 완료.`);
             resolve();
           } else {
@@ -143,7 +152,7 @@
             reject(new Error(`'${svcID}' 트랜잭션 실패: ${errorMsg}`));
           }
         } else {
-          console.log(`[waitForTransaction] 다른 트랜잭션 완료: received serviceID='${serviceID}'. Still waiting for '${svcID}'.`);
+          console.log(`[waitForTransaction] 다른 트랜잭션 완료: 수신 서비스 ID='${serviceID}'. 여전히 '${svcID}' 대기 중.`);
         }
       };
     });
@@ -152,15 +161,18 @@
 
   // ==================================================================================
   // 3. 데이터 수집 함수 (Nexacro Dataset 활용)
+  //    (DOM 파싱 대신 넥사크로 Dataset API를 사용하여 데이터 수집)
   // ==================================================================================
 
   /**
-   * 상품 상세 그리드(gdDetail)의 Dataset에서 모든 상품 정보를 추출합니다.
+   * 상품 상세 그리드(gdDetail)에 바인딩된 Dataset에서 모든 상품 정보를 추출합니다.
+   * 이 방식은 DOM 구조에 의존하지 않고 넥사크로 내부 데이터 모델에서 직접 데이터를 가져오므로 매우 안정적입니다.
    * @param {string} midCode - 상위 중분류 코드
    * @param {string} midName - 상위 중분류 이름
    * @returns {Array<object>} 상품 데이터 객체 배열
    */
   function collectProductsFromDataset(midCode, midName) {
+    // gdDetail 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
     const detailGrid = getNexacroComponent("gdDetail");
     if (!detailGrid) {
       console.error("상품 상세 그리드(gdDetail)를 찾을 수 없습니다.");
@@ -174,30 +186,33 @@
     }
 
     const products = [];
-    const rowCount = dataset.getRowCount();
+    const rowCount = dataset.getRowCount(); // Dataset의 전체 행 수
     console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${rowCount}개를 Dataset에서 수집합니다.`);
 
+    // Dataset의 각 행을 순회하며 컬럼 값 추출
     for (let i = 0; i < rowCount; i++) {
       products.push({
         midCode:     midCode,
         midName:     midName,
-        productCode: dataset.getColumn(i, "PLU_CD") || "",
-        productName: dataset.getColumn(i, "PLU_NM") || "",
-        sales:       parseInt(dataset.getColumn(i, "SALE_QTY") || 0, 10),
-        order_cnt:   parseInt(dataset.getColumn(i, "ORD_QTY") || 0, 10),
-        purchase:    parseInt(dataset.getColumn(i, "PUR_QTY") || 0, 10),
-        disposal:    parseInt(dataset.getColumn(i, "DISP_QTY") || 0, 10),
-        stock:       parseInt(dataset.getColumn(i, "STOCK_QTY") || 0, 10),
+        productCode: dataset.getColumn(i, "PLU_CD") || "", // 상품코드 컬럼 ID
+        productName: dataset.getColumn(i, "PLU_NM") || "", // 상품명 컬럼 ID
+        sales:       parseInt(dataset.getColumn(i, "SALE_QTY") || 0, 10), // 매출수량 컬럼 ID
+        order_cnt:   parseInt(dataset.getColumn(i, "ORD_QTY") || 0, 10), // 발주수량 컬럼 ID
+        purchase:    parseInt(dataset.getColumn(i, "PUR_QTY") || 0, 10), // 매입수량 컬럼 ID
+        disposal:    parseInt(dataset.getColumn(i, "DISP_QTY") || 0, 10), // 폐기수량 컬럼 ID
+        stock:       parseInt(dataset.getColumn(i, "STOCK_QTY") || 0, 10), // 현재고수량 컬럼 ID
       });
     }
     return products;
   }
 
   /**
-   * 중분류 그리드(gdList)의 Dataset에서 처리해야 할 모든 중분류 목록을 추출합니다.
+   * 중분류 그리드(gdList)에 바인딩된 Dataset에서 처리해야 할 모든 중분류 목록을 추출합니다.
+   * 이 방식 또한 DOM 파싱 대신 넥사크로 내부 데이터 모델에서 직접 데이터를 가져옵니다.
    * @returns {Array<object>} { code, name, expectedQuantity, row }를 포함하는 중분류 객체 배열
    */
   function getAllMidCodesFromDataset() {
+    // gdList 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
     const midGrid = getNexacroComponent("gdList");
     if (!midGrid) {
       console.error("중분류 그리드(gdList)를 찾을 수 없습니다.");
@@ -211,15 +226,16 @@
     }
 
     const midCodes = [];
-    const rowCount = dataset.getRowCount();
+    const rowCount = dataset.getRowCount(); // Dataset의 전체 행 수
     console.log(`[getAllMidCodesFromDataset] ${rowCount}개의 중분류를 Dataset에서 찾았습니다.`);
 
+    // Dataset의 각 행을 순회하며 중분류 정보 추출
     for (let i = 0; i < rowCount; i++) {
       midCodes.push({
-        code:             dataset.getColumn(i, "MID_CODE") || "",
-        name:             dataset.getColumn(i, "MID_NAME") || "",
-        expectedQuantity: parseInt(dataset.getColumn(i, "SALE_QTY") || 0, 10),
-        row:              i,
+        code:             dataset.getColumn(i, "MID_CODE") || "", // 중분류 코드 컬럼 ID
+        name:             dataset.getColumn(i, "MID_NAME") || "", // 중분류명 컬럼 ID
+        expectedQuantity: parseInt(dataset.getColumn(i, "SALE_QTY") || 0, 10), // 기대수량 (매출수량) 컬럼 ID
+        row:              i, // 해당 중분류의 Dataset 내 행 인덱스 (클릭 시 필요)
       });
     }
     return midCodes;
@@ -228,58 +244,61 @@
 
   // ==================================================================================
   // 4. 메인 실행 함수
+  //    (특정 날짜에 대한 전체 데이터 수집 흐름 제어)
   // ==================================================================================
 
   /**
-   * 지정된 날짜의 전체 데이터 수집을 실행하는 메인 함수
+   * 지정된 날짜의 전체 데이터 수집을 실행하는 메인 함수입니다.
+   * 이 함수는 날짜 설정, 메인 검색, 중분류 순회, 상품 데이터 수집의 전 과정을 제어합니다.
    * @param {string} dateStr - 'YYYYMMDD' 형식의 날짜 문자열
    */
   async function runCollectionForDate(dateStr) {
     if (window.automation.isCollecting) {
-      console.warn("이미 데이터 수집이 진행 중입니다.");
+      console.warn("이미 데이터 수집이 진행 중입니다. 새로운 요청을 무시합니다.");
       return;
     }
-    window.automation.isCollecting = true;
-    window.automation.error = null;
-    window.automation.parsedData = null;
+    window.automation.isCollecting = true; // 수집 시작 플래그 설정
+    window.automation.error = null; // 이전 오류 초기화
+    window.automation.errors = []; // 이전 오류 로그 초기화
+    window.automation.parsedData = null; // 이전 데이터 초기화
     console.log(`[runCollectionForDate] ${dateStr} 데이터 수집을 시작합니다.`);
 
     try {
-      // 1. 날짜 입력 및 메인 검색
+      // 1. 메인 폼 및 필수 컴포넌트(날짜 입력 필드, 검색 버튼) 찾기
       const mainForm = getMainForm();
       if (!mainForm) {
-        throw new Error("메인 폼(STMB011_M0)을 찾을 수 없습니다.");
+        throw new Error("메인 폼(STMB011_M0)을 찾을 수 없습니다. 자동화를 시작할 수 없습니다.");
       }
 
-      // calFromDay.calendaredit 찾기
-      console.log("[runCollectionForDate] calFromDay.calendaredit 컴포넌트 직접 탐색 시작...");
+      // 날짜 입력 필드 컴포넌트 (calFromDay) 찾기
+      // 넥사크로 컴포넌트 경로를 직접 사용 (주의: 경로 변경 시 수정 필요)
+      console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작...");
       const dateInput = mainForm.div_workForm.form.div2.form.div_search.form.calFromDay.calendaredit;
       if (!dateInput) {
-        throw new Error("날짜 입력 필드(calFromDay.calendaredit)를 찾을 수 없습니다.");
+        throw new Error("날짜 입력 필드(calFromDay.calendaredit)를 찾을 수 없습니다. 경로 확인 필요.");
       }
-      console.log("[runCollectionForDate] calFromDay.calendaredit 컴포넌트 찾기 성공.");
+      console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 찾기 성공.");
 
-      // F_10:icontext 찾기 (F_10이 버튼 컴포넌트 자체일 가능성이 높음)
-      console.log("[runCollectionForDate] F_10 컴포넌트 직접 탐색 시작...");
+      // 검색 버튼 컴포넌트 (F_10) 찾기
+      console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작...");
       const searchBtn = mainForm.div_cmmbtn.form.F_10;
       if (!searchBtn) {
-        throw new Error("검색 버튼(F_10)을 찾을 수 없습니다.");
+        throw new Error("검색 버튼(F_10)을 찾을 수 없습니다. 경로 확인 필요.");
       }
-      console.log("[runCollectionForDate] F_10 컴포넌트 찾기 성공.");
+      console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 찾기 성공.");
 
-      if (!dateInput || !searchBtn) {
-        throw new Error("날짜 입력 필드 또는 검색 버튼을 찾을 수 없습니다.");
-      }
-
-      dateInput.set_value(dateStr);
+      // 2. 날짜 설정 및 메인 검색 버튼 클릭
+      dateInput.set_value(dateStr); // 넥사크로 컴포넌트의 set_value 메서드 사용
       console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
 
+      // 'search' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
       const searchTransaction = waitForTransaction("search");
-      console.log("메인 검색 버튼 클릭을 시도합니다.");
-      const searchBtnId = searchBtn.id; // F_10 컴포넌트의 ID를 가져옴
-      const searchBtnElement = document.getElementById(searchBtnId);
+      
+      // 검색 버튼의 실제 DOM 엘리먼트를 찾아 MouseEvent 시뮬레이션으로 클릭
+      // 넥사크로 컴포넌트의 .click()이 작동하지 않을 때의 안정적인 대안
+      const searchBtnElement = document.getElementById(searchBtn.id);
       if (!searchBtnElement) {
-        throw new Error("검색 버튼의 실제 DOM 엘리먼트를 찾을 수 없습니다. ID: " + searchBtnId);
+        throw new Error("검색 버튼의 실제 DOM 엘리먼트를 찾을 수 없습니다. ID: " + searchBtn.id);
       }
       const rect = searchBtnElement.getBoundingClientRect();
       ["mousedown", "mouseup", "click"].forEach(evt =>
@@ -292,66 +311,93 @@
         }))
       );
       console.log("메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...");
+      
+      // 트랜잭션 완료 대기
       await searchTransaction;
       console.log("중분류 목록 로딩 완료.");
 
-      // 2. 처리할 중분류 목록 가져오기
+      // 3. 처리할 중분류 목록 가져오기 (Dataset에서 직접 가져옴)
       const midCodesToProcess = getAllMidCodesFromDataset();
       if (midCodesToProcess.length === 0) {
         console.warn("처리할 중분류가 없습니다. 수집을 종료합니다.");
+        window.automation.parsedData = []; // 데이터가 없는 경우 빈 배열로 설정
         return;
       }
       
-      const allProductsMap = new Map();
-      const midGrid = await getNexacroComponent("gdList");
+      const allProductsMap = new Map(); // 전체 상품 데이터를 저장할 Map (중복 방지 및 합산)
+      const midGrid = await getNexacroComponent("gdList"); // 중분류 그리드 컴포넌트
 
-      // 3. 각 중분류를 순회하며 상품 데이터 수집
+      // 4. 각 중분류를 순회하며 상품 데이터 수집
       for (const mid of midCodesToProcess) {
-        console.log(`[시작] 중분류: ${mid.code} (${mid.name})`);
+        console.log(`
+[시작] 중분류: ${mid.code} (${mid.name})`);
 
+        // 'searchDetail' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
         const detailTransaction = waitForTransaction("searchDetail");
         
-        // Nexacro API로 특정 행을 클릭한 것과 동일한 효과를 줌
-        midGrid.set_rowposition(mid.row);
-        midGrid.triggerEvent("oncellclick", {
-            "eventid": "oncellclick", "fromobject": midGrid, "fromreferenceobject": midGrid.getCell(mid.row, 0),
-            "row": mid.row, "cell": 0,
+        // 넥사크로 그리드 컴포넌트의 API를 사용하여 중분류 클릭 효과 시뮬레이션
+        // set_rowposition으로 해당 행으로 이동 후, oncellclick 이벤트를 트리거
+        midGrid.set_rowposition(mid.row); // 해당 중분류 행으로 포커스 이동
+        midGrid.triggerEvent("oncellclick", { // oncellclick 이벤트 강제 발생
+            "eventid": "oncellclick",
+            "fromobject": midGrid,
+            "fromreferenceobject": midGrid.getCell(mid.row, 0), // 클릭된 셀 정보
+            "row": mid.row,
+            "cell": 0, // 첫 번째 컬럼 (코드) 클릭
         });
         
         console.log(`'${mid.name}'을 클릭했습니다. 상품 목록 로딩을 기다립니다...`);
-        await detailTransaction;
+        await detailTransaction; // 상품 목록 로딩(트랜잭션) 완료 대기
         console.log("상품 목록 로딩 완료.");
 
+        // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
         const products = collectProductsFromDataset(mid.code, mid.name);
         
-        // 수집된 데이터를 전체 상품 맵에 병합
+        // 수집된 상품 데이터를 전체 상품 맵에 병합 (상품코드 기준으로 모든 수량 합산)
         products.forEach(p => {
             if (allProductsMap.has(p.productCode)) {
                 const existing = allProductsMap.get(p.productCode);
                 existing.sales += p.sales;
+                existing.order_cnt += p.order_cnt;
+                existing.purchase += p.purchase;
+                existing.disposal += p.disposal;
+                existing.stock += p.stock;
             } else {
-                allProductsMap.set(p.productCode, p);
+                allProductsMap.set(p.productCode, p); // 새로운 상품이면 그대로 추가
             }
         });
         console.log(`[완료] 중분류: ${mid.code} (${mid.name}). 현재까지 총 ${allProductsMap.size}개 상품 수집.`);
       }
 
-      // 4. 최종 결과 포맷팅
+      // 5. 최종 결과 포맷팅 및 저장
+      // Map의 값을 배열로 변환하여 window.automation.parsedData에 저장
       window.automation.parsedData = Array.from(allProductsMap.values());
       console.log(`🎉 전체 수집 완료. 총 ${allProductsMap.size}개 상품, ${midCodesToProcess.length}개 중분류.`);
 
     } catch (err) {
       console.error("데이터 수집 중 심각한 오류 발생:", err);
-      window.automation.error = err.message;
+      window.automation.error = err.message; // 오류 메시지 저장
     } finally {
-      window.automation.isCollecting = false;
+      window.automation.isCollecting = false; // 수집 종료 플래그 설정
     }
   }
 
   // ==================================================================================
-  // 5. 외부 노출
+  // 5. 외부 노출 (파이썬 Selenium에서 호출할 함수)
   // ==================================================================================
+  // 이 함수를 window.automation 객체에 노출하여 파이썬 스크립트에서 driver.execute_script()로 호출할 수 있게 합니다.
   window.automation.runCollectionForDate = runCollectionForDate;
-  console.log("Nexacro 자동화 라이브러리가 로드되었습니다. `window.automation.runCollectionForDate('YYYYMMDD')`를 호출하여 사용하세요.");
+  console.log("Nexacro 자동화 라이브러리가 로드되었습니다. 파이썬에서 `window.automation.runCollectionForDate('YYYYMMDD')`를 호출하여 사용하세요.");
 
+  } catch (e) {
+    // 라이브러리 로드 및 초기화 시점에 발생하는 오류를 잡습니다.
+    if (window.automation) {
+      window.automation.error = "라이브러리 초기화 오류: " + e.message;
+      window.automation.errors.push("라이브러리 초기화 오류: " + e.message);
+      window.automation.logs.push("[FATAL ERROR] 라이브러리 초기화 오류: " + e.message);
+    } else {
+      // window.automation 객체조차 초기화되지 않은 경우 (매우 드물지만)
+      console.error("FATAL ERROR: window.automation 객체 초기화 전 라이브러리 로드 오류 발생: ", e);
+    }
+  }
 })();
