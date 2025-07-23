@@ -9,22 +9,28 @@
     }
 
     // 요소가 클릭 가능한 상태가 될 때까지 대기
-    await delay(600);  // 기본 0.6초 대기
+    await delay(10000);  // 기본 10초 대기
 
-    const rect = el.getBoundingClientRect();
-    ["mousedown", "mouseup", "click"].forEach(type =>
-      el.dispatchEvent(new MouseEvent(type, {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-        clientX: rect.left + rect.width / 2,
-        clientY: rect.top + rect.height / 2
-      }))
-    );
+    // Nexacro 컴포넌트의 click() 메서드를 우선적으로 시도
+    if (typeof el.click === 'function') {
+      el.click();
+    } else {
+      // 일반 DOM 요소인 경우 MouseEvent 디스패치
+      const rect = el.getBoundingClientRect();
+      ["mousedown", "mouseup", "click"].forEach(type =>
+        el.dispatchEvent(new MouseEvent(type, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          clientX: rect.left + rect.width / 2,
+          clientY: rect.top + rect.height / 2
+        }))
+      );
+    }
     
     // 클릭 후 데이터 로드 대기
     console.log(`클릭 이벤트 발생 ${label ? " → " + label : ""}: ${id}`);
-    await delay(600);  // 데이터 로드를 위한 0.6초 대기
+    await delay(10000);  // 데이터 로드를 위한 10초 대기
 
     console.log(`클릭 완료${label ? " → " + label : ""}: ${id}`);
     return true;
@@ -40,7 +46,7 @@
         const el = document.getElementById(id);
         if (el && el.offsetParent !== null) {
             await clickByExactId(id, "팝업 닫기");
-            await delay(600);
+            await delay(10000);
         }
     }
   }
@@ -70,13 +76,13 @@
     // 1. 매출분석 탭 클릭
     const topMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext";
     await clickByExactId(topMenuId, "매출분석");
-    await delay(5000);
+    await delay(10000);
     await closePopups();
 
     // 2. 중분류별 매출 구성비 메뉴 클릭
     const subMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text";
     await clickByExactId(subMenuId, "중분류별 매출 구성비");
-    await delay(600);
+    await delay(10000);
     await closePopups();
 
     // 3. 중분류 리스트 첫행 클릭
