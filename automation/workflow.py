@@ -133,14 +133,32 @@ def _run_collection_cycle(
         # window.nexacro 객체가 로드될 때까지 대기
         try:
             log.info("Waiting for window.nexacro object...", extra={"tag": "navigation"})
-            WebDriverWait(driver, 15).until(
-                lambda d: d.execute_script("return window.nexacro && typeof window.nexacro.getApplication === 'function' && window.nexacro.getApplication()")
+            WebDriverWait(driver, 10).until(
+                lambda d: d.execute_script("return !!(window.nexacro && typeof window.nexacro.getApplication === 'function' && window.nexacro.getApplication())")
             )
             log.info("window.nexacro object is ready.", extra={"tag": "navigation"})
         except TimeoutException:
             log.error("Timed out waiting for window.nexacro object.", extra={"tag": "navigation"})
             return
         
+        #  실제 화면 로딩 완료까지 대기 (gdList 그리드 존재 확인)
+        try:
+            log.info("Waiting for mid-category grid to be ready...", extra={"tag": "navigation"})
+            WebDriverWait(driver, 10).until(
+                lambda d: d.execute_script('''
+                    try {
+                        const f = window.nexacro?.getApplication?.().mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
+                        return !!f?.div_workForm?.form?.gdList;
+                    } catch (e) {
+                        return false;
+                    }
+                ''')
+            )
+            log.info("Mid-category grid is ready. Proceeding to inject automation JS.", extra={"tag": "navigation"})
+        except TimeoutException:
+            log.error("Mid-category grid did not load in time.", extra={"tag": "navigation"})
+            return
+
         run_script_func(driver, automation_library_script)
         
         # YYYY-MM-DD 형식을 YYYYMMDD로 변경하여 JS 함수에 전달
