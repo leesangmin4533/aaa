@@ -1,25 +1,27 @@
-[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비�[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[aut[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[DEBUG] Chrome driver created
-Starting collection cycle for 2025-07-17 ---
-[automation.workflow][init][INFO] Initializ[utils.popup_util][mod[automation.workflow][login][INFO] Login successful.
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[automation.config][navigation][DEBUG] Mix ratio page grid and data found.
+[automation.config][driver][DEBUG] Chrome driver created
+[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[automation.config][navigation][DEBUG] Mix ratio page grid and data found.
+[automation.config][driver][DEBUG] Chrome driver created
+ory grid did not load in time.[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully sim[automation.workflow][login][INFO] Login successful.
 [automation.workflow][navigation][INFO] Navigating to sales page...
 [automation.workflow][navigation][INFO] Successfully navigated to sales page.
 [automation.workflow][navigation][INFO] Waiting for window.nexacro object...
 [automation.workflow][navigation][INFO] window.nexacro object is ready.
-[automation.workflow][navigation][INFO] Waiting for mid-category grid to be ready...
-[automation.workflow][navigation][ERROR] Mid-category grid did not load in time.
-[automation.workflow][main][INFO] Closing driver for 2025-07-17 cycle.
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-17 ---
-[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-18 ---
-[automation.workflow][init][INFO] Initializing Chrome driver...
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-18 ---
-ss. Total closed: 5
-[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[automation.workflow][navi[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+ain][INFO] --- Finished collect[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-19 ---
+_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
 [utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
