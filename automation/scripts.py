@@ -34,7 +34,7 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver, timeout: int = 60) -> bool:
+def wait_for_mix_ratio_page(driver, timeout: int = 10) -> bool:
     """중분류별 매출 구성비 화면이 나타나고 데이터가 로드될 때까지 대기한다."""
     selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
     log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={"tag": "navigation"})
