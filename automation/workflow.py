@@ -127,6 +127,17 @@ def _run_collection_cycle(
             driver, run_script_func, wait_for_page_func, navigation_script, page_load_timeout
         ):
             return
+
+        # window.nexacro 객체가 로드될 때까지 대기
+        try:
+            log.info("Waiting for window.nexacro object...", extra={"tag": "navigation"})
+            WebDriverWait(driver, 15).until(
+                lambda d: d.execute_script("return window.nexacro && typeof window.nexacro.getApplication === 'function' && window.nexacro.getApplication()")
+            )
+            log.info("window.nexacro object is ready.", extra={"tag": "navigation"})
+        except TimeoutException:
+            log.error("Timed out waiting for window.nexacro object.", extra={"tag": "navigation"})
+            return
         
         run_script_func(driver, automation_library_script)
         
