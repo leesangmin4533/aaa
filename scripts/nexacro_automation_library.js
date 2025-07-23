@@ -57,7 +57,8 @@
         seen.add(code);
         newCodes.push(code);
         console.log(`✅ 중분류 클릭 완료: ${code}`);
-        await delay(500); // 렌더링 대기
+        // 렌더링 성능 측정 결과(2025-07-23)를 반영하여 700ms 대기
+        await delay(700); // 렌더링 대기
       }
 
       if (newCodes.length === 0) break;
@@ -407,6 +408,8 @@
         
         console.log(`'${mid.name}'을 클릭했습니다. 상품 목록 로딩을 기다립니다...`);
         await detailTransaction; // 상품 목록 로딩(트랜잭션) 완료 대기
+        // 실제 DOM 렌더링 시간을 고려해 추가 대기 (2025-07-23 기준)
+        await delay(300);
         console.log("상품 목록 로딩 완료.");
 
         // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
