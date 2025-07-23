@@ -58,7 +58,7 @@
         newCodes.push(code);
         console.log(`✅ 중분류 클릭 완료: ${code}`);
         // 렌더링 성능 측정 결과(2025-07-23)를 반영하여 700ms 대기
-        await delay(700); // 렌더링 대기
+        await delay(10000); // 렌더링 대기
       }
 
       if (newCodes.length === 0) break;
@@ -69,7 +69,7 @@
       await clickElementById(scrollBtn.id);
       scrollCount++;
       console.log(` 중분류 스크롤 ${scrollCount}회`);
-      await delay(1000);
+      await delay(10000);
     }
 
     console.log(" 전체 중분류 처리 완료. 총 개수:", seen.size);
@@ -136,7 +136,7 @@
    * @param {number} [timeout=15000] - 컴포넌트를 기다릴 최대 시간 (ms)
    * @returns {Promise<object|null>} 찾은 컴포넌트 객체 또는 null (타임아웃 시)
    */
-  async function getNexacroComponent(componentId, initialScope = null, timeout = 15000) {
+  async function getNexacroComponent(componentId, initialScope = null, timeout = 10000) {
     console.log(`[getNexacroComponent] 컴포넌트 대기 중: "${componentId}" (시간 초과: ${timeout}ms)`);
     const start = Date.now();
     let currentScope = initialScope;
@@ -146,7 +146,7 @@
         // 초기 스코프가 지정되지 않았으면 메인 폼이 준비될 때까지 기다림
         currentScope = getMainForm();
         if (!currentScope) {
-          await delay(300); // 메인 폼이 나타날 때까지 대기
+          await delay(10000); // 메인 폼이 나타날 때까지 대기
           continue;
         }
       }
@@ -160,7 +160,7 @@
       } else {
         console.warn(`[getNexacroComponent] 현재 스코프가 유효하지 않거나 lookup 함수가 없습니다. 컴포넌트: "${componentId}"`);
       }
-      await delay(300); // 300ms 대기 후 재시도
+      await delay(10000); // 10000ms 대기 후 재시도
     }
     console.error(`[getNexacroComponent] 시간 초과! 컴포넌트를 찾을 수 없습니다: "${componentId}"`);
     return null; // 타임아웃 시 null 반환
@@ -173,7 +173,7 @@
    * @param {number} [timeout=120000] - 대기 시간 (ms)
    * @returns {Promise<void>} 트랜잭션 완료 시 resolve되는 Promise
    */
-  function waitForTransaction(svcID, timeout = 300000) {
+  function waitForTransaction(svcID, timeout = 10000) {
     console.log(`[waitForTransaction] 서비스 ID 대기 중: '${svcID}' (시간 초과: ${timeout}ms)`);
     return new Promise((resolve, reject) => {
       const form = getMainForm();
@@ -357,8 +357,11 @@
       }
       console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 찾기 성공.");
 
-      // 2. 날짜 설정 및 메인 검색 버튼 클릭
-      dateInput.set_value(dateStr); // 넥사크로 컴포넌트의 set_value 메서드 사용
+      // 2. 날짜 설정 및 메인 검색 버튼 클릭 (트랜잭션 강제 재발행)
+      // 날짜를 초기화했다가 다시 설정하여, 앱이 변경을 인지하고 새 트랜잭션을 보내도록 함
+      dateInput.set_value("");
+      await delay(100); // UI가 변경을 인지할 시간을 줌
+      dateInput.set_value(dateStr);
       console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
 
       // 'search' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
