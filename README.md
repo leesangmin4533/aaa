@@ -101,3 +101,5 @@ CREATE TABLE IF NOT EXISTS mid_sales (
 - **`Dataset` 직접 접근**: 화면에 보이는 그리드(Grid)의 HTML을 읽는 대신, 그리드에 연결된 내부 데이터 저장소(`Dataset`)에 직접 접근합니다. 이를 통해 스크롤 없이 모든 데이터를 한 번에, 빠르고 정확하게 가져올 수 있습니다.
 - **트랜잭션 콜백 기반 동기화**: `delay()`를 사용한 대기 대신, Nexacro의 데이터 통신(Transaction) 완료 신호(`fn_callback`)를 감지하여, 데이터 로딩이 완료되는 정확한 시점에 다음 동작을 수행합니다.
 - **안정적인 컴포넌트 제어**: `lookup()`, `set_rowposition()`, `triggerEvent()` 등 Nexacro 내부 API를 사용하여 컴포넌트를 안정적으로 제어합니다.
+## 프로젝트 요약
+자세한 요약은 PROJECT_SUMMARY.txt 파일을 참조하세요.
