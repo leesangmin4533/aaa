@@ -214,6 +214,16 @@
     });
   }
 
+  // 호출 전에 mainForm 생성 대기
+  const ensureMainFormLoaded = async () => {
+    for (let i = 0; i < 50; i++) {
+      const form = getMainForm();
+      if (form) return true;
+      await delay(300);
+    }
+    throw new Error("mainForm이 15초 내 생성되지 않았습니다.");
+  };
+
 
   // ==================================================================================
   // 3. 데이터 수집 함수 (Nexacro Dataset 활용)
@@ -320,7 +330,10 @@
     console.log(`[runCollectionForDate] ${dateStr} 데이터 수집을 시작합니다.`);
 
     try {
-      // 1. 메인 폼 및 필수 컴포넌트(날짜 입력 필드, 검색 버튼) 찾기
+      // 1. 메인 폼 로딩 확인
+      await ensureMainFormLoaded();
+
+      // 2. 메인 폼 및 필수 컴포넌트(날짜 입력 필드, 검색 버튼) 찾기
       const mainForm = getMainForm();
       if (!mainForm) {
         throw new Error("메인 폼(STMB011_M0)을 찾을 수 없습니다. 자동화를 시작할 수 없습니다.");
