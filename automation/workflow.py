@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import Any, Callable
 
 from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 from utils.log_parser import extract_tab_lines
 from utils.log_util import get_logger
