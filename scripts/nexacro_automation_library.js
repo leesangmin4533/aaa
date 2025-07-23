@@ -18,6 +18,62 @@
   // 비동기 작업을 위한 딜레이 함수
   const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
+  async function clickElementById(id) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    ["mousedown", "mouseup", "click"].forEach(type =>
+      el.dispatchEvent(new MouseEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: rect.left + rect.width / 2,
+        clientY: rect.top + rect.height / 2
+      }))
+    );
+    return true;
+  }
+
+  async function autoClickAllMidCodes() {
+    const seen = new Set();
+    let scrollCount = 0;
+
+    while (true) {
+      const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
+      const newCodes = [];
+
+      for (const textEl of textCells) {
+        const code = textEl.innerText?.trim();
+        if (!/^\d{3}$/.test(code)) continue; // 중분류코드는 3자리 숫자
+        if (seen.has(code)) continue;
+
+        const clickId = textEl.id.replace(":text", "");
+        const clicked = await clickElementById(clickId);
+        if (!clicked) {
+          console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
+          continue;
+        }
+
+        seen.add(code);
+        newCodes.push(code);
+        console.log(`✅ 중분류 클릭 완료: ${code}`);
+        await delay(500); // 렌더링 대기
+      }
+
+      if (newCodes.length === 0) break;
+
+      const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
+      if (!scrollBtn) break;
+
+      await clickElementById(scrollBtn.id);
+      scrollCount++;
+      console.log(` 중분류 스크롤 ${scrollCount}회`);
+      await delay(1000);
+    }
+
+    console.log(" 전체 중분류 처리 완료. 총 개수:", seen.size);
+  }
+
   // 콘솔 로그를 후킹하여 window.automation.logs에 저장
   const origConsoleLog = console.log;
   console.log = function(...args) {
@@ -116,7 +172,7 @@
    * @param {number} [timeout=120000] - 대기 시간 (ms)
    * @returns {Promise<void>} 트랜잭션 완료 시 resolve되는 Promise
    */
-  function waitForTransaction(svcID, timeout = 120000) {
+  function waitForTransaction(svcID, timeout = 300000) {
     console.log(`[waitForTransaction] 서비스 ID 대기 중: '${svcID}' (시간 초과: ${timeout}ms)`);
     return new Promise((resolve, reject) => {
       const form = getMainForm();
@@ -139,18 +195,18 @@
           originalCallback.apply(this, arguments);
         }
 
-        console.log(`[waitForTransaction] fn_callback 호출됨: 수신 서비스 ID='${serviceID}', 기대 서비스 ID='${svcID}', 에러 코드=${errorCode}, 에러 메시지=${errorMsg}`);
+        console.log(`[waitForTransaction] fn_callback 호출됨: 수신 서비스 ID='${serviceID}', 기대 서비스 ID='${svcID}', 에러 코드=${errorCode}, 에러 메시지='${errorMsg}'`);
         // 우리가 기다리던 서비스 ID와 일치하는지 확인
         if (serviceID === svcID) {
           clearTimeout(timeoutId); // 타임아웃 타이머 해제
-          form.fn_callback = originalCallback; // 콜백 함수 즉시 복원
           if (errorCode >= 0) { // 에러 코드가 0 이상이면 성공으로 간주
-            console.log(`[waitForTransaction] '${svcID}' 트랜잭션 성공적으로 완료.`);
+            console.log(`[waitForTransaction] '${svcID}' 트랜잭션 성공적으로 완료. Promise 해결.`);
             resolve();
           } else {
             console.error(`[waitForTransaction] '${svcID}' 트랜잭션 실패: ${errorMsg} (코드: ${errorCode})`);
             reject(new Error(`'${svcID}' 트랜잭션 실패: ${errorMsg}`));
           }
+          form.fn_callback = originalCallback; // 콜백 함수 즉시 복원
         } else {
           console.log(`[waitForTransaction] 다른 트랜잭션 완료: 수신 서비스 ID='${serviceID}'. 여전히 '${svcID}' 대기 중.`);
         }
@@ -171,9 +227,9 @@
    * @param {string} midName - 상위 중분류 이름
    * @returns {Array<object>} 상품 데이터 객체 배열
    */
-  function collectProductsFromDataset(midCode, midName) {
+  async function collectProductsFromDataset(midCode, midName, scope) {
     // gdDetail 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
-    const detailGrid = getNexacroComponent("gdDetail");
+    const detailGrid = await getNexacroComponent("gdDetail", scope);
     if (!detailGrid) {
       console.error("상품 상세 그리드(gdDetail)를 찾을 수 없습니다.");
       return [];
@@ -211,9 +267,9 @@
    * 이 방식 또한 DOM 파싱 대신 넥사크로 내부 데이터 모델에서 직접 데이터를 가져옵니다.
    * @returns {Array<object>} { code, name, expectedQuantity, row }를 포함하는 중분류 객체 배열
    */
-  function getAllMidCodesFromDataset() {
+  async function getAllMidCodesFromDataset(scope) {
     // gdList 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
-    const midGrid = getNexacroComponent("gdList");
+    const midGrid = getNexacroComponent("gdList", scope);
     if (!midGrid) {
       console.error("중분류 그리드(gdList)를 찾을 수 없습니다.");
       return [];
@@ -281,7 +337,7 @@
 
       // 검색 버튼 컴포넌트 (F_10) 찾기
       console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작...");
-      const searchBtn = mainForm.div_cmmbtn.form.F_10;
+      const searchBtn = await getNexacroComponent("F_10", mainForm.div_cmmbtn.form); // getNexacroComponent를 사용하여 컴포넌트 대기
       if (!searchBtn) {
         throw new Error("검색 버튼(F_10)을 찾을 수 없습니다. 경로 확인 필요.");
       }
@@ -294,30 +350,20 @@
       // 'search' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
       const searchTransaction = waitForTransaction("search");
       
-      // 검색 버튼의 실제 DOM 엘리먼트를 찾아 MouseEvent 시뮬레이션으로 클릭
-      // 넥사크로 컴포넌트의 .click()이 작동하지 않을 때의 안정적인 대안
-      const searchBtnElement = document.getElementById(searchBtn.id);
-      if (!searchBtnElement) {
-        throw new Error("검색 버튼의 실제 DOM 엘리먼트를 찾을 수 없습니다. ID: " + searchBtn.id);
-      }
-      const rect = searchBtnElement.getBoundingClientRect();
-      ["mousedown", "mouseup", "click"].forEach(evt =>
-        searchBtnElement.dispatchEvent(new MouseEvent(evt, {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-          clientX: rect.left + rect.width / 2,
-          clientY: rect.top + rect.height / 2
-        }))
-      );
+      // 넥사크로 컴포넌트의 .click() 메서드를 사용하여 클릭 이벤트 트리거
+      searchBtn.click();
+      await delay(500); // 클릭 이벤트 처리 및 트랜잭션 시작을 위한 짧은 지연
       console.log("메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...");
       
       // 트랜잭션 완료 대기
       await searchTransaction;
       console.log("중분류 목록 로딩 완료.");
 
-      // 3. 처리할 중분류 목록 가져오기 (Dataset에서 직접 가져옴)
-      const midCodesToProcess = getAllMidCodesFromDataset();
+      // 3. 모든 중분류 항목이 로드되도록 스크롤 및 클릭
+      await autoClickAllMidCodes();
+
+      // 4. 처리할 중분류 목록 가져오기 (Dataset에서 직접 가져옴)
+      const midCodesToProcess = await getAllMidCodesFromDataset(mainForm.div_workForm.form.div2.form);
       if (midCodesToProcess.length === 0) {
         console.warn("처리할 중분류가 없습니다. 수집을 종료합니다.");
         window.automation.parsedData = []; // 데이터가 없는 경우 빈 배열로 설정
@@ -351,7 +397,7 @@
         console.log("상품 목록 로딩 완료.");
 
         // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
-        const products = collectProductsFromDataset(mid.code, mid.name);
+        const products = await collectProductsFromDataset(mid.code, mid.name, mainForm.div_workForm.form.div2.form);
         
         // 수집된 상품 데이터를 전체 상품 맵에 병합 (상품코드 기준으로 모든 수량 합산)
         products.forEach(p => {
