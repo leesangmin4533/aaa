@@ -51,22 +51,42 @@
     }
   }
 
+  function triggerGridRowClick(rowIndex = 0) {
+    const f = window.nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
+    const gList = f?.div_workForm?.form?.div2?.form?.gdList;
+    if (!gList || typeof gList.selectRow !== "function") {
+      console.warn("⚠️ gdList 초기화 안됨");
+      return;
+    }
+
+    gList.selectRow(rowIndex);
+    const evt = new nexacro.GridClickEventInfo(
+      gList, "oncellclick", false, false, false, false, 0, 0, rowIndex, rowIndex
+    );
+
+    console.log("✅ Nexacro oncellclick 강제 발생");
+    gList.oncellclick._fireEvent(gList, evt);
+  }
+
   async function pollAndClickMidFirstRow() {
-    let attempts = 0;
     const maxAttempts = 30;
+    let attempts = 0;
 
-    const tryClick = async () => {
-      const el = document.querySelector("div[id$='gdList.body.gridrow_0.cell_0_0']");
-      if (!el || el.offsetParent === null) {
-        if (++attempts < maxAttempts) return setTimeout(tryClick, 200);
-        console.warn("중분류 첫행 셀 클릭 실패 (셀 없음)");
-        return;
+    const tryClick = () => {
+      const f = window.nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
+      const gList = f?.div_workForm?.form?.div2?.form?.gdList;
+      if (gList && typeof gList.selectRow === "function") {
+        triggerGridRowClick(0);
+      } else {
+        if (++attempts < maxAttempts) {
+          setTimeout(tryClick, 300);
+        } else {
+          console.warn("⚠️ gdList 초기화 실패");
+        }
       }
-
-      await clickByExactId(el.id, "중분류 첫행");
     };
 
-    await tryClick();
+    tryClick();
   }
 
   async function goToMidMixRatio() {
