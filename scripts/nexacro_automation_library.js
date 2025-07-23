@@ -231,7 +231,7 @@
     for (let i = 0; i < 50; i++) {
       const form = getMainForm();
       if (form) return true;
-      await delay(300);
+    await delay(10000);
     }
     throw new Error("mainForm이 15초 내 생성되지 않았습니다.");
   };
@@ -371,7 +371,7 @@
       // 2. 날짜 설정 및 메인 검색 버튼 클릭 (트랜잭션 강제 재발행)
       // 날짜를 초기화했다가 다시 설정하여, 앱이 변경을 인지하고 새 트랜잭션을 보내도록 함
       dateInput.set_value("");
-      await delay(100); // UI가 변경을 인지할 시간을 줌
+      await delay(10000); // UI가 변경을 인지할 시간을 줌
       dateInput.set_value(dateStr);
       console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
 
@@ -380,7 +380,7 @@
       
       // 넥사크로 컴포넌트의 .click() 메서드를 사용하여 클릭 이벤트 트리거
       searchBtn.click();
-      await delay(500); // 클릭 이벤트 처리 및 트랜잭션 시작을 위한 짧은 지연
+      await delay(10000); // 클릭 이벤트 처리 및 트랜잭션 시작을 위한 짧은 지연
       console.log("메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...");
       
       // 트랜잭션 완료 대기
@@ -414,7 +414,7 @@
         console.log(`'${mid.name}'을 클릭했습니다. 상품 목록 로딩을 기다립니다...`);
         await detailTransaction; // 상품 목록 로딩(트랜잭션) 완료 대기
         // 실제 DOM 렌더링 시간을 고려해 추가 대기 (2025-07-23 기준)
-        await delay(300);
+        await delay(10000);
         console.log("상품 목록 로딩 완료.");
 
         // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
