@@ -215,6 +215,17 @@
     });
   }
 
+  function selectMiddleCodeRow(rowIndex) {
+    const f = getMainForm();
+    const gList = f?.div_workForm?.form?.div2?.form?.gdList;
+    if (!gList) throw new Error("gdList가 존재하지 않습니다.");
+
+    gList.selectRow(rowIndex);
+    const evt = new nexacro.GridClickEventInfo(gList, "oncellclick", false, false, false, false, 0, 0, rowIndex, rowIndex);
+    gList.oncellclick._fireEvent(gList, evt);
+  }
+
+
   // 호출 전에 mainForm 생성 대기
   const ensureMainFormLoaded = async () => {
     for (let i = 0; i < 50; i++) {
@@ -398,16 +409,7 @@
         // 'searchDetail' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
         const detailTransaction = waitForTransaction("searchDetail");
         
-        // 넥사크로 그리드 컴포넌트의 API를 사용하여 중분류 클릭 효과 시뮬레이션
-        // set_rowposition으로 해당 행으로 이동 후, oncellclick 이벤트를 트리거
-        midGrid.set_rowposition(mid.row); // 해당 중분류 행으로 포커스 이동
-        midGrid.triggerEvent("oncellclick", { // oncellclick 이벤트 강제 발생
-            "eventid": "oncellclick",
-            "fromobject": midGrid,
-            "fromreferenceobject": midGrid.getCell(mid.row, 0), // 클릭된 셀 정보
-            "row": mid.row,
-            "cell": 0, // 첫 번째 컬럼 (코드) 클릭
-        });
+        selectMiddleCodeRow(mid.row);
         
         console.log(`'${mid.name}'을 클릭했습니다. 상품 목록 로딩을 기다립니다...`);
         await detailTransaction; // 상품 목록 로딩(트랜잭션) 완료 대기
