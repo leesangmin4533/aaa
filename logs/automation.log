@@ -1,25 +1,17 @@
 [utils.popup_util][modal_closer][INFO] Attempt 1/5 to find[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] Closed 5 popups after login.
-[login.login_bgf][login][ERROR] Nexacro application did not load: Message: no such window: target window already closed
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][ERROR] Nexacro application did not load: Message: no such window: target window already closed
 from unknown error: web view not found
   (Session info: chrome=138.0.7204.158)
 Stacktrace:
 	GetHandleVerifier [0x0x7ff74954e935+77845]
 	GetHandleVerifier [0x0x7ff74954e990+77936]
 	(No symbol) [0x0x7ff749309cda]
-	(No symbol) [0x0x7ff7492e21a1]
-	(No symbol) [0x0x7ff74938fc6e]
-	(No symbol) [0x0x7ff7493b0432]
-	(No symbol) [0x0x7ff7493886a3]
-	(No symbol) [0x0x7ff749351791]
-	(No symbol) [0x0x7ff749352523][automation.workflow][login][ERROR] Login failed.
+	(No[automation.workflow][login][ERROR] Login failed.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-17 ---
+[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-18 ---
+[automation.workflow][init][INFO] Initializing Chrome driver...
 [automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-18 ---
-4896]
-	GetHandleVerifier [0x0x7ff749568c3e+185118]
+c3e+185118]
 	GetHandleVerifier [0x0x7ff74957054f+216111]
 	GetHandleVerifier [0x0x7ff7495572e4+113092]
 	GetHandleVerifier [0x0x7ff749557499+113529]
@@ -27,31 +19,7 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
 	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
 
-ccessfully simulated click on a popup close element.
-[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
-[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
-[utils.popup_util][[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
-[automation.config][navigation][ERROR] Mix ratio page grid not found within 10 seconds.
-Traceback (most recent call last):
-  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 43, in wait_for_mix_ratio_page
-    element = WebDriverWait(driver, timeout).until(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x0x7ff74954e935+77845]
-	GetHandleVerifier [0x0x7ff74954e990+77936]
-	(No symbol) [0x0x7ff749309cda]
-	(No symbol) [0x0x7ff7493606aa]
-	(No symbol) [0x0x7ff74936095c]
-	(No symbol) [0x0x7ff7493b3d07]
-	(No symbol) [0x0x7ff74938890f]
-	(No symbol) [0x0x7ff7493b0b07]
-	(No symbol) [0x0x7ff7493886a3]
-	(No symbol) [0x0x7ff749351791]
-	(No symbol) [0x0x7ff749352523]
+ymbol) [0x0x7ff749352523]
 	GetHandleVerifier [0x0x7ff74982684d+3059501]
 	GetHandleVerifier [0x0x7ff749820c0d+3035885]
 	GetHandleVerifier [0x0x7ff749840400+3164896]
@@ -63,4 +31,5 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
 	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
 
+[automation.config][driver][DEBUG] Chrome driver created
 [automation.config][driver][DEBUG] Chrome driver created
