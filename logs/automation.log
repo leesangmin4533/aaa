@@ -1,103 +1,25 @@
 [utils.popup_util][modal_closer][INFO] Attempt 1/5 to find[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][INFO] Login form[__main__][main][INFO] Starting collection for today: 2025-07-23
-[__main__][main][INFO] ===== Automation End =====
-비�[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비�[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
 [aut[login.login_bgf][login][INFO] Login form elements are ready.
 [login.login_bgf][login][INFO] Login script executed
 [login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
 [login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] [automation.config][run_script[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] Closed 5 popups after login.
-[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] Closed 5 popups after login.
-[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] Closed 5 popups after login.
-[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] Closed 5 popups after login.
-[login.login_bgf][login][INFO] Login form elements are ready.
-[login.login_bgf][login][INFO] Login script executed
-[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
-[login.login_bgf][login][INFO] Login succeeded
-[login.login_bgf][login][INFO] Closed 5 popups after login.
- ratio page grid and data found.
-[automation.config][driver][DEBUG] Chrome driver created
-[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
-[automation.config][navigation][DEBUG] Mix ratio page grid and data found.
-[automation.config][driver][DEBUG] Chrome driver created
-[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
-[automation.config][navigation][DEBUG] Mix ratio page grid and data found.
-y navigated to sales page.
-[automation.workflow][navigation][INFO] Waiting for window.nexacro object...
-[automation.workflow][main][CRITICAL] Critical error during collection cycle for 2025-07-19: name 'WebDriverWait' is not defined
-Traceback (most recent call last):
-  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\workflow.py", line 134, in _run_collection_cycle
-    WebDriverWait(driver, 15).until(
-    ^^^^^^^^^^^^^
-NameError: name 'WebDriverWait' is not defined
-[automation.workflow][main][INFO] Closing driver for 2025-07-19 cycle.
-[automation.workflow][main][[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
-[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
-[utils.popup_util][modal_closer][automation.workflow][login][INFO] Login successful.
+[DEBUG] Chrome driver created
+Starting collection cycle for 2025-07-17 ---
+[automation.workflow][init][INFO] Initializ[utils.popup_util][mod[automation.workflow][login][INFO] Login successful.
 [automation.workflow][navigation][INFO] Navigating to sales page...
 [automation.workflow][navigation][INFO] Successfully navigated to sales page.
 [automation.workflow][navigation][INFO] Waiting for window.nexacro object...
-[automation.workflow][main][CRITICAL] Critical error during collection cycle for 2025-07-20: name 'WebDriverWait' is not defined
-Traceback (most recent call last):
-  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\workflow.py", line 134, in _run_collection_cycle
-    WebDriverWait(driver, 15).until(
-    ^^^^^^^^^^^^^
-NameError: name 'WebDriverWait' is not defined
-[automation.workflow][main][INFO] Closing driver for 2025-07-20 cycle.
-[automation.wo[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
-[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
-[utils.popup_util][modal_closer][INFO] Attempt[automation.workflow][login][INFO] Login successful.
-[automation.workflow][navigation][INFO] Navigating to sales page...
-[automation.workflow][navigation][INFO] Successfully navigated to sales page.
-[automation.workflow][navigation][INFO] Waiting for window.nexacro object...
-[automation.workflow][main][CRITICAL] Critical error during collection cycle for 2025-07-21: name 'WebDriverWait' is not defined
-Traceback (most recent call last):
-  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\workflow.py", line 134, in _run_collection_cycle
-    WebDriverWait(driver, 15).until(
-    ^^^^^^^^^^^^^
-NameError: name 'WebDriverWait' is not defined
-[automation.workflow][main][INFO] Closing driver for 2025-07-21 cycle.
+[automation.workflow][navigation][INFO] window.nexacro object is ready.
+[automation.workflow][navigation][INFO] Waiting for mid-category grid to be ready...
+[automation.workflow][navigation][ERROR] Mid-category grid did not load in time.
+[automation.workflow][main][INFO] Closing driver for 2025-07-17 cycle.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-17 ---
+[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-18 ---
+[automation.workflow][init][INFO] Initializing Chrome driver...
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-18 ---
+ss. Total closed: 5
 [utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
 [utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
-[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find a[automation.workflow][login][INFO] Login successful.
-[automation.workflow][navigation][INFO] Navigating to sales page...
-[automation.workflow][navigation][INFO] Successfully navigated to sales page.
-[automation.workflow][navigation][INFO] Waiting for window.nexacro object...
-[automation.workflow][main][CRITICAL] Critical error during collection cycle for 2025-07-22: name 'WebDriverWait' is not defined
-Traceback (most recent call last):
-  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\workflow.py", line 134, in _run_collection_cycle
-    WebDriverWait(driver, 15).until(
-    ^^^^^^^^^^^^^
-NameError: name 'WebDriverWait' is not defined
-[automation.workflow][main][INFO] Closing driver for 2025-[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
-[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
-[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popup[automation.workflow][login][INFO] Login successful.
-[automation.workflow][navigation][INFO] Navigating to sales page...
-[automation.workflow][navigation][INFO] Successfully navigated to sales page.
-[automation.workflow][navigation][INFO] Waiting for window.nexacro object...
-[automation.workflow][main][CRITICAL] Critical error during collection cycle for 2025-07-23: name 'WebDriverWait' is not defined
-Traceback (most recent call last):
-  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\workflow.py", line 134, in _run_collection_cycle
-    WebDriverWait(driver, 15).until(
-    ^^^^^^^^^^^^^
-NameError: name 'WebDriverWait' is not defined
-[automation.workflow][main][INFO] Closing driver for 2025-07-23 cycle.
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-23 ---
