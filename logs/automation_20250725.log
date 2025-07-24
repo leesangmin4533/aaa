@@ -1,0 +1,10 @@
+[2025-07-25 08:17:27][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:17:27][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:17:27][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:17:27][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:17:27][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:17:34][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:17:35][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:17:35][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:17:35][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:17:35][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
