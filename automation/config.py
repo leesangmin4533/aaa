@@ -31,7 +31,7 @@ NAVIGATION_SCRIPT = config["scripts"]["navigation"]
 # Field order and timeouts
 FIELD_ORDER = config["field_order"]
 DATA_COLLECTION_TIMEOUT = config["timeouts"]["data_collection"]
-PAGE_LOAD_TIMEOUT = 10
+PAGE_LOAD_TIMEOUT = 30
 CYCLE_INTERVAL = config["cycle_interval_seconds"]
 
 # Logger for modules in this package
