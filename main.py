@@ -68,7 +68,6 @@ def main() -> None:
                 collect_day_data_func=execute_collect_single_day_data,
                 write_data_func=write_sales_data,
                 db_path=db_path,
-
                 automation_library_script="nexacro_automation_library.js",
                 field_order=FIELD_ORDER,
                 page_load_timeout=PAGE_LOAD_TIMEOUT,
