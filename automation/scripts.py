@@ -34,11 +34,16 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver, timeout: int = 10) -> bool:
+def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
     """'중분류별 매출 구성비' 화면으로 이동하고, 데이터가 로드될 때까지 대기한다."""
     log.info("Navigating to '중분류별 매출 구성비' page...", extra={"tag": "navigation"})
     try:
-        # 1. '매출분석' 상단 메뉴 클릭 (ID 기반)
+        # 1. '매출분석' 상단 메뉴 클릭
+        top_menu_selector = "div[id*='STMB000_M0:icontext']"
+        log.debug(f"Waiting for top menu with selector: {top_menu_selector}", extra={"tag": "navigation"})
+        WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, top_menu_selector))
+        )
         top_menu_js = """
         const topMenu = document.querySelector("div[id*='STMB000_M0:icontext']");
         if (!topMenu) return 'Top menu not found';
@@ -52,22 +57,26 @@ def wait_for_mix_ratio_page(driver, timeout: int = 10) -> bool:
         return true;
         """
         result = driver.execute_script(top_menu_js)
-        if (result is not True):
+        if result is not True:
             log.error(f"Failed to click top menu '매출분석': {result}", extra={"tag": "navigation"})
             return False
         log.debug("Clicked top menu '매출분석'. Waiting for submenu.", extra={"tag": "navigation"})
         time.sleep(1.5)
 
-        # 2. '중분류별 매출 구성비' 서브 메뉴 클릭 (안정성 개선)
+        # 2. '중분류별 매출 구성비' 서브 메뉴 클릭
+        sub_menu_container_selector = "div[id*='pdiv_topMenu']"
+        log.debug(f"Waiting for sub menu container with selector: {sub_menu_container_selector}", extra={"tag": "navigation"})
+        WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, sub_menu_container_selector))
+        )
         sub_menu_js = """
         const menuContainer = document.querySelector("div[id*='pdiv_topMenu']");
         if (!menuContainer) return 'Sub menu container not found';
-
+        const searchText = arguments[0];
         const subMenu = [...menuContainer.querySelectorAll("div")].find(
-            el => el.innerText.includes('중분류') && el.offsetParent !== null
+            el => el.innerText.includes(searchText) && el.offsetParent !== null
         );
-        if (!subMenu) return 'Sub menu with text \'중분류\' not found in container';
-
+        if (!subMenu) return `Sub menu with text '${searchText}' not found in container`;
         const rect = subMenu.getBoundingClientRect();
         ['mousedown', 'mouseup', 'click'].forEach(evt => {
             subMenu.dispatchEvent(new MouseEvent(evt, {
@@ -77,21 +86,41 @@ def wait_for_mix_ratio_page(driver, timeout: int = 10) -> bool:
         });
         return true;
         """
-        result = driver.execute_script(sub_menu_js)
-        if (result is not True):
+        result = driver.execute_script(sub_menu_js, "중분류")
+        if result is not True:
             log.error(f"Failed to click sub menu '중분류별 매출 구성비': {result}", extra={"tag": "navigation"})
             return False
+        
+        # 페이지 전환을 위한 명시적 대기
+        time.sleep(5)
         log.info("Successfully navigated. Now waiting for page grid to load.", extra={"tag": "navigation"})
 
-        # 3. 페이지 그리드가 나타나고 데이터가 로드될 때까지 대기
-        selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
-        log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={"tag": "navigation"})
+        # 진단: gdList.body 존재 여부 및 로딩 오버레이 확인
+        diagnostic_js = """
+        const gridBodyExists = !!document.querySelector("div[id*='gdList.body']");
+        const loadingOverlayExists = !!document.querySelector(".nexacro_Mask"); // 넥사크로 로딩 마스크 예시
+        return { gridBodyExists: gridBodyExists, loadingOverlayExists: loadingOverlayExists };
+        """
+        diagnostic_result = driver.execute_script(diagnostic_js)
+        log.debug(f"Diagnostic check after sub-menu click: {diagnostic_result}", extra={"tag": "navigation"})
 
+        # 3. 페이지 그리드가 나타나고 데이터가 로드될 때까지 대기 (대기 시간 및 조건 강화)
+        grid_body_selector = "div[id*='gdList.body']"
+        cell_selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
+        log.debug(f"Waiting for mix ratio page grid body with selector: {grid_body_selector}", extra={"tag": "navigation"})
+
+        # 1단계: 그리드 본체(컨테이너)가 나타날 때까지 대기
         WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+            EC.visibility_of_element_located((By.CSS_SELECTOR, grid_body_selector))
         )
+        log.debug("Mix ratio page grid body found. Now waiting for data cells.", extra={"tag": "navigation"})
+
+        # 2단계: 그리드 내부에 실제 데이터가 로드될 때까지 대기
         WebDriverWait(driver, timeout).until(
-            lambda d: len(d.find_element(By.CSS_SELECTOR, selector).text.strip()) > 0
+            EC.all_of(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, cell_selector)),
+                lambda d: len(d.find_element(By.CSS_SELECTOR, cell_selector).text.strip()) > 0
+            )
         )
 
         log.debug("Mix ratio page grid and data found.", extra={"tag": "navigation"})
