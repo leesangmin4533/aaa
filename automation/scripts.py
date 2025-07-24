@@ -34,63 +34,46 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
-    """'중분류별 매출 구성비' 화면으로 이동한다."""
-    log.info("Navigating to '중분류별 매출 구성비' page...", extra={"tag": "navigation"})
+def wait_for_mix_ratio_page(driver, timeout: int = 120) -> bool:
+    """중분류별 매출 구성비 화면이 나타나고 데이터가 로드될 때까지 대기한다."""
+    log.info("중분류별 매출 구성비 페이지 로딩 대기 시작", extra={"tag": "navigation"})
+    driver.implicitly_wait(10)  # 암시적 대기 시간 설정
+    
     try:
-        # 1. '매출분석' 상단 메뉴 클릭
-        top_menu_selector = r"#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.div_topMenu\.form\.STMB000_M0\:icontext"
-        log.debug(f"Waiting for top menu with selector: {top_menu_selector}", extra={"tag": "navigation"})
-        WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, top_menu_selector))
+        # 1. 프레임 로딩 대기 및 전환
+        log.info("프레임 로딩 상태 확인 시작", extra={"tag": "navigation"})
+        
+        # mainframe 찾기 및 전환
+        mainframe = WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[name="mainframe"]'))
         )
-        top_menu_js = r"""
-        const topMenu = document.querySelector("#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.div_topMenu\.form\.STMB000_M0\:icontext");
-        if (!topMenu) return 'Top menu not found';
-        const rect = topMenu.getBoundingClientRect();
-        ['mousedown', 'mouseup', 'click'].forEach(evt => {
-            topMenu.dispatchEvent(new MouseEvent(evt, {
-                bubbles: true, cancelable: true, view: window,
-                clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2
-            }));
-        });
-        return true;
+        driver.switch_to.frame(mainframe)
+        log.debug("mainframe으로 전환 완료", extra={"tag": "navigation"})
+        
+        # 2. 그리드 컨테이너 대기
+        grid_js = """
+        return !!document.querySelector('[id*="gdList"][id*="body"]');
         """
-        result = driver.execute_script(top_menu_js)
-        if result is not True:
-            log.error(f"Failed to click top menu '매출분석': {result}", extra={"tag": "navigation"})
-            return False
-        log.debug("Clicked top menu '매출분석'. Waiting for submenu.", extra={"tag": "navigation"})
-        time.sleep(1.5) # 메뉴가 나타날 때까지 잠시 대기
-
-        # 2. '중분류별 매출 구성비' 서브 메뉴 클릭
-        sub_menu_selector = r"#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.pdiv_topMenu_STMB000_M0\.form\.STMB011_M0\:text"
-        log.debug(f"Waiting for sub menu with selector: {sub_menu_selector}", extra={"tag": "navigation"})
         WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, sub_menu_selector))
+            lambda d: d.execute_script(grid_js)
         )
-        sub_menu_js = r"""
-        const subMenu = document.querySelector("#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.pdiv_topMenu_STMB000_M0\.form\.STMB011_M0\:text");
-        if (!subMenu) return 'Sub menu not found';
-        const rect = subMenu.getBoundingClientRect();
-        ['mousedown', 'mouseup', 'click'].forEach(evt => {
-            subMenu.dispatchEvent(new MouseEvent(evt, {
-                bubbles: true, cancelable: true, view: window,
-                clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2
-            }));
-        });
-        return true;
+        log.debug("그리드 컨테이너 발견됨", extra={"tag": "navigation"})
+        
+        # 3. 데이터 로딩 대기
+        data_js = """
+        const grid = document.querySelector('[id*="gdList"][id*="body"]');
+        return grid && grid.textContent.trim().length > 0;
         """
-        result = driver.execute_script(sub_menu_js)
-        if result is not True:
-            log.error(f"Failed to click sub menu '중분류별 매출 구성비': {result}", extra={"tag": "navigation"})
-            return False
-        log.info("Successfully clicked '중분류별 매출 구성비'. Navigation complete.", extra={"tag": "navigation"})
-
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script(data_js)
+        )
+        log.debug("데이터 로드 완료", extra={"tag": "navigation"})
+        
         return True
+        
     except TimeoutException:
-        log.error(f"Navigation timed out.", extra={"tag": "navigation"}, exc_info=True)
+        log.error(f"페이지 로드 시간 초과 ({timeout}초)", extra={"tag": "navigation"})
         return False
     except Exception as e:
-        log.error(f"An unexpected error occurred during navigation: {e}", extra={"tag": "navigation"}, exc_info=True)
+        log.error(f"페이지 로드 중 오류 발생: {str(e)}", extra={"tag": "navigation"}, exc_info=True)
         return False
