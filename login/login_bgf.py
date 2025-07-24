@@ -32,9 +32,11 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # Load .env from the current working directory if present
-    load_dotenv(dotenv_path=Path(".env"))
+    # .env 파일의 절대 경로를 프로젝트 루트 기준으로 설정
+    dotenv_path = ROOT_DIR / ".env"
+    load_dotenv(dotenv_path=dotenv_path)
 
+    # 환경 변수에서 자격 증명 로드
     user_id = os.environ.get("BGF_USER_ID")
     password = os.environ.get("BGF_PASSWORD")
 
