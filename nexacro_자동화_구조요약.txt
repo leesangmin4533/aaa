@@ -1,0 +1,91 @@
+📁 자동화 설계 통합 요약: Nexacro 기반 BGF 시스템
+
+---
+
+🔷 1. 진입 구조: 매출분석 > 중분류별 매출 구성비
+
+- Top 메뉴 ID  
+  mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext
+
+- 서브 메뉴 ID (중분류별)  
+  mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text  
+  또는 동적으로 검색 (권장):
+  [...document.querySelectorAll("div")].find(el => el.innerText.includes("중분류") && el.offsetParent !== null)
+
+- 중요 포인트  
+  하드코딩 ID 방식은 실패할 수 있음 → 텍스트 기반 탐색 필요  
+  click → wait → querySelector로 ID 획득 후 MouseEvent 시뮬레이션
+
+---
+
+🔷 2. 그리드 구성 요약
+
+▶ gdList (좌측: 중분류 코드 리스트)
+
+| 항목 | 설명 |
+|------|------|
+| ID 패턴 | gdList.body.gridrow_{n}.cell_{n}_0:text (코드), cell_{n}_1:text (명칭) |
+| 클릭 방식 | :text 제거 후 MouseEvent(mousedown→mouseup→click) |
+| 스크롤 | gdList.vscrollbar.incbutton:icontext |
+
+▶ gdDetail (우측: 상품 리스트)
+
+| 항목 | 설명 |
+|------|------|
+| ID 패턴 | gdDetail.body.gridrow_{n}.cell_{n}_{col}:text |
+| 항목 구조 | 상품코드(0), 상품명(1), 매출(2), 발주(3), 매입(4), 폐기(5), 현재고(6) |
+| 스크롤 | gdDetail.vscrollbar.incbutton:icontext |
+
+---
+
+🔷 3. 이벤트 실행 방식
+
+- Nexacro에서는 .click() 무효  
+- 반드시 getBoundingClientRect() 좌표 기반 MouseEvent 필요
+- 예:
+  const rect = el.getBoundingClientRect();
+  ['mousedown', 'mouseup', 'click'].forEach(evt => el.dispatchEvent(new MouseEvent(evt, { ... })));
+
+- 동기화 필요 시 await delay(300~1000) 적용
+
+---
+
+🔷 4. 자동화 루프 구조 (중분류 + 상품코드 전체 순회)
+
+✅ 중분류 자동 클릭
+div[id*='gdList.body'][id*='cell_'][id$='_0:text']  // 3자리 숫자 추출 후 클릭
+
+✅ 상품코드 자동 클릭
+div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']  // 13자리 숫자 추출 후 클릭
+
+✅ 통합 자동화 흐름
+1. 중분류 click
+2. await delay(500~1000)
+3. 상품코드 루프 click
+4. gdDetail 스크롤로 다음 상품 로드
+5. 중분류 스크롤 후 다음 코드 반복
+
+---
+
+🔷 5. 팝업 처리 정책
+
+- 팝업은 모두 nexacro.Div.form 구조  
+- 닫기 버튼 없음 → 텍스트 "닫기", "X" 기반 탐색
+- 반드시 MouseEvent 시뮬레이션으로만 닫기 가능  
+- utils/popup_util.py → close_all_modals() 함수 중심 설계 (MouseEvent 포함)
+
+---
+
+🔷 6. ID 탐색 주의점
+
+- 실제 ID는 mainframe...gdList.body.gridrow_n.cell_n_0:text 형태
+- .querySelector("div[id='gdList...']")는 실패
+- 항상 id*='cell_' && id$=':text' 조합을 사용할 것
+
+---
+
+🔷 7. 발주일자 참고 정책
+
+- 상온 발주: 일요일 불가
+- 냉장 발주: 요일 제한 없음
+- 마감 시간: 오전 10시 이전까지만 유효
