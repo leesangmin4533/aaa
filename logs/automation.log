@@ -1,34 +1,235 @@
 [utils.popup_util][modal_closer][INFO] Attempt 1/5 to find[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
-[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][ERROR] Nexacro application did not load: Message: no such window: target window already closed
-from unknown error: web view not found
-  (Session info: chrome=138.0.7204.158)
-Stacktrace:
-	GetHandleVerifier [0x0x7ff74954e935+77845]
-	GetHandleVerifier [0x0x7ff74954e990+77936]
-	(No symbol) [0x0x7ff749309cda]
-	(No[automation.workflow][login][ERROR] Login failed.
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-17 ---
-[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-18 ---
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selecto[automation.workflow][navi[login.login_bgf][login][INFO] Login form[__main__][main][INFO] Starting collection for today: 2025-07-24
+[__main__][main][INFO] ===== Automation End =====
+비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 0 popups after login.
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+[login.login_bgf][login][INFO] Login form elements are ready.
+[login.login_bgf][login][INFO] Login script executed
+[login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[login.login_bgf][login][INFO] Login succeeded
+[login.login_bgf][login][INFO] Closed 5 popups after login.
+orkflow][main][INFO] --- Finished collection cycle for 2025-07-21 ---
+[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-22 ---
 [automation.workflow][init][INFO] Initializing Chrome driver...
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-18 ---
-c3e+185118]
-	GetHandleVerifier [0x0x7ff74957054f+216111]
-	GetHandleVerifier [0x0x7ff7495572e4+113092]
-	GetHandleVerifier [0x0x7ff749557499+113529]
-	GetHandleVerifier [0x0x7ff74953e298+10616]
-	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
-	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
-
-ymbol) [0x0x7ff749352523]
-	GetHandleVerifier [0x0x7ff74982684d+3059501]
-	GetHandleVerifier [0x0x7ff749820c0d+3035885]
-	GetHandleVerifier [0x0x7ff749840400+3164896]
-	GetHandleVerifier [0x0x7ff749568c3e+185118]
-	GetHandleVerifier [0x0x7ff74957054f+216111]
-	GetHandleVerifier [0x0x7ff7495572e4+113092]
-	GetHandleVerifier [0x0x7ff749557499+113529]
-	GetHandleVerifier [0x0x7ff74953e298+10616]
+[automation.workflow][login][INFO] Login successful.
+[automation.workflow][navigation][INFO] Navigating to sales page...
+[automation.workflow][navigation][ERROR] Page load timed out.
+[automation.workflow][main][INFO] Closing driver for 2025-07-22 cycle.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-22 ---
+[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-23 ---
+[automation.workflow][init][INFO] Initializing Chrome driver...
+[automation.workflow][login][INFO] Login successful.
+[automation.workflow][navigation][INFO] Navigating to sales page...
+[automation.workflow][navigation][ERROR] Page load timed out.
+[automation.workflow][main][INFO] Closing driver for 2025-07-23 cycle.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-23 ---
+[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-24 ---
+[automation.workflow][init][INFO] Initializing Chrome driver...
+[automation.workflow][login][INFO] Login successful.
+[automation.workflow][navigation][INFO] Navigating to sales page...
+[automation.workflow][navigation][ERROR] Page load timed out.
+[automation.workflow][main][INFO] Closing driver for 2025-07-24 cycle.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-24 ---
+ulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+ff6b5c872e4+113092]
+	GetHandleVerifier [0x0x7ff6b5c87499+113529]
+	GetHandleVerifier [0x0x7ff6b5c6e298+10616]
 	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
 	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
 
 [automation.config][driver][DEBUG] Chrome driver created
+[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[automation.config][navigation][ERROR] Mix ratio page grid not found within 10 seconds.
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 43, in wait_for_mix_ratio_page
+    element = WebDriverWait(driver, timeout).until(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b5c7e935+77845]
+	GetHandleVerifier [0x0x7ff6b5c7e990+77936]
+	(No symbol) [0x0x7ff6b5a39cda]
+	(No symbol) [0x0x7ff6b5a906aa]
+	(No symbol) [0x0x7ff6b5a9095c]
+	(No symbol) [0x0x7ff6b5ae3d07]
+	(No symbol) [0x0x7ff6b5ab890f]
+	(No symbol) [0x0x7ff6b5ae0b07]
+	(No symbol) [0x0x7ff6b5ab86a3]
+	(No symbol) [0x0x7ff6b5a81791]
+	(No symbol) [0x0x7ff6b5a82523]
+	GetHandleVerifier [0x0x7ff6b5f5684d+3059501]
+	GetHandleVerifier [0x0x7ff6b5f50c0d+3035885]
+	GetHandleVerifier [0x0x7ff6b5f70400+3164896]
+	GetHandleVerifier [0x0x7ff6b5c98c3e+185118]
+	GetHandleVerifier [0x0x7ff6b5ca054f+216111]
+	GetHandleVerifier [0x0x7ff6b5c872e4+113092]
+	GetHandleVerifier [0x0x7ff6b5c87499+113529]
+	GetHandleVerifier [0x0x7ff6b5c6e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[automation.config][driver][DEBUG] Chrome driver created
+[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[automation.config][navigation][ERROR] Mix ratio page grid not found within 10 seconds.
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 43, in wait_for_mix_ratio_page
+    element = WebDriverWait(driver, timeout).until(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b5c7e935+77845]
+	GetHandleVerifier [0x0x7ff6b5c7e990+77936]
+	(No symbol) [0x0x7ff6b5a39cda]
+	(No symbol) [0x0x7ff6b5a906aa]
+	(No symbol) [0x0x7ff6b5a9095c]
+	(No symbol) [0x0x7ff6b5ae3d07]
+	(No symbol) [0x0x7ff6b5ab890f]
+	(No symbol) [0x0x7ff6b5ae0b07]
+	(No symbol) [0x0x7ff6b5ab86a3]
+	(No symbol) [0x0x7ff6b5a81791]
+	(No symbol) [0x0x7ff6b5a82523]
+	GetHandleVerifier [0x0x7ff6b5f5684d+3059501]
+	GetHandleVerifier [0x0x7ff6b5f50c0d+3035885]
+	GetHandleVerifier [0x0x7ff6b5f70400+3164896]
+	GetHandleVerifier [0x0x7ff6b5c98c3e+185118]
+	GetHandleVerifier [0x0x7ff6b5ca054f+216111]
+	GetHandleVerifier [0x0x7ff6b5c872e4+113092]
+	GetHandleVerifier [0x0x7ff6b5c87499+113529]
+	GetHandleVerifier [0x0x7ff6b5c6e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[automation.config][driver][DEBUG] Chrome driver created
+[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[automation.config][navigation][ERROR] Mix ratio page grid not found within 10 seconds.
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 43, in wait_for_mix_ratio_page
+    element = WebDriverWait(driver, timeout).until(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b5c7e935+77845]
+	GetHandleVerifier [0x0x7ff6b5c7e990+77936]
+	(No symbol) [0x0x7ff6b5a39cda]
+	(No symbol) [0x0x7ff6b5a906aa]
+	(No symbol) [0x0x7ff6b5a9095c]
+	(No symbol) [0x0x7ff6b5ae3d07]
+	(No symbol) [0x0x7ff6b5ab890f]
+	(No symbol) [0x0x7ff6b5ae0b07]
+	(No symbol) [0x0x7ff6b5ab86a3]
+	(No symbol) [0x0x7ff6b5a81791]
+	(No symbol) [0x0x7ff6b5a82523]
+	GetHandleVerifier [0x0x7ff6b5f5684d+3059501]
+	GetHandleVerifier [0x0x7ff6b5f50c0d+3035885]
+	GetHandleVerifier [0x0x7ff6b5f70400+3164896]
+	GetHandleVerifier [0x0x7ff6b5c98c3e+185118]
+	GetHandleVerifier [0x0x7ff6b5ca054f+216111]
+	GetHandleVerifier [0x0x7ff6b5c872e4+113092]
+	GetHandleVerifier [0x0x7ff6b5c87499+113529]
+	GetHandleVerifier [0x0x7ff6b5c6e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[automation.config][driver][DEBUG] Chrome driver created
+[automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[automation.config][navigation][DEBUG] Waiting for mix ratio page grid with selector: div[id*='gdList.body'][id*='cell_'][id$='_0:text']
+[automation.config][navigation][ERROR] Mix ratio page grid not found within 10 seconds.
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 43, in wait_for_mix_ratio_page
+    element = WebDriverWait(driver, timeout).until(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b5c7e935+77845]
+	GetHandleVerifier [0x0x7ff6b5c7e990+77936]
+	(No symbol) [0x0x7ff6b5a39cda]
+	(No symbol) [0x0x7ff6b5a906aa]
+	(No symbol) [0x0x7ff6b5a9095c]
+	(No symbol) [0x0x7ff6b5ae3d07]
+	(No symbol) [0x0x7ff6b5ab890f]
+	(No symbol) [0x0x7ff6b5ae0b07]
+	(No symbol) [0x0x7ff6b5ab86a3]
+	(No symbol) [0x0x7ff6b5a81791]
+	(No symbol) [0x0x7ff6b5a82523]
+	GetHandleVerifier [0x0x7ff6b5f5684d+3059501]
+	GetHandleVerifier [0x0x7ff6b5f50c0d+3035885]
+	GetHandleVerifier [0x0x7ff6b5f70400+3164896]
+	GetHandleVerifier [0x0x7ff6b5c98c3e+185118]
+	GetHandleVerifier [0x0x7ff6b5ca054f+216111]
+	GetHandleVerifier [0x0x7ff6b5c872e4+113092]
+	GetHandleVerifier [0x0x7ff6b5c87499+113529]
+	GetHandleVerifier [0x0x7ff6b5c6e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
