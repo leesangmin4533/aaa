@@ -65,9 +65,12 @@ def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
 
         # 2. '중분류별 매출 구성비' 서브 메뉴 클릭
         sub_menu_container_selector = "div[id*='pdiv_topMenu']"
-        log.debug(f"Waiting for sub menu container with selector: {sub_menu_container_selector}", extra={"tag": "navigation"})
+        log.debug(f"Waiting for sub menu container to be rendered and visible with selector: {sub_menu_container_selector}", extra={"tag": "navigation"})
         WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, sub_menu_container_selector))
+            lambda d: d.execute_script("""
+                const el = document.querySelector('div[id*="pdiv_topMenu"]');
+                return !!el && el.offsetParent !== null;
+            """)
         )
         sub_menu_js = """
         const menuContainer = document.querySelector("div[id*='pdiv_topMenu']");
@@ -92,7 +95,7 @@ def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
             return False
         
         # 페이지 전환을 위한 명시적 대기
-        time.sleep(5)
+        time.sleep(8)
         log.info("Successfully navigated. Now waiting for page grid to load.", extra={"tag": "navigation"})
 
         # 진단: gdList.body 존재 여부 및 로딩 오버레이 확인
@@ -109,15 +112,17 @@ def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
         cell_selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
         log.debug(f"Waiting for mix ratio page grid body with selector: {grid_body_selector}", extra={"tag": "navigation"})
 
-        # 1단계: 그리드 본체(컨테이너)가 나타날 때까지 대기
+        # 1단계: 그리드 본체(컨테이너)가 DOM에 나타날 때까지 대기
         WebDriverWait(driver, timeout).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, grid_body_selector))
+            EC.presence_of_element_located((By.CSS_SELECTOR, grid_body_selector))
         )
-        log.debug("Mix ratio page grid body found. Now waiting for data cells.", extra={"tag": "navigation"})
+        log.debug("Mix ratio page grid body is present in DOM. Giving it a moment to render.", extra={"tag": "navigation"})
+        time.sleep(2) # DOM에 나타난 후 렌더링을 위한 추가 대기
 
-        # 2단계: 그리드 내부에 실제 데이터가 로드될 때까지 대기
+        # 2단계: 그리드 본체(컨테이너)가 화면에 보이고, 내부에 실제 데이터가 로드될 때까지 대기
         WebDriverWait(driver, timeout).until(
             EC.all_of(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, grid_body_selector)), # 다시 한번 가시성 확인
                 EC.visibility_of_element_located((By.CSS_SELECTOR, cell_selector)),
                 lambda d: len(d.find_element(By.CSS_SELECTOR, cell_selector).text.strip()) > 0
             )
