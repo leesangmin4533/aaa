@@ -20,7 +20,7 @@ from automation.config import (
     ALL_SALES_DB_FILE,
     CODE_OUTPUT_DIR,
     FIELD_ORDER,
-    NAVIGATION_SCRIPT,
+
     PAGE_LOAD_TIMEOUT,
     SCRIPT_DIR,
 )
@@ -68,7 +68,7 @@ def main() -> None:
                 collect_day_data_func=execute_collect_single_day_data,
                 write_data_func=write_sales_data,
                 db_path=db_path,
-                navigation_script=NAVIGATION_SCRIPT,
+
                 automation_library_script="nexacro_automation_library.js",
                 field_order=FIELD_ORDER,
                 page_load_timeout=PAGE_LOAD_TIMEOUT,
@@ -89,7 +89,6 @@ def main() -> None:
         collect_day_data_func=execute_collect_single_day_data,
         write_data_func=write_sales_data,
         db_path=db_path,
-        navigation_script=NAVIGATION_SCRIPT,
         automation_library_script="nexacro_automation_library.js",
         field_order=FIELD_ORDER,
         page_load_timeout=PAGE_LOAD_TIMEOUT,
