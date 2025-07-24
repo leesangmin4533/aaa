@@ -1,21 +1,44 @@
 (() => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
+  async function findElementByNexacroId(id) {
+    try {
+      // Nexacro ID를 점으로 분할하여 각 부분을 처리
+      const parts = id.split('.');
+      const finalPart = parts[parts.length - 1].split(':')[0];
+      
+      // 다양한 선택자 조합을 시도
+      const selectors = [
+        `[id$="${finalPart}"]`,                    // ID 끝부분으로 찾기
+        `[id*="${finalPart}"]`,                    // ID 일부로 찾기
+        `[id*="${parts[parts.length - 2]}"]`       // 상위 컴포넌트 ID로 찾기
+      ];
+
+      for (const selector of selectors) {
+        const elements = document.querySelectorAll(selector);
+        for (const el of elements) {
+          if (el.offsetParent !== null) {  // 화면에 보이는 요소만 선택
+            return el;
+          }
+        }
+      }
+      return null;
+    } catch (e) {
+      console.error(`요소 검색 중 오류 발생: ${e}`);
+      return null;
+    }
+  }
+
   async function clickByExactId(id, label = "") {
-    const el = document.getElementById(id);
+    console.log(`🔍 요소 검색 중: ${id} ${label ? `(${label})` : ""}`);
+    
+    const el = await findElementByNexacroId(id);
     if (!el || el.offsetParent === null) {
-      console.warn(`ID 클릭 실패: ${id}`);
+      console.warn(`⛔ 클릭 실패: ${id} ${label ? `(${label})` : ""}`);
       return false;
     }
 
-    // 요소가 클릭 가능한 상태가 될 때까지 대기
-    await delay(10000);  // 기본 10초 대기
-
-    // Nexacro 컴포넌트의 click() 메서드를 우선적으로 시도
-    if (typeof el.click === 'function') {
-      el.click();
-    } else {
-      // 일반 DOM 요소인 경우 MouseEvent 디스패치
+    try {
       const rect = el.getBoundingClientRect();
       ["mousedown", "mouseup", "click"].forEach(type =>
         el.dispatchEvent(new MouseEvent(type, {
@@ -26,89 +49,47 @@
           clientY: rect.top + rect.height / 2
         }))
       );
-    }
-    
-    // 클릭 후 데이터 로드 대기
-    console.log(`클릭 이벤트 발생 ${label ? " → " + label : ""}: ${id}`);
-    await delay(10000);  // 데이터 로드를 위한 10초 대기
-
-    console.log(`클릭 완료${label ? " → " + label : ""}: ${id}`);
-    return true;
-  }
-
-  async function closePopups() {
-    const popupIds = [
-        'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_close',
-        'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_closeTop',
-        'mainframe.HFrameSet00.VFrameSet00.TopFrame.STZZ210_P0.form.btn_enter'
-    ];
-    for (const id of popupIds) {
-        const el = document.getElementById(id);
-        if (el && el.offsetParent !== null) {
-            await clickByExactId(id, "팝업 닫기");
-            await delay(10000);
-        }
+      
+      console.log(`✅ 클릭 성공: ${id} ${label ? `(${label})` : ""}`);
+      return true;
+    } catch (e) {
+      console.error(`클릭 이벤트 발생 중 오류: ${e}`);
+      return false;
     }
   }
 
-  function triggerGridRowClick(rowIndex = 0) {
-    const f = window.nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
-    const gList = f?.div_workForm?.form?.div2?.form?.gdList;
-    if (!gList || typeof gList.selectRow !== "function") {
-      console.warn("⚠️ gdList 초기화 안됨");
-      return;
-    }
-
-    gList.selectRow(rowIndex);
-    const evt = new nexacro.GridClickEventInfo(
-      gList, "oncellclick", false, false, false, false, 0, 0, rowIndex, rowIndex
-    );
-
-    console.log("✅ Nexacro oncellclick 강제 발생");
-    gList.oncellclick._fireEvent(gList, evt);
-  }
-
-  async function pollAndClickMidFirstRow() {
-    const maxAttempts = 30;
-    let attempts = 0;
-
-    const tryClick = () => {
-      const f = window.nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
-      const gList = f?.div_workForm?.form?.div2?.form?.gdList;
-      if (gList && typeof gList.selectRow === "function") {
-        triggerGridRowClick(0);
-      } else {
-        if (++attempts < maxAttempts) {
-          setTimeout(tryClick, 300);
-        } else {
-          console.warn("⚠️ gdList 초기화 실패");
-        }
+  (async () => {
+    try {
+      // 1. 매출분석 탭 클릭
+      console.log("🔍 매출분석 메뉴 진입 시도...");
+      const topMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext";
+      const ok1 = await clickByExactId(topMenuId, "매출분석");
+      if (!ok1) {
+        console.error("❌ 매출분석 메뉴 클릭 실패");
+        return;
       }
-    };
+      
+      // 메뉴 표시를 위한 대기
+      console.log("⏳ 서브메뉴 로딩 대기 중...");
+      await delay(2000);
 
-    tryClick();
-  }
+      // 2. 중분류별 매출 구성비 클릭
+      const subMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text";
+      console.log("🔍 중분류별 매출 구성비 메뉴 진입 시도...");
+      const ok2 = await clickByExactId(subMenuId, "중분류별 매출 구성비");
+      if (!ok2) {
+        console.error("❌ 중분류별 매출 구성비 메뉴 클릭 실패");
+        return;
+      }
 
-  async function goToMidMixRatio() {
-    console.log("goToMidMixRatio 시작");
-    await closePopups();
-
-    // 1. 매출분석 탭 클릭
-    const topMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext";
-    await clickByExactId(topMenuId, "매출분석");
-    await delay(10000);
-    await closePopups();
-
-    // 2. 중분류별 매출 구성비 메뉴 클릭
-    const subMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text";
-    await clickByExactId(subMenuId, "중분류별 매출 구성비");
-    await delay(10000);
-    await closePopups();
-
-    // 3. 중분류 리스트 첫행 클릭
-    await pollAndClickMidFirstRow();
-  }
-
-  // 엔트리 포인트
-  goToMidMixRatio();
+      // 페이지 로딩 대기
+      console.log("⏳ 페이지 로딩 대기 중...");
+      await delay(2000);
+      
+      // 로딩 완료 표시
+      console.log("✅ 네비게이션 완료");
+    } catch (e) {
+      console.error(`네비게이션 중 오류 발생: ${e}`);
+    }
+  })();
 })();
