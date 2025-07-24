@@ -8,3 +8,256 @@
 [2025-07-25 08:17:35][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
 [2025-07-25 08:17:35][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
 [2025-07-25 08:17:35][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:27:36][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:27:37][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:27:37][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:27:37][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:27:37][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:27:37][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 08:27:37][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 08:27:37][__main__][main][INFO] 시작 시각: 2025-07-25 08:27:37
+[2025-07-25 08:27:37][__main__][main][INFO] Python 프로세스 ID: 24340
+[2025-07-25 08:27:37][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 08:27:37][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 08:27:37][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 08:27:37][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 08:27:37][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 08:27:39][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 08:27:43][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 08:27:43][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 08:27:43][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 08:27:43][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 08:27:44][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 08:27:44][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:27:46][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 08:27:46][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:27:48][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 08:27:48][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:27:50][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 08:27:50][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:27:52][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 08:27:52][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:27:54][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 08:27:54][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 08:27:54][automation.workflow][login][INFO] Login successful.
+[2025-07-25 08:27:54][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 08:27:54][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 08:27:54][automation.config][navigation][INFO] 프레임 로딩 상태 확인 시작
+[2025-07-25 08:28:25][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (30초)
+[2025-07-25 08:28:25][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 08:28:25][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 08:28:28][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 08:28:28][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 08:28:28][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 08:46:53][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:46:53][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:46:54][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:46:54][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:46:54][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:46:54][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 08:46:54][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 08:46:54][__main__][main][INFO] 시작 시각: 2025-07-25 08:46:54
+[2025-07-25 08:46:54][__main__][main][INFO] Python 프로세스 ID: 5556
+[2025-07-25 08:46:54][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 08:46:54][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 08:46:54][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 08:46:54][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 08:46:54][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 08:46:55][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 08:46:59][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 08:46:59][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 08:46:59][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 08:46:59][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 08:47:00][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 08:47:01][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:47:03][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 08:47:03][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:47:05][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 08:47:05][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:47:07][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 08:47:07][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:47:09][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 08:47:09][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:47:11][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 08:47:11][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 08:47:11][automation.workflow][login][INFO] Login successful.
+[2025-07-25 08:47:11][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 08:47:11][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 08:47:11][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 08:47:11][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 08:47:41][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (30초)
+[2025-07-25 08:47:41][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 08:47:41][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 08:47:44][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 08:47:44][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 08:47:44][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 08:49:17][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:49:17][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:49:17][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:49:17][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:49:17][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:49:17][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 08:49:17][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 08:49:17][__main__][main][INFO] 시작 시각: 2025-07-25 08:49:17
+[2025-07-25 08:49:17][__main__][main][INFO] Python 프로세스 ID: 17372
+[2025-07-25 08:49:17][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 08:49:17][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 08:49:17][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 08:49:17][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 08:49:17][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 08:49:19][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 08:49:23][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 08:49:23][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 08:49:23][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 08:49:23][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 08:49:24][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 08:49:24][utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[2025-07-25 08:49:24][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[2025-07-25 08:49:24][login.login_bgf][login][INFO] Closed 0 popups after login.
+[2025-07-25 08:49:24][automation.workflow][login][INFO] Login successful.
+[2025-07-25 08:49:24][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 08:49:24][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 08:49:24][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 08:49:24][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 08:49:52][automation.config][navigation][ERROR] 페이지 로드 중 오류 발생: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff65368e935+77845]
+	GetHandleVerifier [0x0x7ff65368e990+77936]
+	(No symbol) [0x0x7ff653449cda]
+	(No symbol) [0x0x7ff6534221a1]
+	(No symbol) [0x0x7ff6534cfc6e]
+	(No symbol) [0x0x7ff6534f0432]
+	(No symbol) [0x0x7ff6534c86a3]
+	(No symbol) [0x0x7ff653491791]
+	(No symbol) [0x0x7ff653492523]
+	GetHandleVerifier [0x0x7ff65396684d+3059501]
+	GetHandleVerifier [0x0x7ff653960c0d+3035885]
+	GetHandleVerifier [0x0x7ff653980400+3164896]
+	GetHandleVerifier [0x0x7ff6536a8c3e+185118]
+	GetHandleVerifier [0x0x7ff6536b054f+216111]
+	GetHandleVerifier [0x0x7ff6536972e4+113092]
+	GetHandleVerifier [0x0x7ff653697499+113529]
+	GetHandleVerifier [0x0x7ff65367e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 44, in wait_for_mix_ratio_page
+    WebDriverWait(driver, timeout).until(
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\wait.py", line 129, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 104, in _predicate
+    return driver.find_element(*locator)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 914, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff65368e935+77845]
+	GetHandleVerifier [0x0x7ff65368e990+77936]
+	(No symbol) [0x0x7ff653449cda]
+	(No symbol) [0x0x7ff6534221a1]
+	(No symbol) [0x0x7ff6534cfc6e]
+	(No symbol) [0x0x7ff6534f0432]
+	(No symbol) [0x0x7ff6534c86a3]
+	(No symbol) [0x0x7ff653491791]
+	(No symbol) [0x0x7ff653492523]
+	GetHandleVerifier [0x0x7ff65396684d+3059501]
+	GetHandleVerifier [0x0x7ff653960c0d+3035885]
+	GetHandleVerifier [0x0x7ff653980400+3164896]
+	GetHandleVerifier [0x0x7ff6536a8c3e+185118]
+	GetHandleVerifier [0x0x7ff6536b054f+216111]
+	GetHandleVerifier [0x0x7ff6536972e4+113092]
+	GetHandleVerifier [0x0x7ff653697499+113529]
+	GetHandleVerifier [0x0x7ff65367e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+
+[2025-07-25 08:49:52][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 08:49:52][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 08:49:54][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 08:49:57][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:49:58][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:49:58][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:49:58][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:49:58][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:49:58][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 08:49:58][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 08:49:58][__main__][main][INFO] 시작 시각: 2025-07-25 08:49:58
+[2025-07-25 08:49:58][__main__][main][INFO] Python 프로세스 ID: 10984
+[2025-07-25 08:49:58][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 08:49:58][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 08:49:58][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 08:49:58][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 08:49:58][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 08:49:59][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 08:50:04][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 08:50:04][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 08:50:04][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 08:50:04][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 08:50:05][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 08:50:05][utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[2025-07-25 08:50:05][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[2025-07-25 08:50:05][login.login_bgf][login][INFO] Closed 0 popups after login.
+[2025-07-25 08:50:05][automation.workflow][login][INFO] Login successful.
+[2025-07-25 08:50:05][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 08:50:05][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 08:50:05][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 08:50:05][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 08:50:35][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (30초)
+[2025-07-25 08:50:35][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 08:50:35][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 08:50:38][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 08:50:38][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 08:50:38][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 08:50:41][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 08:50:42][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 08:50:42][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 08:50:42][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 08:50:42][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 08:50:42][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 08:50:42][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 08:50:42][__main__][main][INFO] 시작 시각: 2025-07-25 08:50:42
+[2025-07-25 08:50:42][__main__][main][INFO] Python 프로세스 ID: 15264
+[2025-07-25 08:50:42][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 08:50:42][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 08:50:42][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 08:50:42][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 08:50:42][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 08:50:43][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 08:50:47][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 08:50:47][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 08:50:47][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 08:50:47][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 08:50:48][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 08:50:49][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:50:51][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 08:50:51][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:50:53][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 08:50:53][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:50:55][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 08:50:55][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:50:57][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 08:50:57][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 08:50:59][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 08:50:59][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 08:50:59][automation.workflow][login][INFO] Login successful.
+[2025-07-25 08:50:59][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 08:50:59][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 08:50:59][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 08:50:59][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 08:51:29][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (30초)
+[2025-07-25 08:51:29][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 08:51:29][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 08:51:31][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 08:51:31][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 08:51:31][__main__][main][INFO] ===== Automation Complete =====
