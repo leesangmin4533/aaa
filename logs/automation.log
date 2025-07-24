@@ -1,34 +1,10 @@
 [utils.popup_util][modal_closer][INFO] Attempt 1/5 to find[automation.config][navigation][INFO] Navigating to '중분류별 매출 구성비' page...
 [automation.config][navigation][ERROR] Failed to click top menu '매출분석': Top menu not found
-[automation.config][driver][DEBUG] Chrome driver created[l[automation.config][driver][DEBUG] Chrome driver created
- Message: javascript error: Cannot read properties of undefined (reading 'form')
-  (Session info: chrome=138.0.7204.158)
-Stacktrace:
-	GetHandleVerifier [0x0x7ff648c0e935+77845]
-	GetHandleVerifier [0x0x7ff648c0e990+77936]
-	(No symbol) [0x0x7ff6489c9cda]
-	(No symbol) [0x0x7ff6489d1679]
-	(No symbo[automation.workflow][login][ERROR] Login failed.
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-18 ---
-[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-19 ---
-[automation.workflow][init][INFO] Initializing Chrome driver...
-[automation.workflow][login][ERROR] Login failed.
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-19 ---
-[automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-20 ---
-[automation.workflow][init][INFO] Initializing Chrome driver...
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-20 ---
-rt [0x0x7ff91d4bc34c+44]
-
-[login.login_bgf][login][ERROR] Nexacro application did not load: Message: no such window: target window already closed
-from unknown error: web view not found
-  (Session info: chrome=138.0.7204.158)
-Stacktrace:
-	GetHandleVerifier [0x0x7ff648c0e935+77845]
-	GetHandleVerifier [0x0x7ff648c0e990+77936]
-	(No symbol) [0x0x7ff6489c9cda]
-	(No symbol) [0x0x7ff6489a21a1]
-	(No symbol) [0x0x7ff648a4fc6e]
-	(No symbol) [0x0x7ff648a70432]
+ng and waiting for page to loa[__main__][main][INFO] ===== Automation End =====
+gation or page load timed out.
+[automation.workflow][main][INFO] Closing driver for 2025-07-24 cycle.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-24 ---
+ [0x0x7ff648a71582]
 	(No symbol) [0x0x7ff648a486a3]
 	(No symbol) [0x0x7ff648a11791]
 	(No symbol) [0x0x7ff648a12523]
@@ -43,3 +19,4 @@ Stacktrace:
 	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
 	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
 
+[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
