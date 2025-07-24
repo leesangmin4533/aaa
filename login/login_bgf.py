@@ -78,34 +78,62 @@ def login_bgf(
 
     js = f"""
 try {{
-    var form = nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form;
+    var app = nexacro.getApplication();
+    if (!app) return 'nexacro application not found';
+    var mainframe = app.mainframe;
+    if (!mainframe) return 'mainframe not found';
+    var hFrameSet00 = mainframe.HFrameSet00;
+    if (!hFrameSet00) return 'HFrameSet00 not found';
+    var loginFrame = hFrameSet00.LoginFrame;
+    if (!loginFrame) return 'LoginFrame not found';
+    var form = loginFrame.form.div_login.form;
+    if (!form) return 'login form not found';
 
-    form.edt_id.set_value("{user_id}");
-    form.edt_id.text = "{user_id}";
-    form.edt_id.setFocus();
+    // Wait for input fields to be available
+    var idInput = form.edt_id;
+    var pwInput = form.edt_pw;
+    if (!idInput || !pwInput) return 'Login input fields not found';
 
-    form.edt_pw.set_value("{password}");
-    form.edt_pw.text = "{password}";
-    form.edt_pw.setFocus();
+    idInput.set_value("{user_id}");
+    idInput.text = "{user_id}";
+    idInput.setFocus();
+
+    pwInput.set_value("{password}");
+    pwInput.text = "{password}";
+    pwInput.setFocus();
 
     // 지연 실행
     setTimeout(() => form.btn_login.click(), 300);
 }} catch (e) {{
     console.error("login error", e);
+    return 'JavaScript error: ' + e.message;
 }}
 """
     try:
         # Wait for the login form elements to be ready
+        # This check is now more robust within the JS itself
         WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form);")
+            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe && nexacro.getApplication().mainframe.HFrameSet00 && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form);")
         )
         log.info("Login form elements are ready.", extra={'tag': 'login'})
-        driver.execute_script(js)
+        js_result = driver.execute_script(js)
+        if isinstance(js_result, str) and js_result.startswith('JavaScript error'):
+            raise RuntimeError(js_result)
         log.info("Login script executed", extra={'tag': 'login'})
         pw_value = driver.execute_script(
             """
 try {
-    return nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form.edt_pw.value;
+    var app = nexacro.getApplication();
+    if (!app) return 'nexacro application not found';
+    var mainframe = app.mainframe;
+    if (!mainframe) return 'mainframe not found';
+    var hFrameSet00 = mainframe.HFrameSet00;
+    if (!hFrameSet00) return 'HFrameSet00 not found';
+    var loginFrame = hFrameSet00.LoginFrame;
+    if (!loginFrame) return 'LoginFrame not found';
+    var form = loginFrame.form.div_login.form;
+    if (!form) return 'login form not found';
+    return form.edt_pw.value;
 } catch (e) {
     return 'error: ' + e.toString();
 }
