@@ -45,17 +45,14 @@ def _initialize_driver_and_login(
 
 def _navigate_and_prepare_collection(
     driver: Any,
-    run_script_fn: Callable[[Any, str], Any],
     wait_page_fn: Callable[[Any, int], bool],
-    navigation_script: str,
     page_load_timeout: int,
 ) -> bool:
-    log.info("Navigating to sales page...", extra={"tag": "navigation"})
-    run_script_fn(driver, navigation_script)
+    log.info("Navigating and waiting for page to load...", extra={"tag": "navigation"})
     if not wait_page_fn(driver, page_load_timeout):
-        log.error("Page load timed out.", extra={"tag": "navigation"})
+        log.error("Navigation or page load timed out.", extra={"tag": "navigation"})
         return False
-    log.info("Successfully navigated to sales page.", extra={"tag": "navigation"})
+    log.info("Successfully navigated and page is ready.", extra={"tag": "navigation"})
     return True
 
 
@@ -113,7 +110,6 @@ def _run_collection_cycle(
     collect_day_data_func: Callable[[Any, str], Any],
     write_data_func: Callable[..., int],
     db_path: Path,
-    navigation_script: str,
     automation_library_script: str,
     field_order: list[str],
     page_load_timeout: int,
@@ -126,37 +122,8 @@ def _run_collection_cycle(
             return
 
         if not _navigate_and_prepare_collection(
-            driver, run_script_func, wait_for_page_func, navigation_script, page_load_timeout
+            driver, wait_for_page_func, page_load_timeout
         ):
-            return
-
-        # window.nexacro 객체가 로드될 때까지 대기
-        try:
-            log.info("Waiting for window.nexacro object...", extra={"tag": "navigation"})
-            WebDriverWait(driver, 10).until(
-                lambda d: d.execute_script("return !!(window.nexacro && typeof window.nexacro.getApplication === 'function' && window.nexacro.getApplication())")
-            )
-            log.info("window.nexacro object is ready.", extra={"tag": "navigation"})
-        except TimeoutException:
-            log.error("Timed out waiting for window.nexacro object.", extra={"tag": "navigation"})
-            return
-        
-        #  실제 화면 로딩 완료까지 대기 (gdList 그리드 존재 확인)
-        try:
-            log.info("Waiting for mid-category grid to be ready...", extra={"tag": "navigation"})
-            WebDriverWait(driver, 10).until(
-                lambda d: d.execute_script('''
-                    try {
-                        const f = window.nexacro?.getApplication?.().mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form;
-                        return !!f?.div_workForm?.form?.gdList;
-                    } catch (e) {
-                        return false;
-                    }
-                ''')
-            )
-            log.info("Mid-category grid is ready. Proceeding to inject automation JS.", extra={"tag": "navigation"})
-        except TimeoutException:
-            log.error("Mid-category grid did not load in time.", extra={"tag": "navigation"})
             return
 
         run_script_func(driver, automation_library_script)
