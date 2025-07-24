@@ -35,17 +35,17 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
 
 
 def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
-    """'중분류별 매출 구성비' 화면으로 이동하고, 데이터가 로드될 때까지 대기한다."""
+    """'중분류별 매출 구성비' 화면으로 이동한다."""
     log.info("Navigating to '중분류별 매출 구성비' page...", extra={"tag": "navigation"})
     try:
         # 1. '매출분석' 상단 메뉴 클릭
-        top_menu_selector = "div[id*='STMB000_M0:icontext']"
+        top_menu_selector = r"#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.div_topMenu\.form\.STMB000_M0\:icontext"
         log.debug(f"Waiting for top menu with selector: {top_menu_selector}", extra={"tag": "navigation"})
         WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, top_menu_selector))
         )
-        top_menu_js = """
-        const topMenu = document.querySelector("div[id*='STMB000_M0:icontext']");
+        top_menu_js = r"""
+        const topMenu = document.querySelector("#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.div_topMenu\.form\.STMB000_M0\:icontext");
         if (!topMenu) return 'Top menu not found';
         const rect = topMenu.getBoundingClientRect();
         ['mousedown', 'mouseup', 'click'].forEach(evt => {
@@ -61,25 +61,17 @@ def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
             log.error(f"Failed to click top menu '매출분석': {result}", extra={"tag": "navigation"})
             return False
         log.debug("Clicked top menu '매출분석'. Waiting for submenu.", extra={"tag": "navigation"})
-        time.sleep(1.5)
+        time.sleep(1.5) # 메뉴가 나타날 때까지 잠시 대기
 
         # 2. '중분류별 매출 구성비' 서브 메뉴 클릭
-        sub_menu_container_selector = "div[id*='pdiv_topMenu']"
-        log.debug(f"Waiting for sub menu container to be rendered and visible with selector: {sub_menu_container_selector}", extra={"tag": "navigation"})
+        sub_menu_selector = r"#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.pdiv_topMenu_STMB000_M0\.form\.STMB011_M0\:text"
+        log.debug(f"Waiting for sub menu with selector: {sub_menu_selector}", extra={"tag": "navigation"})
         WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("""
-                const el = document.querySelector('div[id*="pdiv_topMenu"]');
-                return !!el && el.offsetParent !== null;
-            """)
+            EC.presence_of_element_located((By.CSS_SELECTOR, sub_menu_selector))
         )
-        sub_menu_js = """
-        const menuContainer = document.querySelector("div[id*='pdiv_topMenu']");
-        if (!menuContainer) return 'Sub menu container not found';
-        const searchText = arguments[0];
-        const subMenu = [...menuContainer.querySelectorAll("div")].find(
-            el => el.innerText.includes(searchText) && el.offsetParent !== null
-        );
-        if (!subMenu) return `Sub menu with text '${searchText}' not found in container`;
+        sub_menu_js = r"""
+        const subMenu = document.querySelector("#mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.pdiv_topMenu_STMB000_M0\.form\.STMB011_M0\:text");
+        if (!subMenu) return 'Sub menu not found';
         const rect = subMenu.getBoundingClientRect();
         ['mousedown', 'mouseup', 'click'].forEach(evt => {
             subMenu.dispatchEvent(new MouseEvent(evt, {
@@ -89,50 +81,16 @@ def wait_for_mix_ratio_page(driver, timeout: int = 30) -> bool:
         });
         return true;
         """
-        result = driver.execute_script(sub_menu_js, "중분류")
+        result = driver.execute_script(sub_menu_js)
         if result is not True:
             log.error(f"Failed to click sub menu '중분류별 매출 구성비': {result}", extra={"tag": "navigation"})
             return False
-        
-        # 페이지 전환을 위한 명시적 대기
-        time.sleep(8)
-        log.info("Successfully navigated. Now waiting for page grid to load.", extra={"tag": "navigation"})
+        log.info("Successfully clicked '중분류별 매출 구성비'. Navigation complete.", extra={"tag": "navigation"})
 
-        # 진단: gdList.body 존재 여부 및 로딩 오버레이 확인
-        diagnostic_js = """
-        const gridBodyExists = !!document.querySelector("div[id*='gdList.body']");
-        const loadingOverlayExists = !!document.querySelector(".nexacro_Mask"); // 넥사크로 로딩 마스크 예시
-        return { gridBodyExists: gridBodyExists, loadingOverlayExists: loadingOverlayExists };
-        """
-        diagnostic_result = driver.execute_script(diagnostic_js)
-        log.debug(f"Diagnostic check after sub-menu click: {diagnostic_result}", extra={"tag": "navigation"})
-
-        # 3. 페이지 그리드가 나타나고 데이터가 로드될 때까지 대기 (대기 시간 및 조건 강화)
-        grid_body_selector = "div[id*='gdList.body']"
-        cell_selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
-        log.debug(f"Waiting for mix ratio page grid body with selector: {grid_body_selector}", extra={"tag": "navigation"})
-
-        # 1단계: 그리드 본체(컨테이너)가 DOM에 나타날 때까지 대기
-        WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, grid_body_selector))
-        )
-        log.debug("Mix ratio page grid body is present in DOM. Giving it a moment to render.", extra={"tag": "navigation"})
-        time.sleep(2) # DOM에 나타난 후 렌더링을 위한 추가 대기
-
-        # 2단계: 그리드 본체(컨테이너)가 화면에 보이고, 내부에 실제 데이터가 로드될 때까지 대기
-        WebDriverWait(driver, timeout).until(
-            EC.all_of(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, grid_body_selector)), # 다시 한번 가시성 확인
-                EC.visibility_of_element_located((By.CSS_SELECTOR, cell_selector)),
-                lambda d: len(d.find_element(By.CSS_SELECTOR, cell_selector).text.strip()) > 0
-            )
-        )
-
-        log.debug("Mix ratio page grid and data found.", extra={"tag": "navigation"})
         return True
     except TimeoutException:
-        log.error(f"Mix ratio page grid not found within {timeout} seconds after navigation.", extra={"tag": "navigation"}, exc_info=True)
+        log.error(f"Navigation timed out.", extra={"tag": "navigation"}, exc_info=True)
         return False
     except Exception as e:
-        log.error(f"An unexpected error occurred while navigating or waiting for mix ratio page: {e}", extra={"tag": "navigation"}, exc_info=True)
+        log.error(f"An unexpected error occurred during navigation: {e}", extra={"tag": "navigation"}, exc_info=True)
         return False
