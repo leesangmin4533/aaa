@@ -1,22 +1,65 @@
 [utils.popup_util][modal_closer][INFO] Attempt 1/5 to find[automation.config][navigation][INFO] Navigating to '중분류별 매출 구성비' page...
-[automation.config][navigation][ERROR] Failed to click top menu '매출분석': Top menu not found
-ng and waiting for page to loa[__main__][main][INFO] ===== Automation End =====
+[automation.config][navigation][DEBUG] Waiting for top menu with selector: #mainframe\.HFrameSet00\.VFrameSet00\.TopFrame\.form\.d[__main__][main][INFO] ===== Automation End =====
 gation or page load timed out.
-[automation.workflow][main][INFO] Closing driver for 2025-07-24 cycle.
-[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-24 ---
- [0x0x7ff648a71582]
-	(No symbol) [0x0x7ff648a486a3]
-	(No symbol) [0x0x7ff648a11791]
-	(No symbol) [0x0x7ff648a12523]
-	GetHandleVerifier [0x0x7ff648ee684d+3059501]
-	GetHandleVerifier [0x0x7ff648ee0c0d+3035885]
-	GetHandleVerifier [0x0x7ff648f00400+3164896]
-	GetHandleVerifier [0x0x7ff648c28c3e+185118]
-	GetHandleVerifier [0x0x7ff648c3054f+216111]
-	GetHandleVerifier [0x0x7ff648c172e4+113092]
-	GetHandleVerifier [0x0x7ff648c17499+113529]
-	GetHandleVerifier [0x0x7ff648bfe298+10616]
+[automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+et00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext' is not a valid selector.
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff65368e935+77845]
+	GetHandleVerifier [0x0x7ff65368e990+77936]
+	(No symbol) [0x0x7ff653449cda]
+	(No symbol) [0x0x7ff653451679]
+	(No symbol) [0x0x7ff653454a61]
+	(No symbol) [0x0x7ff6534f1e4b]
+	(No symbol) [0x0x7ff6534c88ca]
+	(No symbol) [0x0x7ff6534f0b07]
+	(No symbol) [0x0x7ff6534c86a3]
+	(No symbol) [0x0x7ff653491791]
+	(No symbol) [0x0x7ff653492523]
+	GetHandleVerifier [0x0x7ff65396684d+3059501]
+	GetHandleVerifier [0x0x7ff653960c0d+3035885]
+	GetHandleVerifier [0x0x7ff653980400+3164896]
+	GetHandleVerifier [0x0x7ff6536a8c3e+185118]
+	GetHandleVerifier [0x0x7ff6536b054f+216111]
+	GetHandleVerifier [0x0x7ff6536972e4+113092]
+	GetHandleVerifier [0x0x7ff653697499+113529]
+	GetHandleVerifier [0x0x7ff65367e298+10616]
+	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
+	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
+Traceback (most recent call last):
+  File "c:\Users\kanur\OneDrive\문서\GitHub\aaa\automation\scripts.py", line 59, in wait_for_mix_ratio_page
+    result = driver.execute_script(top_menu_js)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 544, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\kanur\AppData\Local\Programs\Python\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidElementStateException: Message: invalid element state: Failed to execute 'querySelector' on 'Document': '#mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext' is not a valid selector.
+  (Session info: chrome=138.0.7204.158)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff65368e935+77845]
+	GetHandleVerifier [0x0x7ff65368e990+77936]
+	(No symbol) [0x0x7ff653449cda]
+	(No symbol) [0x0x7ff653451679]
+	(No symbol) [0x0x7ff653454a61]
+	(No symbol) [0x0x7ff6534f1e4b]
+	(No symbol) [0x0x7ff6534c88ca]
+	(No symbol) [0x0x7ff6534f0b07]
+	(No symbol) [0x0x7ff6534c86a3]
+	(No symbol) [0x0x7ff653491791]
+	(No symbol) [0x0x7ff653492523]
+	GetHandleVerifier [0x0x7ff65396684d+3059501]
+	GetHandleVerifier [0x0x7ff653960c0d+3035885]
+	GetHandleVerifier [0x0x7ff653980400+3164896]
+	GetHandleVerifier [0x0x7ff6536a8c3e+185118]
+	GetHandleVerifier [0x0x7ff6536b054f+216111]
+	GetHandleVerifier [0x0x7ff6536972e4+113092]
+	GetHandleVerifier [0x0x7ff653697499+113529]
+	GetHandleVerifier [0x0x7ff65367e298+10616]
 	BaseThreadInitThunk [0x0x7ff91c0de8d7+23]
 	RtlUserThreadStart [0x0x7ff91d4bc34c+44]
 
-[utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
