@@ -117,6 +117,7 @@ def _run_collection_cycle(
     write_data_func: Callable[..., int],
     db_path: Path,
     automation_library_script: str,
+    navigation_script: str, # 추가된 매개변수
     field_order: list[str],
     page_load_timeout: int,
 ) -> None:
@@ -126,6 +127,9 @@ def _run_collection_cycle(
         driver = _initialize_driver_and_login(cred_path, create_driver_func, login_func)
         if not driver:
             return
+
+        # 네비게이션 스크립트 실행
+        run_script_func(driver, navigation_script)
 
         if not _navigate_and_prepare_collection(
             driver, wait_for_page_func, page_load_timeout
