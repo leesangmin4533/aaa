@@ -99,6 +99,12 @@ def _handle_final_logs(driver: Any) -> None:
             log.info(str(entry), extra={"tag": "browser_log"})
         log.info("--- End of Browser Logs ---", extra={"tag": "browser_log"})
 
+        try:
+            mid_logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+            print("중분류 클릭 로그", mid_logs)
+        except Exception as e:
+            log.warning(f"Failed to fetch mid category logs: {e}", extra={"tag": "browser_log"})
+
     except Exception as e:
         log.error(f"Failed to collect browser logs: {e}", extra={"tag": "browser_log"}, exc_info=True)
 
