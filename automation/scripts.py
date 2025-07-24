@@ -35,25 +35,70 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
 
 
 def wait_for_mix_ratio_page(driver, timeout: int = 10) -> bool:
-    """중분류별 매출 구성비 화면이 나타나고 데이터가 로드될 때까지 대기한다."""
-    selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
-    log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={"tag": "navigation"})
+    """'중분류별 매출 구성비' 화면으로 이동하고, 데이터가 로드될 때까지 대기한다."""
+    log.info("Navigating to '중분류별 매출 구성비' page...", extra={"tag": "navigation"})
     try:
-        # 그리드 요소가 나타날 때까지 대기
-        element = WebDriverWait(driver, timeout).until(
+        # 1. '매출분석' 상단 메뉴 클릭 (ID 기반)
+        top_menu_js = """
+        const topMenu = document.querySelector("div[id*='STMB000_M0:icontext']");
+        if (!topMenu) return 'Top menu not found';
+        const rect = topMenu.getBoundingClientRect();
+        ['mousedown', 'mouseup', 'click'].forEach(evt => {
+            topMenu.dispatchEvent(new MouseEvent(evt, {
+                bubbles: true, cancelable: true, view: window,
+                clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2
+            }));
+        });
+        return true;
+        """
+        result = driver.execute_script(top_menu_js)
+        if (result is not True):
+            log.error(f"Failed to click top menu '매출분석': {result}", extra={"tag": "navigation"})
+            return False
+        log.debug("Clicked top menu '매출분석'. Waiting for submenu.", extra={"tag": "navigation"})
+        time.sleep(1.5)
+
+        # 2. '중분류별 매출 구성비' 서브 메뉴 클릭 (안정성 개선)
+        sub_menu_js = """
+        const menuContainer = document.querySelector("div[id*='pdiv_topMenu']");
+        if (!menuContainer) return 'Sub menu container not found';
+
+        const subMenu = [...menuContainer.querySelectorAll("div")].find(
+            el => el.innerText.includes('중분류') && el.offsetParent !== null
+        );
+        if (!subMenu) return 'Sub menu with text \'중분류\' not found in container';
+
+        const rect = subMenu.getBoundingClientRect();
+        ['mousedown', 'mouseup', 'click'].forEach(evt => {
+            subMenu.dispatchEvent(new MouseEvent(evt, {
+                bubbles: true, cancelable: true, view: window,
+                clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2
+            }));
+        });
+        return true;
+        """
+        result = driver.execute_script(sub_menu_js)
+        if (result is not True):
+            log.error(f"Failed to click sub menu '중분류별 매출 구성비': {result}", extra={"tag": "navigation"})
+            return False
+        log.info("Successfully navigated. Now waiting for page grid to load.", extra={"tag": "navigation"})
+
+        # 3. 페이지 그리드가 나타나고 데이터가 로드될 때까지 대기
+        selector = "div[id*='gdList.body'][id*='cell_'][id$='_0:text']"
+        log.debug(f"Waiting for mix ratio page grid with selector: {selector}", extra={"tag": "navigation"})
+
+        WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, selector))
         )
-        
-        # 그리드에 실제 데이터가 로드될 때까지 대기
         WebDriverWait(driver, timeout).until(
-            lambda d: len(element.text.strip()) > 0
+            lambda d: len(d.find_element(By.CSS_SELECTOR, selector).text.strip()) > 0
         )
-        
+
         log.debug("Mix ratio page grid and data found.", extra={"tag": "navigation"})
         return True
     except TimeoutException:
-        log.error(f"Mix ratio page grid not found within {timeout} seconds.", extra={"tag": "navigation"}, exc_info=True)
+        log.error(f"Mix ratio page grid not found within {timeout} seconds after navigation.", extra={"tag": "navigation"}, exc_info=True)
         return False
     except Exception as e:
-        log.error(f"An unexpected error occurred while waiting for mix ratio page: {e}", extra={"tag": "navigation"}, exc_info=True)
+        log.error(f"An unexpected error occurred while navigating or waiting for mix ratio page: {e}", extra={"tag": "navigation"}, exc_info=True)
         return False
