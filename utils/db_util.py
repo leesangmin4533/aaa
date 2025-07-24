@@ -92,19 +92,25 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
         저장된 레코드 수
     """
     conn = init_db(db_path)
-    collected_at_val = collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
+    collected_at_val = (
+        collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
+    )
     cur = conn.cursor()
-    inserted_count = 0
 
-    # 먼저 날짜만 추출하여 당일 데이터만 비교하도록 함
     current_date = collected_at_val.split()[0]
 
-    # 새로운 데이터를 저장하되, 같은 날짜의 sales가 더 큰 경우에만 저장
     insert_sql = """
     INSERT INTO mid_sales (
         collected_at, mid_code, mid_name, product_code, product_name,
         sales, order_cnt, purchase, disposal, stock
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+
+    update_sql = """
+    UPDATE mid_sales SET
+        collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?,
+        sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?
+    WHERE product_code = ? AND SUBSTR(collected_at, 1, 10) = ?
     """
 
     for rec in records:
@@ -119,26 +125,59 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
         except (ValueError, TypeError):
             continue
 
-        params = (
-            collected_at_val,
-            _get_value(rec, "midCode", "mid_code"),
-            _get_value(rec, "midName", "mid_name"),
-            product_code,
-            _get_value(rec, "productName", "product_name"),
-            sales,
-            _get_value(rec, "order", "order_cnt"),
-            _get_value(rec, "purchase"),
-            _get_value(rec, "discard", "disposal"),
-            _get_value(rec, "stock"),
+        mid_code = _get_value(rec, "midCode", "mid_code")
+        mid_name = _get_value(rec, "midName", "mid_name")
+        product_name = _get_value(rec, "productName", "product_name")
+        order_cnt = _get_value(rec, "order", "order_cnt")
+        purchase = _get_value(rec, "purchase")
+        disposal = _get_value(rec, "discard", "disposal")
+        stock = _get_value(rec, "stock")
+
+        cur.execute(
+            "SELECT sales FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
+            (product_code, current_date),
         )
-        
-        cur.execute(insert_sql, params)
-        if cur.rowcount > 0:
-            inserted_count += 1
+        row = cur.fetchone()
+        if row:
+            if sales > (row[0] or 0):
+                cur.execute(
+                    update_sql,
+                    (
+                        collected_at_val,
+                        mid_code,
+                        mid_name,
+                        product_name,
+                        sales,
+                        order_cnt,
+                        purchase,
+                        disposal,
+                        stock,
+                        product_code,
+                        current_date,
+                    ),
+                )
+        else:
+            cur.execute(
+                insert_sql,
+                (
+                    collected_at_val,
+                    mid_code,
+                    mid_name,
+                    product_code,
+                    product_name,
+                    sales,
+                    order_cnt,
+                    purchase,
+                    disposal,
+                    stock,
+                ),
+            )
 
     conn.commit()
+    cur.execute("SELECT COUNT(*) FROM mid_sales")
+    count = cur.fetchone()[0]
     conn.close()
-    return inserted_count
+    return count
 
 def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
     """

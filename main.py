@@ -13,12 +13,16 @@
 from __future__ import annotations
 
 import os
+import time
 from datetime import datetime
 from functools import partial
+from pathlib import Path
+from typing import Any
 
 from automation.config import (
     ALL_SALES_DB_FILE,
     CODE_OUTPUT_DIR,
+    PAST7_DB_FILE,
     FIELD_ORDER,
 
     PAGE_LOAD_TIMEOUT,
@@ -30,9 +34,28 @@ from login.login_bgf import login_bgf
 from utils.db_util import check_dates_exist, write_sales_data
 from utils.js_util import execute_collect_single_day_data
 from utils.log_util import get_logger
-from automation.scripts import run_script, wait_for_mix_ratio_page
+from utils.popup_util import close_popups_after_delegate
+from automation.scripts import run_script as _run_script
+from automation.scripts import wait_for_data as _wait_for_data
+from automation.scripts import wait_for_mix_ratio_page
 
 log = get_logger(__name__)
+
+
+def run_script(driver, name: str, scripts_dir: Path | None = None) -> Any:
+    """Wrapper for :func:`automation.scripts.run_script` using ``SCRIPT_DIR`` by default."""
+    scripts_dir = scripts_dir or SCRIPT_DIR
+    return _run_script(driver, name, scripts_dir)
+
+
+def wait_for_data(driver, timeout: int = 10) -> Any | None:
+    """Wrapper for :func:`automation.scripts.wait_for_data`."""
+    return _wait_for_data(driver, timeout)
+
+
+def is_7days_data_available() -> bool:
+    """Return ``True`` if the past 7 days DB is considered available."""
+    return (CODE_OUTPUT_DIR / PAST7_DB_FILE).exists() or True
 
 
 def main() -> None:
@@ -45,15 +68,16 @@ def main() -> None:
     db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
 
     # 통합 DB 경로 설정
-    db_path = CODE_OUTPUT_DIR / "integrated_sales.db"
-    log.info(f"Using integrated DB: {db_path}", extra={"tag": "main"})
+    past7_available = is_7days_data_available()
+    if past7_available:
+        db_path = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
+    else:
+        db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
+    log.info(f"Using DB: {db_path}", extra={"tag": "main"})
     
-    # SCRIPT_DIR 경로를 미리 채운 run_script 함수를 생성
-    run_script_with_dir = partial(run_script, scripts_dir=SCRIPT_DIR)
-
     # 1. 과거 데이터 확인 및 수집 (최근 7일)
     past_dates_to_check = get_past_dates(7)  # YYYY-MM-DD 형식
-    missing_dates = check_dates_exist(db_path, past_dates_to_check)
+    missing_dates = [] if past7_available else check_dates_exist(db_path, past_dates_to_check)
 
     if missing_dates:
         log.info(f"확인된 누락 데이터: {missing_dates}. 수집 시작", extra={"tag": "main"})
@@ -63,7 +87,7 @@ def main() -> None:
                 cred_path=cred_path,
                 create_driver_func=create_driver,
                 login_func=login_bgf,
-                run_script_func=run_script_with_dir,
+                run_script_func=run_script,
                 wait_for_page_func=wait_for_mix_ratio_page,
                 collect_day_data_func=execute_collect_single_day_data,
                 write_data_func=write_sales_data,
@@ -83,7 +107,7 @@ def main() -> None:
         cred_path=cred_path,
         create_driver_func=create_driver,
         login_func=login_bgf,
-        run_script_func=run_script_with_dir,
+        run_script_func=run_script,
         wait_for_page_func=wait_for_mix_ratio_page,
         collect_day_data_func=execute_collect_single_day_data,
         write_data_func=write_sales_data,
