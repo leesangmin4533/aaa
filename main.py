@@ -105,6 +105,7 @@ def main() -> None:
                     write_data_func=write_sales_data,
                     db_path=db_path,
                     automation_library_script="nexacro_automation_library.js",
+                    navigation_script="navigation.js", # 추가된 매개변수
                     field_order=FIELD_ORDER,
                     page_load_timeout=PAGE_LOAD_TIMEOUT,
                 )
@@ -125,6 +126,7 @@ def main() -> None:
             write_data_func=write_sales_data,
             db_path=db_path,
             automation_library_script="nexacro_automation_library.js",
+            navigation_script="navigation.js", # 추가된 매개변수
             field_order=FIELD_ORDER,
             page_load_timeout=PAGE_LOAD_TIMEOUT,
         )
