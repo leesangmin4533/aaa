@@ -423,9 +423,6 @@
         console.log(`
 [시작] 중분류: ${mid.code} (${mid.name})`);
 
-        // 'searchDetail' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
-        const detailTransaction = waitForTransaction("searchDetail");
-        
         selectMiddleCodeRow(mid.row);
         
         console.log(`'${mid.name}'을 클릭했습니다. 상품 목록 로딩을 기다립니다...`);
