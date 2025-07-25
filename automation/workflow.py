@@ -271,13 +271,17 @@ def run_sale_qty_verification(
         # Load the automation library and run the verification
         run_script_func(driver, automation_library_script)
         log.info("Executing sales quantity verification script...", extra={"tag": "verification"})
-        driver.execute_script("window.automation.runSaleQtyVerification()")
         
-        # Wait a bit for async verification logs to be generated
-        import time
-        time.sleep(10) # Adjust this sleep time if verification takes longer
+        # Execute the verification and get the result object
+        verification_result = driver.execute_script("return window.automation.runSaleQtyVerification()")
+        
+        if verification_result and verification_result.get('success'):
+            log.info("✅ Verification successful: All mid-category quantities match.", extra={"tag": "verification"})
+        else:
+            failed_codes = verification_result.get('failed_codes', [])
+            log.warning(f"❌ Verification failed for mid-category codes: {failed_codes}", extra={"tag": "verification"})
 
-        log.info("Verification script executed. Please check the browser console logs below.", extra={"tag": "verification"})
+        log.info("Verification script executed. Please check the browser console logs below for details.", extra={"tag": "verification"})
         _handle_final_logs(driver)
 
     except Exception as e:
