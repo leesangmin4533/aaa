@@ -258,73 +258,54 @@
    * @returns {Array<object>} 상품 데이터 객체 배열
    */
   async function collectProductsFromDataset(midCode, midName, scope) {
-    // gdDetail 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
-    const detailGrid = await getNexacroComponent("gdDetail", scope);
-    if (!detailGrid) {
-      console.error("상품 상세 그리드(gdDetail)를 찾을 수 없습니다.");
-      return [];
-    }
-
-    const dataset = detailGrid.getBindDataset();
-    if (!dataset) {
-      console.error("상품 상세 그리드에 바인딩된 Dataset을 찾을 수 없습니다.");
-      return [];
-    }
-
     const products = [];
-    const rowCount = dataset.getRowCount(); // Dataset의 전체 행 수
-    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${rowCount}개를 Dataset에서 수집합니다.`);
+    const rows = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
 
-    // Dataset의 각 행을 순회하며 컬럼 값 추출
-    for (let i = 0; i < rowCount; i++) {
+    for (const el of rows) {
+      const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
+      if (!row) continue;
+
+      const getText = (r, c) => {
+        const element = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${r}_${c}'][id$=':text']`);
+        return element?.innerText?.trim() || '';
+      };
+
       products.push({
         midCode:     midCode,
         midName:     midName,
-        productCode: dataset.getColumn(i, "PLU_CD") || "", // 상품코드 컬럼 ID
-        productName: dataset.getColumn(i, "PLU_NM") || "", // 상품명 컬럼 ID
-        sales:       parseInt(dataset.getColumn(i, "SALE_QTY") || 0, 10), // 매출수량 컬럼 ID
-        order_cnt:   parseInt(dataset.getColumn(i, "ORD_QTY") || 0, 10), // 발주수량 컬럼 ID
-        purchase:    parseInt(dataset.getColumn(i, "PUR_QTY") || 0, 10), // 매입수량 컬럼 ID
-        disposal:    parseInt(dataset.getColumn(i, "DISP_QTY") || 0, 10), // 폐기수량 컬럼 ID
-        stock:       parseInt(dataset.getColumn(i, "STOCK_QTY") || 0, 10), // 현재고수량 컬럼 ID
+        productCode: getText(row, 0),
+        productName: getText(row, 1),
+        sales:       parseInt(getText(row, 2) || 0, 10),
+        order_cnt:   parseInt(getText(row, 3) || 0, 10),
+        purchase:    parseInt(getText(row, 4) || 0, 10),
+        disposal:    parseInt(getText(row, 5) || 0, 10),
+        stock:       parseInt(getText(row, 6) || 0, 10),
       });
     }
+    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${products.length}개를 DOM에서 수집합니다.`);
     return products;
   }
 
-  /**
-   * 중분류 그리드(gdList)에 바인딩된 Dataset에서 처리해야 할 모든 중분류 목록을 추출합니다.
-   * 이 방식 또한 DOM 파싱 대신 넥사크로 내부 데이터 모델에서 직접 데이터를 가져옵니다.
-   * @returns {Array<object>} { code, name, expectedQuantity, row }를 포함하는 중분류 객체 배열
-   */
   async function getAllMidCodesFromDataset(scope) {
-    // gdList 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
-    const midGrid = await getNexacroComponent("gdList", scope);
-    if (!midGrid) {
-      console.error("중분류 그리드(gdList)를 찾을 수 없습니다.");
-      return [];
-    }
-    await delay(500); // 컴포넌트 초기화 대기
-
-    const dataset = midGrid.getBindDataset();
-    if (!dataset) {
-      console.error("중분류 그리드에 바인딩된 Dataset을 찾을 수 없습니다.");
-      return [];
-    }
-
     const midCodes = [];
-    const rowCount = dataset.getRowCount(); // Dataset의 전체 행 수
-    console.log(`[getAllMidCodesFromDataset] ${rowCount}개의 중분류를 Dataset에서 찾았습니다.`);
+    const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
 
-    // Dataset의 각 행을 순회하며 중분류 정보 추출
-    for (let i = 0; i < rowCount; i++) {
+    for (const textEl of textCells) {
+      const code = textEl.innerText?.trim();
+      if (!/^\d{3}$/.test(code)) continue; // 중분류코드는 3자리 숫자
+
+      const row = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
+      const midNameEl = document.querySelector(`div[id*='gdList.body'][id*='cell_${row}_1:text']`);
+      const name = midNameEl?.innerText?.trim() || '';
+
       midCodes.push({
-        code:             dataset.getColumn(i, "MID_CODE") || "", // 중분류 코드 컬럼 ID
-        name:             dataset.getColumn(i, "MID_NAME") || "", // 중분류명 컬럼 ID
-        expectedQuantity: parseInt(dataset.getColumn(i, "SALE_QTY") || 0, 10), // 기대수량 (매출수량) 컬럼 ID
-        row:              i, // 해당 중분류의 Dataset 내 행 인덱스 (클릭 시 필요)
+        code:             code,
+        name:             name,
+        expectedQuantity: 0, // DOM 파싱에서는 기대수량 직접 얻기 어려움
+        row:              parseInt(row, 10), // 해당 중분류의 DOM 행 인덱스
       });
     }
+    console.log(`[getAllMidCodesFromDataset] ${midCodes.length}개의 중분류를 DOM에서 찾았습니다.`);
     return midCodes;
   }
 
