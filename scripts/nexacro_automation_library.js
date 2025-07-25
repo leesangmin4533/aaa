@@ -299,11 +299,12 @@
    */
   async function getAllMidCodesFromDataset(scope) {
     // gdList 컴포넌트를 찾아 바인딩된 Dataset을 가져옵니다.
-    const midGrid = getNexacroComponent("gdList", scope);
+    const midGrid = await getNexacroComponent("gdList", scope);
     if (!midGrid) {
       console.error("중분류 그리드(gdList)를 찾을 수 없습니다.");
       return [];
     }
+    await delay(500); // 컴포넌트 초기화 대기
 
     const dataset = midGrid.getBindDataset();
     if (!dataset) {
@@ -416,7 +417,6 @@
       }
       
       const allProductsMap = new Map(); // 전체 상품 데이터를 저장할 Map (중복 방지 및 합산)
-      const midGrid = await getNexacroComponent("gdList"); // 중분류 그리드 컴포넌트
 
       // 4. 각 중분류를 순회하며 상품 데이터 수집
       for (const mid of midCodesToProcess) {
