@@ -39,24 +39,10 @@ def wait_for_mix_ratio_page(driver, timeout: int = 120) -> bool:
     log.info("중분류별 매출 구성비 페이지 로딩 대기 시작", extra={"tag": "navigation"})
     
     try:
-        # 1. mainframe 로딩 대기 (이미 전환되어 있을 수 있으므로 존재 여부만 확인)
-        log.info("mainframe 로딩 상태 확인 시작", extra={"tag": "navigation"})
-        WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[name="mainframe"]'))
-        )
-        # 이미 navigation.js에서 전환되었을 수 있으므로, 다시 전환 시도 (안전하게)
-        try:
-            driver.switch_to.default_content() # 메인 프레임으로 돌아간 후
-            mainframe = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[name="mainframe"]'))
-            )
-            driver.switch_to.frame(mainframe)
-            log.debug("mainframe으로 전환 완료", extra={"tag": "navigation"})
-        except Exception as e:
-            log.warning(f"mainframe 재전환 실패 또는 이미 전환됨: {e}", extra={"tag": "navigation"})
-            # 이미 전환되어 있는 경우를 위해 현재 프레임 유지
+        # navigation.js가 이미 페이지를 로드하고 필요한 프레임으로 전환했다고 가정
+        # 따라서, 직접적으로 gdList 그리드 컨테이너와 데이터 로딩을 기다립니다.
 
-        # 2. 그리드 컨테이너 대기
+        # 1. 그리드 컨테이너 대기
         grid_js = """
         return !!document.querySelector('[id*="gdList"][id*="body"]');
         """
@@ -65,7 +51,7 @@ def wait_for_mix_ratio_page(driver, timeout: int = 120) -> bool:
         )
         log.debug("그리드 컨테이너 발견됨", extra={"tag": "navigation"})
         
-        # 3. 데이터 로딩 대기
+        # 2. 데이터 로딩 대기
         data_js = """
         const grid = document.querySelector('[id*="gdList"][id*="body"]');
         return grid && grid.textContent.trim().length > 0;
