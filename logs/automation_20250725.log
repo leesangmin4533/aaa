@@ -261,3 +261,351 @@ Stacktrace:
 [2025-07-25 08:51:31][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
 [2025-07-25 08:51:31][__main__][main][INFO] ===== Automation End =====
 [2025-07-25 08:51:31][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 09:37:31][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 09:37:32][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 09:37:32][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 09:37:32][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 09:37:32][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 09:37:32][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 09:37:32][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 09:37:32][__main__][main][INFO] 시작 시각: 2025-07-25 09:37:32
+[2025-07-25 09:37:32][__main__][main][INFO] Python 프로세스 ID: 19204
+[2025-07-25 09:37:32][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 09:37:32][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 09:37:32][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 09:37:32][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 09:37:32][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 09:37:35][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 09:37:39][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 09:37:39][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 09:37:39][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 09:37:39][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 09:37:40][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 09:37:40][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:37:42][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 09:37:43][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:37:45][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 09:37:45][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:37:47][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 09:37:47][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:37:49][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 09:37:49][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:37:51][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 09:37:51][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 09:37:51][automation.workflow][login][INFO] Login successful.
+[2025-07-25 09:37:51][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 09:37:51][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 09:37:51][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 09:37:51][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 09:38:21][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (30초)
+[2025-07-25 09:38:21][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 09:38:21][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 09:38:23][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 09:38:23][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 09:38:23][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 09:47:40][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 09:47:40][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 09:47:40][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 09:47:40][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 09:47:40][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 09:47:40][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 09:47:40][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 09:47:40][__main__][main][INFO] 시작 시각: 2025-07-25 09:47:40
+[2025-07-25 09:47:40][__main__][main][INFO] Python 프로세스 ID: 13844
+[2025-07-25 09:47:40][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 09:47:40][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 09:47:40][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 09:47:40][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 09:47:40][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 09:47:42][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 09:47:46][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 09:47:46][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 09:47:46][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 09:47:46][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 09:47:47][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 09:47:47][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:47:49][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 09:47:49][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:47:51][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 09:47:51][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:47:53][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 09:47:53][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:47:55][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 09:47:55][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 09:47:57][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 09:47:57][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 09:47:57][automation.workflow][login][INFO] Login successful.
+[2025-07-25 09:47:57][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 09:47:57][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 09:47:57][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 09:47:57][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 09:48:27][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (30초)
+[2025-07-25 09:48:27][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 09:48:27][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 09:48:30][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 09:48:30][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 09:48:30][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 11:11:19][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 11:11:19][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 11:11:19][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 11:11:19][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 11:11:19][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 11:11:19][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 11:11:19][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 11:11:19][__main__][main][INFO] 시작 시각: 2025-07-25 11:11:19
+[2025-07-25 11:11:19][__main__][main][INFO] Python 프로세스 ID: 16176
+[2025-07-25 11:11:19][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 11:11:19][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 11:11:19][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 11:11:19][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 11:11:19][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 11:11:23][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 11:11:27][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 11:11:27][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 11:11:27][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 11:11:27][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 11:11:28][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 11:11:28][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:11:30][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 11:11:30][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:11:32][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 11:11:32][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:11:34][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 11:11:34][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:11:36][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 11:11:36][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:11:38][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 11:11:38][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 11:11:38][automation.workflow][login][INFO] Login successful.
+[2025-07-25 11:11:38][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 11:11:38][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 11:11:38][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 11:11:38][automation.config][navigation][INFO] mainframe 로딩 상태 확인 시작
+[2025-07-25 11:13:39][automation.config][navigation][ERROR] 페이지 로드 시간 초과 (120초)
+[2025-07-25 11:13:39][automation.workflow][navigation][ERROR] Navigation or page load timed out.
+[2025-07-25 11:13:39][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 11:13:41][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 11:13:41][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 11:13:41][__main__][main][INFO] ===== Automation Complete =====
+[2025-07-25 11:17:57][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-25 11:17:57][automation.config][system][DEBUG] Logger 'automation.config' initialized
+[2025-07-25 11:17:57][automation.workflow][system][DEBUG] Logger 'automation.workflow' initialized
+[2025-07-25 11:17:57][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-25 11:17:57][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+[2025-07-25 11:17:57][__main__][system][DEBUG] Logger '__main__' initialized
+[2025-07-25 11:17:57][__main__][main][INFO] ===== Automation Start =====
+[2025-07-25 11:17:57][__main__][main][INFO] 시작 시각: 2025-07-25 11:17:57
+[2025-07-25 11:17:57][__main__][main][INFO] Python 프로세스 ID: 17960
+[2025-07-25 11:17:57][__main__][main][INFO] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\20250725.db
+[2025-07-25 11:17:57][__main__][main][INFO] All past 7 days of data are present.
+[2025-07-25 11:17:57][__main__][main][INFO] Starting collection for today: 2025-07-25
+[2025-07-25 11:17:57][automation.workflow][main][INFO] --- Starting collection cycle for 2025-07-25 ---
+[2025-07-25 11:17:57][automation.workflow][init][INFO] Initializing Chrome driver...
+[2025-07-25 11:17:59][automation.config][driver][DEBUG] Chrome driver created
+[2025-07-25 11:18:03][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-25 11:18:03][login.login_bgf][login][INFO] Login script executed
+[2025-07-25 11:18:03][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-25 11:18:03][login.login_bgf][login][INFO] Login succeeded
+[2025-07-25 11:18:04][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-25 11:18:04][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:18:06][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-25 11:18:06][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:18:08][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-25 11:18:08][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:18:10][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-25 11:18:10][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:18:12][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-25 11:18:12][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-25 11:18:14][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-25 11:18:14][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-25 11:18:14][automation.workflow][login][INFO] Login successful.
+[2025-07-25 11:18:14][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\navigation.js
+[2025-07-25 11:18:14][automation.workflow][navigation][INFO] Navigating and waiting for page to load...
+[2025-07-25 11:18:14][automation.config][navigation][INFO] 중분류별 매출 구성비 페이지 로딩 대기 시작
+[2025-07-25 11:18:17][automation.config][navigation][DEBUG] 그리드 컨테이너 발견됨
+[2025-07-25 11:18:17][automation.config][navigation][DEBUG] 데이터 로드 완료
+[2025-07-25 11:18:17][automation.workflow][navigation][INFO] Successfully navigated and page is ready.
+[2025-07-25 11:18:17][automation.config][run_script][DEBUG] Checking script existence: C:\Users\kanur\OneDrive\문서\GitHub\aaa\scripts\nexacro_automation_library.js
+[2025-07-25 11:18:37][automation.workflow][main][WARNING] Collection for 2025-07-25 successful, but no data was returned.
+[2025-07-25 11:18:37][automation.workflow][script][ERROR] JavaScript error: 'search' 트랜잭션 대기 시간 초과 (10000ms).
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] --- Browser Console Logs ---
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753409879456}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html?version=0.8350068080391158 5 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753409882518}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'SEVERE', 'message': 'https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)', 'source': 'network', 'timestamp': 1753409883103}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753409883103}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "nxApp.GV_POSPARAM1 onload :::::::::::::::::::::::::::::::::: "', 'source': 'console-api', 'timestamp': 1753409883193}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "nxApp.GV_POSPARAM2 onload :::::::::::::::::::::::::::::::::: "', 'source': 'console-api', 'timestamp': 1753409883193}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "nxApp.GV_POSPARAM3 onload :::::::::::::::::::::::::::::::::: "', 'source': 'console-api', 'timestamp': 1753409883193}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "nxApp.GV_POSPARAM4 onload :::::::::::::::::::::::::::::::::: "', 'source': 'console-api', 'timestamp': 1753409883193}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "접속주소 : https://store.bgfretail.com/"', 'source': 'console-api', 'timestamp': 1753409883193}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'DEBUG', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html - [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o', 'source': 'recommendation', 'timestamp': 1753409883246}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selInitPwdCheck (strServiceUrl :svc::login/selInitPwdCheck) (20250725111803)"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selInitPwdCheck|fn_callback|true|2025-07-25 11:18:03 559|1753409883559|b1973500f94d4a4b8531a1f8e2ba31d7"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : login (strServiceUrl :svc::login/login) (20250725111803)"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : login|_gfn_loginCallback|true|2025-07-25 11:18:03 617|1753409883617|f83ea0150b6b490782d211897ae518af"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "nxApp.GV_POSPARAM3:"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "=========fsms_Main_SC"', 'source': 'console-api', 'timestamp': 1753409884290}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selTopWeather (strServiceUrl :svc::weather/selTopWeather) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884314}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884314}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 ">>>>>>>>>>>>>>>nxApp.GV_CHANNELTYPE :::::::: HOME"', 'source': 'console-api', 'timestamp': 1753409884317}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : getcmmCodeList (strServiceUrl :svc::stco010/selComCd) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884317}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884317}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : searchCutvNotice (strServiceUrl :svc::stcm230/searchCutvNotice) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884320}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884320}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884357}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884357}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : searchCutvNotice|fn_callback|false|2025-07-25 11:18:04 318|1753409884318|b8765aceece140309b73b7e47d65516f"', 'source': 'console-api', 'timestamp': 1753409884357}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884357}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selPermission (strServiceUrl :svc::permission/selPermission) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884358}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884358}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884428}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884428}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selTopWeather|fn_callback|true|2025-07-25 11:18:04 308|1753409884308|b2edf7c670d94e1a9288852eb67fa8a6"', 'source': 'console-api', 'timestamp': 1753409884428}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884428}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884445}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884445}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : getcmmCodeList|fn_commonAfterOnload|true|2025-07-25 11:18:04 315|1753409884315|9b82ddbd96b240f49a370ea57c8a3364"', 'source': 'console-api', 'timestamp': 1753409884445}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884445}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "load fsms_Main_SC.xfdl.js"', 'source': 'console-api', 'timestamp': 1753409884526}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "fsms_Main_SC.xfdl.js afterFormOnload start"', 'source': 'console-api', 'timestamp': 1753409884529}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "fsms_Main_SC.xfdl.js init this.fn_initBalju() "', 'source': 'console-api', 'timestamp': 1753409884529}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : initBalju (strServiceUrl :svc::stbjz00/selBaljuTime) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884530}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884530}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selPermission|fn_callback|true|2025-07-25 11:18:04 357|1753409884357|29ab8e853b45403aa34d8961456d8b1a"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selBusinessAlarm (strServiceUrl :svc::permission/selBusinessAlarm) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selMainAlarm (strServiceUrl :svc::permission/selMainAlarm) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884599}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884607}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884607}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : initBalju|fn_callback|true|2025-07-25 11:18:04 529|1753409884529|371b06d31dc5446baba67fa9f8067607"', 'source': 'console-api', 'timestamp': 1753409884607}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884607}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selOrdFont (strServiceUrl :svc::stjj190/selOptionList) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884609}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884609}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selMainNotice (strServiceUrl :svc::main/selMainNotice) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884611}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884611}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : getNotice (strServiceUrl :svc::search/selNoticeTotalSearch) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884614}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884614}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : getMainTranction (strServiceUrl :svc::main/getMainTranction) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884617}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884617}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "WorkFrame : edt_pluSearch : Main"', 'source': 'console-api', 'timestamp': 1753409884646}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884651}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884651}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selBusinessAlarm|fn_callback|true|2025-07-25 11:18:04 590|1753409884590|740754efb3ac487e950d13fe05b10559"', 'source': 'console-api', 'timestamp': 1753409884651}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884651}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selBusinessAlarmMessage (strServiceUrl :svc::permission/selBusinessAlarmMessage) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884651}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884651}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884654}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884654}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selMainAlarm|fn_callback|true|2025-07-25 11:18:04 594|1753409884594|79df7a8e59274ba8be7b6808d66481c5"', 'source': 'console-api', 'timestamp': 1753409884654}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884654}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409884659}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409884659}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selOrdFont|fn_callback|true|2025-07-25 11:18:04 608|1753409884608|7c8fdcf29ed84b0c832fc0faedc86273"', 'source': 'console-api', 'timestamp': 1753409884659}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884659}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : selSearchMain (strServiceUrl :svc::stmb002/selSearchMain) (20250725111804)"', 'source': 'console-api', 'timestamp': 1753409884660}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409884660}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : getNotice|fn_callback|true|2025-07-25 11:18:04 613|1753409884613|d6702fa2be5d405c8af2dc291caf55db"', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selBusinessAlarmMessage|fn_callback|true|2025-07-25 11:18:04 651|1753409884651|d14d208ce89b4134b2c74dd9022d2bbb"', 'source': 'console-api', 'timestamp': 1753409886666}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selSearchMain|fn_callback|true|2025-07-25 11:18:04 659|1753409884659|86a43959a20c45ce9f74ac0199888484"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : selMainNotice|fn_callback|true|2025-07-25 11:18:04 611|1753409884611|5abb19cfba214300ba9be70f62d69fec"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : getMainTranction|fn_callback|true|2025-07-25 11:18:04 616|1753409884616|8339d8ada72549a294007a26b9249306"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "0:  복수점 설정  :CO::STZZ130_P0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "1:  회계시스템  :http://etax.bgfretail.com:8080/uifc"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "2:  시스템운영 꿀 TIP  :STCM220_M0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "3:  배송차량 위치조회  :CO::STZZ150_P0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "4:  PDA찾기  :bin//PDASearch.exe"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "5:  CU 신상 온에어  :STCM230_M0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "6:  CU백과사전  :STCM250_M0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "7:  설문조사  :STCM070_M0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "8:  상생혜택제도  :STJJ380_M0"', 'source': 'console-api', 'timestamp': 1753409886667}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 65:14 "🔍 매출분석 메뉴 진입 시도..."', 'source': 'console-api', 'timestamp': 1753409894819}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 34:12 "🔍 요소 검색 중: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext (매출분석)"', 'source': 'console-api', 'timestamp': 1753409894820}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "obj.name : STMB000_M0"', 'source': 'console-api', 'timestamp': 1753409894825}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "sPdivID : pdiv_topMenu_STMB000_M0"', 'source': 'console-api', 'timestamp': 1753409894825}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "this.isValidObject(sPdivID) : false"', 'source': 'console-api', 'timestamp': 1753409894825}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "n2DepthCnt : 2"', 'source': 'console-api', 'timestamp': 1753409894833}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 54:14 "✅ 클릭 성공: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext (매출분석)"', 'source': 'console-api', 'timestamp': 1753409894852}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 74:14 "⏳ 서브메뉴 로딩 대기 중..."', 'source': 'console-api', 'timestamp': 1753409894852}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 79:14 "🔍 중분류별 매출 구성비 메뉴 진입 시도..."', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 34:12 "🔍 요소 검색 중: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text (중분류별 매출 구성비)"', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : getNotice (strServiceUrl :svc::search/selNoticeTotalSearch) (20250725111816)"', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 ">>>>>>>>>>>>>>>. : STMB011_M0"', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 ">>>>>>>>>>>>>>>. : MB::STMB011_M0.xfdl"', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 54:14 "✅ 클릭 성공: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text (중분류별 매출 구성비)"', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 87:14 "⏳ 페이지 로딩 대기 중..."', 'source': 'console-api', 'timestamp': 1753409896928}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : menulog_20250725 (strServiceUrl :svc::log/saveAccLog) (20250725111816)"', 'source': 'console-api', 'timestamp': 1753409896989}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409896989}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409897010}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409897010}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : getNotice|fn_callback|true|2025-07-25 11:18:16 872|1753409896872|4f555a5db8aa4b56ae53916241342014"', 'source': 'console-api', 'timestamp': 1753409897010}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409897010}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409897021}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409897022}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : menulog_20250725|gfn_menulogCallback|true|2025-07-25 11:18:16 985|1753409896985|c0d7531db43b48fdb830ab5b30be9b0f"', 'source': 'console-api', 'timestamp': 1753409897022}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409897022}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 svcID : search (strServiceUrl :svc::stmb011/selSearch) (20250725111817)"', 'source': 'console-api', 'timestamp': 1753409897530}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409897530}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409897531}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409897531}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "----------- 서비스 ID  : search|fn_callback|true|2025-07-25 11:18:17 164|1753409897164|e32bbd8d772c4599b0da3be1a085380e"', 'source': 'console-api', 'timestamp': 1753409897531}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0:702332 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409897531}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "Nexacro 자동화 라이브러리가 로드되었습니다. 파이썬에서 `window.automation.runCollectionForDate(\'YYYYMMDD\')`를 호출하여 사용하세요."', 'source': 'console-api', 'timestamp': 1753409897569}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[runCollectionForDate] 20250725 데이터 수집을 시작합니다."', 'source': 'console-api', 'timestamp': 1753409897578}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getNexacroApp] Nexacro Application 객체를 찾았습니다."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getMainForm] 메인 폼(STMB011_M0)을 찾았습니다."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getNexacroApp] Nexacro Application 객체를 찾았습니다."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getMainForm] 메인 폼(STMB011_M0)을 찾았습니다."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작..."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 찾기 성공."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작..."', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getNexacroComponent] 컴포넌트 대기 중: \\"F_10\\" (시간 초과: 10000ms)"', 'source': 'console-api', 'timestamp': 1753409897579}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getNexacroComponent] 성공! 컴포넌트 찾음: \\"F_10\\""', 'source': 'console-api', 'timestamp': 1753409897580}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 찾기 성공."', 'source': 'console-api', 'timestamp': 1753409897580}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "✅ 네비게이션 완료"', 'source': 'console-api', 'timestamp': 1753409898919}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "날짜를 \'20250725\'로 설정했습니다."', 'source': 'console-api', 'timestamp': 1753409907600}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[waitForTransaction] 서비스 ID 대기 중: \'search\' (시간 초과: 10000ms)"', 'source': 'console-api', 'timestamp': 1753409907600}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getNexacroApp] Nexacro Application 객체를 찾았습니다."', 'source': 'console-api', 'timestamp': 1753409907600}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "[getMainForm] 메인 폼(STMB011_M0)을 찾았습니다."', 'source': 'console-api', 'timestamp': 1753409907600}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "*********** 트랜잭션 호출 전 svcID : search (strServiceUrl :svc::stmb011/selSearch) (20250725111827)"', 'source': 'console-api', 'timestamp': 1753409907615}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "*********** 트랜잭션 호출 전 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409907618}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "----------- 에러 코드 1 : 0"', 'source': 'console-api', 'timestamp': 1753409907698}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "----------- 에러 코드 2 : "', 'source': 'console-api', 'timestamp': 1753409907698}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "----------- 서비스 ID  : search|fn_callback|true|2025-07-25 11:18:27 608|1753409907608|04cc2a4666444aef8c047c46834b0b58"', 'source': 'console-api', 'timestamp': 1753409907698}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "*********** 트랜잭션 호출 후 httptimeout : 60"', 'source': 'console-api', 'timestamp': 1753409907698}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'SEVERE', 'message': 'console-api 91:28 "[waitForTransaction] 시간 초과! 서비스 ID \'search\'가 10000ms 후 타임아웃되었습니다."', 'source': 'console-api', 'timestamp': 1753409917605}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'SEVERE', 'message': "javascript 190:15 Uncaught (in promise) Error: 'search' 트랜잭션 대기 시간 초과 (10000ms).", 'source': 'javascript', 'timestamp': 1753409917605}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'INFO', 'message': 'console-api 83:26 "메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다..."', 'source': 'console-api', 'timestamp': 1753409917621}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] {'level': 'SEVERE', 'message': 'console-api 91:28 "데이터 수집 중 심각한 오류 발생:" Error: \'search\' 트랜잭션 대기 시간 초과 (10000ms).', 'source': 'console-api', 'timestamp': 1753409917621}
+[2025-07-25 11:18:37][automation.workflow][browser_log][INFO] --- End of Browser Logs ---
+[2025-07-25 11:18:37][automation.workflow][main][INFO] Closing driver for 2025-07-25 cycle.
+[2025-07-25 11:18:40][automation.workflow][main][INFO] --- Finished collection cycle for 2025-07-25 ---
+[2025-07-25 11:18:40][__main__][main][INFO] ===== Automation End =====
+[2025-07-25 11:18:40][__main__][main][INFO] ===== Automation Complete =====
