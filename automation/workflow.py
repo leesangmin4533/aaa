@@ -244,3 +244,46 @@ def run_mid_category_collection(
             log.info("Closing driver for mid-category collection cycle.", extra={"tag": "main"})
             driver.quit()
         log.info("--- Finished mid-category collection cycle ---", extra={"tag": "main"})
+
+def run_sale_qty_verification(
+    cred_path: str | None,
+    create_driver_func: Callable[[], Any],
+    login_func: Callable[[Any, str | None], bool],
+    run_script_func: Callable[[Any, str], Any],
+    wait_for_page_func: Callable[[Any, int], bool],
+    page_load_timeout: int,
+    automation_library_script: str,
+    navigation_script: str,
+) -> None:
+    """Runs the sales quantity verification workflow."""
+    log.info("--- Starting Sales Quantity Verification Cycle ---", extra={"tag": "verification"})
+    driver = None
+    try:
+        driver = _initialize_driver_and_login(cred_path, create_driver_func, login_func)
+        if not driver:
+            return
+
+        # Navigate to the target page
+        run_script_func(driver, navigation_script)
+        if not _navigate_and_prepare_collection(driver, wait_for_page_func, page_load_timeout):
+            return
+
+        # Load the automation library and run the verification
+        run_script_func(driver, automation_library_script)
+        log.info("Executing sales quantity verification script...", extra={"tag": "verification"})
+        driver.execute_script("window.automation.runSaleQtyVerification()")
+        
+        # Wait a bit for async verification logs to be generated
+        import time
+        time.sleep(10) # Adjust this sleep time if verification takes longer
+
+        log.info("Verification script executed. Please check the browser console logs below.", extra={"tag": "verification"})
+        _handle_final_logs(driver)
+
+    except Exception as e:
+        log.critical(f"Critical error during verification cycle: {e}", extra={"tag": "verification"}, exc_info=True)
+    finally:
+        if driver:
+            log.info("Closing driver for verification cycle.", extra={"tag": "verification"})
+            driver.quit()
+        log.info("--- Finished Sales Quantity Verification Cycle ---", extra={"tag": "verification"})
