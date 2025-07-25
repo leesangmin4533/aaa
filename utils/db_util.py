@@ -115,7 +115,7 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
 
     for rec in records:
         product_code = _get_value(rec, "productCode", "product_code")
-        sales_raw = _get_value(rec, "sales")
+        sales_raw = _get_value(rec, "sales", "SALE_QTY")
 
         if product_code is None or sales_raw is None:
             continue
@@ -128,10 +128,10 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
         mid_code = _get_value(rec, "midCode", "mid_code")
         mid_name = _get_value(rec, "midName", "mid_name")
         product_name = _get_value(rec, "productName", "product_name")
-        order_cnt = _get_value(rec, "order", "order_cnt")
-        purchase = _get_value(rec, "purchase")
-        disposal = _get_value(rec, "discard", "disposal")
-        stock = _get_value(rec, "stock")
+        order_cnt = _get_value(rec, "order", "order_cnt", "ORD_QTY")
+        purchase = _get_value(rec, "purchase", "BUY_QTY")
+        disposal = _get_value(rec, "disposal", "DISUSE_QTY")
+        stock = _get_value(rec, "stock", "STOCK_QTY")
 
         cur.execute(
             "SELECT sales FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
