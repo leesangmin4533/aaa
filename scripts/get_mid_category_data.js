@@ -23,15 +23,15 @@
     const items = [];
     for (let j = 0; j < dsDetail.getRowCount(); j++) {
       items.push({
-        MID_CD: midCode,
-        MID_NM: midName,
-        ITEM_CD: dsDetail.getColumn(j, "ITEM_CD"),
-        ITEM_NM: dsDetail.getColumn(j, "ITEM_NM"),
-        SALE_QTY: dsDetail.getColumn(j, "SALE_QTY"),
-        ORD_QTY: dsDetail.getColumn(j, "ORD_QTY"),
-        BUY_QTY: dsDetail.getColumn(j, "BUY_QTY"),
-        DISUSE_QTY: dsDetail.getColumn(j, "DISUSE_QTY"),
-        STOCK_QTY: dsDetail.getColumn(j, "STOCK_QTY")
+        midCode:     midCode,
+        midName:     midName,
+        productCode: dsDetail.getColumn(j, "ITEM_CD"),
+        productName: dsDetail.getColumn(j, "ITEM_NM"),
+        sales:       dsDetail.getColumn(j, "SALE_QTY"),
+        order_cnt:   dsDetail.getColumn(j, "ORD_QTY"),
+        purchase:    dsDetail.getColumn(j, "BUY_QTY"),
+        disposal:    dsDetail.getColumn(j, "DISUSE_QTY"),
+        stock:       dsDetail.getColumn(j, "STOCK_QTY")
       });
     }
 
