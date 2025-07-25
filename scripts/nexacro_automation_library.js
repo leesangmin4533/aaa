@@ -173,7 +173,7 @@
    * @param {number} [timeout=120000] - 대기 시간 (ms)
    * @returns {Promise<void>} 트랜잭션 완료 시 resolve되는 Promise
    */
-  function waitForTransaction(svcID, timeout = 10000) {
+  function waitForTransaction(svcID, timeout = 120000) {
     console.log(`[waitForTransaction] 서비스 ID 대기 중: '${svcID}' (시간 초과: ${timeout}ms)`);
     return new Promise((resolve, reject) => {
       const form = getMainForm();
