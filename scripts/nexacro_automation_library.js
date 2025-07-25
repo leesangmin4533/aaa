@@ -173,7 +173,7 @@
    * @param {number} [timeout=120000] - 대기 시간 (ms)
    * @returns {Promise<void>} 트랜잭션 완료 시 resolve되는 Promise
    */
-  function waitForTransaction(svcID, timeout = 120000) {
+  function waitForTransaction(svcID, timeout = 15000) {
     console.log(`[waitForTransaction] 서비스 ID 대기 중: '${svcID}' (시간 초과: ${timeout}ms)`);
     return new Promise((resolve, reject) => {
       const form = getMainForm();
@@ -462,7 +462,76 @@
   // ==================================================================================
   // 이 함수를 window.automation 객체에 노출하여 파이썬 스크립트에서 driver.execute_script()로 호출할 수 있게 합니다.
   window.automation.runCollectionForDate = runCollectionForDate;
-  console.log("Nexacro 자동화 라이브러리가 로드되었습니다. 파이썬에서 `window.automation.runCollectionForDate('YYYYMMDD')`를 호출하여 사용하세요.");
+  
+  // ==================================================================================
+  // 6. 데이터 검증 함수
+  // ==================================================================================
+
+  /**
+   * 특정 중분류의 SALE_QTY와 그에 속한 상품들의 SALE_QTY 총합이 일치하는지 검증합니다.
+   * @param {number} rowIndex - 검증할 중분류의 dsList 내 행 인덱스
+   */
+  async function verifyMidSaleQty(rowIndex) {
+    try {
+      const form = getMainForm().div_workForm.form;
+      const dsList = form.dsList;
+      const dsDetail = form.dsDetail;
+
+      if (!dsList || !dsDetail) {
+        console.warn("검증에 필요한 데이터셋(dsList, dsDetail)이 없습니다.");
+        return;
+      }
+
+      const midCode = dsList.getColumn(rowIndex, "MID_CD");
+      const midName = dsList.getColumn(rowIndex, "MID_NM");
+      const expectedQty = parseInt(dsList.getColumn(rowIndex, "SALE_QTY"), 10);
+
+      // 클릭 유도
+      selectMiddleCodeRow(rowIndex);
+      console.log(`▶ 중분류 [${midCode} - ${midName}] 클릭됨, 기준 수량: ${expectedQty}`);
+
+      // 상품 데이터 로딩 대기.
+      // 참고: 이상적으로는 waitForTransaction('searchDetail')과 같이 트랜잭션을 기다려야 합니다.
+      // 트랜잭션 ID를 모를 경우, 충분한 delay를 사용합니다.
+      await delay(2000);
+
+      // 합산
+      let actualQty = 0;
+      for (let i = 0; i < dsDetail.getRowCount(); i++) {
+        actualQty += parseInt(dsDetail.getColumn(i, "SALE_QTY"), 10) || 0;
+      }
+
+      // 비교
+      if (expectedQty === actualQty) {
+        console.log(`✅ [${midCode}] 수량 일치 → 기준 ${expectedQty} == 합계 ${actualQty}`);
+      } else {
+        console.warn(`❌ [${midCode}] 수량 불일치! → 기준 ${expectedQty} ≠ 합계 ${actualQty}`);
+      }
+    } catch (e) {
+      console.error(`[verifyMidSaleQty] 검증 중 오류 발생 (row: ${rowIndex}):`, e.message);
+    }
+  }
+
+  /**
+   * 모든 중분류에 대해 수량 검증을 실행하는 메인 루프입니다.
+   */
+  async function runSaleQtyVerification() {
+      console.log("===== 중분류-상품 수량 합계 검증 시작 =====");
+      const dsList = getMainForm()?.div_workForm?.form?.dsList;
+      if (!dsList) {
+          console.error("dsList를 찾을 수 없습니다. 검증을 중단합니다.");
+          return;
+      }
+      for (let i = 0; i < dsList.getRowCount(); i++) {
+          await verifyMidSaleQty(i);
+          await delay(500); // 안정화 대기
+      }
+      console.log("===== 모든 중분류 검증 완료 =====");
+  }
+
+  window.automation.runSaleQtyVerification = runSaleQtyVerification; // 검증 함수 노출
+
+  console.log("Nexacro 자동화 라이브러리가 로드되었습니다. `runCollectionForDate('YYYYMMDD')` 또는 `runSaleQtyVerification()`를 호출하여 사용하세요.");
 
   } catch (e) {
     // 라이브러리 로드 및 초기화 시점에 발생하는 오류를 잡습니다.
