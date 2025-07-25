@@ -18,6 +18,8 @@ if __name__ == "__main__":니다 (YYYY-MM-DD HH:MM).
 4. 과거 데이터: 최근 7일의 누락 데이터를 자동으로 확인하고 수집합니다.
 """
 
+import argparse
+
 from __future__ import annotations
 
 import os
@@ -138,4 +140,28 @@ def main() -> None:
     finally:
         log.info("===== Automation Complete =====", extra={"tag": "main"})
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="BGF Retail Automation Script")
+    parser.add_argument(
+        "--collect-mid-categories",
+        action="store_true",
+        help="Run the mid-category collection workflow."
+    )
+    args = parser.parse_args()
+
+    if args.collect_mid_categories:
+        from automation.workflow import run_mid_category_collection
+        from automation.scripts import collect_mid_category_data
+
+        cred_path = os.environ.get("CREDENTIAL_FILE")
+        save_path = CODE_OUTPUT_DIR / "mid_categories.json"
+
+        run_mid_category_collection(
+            cred_path=cred_path,
+            create_driver_func=create_driver,
+            login_func=login_bgf,
+            collect_mid_category_data_func=partial(collect_mid_category_data, scripts_dir=SCRIPT_DIR),
+            save_path=save_path,
+            scripts_dir=SCRIPT_DIR
+        )
+    else:
+        main()
