@@ -1,31 +1,43 @@
+(async () => {
+  const form = app.mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
+  const dsList = form.div_workForm.form.dsList;
+  const gdList = form.div_workForm.form.div2.form.gdList;
+  const result = [];
 
-(function() {
-    try {
-        const app = window.nexacro.getApplication();
-        const dsList = app.mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.dsList;
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
-        if (!dsList) {
-            return {
-                error: "Dataset 'dsList' not found at the specified path."
-            };
-        }
+  for (let i = 0; i < dsList.getRowCount(); i++) {
+    const midCode = dsList.getColumn(i, "MID_CD");
+    const midName = dsList.getColumn(i, "MID_NM");
 
-        const rowCount = dsList.getRowCount();
-        const data = [];
+    gdList.selectRow(i);
+    const evt = new nexacro.GridClickEventInfo(gdList, "oncellclick", false, false, false, false, 0, 0, i, i);
+    gdList.oncellclick && gdList.oncellclick._fireEvent(gdList, evt);
 
-        for (let i = 0; i < rowCount; i++) {
-            data.push({
-                "MID_CD": dsList.getColumn(i, "MID_CD"),
-                "MID_NM": dsList.getColumn(i, "MID_NM")
-            });
-        }
+    console.log(`▶ 중분류 [${midCode}] 클릭`);
+    await delay(1000);  // 상품 로딩 대기
 
-        return {
-            data: data
-        };
-    } catch (e) {
-        return {
-            error: e.toString()
-        };
+    const dsDetail = form.div_workForm.form.dsDetail;
+    const items = [];
+    for (let j = 0; j < dsDetail.getRowCount(); j++) {
+      items.push({
+        MID_CD: midCode,
+        MID_NM: midName,
+        ITEM_CD: dsDetail.getColumn(j, "ITEM_CD"),
+        ITEM_NM: dsDetail.getColumn(j, "ITEM_NM"),
+        SALE_QTY: dsDetail.getColumn(j, "SALE_QTY"),
+        ORD_QTY: dsDetail.getColumn(j, "ORD_QTY"),
+        BUY_QTY: dsDetail.getColumn(j, "BUY_QTY"),
+        DISUSE_QTY: dsDetail.getColumn(j, "DISUSE_QTY"),
+        STOCK_QTY: dsDetail.getColumn(j, "STOCK_QTY")
+      });
     }
+
+    result.push(...items);
+    console.log(`✅ ${midName} - ${items.length}개 상품 수집 완료`);
+    await delay(300);
+  }
+
+  window.__중분류상품수집결과__ = result;
+  console.log(" 전체 수집 완료:", result);
 })();
