@@ -69,3 +69,19 @@ def wait_for_mix_ratio_page(driver, timeout: int = 120) -> bool:
     except Exception as e:
         log.error(f"페이지 로드 중 오류 발생: {str(e)}", extra={"tag": "navigation"}, exc_info=True)
         return False
+
+
+def collect_mid_category_data(driver, scripts_dir: str) -> Any:
+    """Execute the mid-category data collection script and return the data."""
+    log.info("Executing mid-category data collection script...", extra={"tag": "collect"})
+    try:
+        result = run_script(driver, "get_mid_category_data.js", scripts_dir)
+        if result and result.get("error"):
+            log.error(f"Mid-category collection script failed: {result['error']}", extra={"tag": "collect"})
+            return None
+        
+        log.info(f"Successfully collected {len(result.get('data', []))} mid-categories.", extra={"tag": "collect"})
+        return result.get("data")
+    except Exception as e:
+        log.error(f"An error occurred while running the collection script: {e}", extra={"tag": "collect"}, exc_info=True)
+        return None
