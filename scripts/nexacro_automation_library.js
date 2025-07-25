@@ -58,7 +58,7 @@
         newCodes.push(code);
         console.log(`✅ 중분류 클릭 완료: ${code}`);
         // 렌더링 성능 측정 결과(2025-07-23)를 반영하여 700ms 대기
-        await delay(10000); // 렌더링 대기
+        await delay(500); // 렌더링 대기
       }
 
       if (newCodes.length === 0) break;
@@ -69,7 +69,7 @@
       await clickElementById(scrollBtn.id);
       scrollCount++;
       console.log(` 중분류 스크롤 ${scrollCount}회`);
-      await delay(10000);
+      await delay(500);
     }
 
     console.log(" 전체 중분류 처리 완료. 총 개수:", seen.size);
@@ -146,7 +146,7 @@
         // 초기 스코프가 지정되지 않았으면 메인 폼이 준비될 때까지 기다림
         currentScope = getMainForm();
         if (!currentScope) {
-          await delay(10000); // 메인 폼이 나타날 때까지 대기
+          await delay(500); // 메인 폼이 나타날 때까지 대기
           continue;
         }
       }
