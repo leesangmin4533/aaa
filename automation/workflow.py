@@ -1,3 +1,5 @@
+import sqlite3
+
 from __future__ import annotations
 
 from datetime import datetime, timedelta
@@ -108,6 +110,42 @@ def _handle_final_logs(driver: Any) -> None:
     except Exception as e:
         log.error(f"Failed to collect browser logs: {e}", extra={"tag": "browser_log"}, exc_info=True)
 
+def save_to_db(records: list[dict[str, Any]], db_path: Path) -> int:
+    """Save records to the SQLite database."""
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS mid_products (
+      MID_CD TEXT,
+      MID_NM TEXT,
+      ITEM_CD TEXT,
+      ITEM_NM TEXT,
+      SALE_QTY INTEGER,
+      ORD_QTY INTEGER,
+      BUY_QTY INTEGER,
+      DISUSE_QTY INTEGER,
+      STOCK_QTY INTEGER,
+      PRIMARY KEY (MID_CD, ITEM_CD)
+    )
+    """)
+
+    insert_sql = """
+    INSERT OR REPLACE INTO mid_products
+    (MID_CD, MID_NM, ITEM_CD, ITEM_NM, SALE_QTY, ORD_QTY, BUY_QTY, DISUSE_QTY, STOCK_QTY)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+
+    for r in records:
+        cur.execute(insert_sql, (
+            r["MID_CD"], r["MID_NM"], r["ITEM_CD"], r["ITEM_NM"],
+            r["SALE_QTY"], r["ORD_QTY"], r["BUY_QTY"], r["DISUSE_QTY"], r["STOCK_QTY"]
+        ))
+
+    conn.commit()
+    conn.close()
+    return len(records)
+
 
 def _run_collection_cycle(
     date_to_collect: str, # YYYY-MM-DD 형식
@@ -192,13 +230,8 @@ def run_mid_category_collection(
         data = collect_mid_category_data_func(driver, scripts_dir)
 
         if data:
-            import json
-            try:
-                with open(save_path, 'w', encoding='utf-8') as f:
-                    json.dump(data, f, ensure_ascii=False, indent=4)
-                log.info(f"Mid-category data successfully saved to {save_path}", extra={"tag": "main"})
-            except IOError as e:
-                log.error(f"Failed to save mid-category data to {save_path}: {e}", extra={"tag": "main"}, exc_info=True)
+            inserted_count = save_to_db(data, save_path)
+            log.info(f"Mid-category data successfully saved to {save_path}, inserted {inserted_count} records.", extra={"tag": "main"})
         else:
             log.warning("No mid-category data was collected.", extra={"tag": "main"})
 
