@@ -169,3 +169,45 @@ def _run_collection_cycle(
             log.info(f"Closing driver for {date_to_collect} cycle.", extra={"tag": "main"})
             driver.quit()
         log.info(f"--- Finished collection cycle for {date_to_collect} ---", extra={"tag": "main"})
+
+
+def run_mid_category_collection(
+    cred_path: str | None,
+    create_driver_func: Callable[[], Any],
+    login_func: Callable[[Any, str | None], bool],
+    collect_mid_category_data_func: Callable[[Any, str], Any],
+    save_path: Path,
+    scripts_dir: str
+) -> None:
+    log.info("--- Starting mid-category collection cycle ---", extra={"tag": "main"})
+    driver = None
+    try:
+        driver = _initialize_driver_and_login(cred_path, create_driver_func, login_func)
+        if not driver:
+            return
+
+        # This workflow assumes the user is already on the correct page
+        # or the default page after login is where the data can be collected.
+        
+        data = collect_mid_category_data_func(driver, scripts_dir)
+
+        if data:
+            import json
+            try:
+                with open(save_path, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, ensure_ascii=False, indent=4)
+                log.info(f"Mid-category data successfully saved to {save_path}", extra={"tag": "main"})
+            except IOError as e:
+                log.error(f"Failed to save mid-category data to {save_path}: {e}", extra={"tag": "main"}, exc_info=True)
+        else:
+            log.warning("No mid-category data was collected.", extra={"tag": "main"})
+
+        _handle_final_logs(driver)
+
+    except Exception as e:
+        log.critical(f"Critical error during mid-category collection cycle: {e}", extra={"tag": "main"}, exc_info=True)
+    finally:
+        if driver:
+            log.info("Closing driver for mid-category collection cycle.", extra={"tag": "main"})
+            driver.quit()
+        log.info("--- Finished mid-category collection cycle ---", extra={"tag": "main"})
