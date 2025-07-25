@@ -15,7 +15,9 @@
     gdList.oncellclick && gdList.oncellclick._fireEvent(gdList, evt);
 
     console.log(`▶ 중분류 [${midCode}] 클릭`);
-    await delay(1000);  // 상품 로딩 대기
+    
+    // 상품 목록 로딩을 위한 트랜잭션 완료까지 대기 (가장 중요!)
+    await window.automation.waitForTransaction("searchDetail");
 
     const dsDetail = form.div_workForm.form.dsDetail;
     const items = [];
