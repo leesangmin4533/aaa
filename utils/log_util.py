@@ -41,7 +41,7 @@ def _setup_logger(name: str) -> logging.Logger:
         logger._memory_stream = mem_stream  # type: ignore[attr-defined]
     else:
         # 파일 로깅 설정
-        log_dir = Path(__file__).resolve().parents[2] # 프로젝트 루트 디렉토리
+        log_dir = Path(__file__).resolve().parents[1] # 프로젝트 루트 디렉토리
         
         # 단일 로그 파일 사용 (덮어쓰기 모드)
         file_name = "automation.log"
