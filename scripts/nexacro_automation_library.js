@@ -429,9 +429,22 @@
         selectMiddleCodeRow(mid.row);
         
         console.log(`'${mid.name}'을 클릭했습니다. 상품 목록 로딩을 기다립니다...`);
-        await detailTransaction; // 상품 목록 로딩(트랜잭션) 완료 대기
-        // 실제 DOM 렌더링 시간을 고려해 추가 대기 (2025-07-23 기준)
-        await delay(10000);
+        // 트랜잭션 완료 대기 (DOM 기반 대기로 변경)
+        await new Promise((resolve, reject) => {
+          const checkInterval = setInterval(() => {
+            const firstProductCodeCell = document.querySelector("div[id*='gdDetail.body'][id*='cell_0_0:text']");
+            if (firstProductCodeCell && firstProductCodeCell.innerText.trim().length > 0) {
+              clearInterval(checkInterval);
+              resolve();
+            }
+          }, 500); // 0.5초마다 확인
+          setTimeout(() => {
+            clearInterval(checkInterval);
+            reject(new Error("상품 목록 로딩 시간 초과."));
+          }, 120000); // 120초 타임아웃
+        });
+        console.log("상품 목록 로딩 완료.");
+        await delay(700); // DOM 렌더링을 위한 추가 대기
         console.log("상품 목록 로딩 완료.");
 
         // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
