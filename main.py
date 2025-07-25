@@ -18,9 +18,9 @@ if __name__ == "__main__":니다 (YYYY-MM-DD HH:MM).
 4. 과거 데이터: 최근 7일의 누락 데이터를 자동으로 확인하고 수집합니다.
 """
 
-import argparse
-
 from __future__ import annotations
+
+import argparse
 
 import os
 import time
