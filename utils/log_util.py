@@ -41,16 +41,14 @@ def _setup_logger(name: str) -> logging.Logger:
         logger._memory_stream = mem_stream  # type: ignore[attr-defined]
     else:
         # 파일 로깅 설정
-        log_dir = Path("logs")
-        log_dir.mkdir(exist_ok=True)
+        log_dir = Path(__file__).resolve().parents[2] # 프로젝트 루트 디렉토리
         
-        # 날짜별 로그 파일 사용
-        current_date = datetime.now().strftime("%Y%m%d")
-        file_name = f"automation_{current_date}.log"
+        # 단일 로그 파일 사용 (덮어쓰기 모드)
+        file_name = "automation.log"
         
-        # 파일 핸들러 (추가 모드)
+        # 파일 핸들러 (덮어쓰기 모드)
         file_handler = logging.FileHandler(
-            log_dir / file_name, mode="a", encoding="utf-8"
+            log_dir / file_name, mode="w", encoding="utf-8"
         )
         file_handler.setFormatter(fmt)
         logger.addHandler(file_handler)
