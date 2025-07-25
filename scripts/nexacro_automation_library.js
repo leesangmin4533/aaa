@@ -470,6 +470,7 @@
   /**
    * 특정 중분류의 SALE_QTY와 그에 속한 상품들의 SALE_QTY 총합이 일치하는지 검증합니다.
    * @param {number} rowIndex - 검증할 중분류의 dsList 내 행 인덱스
+   * @returns {Promise<boolean>} 검증 성공 시 true, 실패 시 false 반환
    */
   async function verifyMidSaleQty(rowIndex) {
     try {
@@ -479,54 +480,63 @@
 
       if (!dsList || !dsDetail) {
         console.warn("검증에 필요한 데이터셋(dsList, dsDetail)이 없습니다.");
-        return;
+        return false;
       }
 
       const midCode = dsList.getColumn(rowIndex, "MID_CD");
       const midName = dsList.getColumn(rowIndex, "MID_NM");
       const expectedQty = parseInt(dsList.getColumn(rowIndex, "SALE_QTY"), 10);
 
-      // 클릭 유도
       selectMiddleCodeRow(rowIndex);
       console.log(`▶ 중분류 [${midCode} - ${midName}] 클릭됨, 기준 수량: ${expectedQty}`);
 
-      // 상품 데이터 로딩 대기.
-      // 참고: 이상적으로는 waitForTransaction('searchDetail')과 같이 트랜잭션을 기다려야 합니다.
-      // 트랜잭션 ID를 모를 경우, 충분한 delay를 사용합니다.
       await delay(2000);
 
-      // 합산
       let actualQty = 0;
       for (let i = 0; i < dsDetail.getRowCount(); i++) {
         actualQty += parseInt(dsDetail.getColumn(i, "SALE_QTY"), 10) || 0;
       }
 
-      // 비교
       if (expectedQty === actualQty) {
         console.log(`✅ [${midCode}] 수량 일치 → 기준 ${expectedQty} == 합계 ${actualQty}`);
+        return true;
       } else {
         console.warn(`❌ [${midCode}] 수량 불일치! → 기준 ${expectedQty} ≠ 합계 ${actualQty}`);
+        return false;
       }
     } catch (e) {
       console.error(`[verifyMidSaleQty] 검증 중 오류 발생 (row: ${rowIndex}):`, e.message);
+      return false;
     }
   }
 
   /**
-   * 모든 중분류에 대해 수량 검증을 실행하는 메인 루프입니다.
+   * 모든 중분류에 대해 수량 검증을 실행하고, 최종 결과를 객체로 반환합니다.
+   * @returns {Promise<object>} { success: boolean, failed_codes: Array<string> }
    */
   async function runSaleQtyVerification() {
       console.log("===== 중분류-상품 수량 합계 검증 시작 =====");
       const dsList = getMainForm()?.div_workForm?.form?.dsList;
       if (!dsList) {
           console.error("dsList를 찾을 수 없습니다. 검증을 중단합니다.");
-          return;
+          return { success: false, failed_codes: ["dsList not found"] };
       }
+
+      const failed_codes = [];
       for (let i = 0; i < dsList.getRowCount(); i++) {
-          await verifyMidSaleQty(i);
-          await delay(500); // 안정화 대기
+          const isSuccess = await verifyMidSaleQty(i);
+          if (!isSuccess) {
+              failed_codes.push(dsList.getColumn(i, "MID_CD"));
+          }
+          await delay(500);
       }
+
       console.log("===== 모든 중분류 검증 완료 =====");
+      if (failed_codes.length > 0) {
+          return { success: false, failed_codes: failed_codes };
+      } else {
+          return { success: true, failed_codes: [] };
+      }
   }
 
   window.automation.runSaleQtyVerification = runSaleQtyVerification; // 검증 함수 노출
