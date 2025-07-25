@@ -11,9 +11,9 @@
         "productCode",
         "productName",
         "sales",
-        "order",
+        "order_cnt",
         "purchase",
-        "discard",
+        "disposal",
         "stock"
     ],
     "timeouts": {
