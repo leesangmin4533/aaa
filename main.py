@@ -153,7 +153,7 @@ if __name__ == "__main__":
         from automation.scripts import collect_mid_category_data
 
         cred_path = os.environ.get("CREDENTIAL_FILE")
-        save_path = CODE_OUTPUT_DIR / "mid_categories.json"
+        save_path = CODE_OUTPUT_DIR / "mid_products.db"
 
         run_mid_category_collection(
             cred_path=cred_path,
