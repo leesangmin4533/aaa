@@ -182,9 +182,17 @@
       }
 
       let originalCallback = form.fn_callback; // 기존 콜백 함수 백업
+      let callbackRestored = false; // 콜백 복원 여부 플래그
+
+      const restoreCallback = () => {
+        if (!callbackRestored) {
+          form.fn_callback = originalCallback; // 원래 콜백 복원
+          callbackRestored = true;
+        }
+      };
 
       const timeoutId = setTimeout(() => {
-        form.fn_callback = originalCallback; // 타임아웃 시 원래 콜백 복원
+        restoreCallback(); // 타임아웃 시 원래 콜백 복원
         console.error(`[waitForTransaction] 시간 초과! 서비스 ID '${svcID}'가 ${timeout}ms 후 타임아웃되었습니다.`);
         reject(new Error(`'${svcID}' 트랜잭션 대기 시간 초과 (${timeout}ms).`));
       }, timeout);
@@ -207,7 +215,7 @@
             console.error(`[waitForTransaction] '${svcID}' 트랜잭션 실패: ${errorMsg} (코드: ${errorCode})`);
             reject(new Error(`'${svcID}' 트랜잭션 실패: ${errorMsg}`));
           }
-          form.fn_callback = originalCallback; // 콜백 함수 즉시 복원
+          restoreCallback(); // 콜백 함수 복원
         } else {
           console.log(`[waitForTransaction] 다른 트랜잭션 완료: 수신 서비스 ID='${serviceID}'. 여전히 '${svcID}' 대기 중.`);
         }
@@ -375,17 +383,26 @@
       dateInput.set_value(dateStr);
       console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
 
-      // 'search' 트랜잭션이 완료될 때까지 기다리는 Promise 생성
-      const searchTransaction = waitForTransaction("search");
-      
       // 넥사크로 컴포넌트의 .click() 메서드를 사용하여 클릭 이벤트 트리거
       searchBtn.click();
-      await delay(10000); // 클릭 이벤트 처리 및 트랜잭션 시작을 위한 짧은 지연
       console.log("메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...");
       
-      // 트랜잭션 완료 대기
-      await searchTransaction;
+      // 중분류 목록(gdList)이 로드될 때까지 대기
+      await new Promise((resolve, reject) => {
+        const checkInterval = setInterval(() => {
+          const firstMidCodeCell = document.querySelector("div[id*='gdList.body'][id*='cell_0_0:text']");
+          if (firstMidCodeCell && firstMidCodeCell.innerText.trim().length > 0) {
+            clearInterval(checkInterval);
+            resolve();
+          }
+        }, 500); // 0.5초마다 확인
+        setTimeout(() => {
+          clearInterval(checkInterval);
+          reject(new Error("중분류 목록 로딩 시간 초과."));
+        }, 120000); // 120초 타임아웃
+      });
       console.log("중분류 목록 로딩 완료.");
+      await delay(700); // DOM 렌더링을 위한 추가 대기
 
       // 3. 모든 중분류 항목이 로드되도록 스크롤 및 클릭
       await autoClickAllMidCodes();
