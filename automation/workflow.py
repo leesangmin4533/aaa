@@ -77,6 +77,9 @@ def _process_and_save_data(
         log.warning("No valid records to save.", extra={"tag": "db"})
         return
 
+    log.debug(f"Attempting to save {len(records_for_db)} records to DB.", extra={"tag": "db"})
+    log.debug(f"First record to save: {records_for_db[0] if records_for_db else 'N/A'}", extra={"tag": "db"})
+
     try:
         inserted = write_data_func(records_for_db, db_path, collected_at_override=collected_at_override)
         log.info(f"DB saved to {db_path}, inserted {inserted} new rows.", extra={"tag": "db"})
