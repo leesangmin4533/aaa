@@ -146,6 +146,11 @@ if __name__ == "__main__":
         action="store_true",
         help="Run the mid-category collection workflow."
     )
+    parser.add_argument(
+        "--verify-sales-quantity",
+        action="store_true",
+        help="Run the sales quantity verification workflow."
+    )
     args = parser.parse_args()
 
     if args.collect_mid_categories:
@@ -162,6 +167,21 @@ if __name__ == "__main__":
             collect_mid_category_data_func=partial(collect_mid_category_data, scripts_dir=SCRIPT_DIR),
             save_path=save_path,
             scripts_dir=SCRIPT_DIR
+        )
+    elif args.verify_sales_quantity:
+        from automation.workflow import run_sale_qty_verification
+
+        cred_path = os.environ.get("CREDENTIAL_FILE")
+
+        run_sale_qty_verification(
+            cred_path=cred_path,
+            create_driver_func=create_driver,
+            login_func=login_bgf,
+            run_script_func=run_script,
+            wait_for_page_func=wait_for_mix_ratio_page,
+            page_load_timeout=PAGE_LOAD_TIMEOUT,
+            automation_library_script="nexacro_automation_library.js",
+            navigation_script="navigation.js",
         )
     else:
         main()
