@@ -32,16 +32,8 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # .env 파일의 절대 경로를 프로젝트 루트 기준으로 설정
-    dotenv_path = ROOT_DIR / ".env"
-    load_dotenv(dotenv_path=dotenv_path)
-
-    # 환경 변수에서 자격 증명 로드
-    user_id = os.environ.get("BGF_USER_ID")
-    password = os.environ.get("BGF_PASSWORD")
-
-    if user_id and password:
-        return {"id": user_id, "password": password}
+    # 현재 작업 디렉터리의 .env를 우선 읽는다
+    load_dotenv(dotenv_path=Path.cwd() / ".env")
 
     if path:
         try:
@@ -49,6 +41,13 @@ def load_credentials(path: str | None = None) -> dict:
                 return json.load(f)
         except Exception as e:
             raise RuntimeError(f"Failed to load credentials from {path}: {e}")
+
+    # 환경 변수에서 자격 증명 로드
+    user_id = os.environ.get("BGF_USER_ID")
+    password = os.environ.get("BGF_PASSWORD")
+
+    if user_id and password:
+        return {"id": user_id, "password": password}
 
     raise RuntimeError(
         "Credentials not provided. Set BGF_USER_ID/BGF_PASSWORD in .env or specify a JSON file."
