@@ -190,24 +190,12 @@
   function selectMiddleCodeRow(rowIndex) {
     const f = getMainForm();
     const gList = f?.div_workForm?.form?.div2?.form?.gdList;
-    const dsList = f?.div_workForm?.form?.dsList;
-    if (!gList || !dsList) throw new Error("gdList 또는 dsList가 존재하지 않습니다.");
+    if (!gList) throw new Error("gdList가 존재하지 않습니다.");
 
-    const expectedCode = dsList.getColumn(rowIndex, "MID_CD");
-    const expectedName = dsList.getColumn(rowIndex, "MID_NM");
-    const logMsg = `[selectMiddleCodeRow] try row=${rowIndex}, code=${expectedCode}, name=${expectedName}`;
-    console.log(logMsg);
-    window.__midCategoryLogs__.push(logMsg);
-
+    // 실제 클릭은 여기서 한 번만 발생합니다.
     gList.selectRow(rowIndex);
     const evt = new nexacro.GridClickEventInfo(gList, "oncellclick", false, false, false, false, 0, 0, rowIndex, rowIndex);
     gList.oncellclick._fireEvent(gList, evt);
-
-    const actualCode = dsList.getColumn(dsList.rowposition, "MID_CD");
-    const actualName = dsList.getColumn(dsList.rowposition, "MID_NM");
-    const afterMsg = `[selectMiddleCodeRow] after rowpos=${dsList.rowposition}, code=${actualCode}, name=${actualName}`;
-    console.log(afterMsg);
-    window.__midCategoryLogs__.push(afterMsg);
   }
 
 
@@ -468,8 +456,9 @@
       const midName = dsList.getColumn(rowIndex, "MID_NM");
       const expectedQty = parseInt(dsList.getColumn(rowIndex, "SALE_QTY"), 10);
 
-      selectMiddleCodeRow(rowIndex);
-      console.log(`▶ 중분류 [${midCode} - ${midName}] 클릭됨, 기준 수량: ${expectedQty}`);
+      // 중분류를 다시 클릭하는 로직은 검증 단계에서 불필요하므로 제거합니다.
+      // selectMiddleCodeRow(rowIndex);
+      console.log(`▶ 중분류 [${midCode} - ${midName}] 검증 시작, 기준 수량: ${expectedQty}`);
 
       await delay(2000);
 
@@ -502,6 +491,21 @@
           console.error("dsList를 찾을 수 없습니다. 검증을 중단합니다.");
           return { success: false, failed_codes: ["dsList not found"] };
       }
+
+      // dsList에 데이터가 로드될 때까지 대기
+      await new Promise((resolve, reject) => {
+        const checkInterval = setInterval(() => {
+          const currentDsList = getMainForm()?.div_workForm?.form?.dsList;
+          if (currentDsList && currentDsList.getRowCount() > 0) {
+            clearInterval(checkInterval);
+            resolve();
+          }
+        }, 500); // 0.5초마다 확인
+        setTimeout(() => {
+          clearInterval(checkInterval);
+          reject(new Error("dsList data loading timed out."));
+        }, 30000); // 30초 타임아웃
+      });
 
       const failed_codes = [];
       for (let i = 0; i < dsList.getRowCount(); i++) {
