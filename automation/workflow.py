@@ -12,6 +12,7 @@ from selenium.common.exceptions import TimeoutException
 
 from utils.log_parser import extract_tab_lines
 from utils.log_util import get_logger
+from utils.hourly_sales_util import write_hourly_data
 
 log = get_logger(__name__)
 
@@ -20,7 +21,18 @@ log = get_logger(__name__)
 # Helper functions
 # ---------------------------------------------------------------------------
 
-
+def _parse_raw_data_to_records(parsed_data: Any, field_order: list[str]) -> list[dict[str, Any]]:
+    """Converts raw parsed data (list of strings or dicts) into a list of dicts."""
+    records_for_db: list[dict[str, Any]] = []
+    if isinstance(parsed_data, list) and parsed_data:
+        if all(isinstance(item, dict) for item in parsed_data):
+            return parsed_data  # Already in the correct format
+        elif all(isinstance(item, str) for item in parsed_data):
+            for line in parsed_data:
+                values = line.strip().split("\t")
+                if len(values) == len(field_order):
+                    records_for_db.append(dict(zip(field_order, values)))
+    return records_for_db
 
 
 def _initialize_driver_and_login(
@@ -52,31 +64,20 @@ def _navigate_and_prepare_collection(
 
 
 def _process_and_save_data(
-    parsed_data: Any,
+    records: list[dict[str, Any]],
     db_path: Path,
-    field_order: list[str],
     write_data_func: Callable[..., int],
-    collected_at_override: str | None = None,
 ) -> None:
-    records_for_db: list[dict[str, Any]] = []
-    if isinstance(parsed_data, list) and parsed_data:
-        if all(isinstance(item, dict) for item in parsed_data):
-            records_for_db = parsed_data
-        elif all(isinstance(item, str) for item in parsed_data):
-            for line in parsed_data:
-                values = line.strip().split("\t")
-                if len(values) == len(field_order):
-                    records_for_db.append(dict(zip(field_order, values)))
-    
-    if not records_for_db:
+    """Saves a list of records to the database using the provided write function."""
+    if not records:
         log.warning("No valid records to save.", extra={"tag": "db"})
         return
 
-    log.debug(f"Attempting to save {len(records_for_db)} records to DB.", extra={"tag": "db"})
-    log.debug(f"First record to save: {records_for_db[0] if records_for_db else 'N/A'}", extra={"tag": "db"})
+    log.debug(f"Attempting to save {len(records)} records to DB.", extra={"tag": "db"})
+    log.debug(f"First record to save: {records[0] if records else 'N/A'}", extra={"tag": "db"})
 
     try:
-        inserted = write_data_func(records_for_db, db_path)
+        inserted = write_data_func(records, db_path)
         log.info(f"DB saved to {db_path}, inserted {inserted} new rows.", extra={"tag": "db"})
     except Exception as e:
         log.error(f"DB write failed: {e}", extra={"tag": "db"}, exc_info=True)
@@ -202,26 +203,37 @@ def _run_collection_cycle(
                 parsed_data = []
 
         if parsed_data:
-            collected_at = (
-                f"{date_to_collect} 00:00"
-                if date_to_collect != datetime.now().strftime("%Y-%m-%d")
-                else datetime.now().strftime("%Y-%m-%d %H:%M")
+            records = _parse_raw_data_to_records(parsed_data, field_order)
+            if not records:
+                log.warning(
+                    f"Collection for {date_to_collect} successful, but no valid data was parsed.",
+                    extra={"tag": "main"},
+                )
+                _handle_final_logs(driver)
+                return
+
+            # 1. 증분 데이터 저장 (Hourly) - 기존 DB 파일에 저장
+            collected_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+            try:
+                inserted_hourly = write_hourly_data(records, collected_at, db_path)
+                log.info(
+                    f"Saved {inserted_hourly} incremental sales records to {db_path}",
+                    extra={"tag": "db"},
+                )
+            except Exception as e:
+                log.error(
+                    f"Failed to write hourly sales data: {e}",
+                    extra={"tag": "db"},
+                    exc_info=True,
+                )
+
+            # 2. 전체 누적 데이터 저장 (기존 방식) - 기존 DB 파일에 저장
+            log.info(f"Proceeding to save cumulative data to {db_path}", extra={"tag": "db"})
+            _process_and_save_data(
+                records,  # 이미 파싱된 데이터를 전달
+                db_path,
+                write_data_func,
             )
-            if date_to_collect == datetime.now().strftime("%Y-%m-%d"):
-                _process_and_save_data(
-                    parsed_data,
-                    db_path,
-                    field_order,
-                    write_data_func,
-                )
-            else:
-                _process_and_save_data(
-                    parsed_data,
-                    db_path,
-                    field_order,
-                    write_data_func,
-                    collected_at_override=collected_at,
-                )
         else:
             log.warning(
                 f"Collection for {date_to_collect} successful, but no data was returned.",
