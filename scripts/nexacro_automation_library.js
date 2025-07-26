@@ -15,6 +15,9 @@
     isCollecting: false, // 현재 데이터 수집이 진행 중인지 여부
   });
 
+  // 중분류 클릭 과정을 별도로 추적하기 위한 로그 배열
+  window.__midCategoryLogs__ = window.__midCategoryLogs__ || [];
+
   // 비동기 작업을 위한 딜레이 함수
   const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
@@ -187,11 +190,24 @@
   function selectMiddleCodeRow(rowIndex) {
     const f = getMainForm();
     const gList = f?.div_workForm?.form?.div2?.form?.gdList;
-    if (!gList) throw new Error("gdList가 존재하지 않습니다.");
+    const dsList = f?.div_workForm?.form?.dsList;
+    if (!gList || !dsList) throw new Error("gdList 또는 dsList가 존재하지 않습니다.");
+
+    const expectedCode = dsList.getColumn(rowIndex, "MID_CD");
+    const expectedName = dsList.getColumn(rowIndex, "MID_NM");
+    const logMsg = `[selectMiddleCodeRow] try row=${rowIndex}, code=${expectedCode}, name=${expectedName}`;
+    console.log(logMsg);
+    window.__midCategoryLogs__.push(logMsg);
 
     gList.selectRow(rowIndex);
     const evt = new nexacro.GridClickEventInfo(gList, "oncellclick", false, false, false, false, 0, 0, rowIndex, rowIndex);
     gList.oncellclick._fireEvent(gList, evt);
+
+    const actualCode = dsList.getColumn(dsList.rowposition, "MID_CD");
+    const actualName = dsList.getColumn(dsList.rowposition, "MID_NM");
+    const afterMsg = `[selectMiddleCodeRow] after rowpos=${dsList.rowposition}, code=${actualCode}, name=${actualName}`;
+    console.log(afterMsg);
+    window.__midCategoryLogs__.push(afterMsg);
   }
 
 
@@ -227,20 +243,40 @@
       return products;
     }
 
-    for (let i = 0; i < dsDetail.getRowCount(); i++) {
+    const rowCount = dsDetail.getRowCount();
+    let firstCode = rowCount > 0 ? dsDetail.getColumn(0, "ITEM_CD") : "";
+    let firstName = rowCount > 0 ? dsDetail.getColumn(0, "ITEM_NM") : "";
+    let sumSales = 0, sumOrder = 0, sumPurchase = 0, sumDisposal = 0, sumStock = 0;
+
+    for (let i = 0; i < rowCount; i++) {
+      const sales = parseInt(dsDetail.getColumn(i, "SALE_QTY") || 0, 10);
+      const order_cnt = parseInt(dsDetail.getColumn(i, "ORD_QTY") || 0, 10);
+      const purchase = parseInt(dsDetail.getColumn(i, "BUY_QTY") || 0, 10);
+      const disposal = parseInt(dsDetail.getColumn(i, "DISUSE_QTY") || 0, 10);
+      const stock = parseInt(dsDetail.getColumn(i, "STOCK_QTY") || 0, 10);
+
       products.push({
-        midCode:     midCode,
-        midName:     midName,
+        midCode,
+        midName,
         productCode: dsDetail.getColumn(i, "ITEM_CD"),
         productName: dsDetail.getColumn(i, "ITEM_NM"),
-        sales:       parseInt(dsDetail.getColumn(i, "SALE_QTY") || 0, 10),
-        order_cnt:   parseInt(dsDetail.getColumn(i, "ORD_QTY") || 0, 10),
-        purchase:    parseInt(dsDetail.getColumn(i, "BUY_QTY") || 0, 10),
-        disposal:    parseInt(dsDetail.getColumn(i, "DISUSE_QTY") || 0, 10),
-        stock:       parseInt(dsDetail.getColumn(i, "STOCK_QTY") || 0, 10),
+        sales,
+        order_cnt,
+        purchase,
+        disposal,
+        stock,
       });
+
+      sumSales += sales;
+      sumOrder += order_cnt;
+      sumPurchase += purchase;
+      sumDisposal += disposal;
+      sumStock += stock;
     }
-    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${products.length}개를 데이터셋에서 수집합니다.`);
+
+    console.log(`[collectProductsFromDataset] '${midName}' rows=${rowCount}, first=${firstCode}-${firstName}, sums={sales:${sumSales},order:${sumOrder},purchase:${sumPurchase},disposal:${sumDisposal},stock:${sumStock}}`);
+    window.__midCategoryLogs__.push(`[collectProductsFromDataset] ${midName} rowCount=${rowCount}`);
+
     return products;
   }
 
@@ -388,23 +424,28 @@
         // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
         const products = await collectProductsFromDataset(mid.code, mid.name, mainForm.div_workForm.form.div2.form);
         
-        // 수집된 상품 데이터를 전체 상품 맵에 병합 (상품코드 기준으로 모든 수량 합산)
+        // 수집된 상품 데이터를 전체 상품 맵에 병합 (중분류-상품코드 기준으로 합산)
         products.forEach(p => {
-            if (allProductsMap.has(p.productCode)) {
-                const existing = allProductsMap.get(p.productCode);
+            const key = `${p.midCode}_${p.productCode}`;
+            if (allProductsMap.has(key)) {
+                const existing = allProductsMap.get(key);
+                console.warn(`[merge] duplicate product ${p.productCode} existing-mid=${existing.midCode} new-mid=${p.midCode}`);
                 existing.sales += p.sales;
                 existing.order_cnt += p.order_cnt;
                 existing.purchase += p.purchase;
                 existing.disposal += p.disposal;
                 existing.stock += p.stock;
             } else {
-                allProductsMap.set(p.productCode, p); // 새로운 상품이면 그대로 추가
+                allProductsMap.set(key, p); // 새로운 상품이면 그대로 추가
             }
         });
         console.log(`[완료] 중분류: ${mid.code} (${mid.name}). 현재까지 총 ${allProductsMap.size}개 상품 수집.`);
       }
 
-      // 5. 최종 결과 포맷팅 및 저장
+      // 5. 최종 검증 및 결과 포맷팅
+      const verification = await runSaleQtyVerification();
+      console.log(`[runCollectionForDate] verification result: ${JSON.stringify(verification)}`);
+
       // Map의 값을 배열로 변환하여 window.automation.parsedData에 저장
       window.automation.parsedData = Array.from(allProductsMap.values());
       console.log(`🎉 전체 수집 완료. 총 ${allProductsMap.size}개 상품, ${midCodesToProcess.length}개 중분류.`);
