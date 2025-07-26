@@ -236,47 +236,27 @@
    */
   async function collectProductsFromDataset(midCode, midName, scope) {
     const products = [];
-    const dsDetail = scope.dsDetail; // 넥사크로 데이터셋 객체 직접 접근
+    const dsDetail = getMainForm()?.div_workForm?.form?.dsDetail; // 넥사크로 데이터셋 객체 직접 접근
 
     if (!dsDetail) {
       console.warn("[collectProductsFromDataset] dsDetail 데이터셋을 찾을 수 없습니다.");
       return products;
     }
 
-    const rowCount = dsDetail.getRowCount();
-    let firstCode = rowCount > 0 ? dsDetail.getColumn(0, "ITEM_CD") : "";
-    let firstName = rowCount > 0 ? dsDetail.getColumn(0, "ITEM_NM") : "";
-    let sumSales = 0, sumOrder = 0, sumPurchase = 0, sumDisposal = 0, sumStock = 0;
-
-    for (let i = 0; i < rowCount; i++) {
-      const sales = parseInt(dsDetail.getColumn(i, "SALE_QTY") || 0, 10);
-      const order_cnt = parseInt(dsDetail.getColumn(i, "ORD_QTY") || 0, 10);
-      const purchase = parseInt(dsDetail.getColumn(i, "BUY_QTY") || 0, 10);
-      const disposal = parseInt(dsDetail.getColumn(i, "DISUSE_QTY") || 0, 10);
-      const stock = parseInt(dsDetail.getColumn(i, "STOCK_QTY") || 0, 10);
-
+    for (let i = 0; i < dsDetail.getRowCount(); i++) {
       products.push({
-        midCode,
-        midName,
+        midCode:     midCode,
+        midName:     midName,
         productCode: dsDetail.getColumn(i, "ITEM_CD"),
         productName: dsDetail.getColumn(i, "ITEM_NM"),
-        sales,
-        order_cnt,
-        purchase,
-        disposal,
-        stock,
+        sales:       parseInt(dsDetail.getColumn(i, "SALE_QTY") || 0, 10),
+        order_cnt:   parseInt(dsDetail.getColumn(i, "ORD_QTY") || 0, 10),
+        purchase:    parseInt(dsDetail.getColumn(i, "BUY_QTY") || 0, 10),
+        disposal:    parseInt(dsDetail.getColumn(i, "DISUSE_QTY") || 0, 10),
+        stock:       parseInt(dsDetail.getColumn(i, "STOCK_QTY") || 0, 10),
       });
-
-      sumSales += sales;
-      sumOrder += order_cnt;
-      sumPurchase += purchase;
-      sumDisposal += disposal;
-      sumStock += stock;
     }
-
-    console.log(`[collectProductsFromDataset] '${midName}' rows=${rowCount}, first=${firstCode}-${firstName}, sums={sales:${sumSales},order:${sumOrder},purchase:${sumPurchase},disposal:${sumDisposal},stock:${sumStock}}`);
-    window.__midCategoryLogs__.push(`[collectProductsFromDataset] ${midName} rowCount=${rowCount}`);
-
+    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${products.length}개를 데이터셋에서 수집합니다.`);
     return products;
   }
 
