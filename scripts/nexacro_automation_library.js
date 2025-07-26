@@ -160,7 +160,7 @@
       } else {
         console.warn(`[getNexacroComponent] 현재 스코프가 유효하지 않거나 lookup 함수가 없습니다. 컴포넌트: "${componentId}"`);
       }
-      await delay(10000); // 10000ms 대기 후 재시도
+      await delay(500); // 0.5초마다 재시도하여 대기 시간 단축
     }
     console.error(`[getNexacroComponent] 시간 초과! 컴포넌트를 찾을 수 없습니다: "${componentId}"`);
     return null; // 타임아웃 시 null 반환
@@ -239,7 +239,7 @@
     for (let i = 0; i < 50; i++) {
       const form = getMainForm();
       if (form) return true;
-    await delay(10000);
+    await delay(500);
     }
     throw new Error("mainForm이 15초 내 생성되지 않았습니다.");
   };
@@ -361,7 +361,7 @@
       // 2. 날짜 설정 및 메인 검색 버튼 클릭 (트랜잭션 강제 재발행)
       // 날짜를 초기화했다가 다시 설정하여, 앱이 변경을 인지하고 새 트랜잭션을 보내도록 함
       dateInput.set_value("");
-      await delay(10000); // UI가 변경을 인지할 시간을 줌
+      await delay(500); // UI 반영 대기 시간을 0.5초로 단축
       dateInput.set_value(dateStr);
       console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
 
