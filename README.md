@@ -73,6 +73,24 @@ python main.py
 - `nexacro_automation_library.js`를 브라우저에 주입하고, `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
 - 수집된 데이터는 통합 DB에 저장됩니다.
 
+## 데이터 포맷
+
+JavaScript 스크립트에서 수집한 각 상품 데이터는 다음과 같은 필드를 포함한 객체 형태로 Python에 전달됩니다.
+
+| 키 이름        | 설명             |
+|----------------|------------------|
+| `midCode`      | 중분류 코드      |
+| `midName`      | 중분류명         |
+| `productCode`  | 상품 코드        |
+| `productName`  | 상품명           |
+| `sales`        | 매출액           |
+| `order_cnt`    | 주문수량         |
+| `purchase`     | 매입액           |
+| `disposal`     | 폐기액           |
+| `stock`        | 재고액           |
+
+`write_sales_data` 함수는 위 필드명 외에도 `snake_case` 형태(`mid_code` 등)나 기존 텍스트 파일 포맷(`order`, `discard`)을 허용합니다.
+
 ## 데이터베이스 구조
 
 `mid_sales` 테이블에 데이터가 저장되며, 중복 저장을 방지하기 위한 제약 조건이 포함되어 있습니다.
