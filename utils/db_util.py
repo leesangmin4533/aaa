@@ -25,6 +25,33 @@ else:  # pragma: no cover - fallback when executed directly
 log = get_logger(__name__)
 
 
+# ``write_sales_data`` 함수에서 허용하는 키 목록
+ALLOWED_KEYS: set[str] = {
+    "midCode",
+    "midName",
+    "productCode",
+    "productName",
+    "sales",
+    "order",
+    "order_cnt",
+    "purchase",
+    "disposal",
+    "discard",
+    "stock",
+    # snake_case 변형
+    "mid_code",
+    "mid_name",
+    "product_code",
+    "product_name",
+    # 원본 데이터셋 컬럼명
+    "SALE_QTY",
+    "ORD_QTY",
+    "BUY_QTY",
+    "DISUSE_QTY",
+    "STOCK_QTY",
+}
+
+
 # 통합 매출 데이터 테이블 스키마
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS mid_sales (
@@ -114,6 +141,12 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
     """
 
     for rec in records:
+        unknown = set(rec) - ALLOWED_KEYS
+        if unknown:
+            log.warning(
+                f"Unexpected keys in record ignored: {sorted(unknown)}",
+                extra={"tag": "db"},
+            )
         product_code = _get_value(rec, "productCode", "product_code")
         sales_raw = _get_value(rec, "sales", "SALE_QTY")
 
