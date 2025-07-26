@@ -1,8 +1,30 @@
 import logging
 import os
+import json
 from datetime import datetime
 from pathlib import Path
 from typing import Callable
+
+# 프로젝트 루트 경로
+ROOT_DIR = Path(__file__).resolve().parents[1]
+
+
+def _get_log_path() -> Path:
+    """Return log file path defined in config.json or default."""
+    config_path = ROOT_DIR / "config.json"
+    if config_path.exists():
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                conf = json.load(f)
+            log_file = conf.get("log_file")
+            if log_file:
+                path = Path(log_file)
+                if not path.is_absolute():
+                    return ROOT_DIR / path
+                return path
+        except Exception:
+            pass
+    return ROOT_DIR / "logs" / "automation.log"
 
 
 def _setup_logger(name: str) -> logging.Logger:
@@ -40,16 +62,9 @@ def _setup_logger(name: str) -> logging.Logger:
         logger.addHandler(mem_handler)
         logger._memory_stream = mem_stream  # type: ignore[attr-defined]
     else:
-        # 파일 로깅 설정
-        log_dir = Path(__file__).resolve().parents[1] # 프로젝트 루트 디렉토리
-        
-        # 단일 로그 파일 사용 (덮어쓰기 모드)
-        file_name = "automation.log"
-        
-        # 파일 핸들러 (덮어쓰기 모드)
-        file_handler = logging.FileHandler(
-            log_dir / file_name, mode="w", encoding="utf-8"
-        )
+        log_path = _get_log_path()
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        file_handler = logging.FileHandler(log_path, mode="w", encoding="utf-8")
         file_handler.setFormatter(fmt)
         logger.addHandler(file_handler)
 
