@@ -259,30 +259,27 @@
    */
   async function collectProductsFromDataset(midCode, midName, scope) {
     const products = [];
-    const rows = [...document.querySelectorAll("div[id*='gdDetail.body'][id*='cell_'][id$='_0:text']")];
+    const dsDetail = scope.dsDetail; // 넥사크로 데이터셋 객체 직접 접근
 
-    for (const el of rows) {
-      const row = el.id.match(/cell_(\d+)_0:text/)?.[1];
-      if (!row) continue;
+    if (!dsDetail) {
+      console.warn("[collectProductsFromDataset] dsDetail 데이터셋을 찾을 수 없습니다.");
+      return products;
+    }
 
-      const getText = (r, c) => {
-        const element = document.querySelector(`div[id*='gdDetail.body'][id*='cell_${r}_${c}'][id$=':text']`);
-        return element?.innerText?.trim() || '';
-      };
-
+    for (let i = 0; i < dsDetail.getRowCount(); i++) {
       products.push({
         midCode:     midCode,
         midName:     midName,
-        productCode: getText(row, 0),
-        productName: getText(row, 1),
-        sales:       parseInt(getText(row, 2) || 0, 10),
-        order_cnt:   parseInt(getText(row, 3) || 0, 10),
-        purchase:    parseInt(getText(row, 4) || 0, 10),
-        disposal:    parseInt(getText(row, 5) || 0, 10),
-        stock:       parseInt(getText(row, 6) || 0, 10),
+        productCode: dsDetail.getColumn(i, "ITEM_CD"),
+        productName: dsDetail.getColumn(i, "ITEM_NM"),
+        sales:       parseInt(dsDetail.getColumn(i, "SALE_QTY") || 0, 10),
+        order_cnt:   parseInt(dsDetail.getColumn(i, "ORD_QTY") || 0, 10),
+        purchase:    parseInt(dsDetail.getColumn(i, "BUY_QTY") || 0, 10),
+        disposal:    parseInt(dsDetail.getColumn(i, "DISUSE_QTY") || 0, 10),
+        stock:       parseInt(dsDetail.getColumn(i, "STOCK_QTY") || 0, 10),
       });
     }
-    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${products.length}개를 DOM에서 수집합니다.`);
+    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${products.length}개를 데이터셋에서 수집합니다.`);
     return products;
   }
 
