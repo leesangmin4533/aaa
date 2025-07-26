@@ -33,7 +33,7 @@ from automation.config import (
     NAVIGATION_SCRIPT,
 )
 from automation.driver import create_driver
-from automation.workflow import _run_collection_cycle, get_past_dates
+from automation.workflow import _run_collection_cycle
 from login.login_bgf import login_bgf
 from utils.db_util import check_dates_exist, write_sales_data
 from utils.js_util import execute_collect_single_day_data
