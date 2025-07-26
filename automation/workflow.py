@@ -20,14 +20,7 @@ log = get_logger(__name__)
 # Helper functions
 # ---------------------------------------------------------------------------
 
-def get_past_dates(n: int = 7) -> list[str]:
-    """YYYY-MM-DD 형식의 과거 날짜 리스트를 반환합니다."""
-    dates = []
-    today = datetime.now()
-    for i in range(1, n + 1):
-        d = today - timedelta(days=i)
-        dates.append(d.strftime("%Y-%m-%d"))
-    return dates
+
 
 
 def _initialize_driver_and_login(
