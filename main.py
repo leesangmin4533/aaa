@@ -57,9 +57,7 @@ def wait_for_data(driver, timeout: int = 10) -> Any | None:
     return _wait_for_data(driver, timeout)
 
 
-def is_7days_data_available() -> bool:
-    """Return ``True`` if the past 7 days DB is considered available."""
-    return (CODE_OUTPUT_DIR / PAST7_DB_FILE).exists() or True
+
 
 
 def main() -> None:
@@ -75,40 +73,9 @@ def main() -> None:
         cred_path = os.environ.get("CREDENTIAL_FILE")
         db_path = CODE_OUTPUT_DIR / ALL_SALES_DB_FILE
 
-        # 통합 DB 경로 설정
-        past7_available = is_7days_data_available()
-        if past7_available:
-            db_path = CODE_OUTPUT_DIR / f"{datetime.now():%Y%m%d}.db"
-        else:
-            db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
         log.info(f"Using DB: {db_path}", extra={"tag": "main"})
         
-        # 1. 과거 데이터 확인 및 수집 (최근 7일)
-        past_dates_to_check = get_past_dates(7)  # YYYY-MM-DD 형식
-        missing_dates = [] if past7_available else check_dates_exist(db_path, past_dates_to_check)
-
-        if missing_dates:
-            log.info(f"확인된 누락 데이터: {missing_dates}. 수집 시작", extra={"tag": "main"})
-            for date_str in sorted(missing_dates):
-                _run_collection_cycle(
-                    date_to_collect=date_str,
-                    cred_path=cred_path,
-                    create_driver_func=create_driver,
-                    login_func=login_bgf,
-                    run_script_func=run_script,
-                    wait_for_page_func=wait_for_mix_ratio_page,
-                    collect_day_data_func=execute_collect_single_day_data,
-                    write_data_func=write_sales_data,
-                    db_path=db_path,
-                    automation_library_script=DEFAULT_SCRIPT,
-                    navigation_script=NAVIGATION_SCRIPT, # 추가된 매개변수
-                    field_order=FIELD_ORDER,
-                    page_load_timeout=PAGE_LOAD_TIMEOUT,
-                )
-        else:
-            log.info("All past 7 days of data are present.", extra={"tag": "main"})
-
-        # 2. 오늘 데이터 수집
+        # 1. 오늘 데이터 수집
         today_str = datetime.now().strftime("%Y-%m-%d")
         log.info(f"Starting collection for today: {today_str}", extra={"tag": "main"})
         _run_collection_cycle(
