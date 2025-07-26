@@ -1,20 +1,11 @@
 """
-중분류별 매출 데이터 수집 자동화 스크립트 (통합 DB 방식)
+중분류별 매출 데이터 수집 자동화 스크립트
 
 데이터 저장 정책:
 1. 단일 통합 DB: 모든 데이터는 하나의 DB 파일에 누적 저장됩니다.
-2. 저장 시각: collected_at은 분 단위까지        log.info("===== Automation End =====", extra={"tag": "main"})
-    except Exception as e:
-        log.error(f"An error occurred: {str(e)}", extra={"tag": "main"})
-        raise
-    finally:
-        log.info("===== Automation Complete =====", extra={"tag": "main"})
-
-
-if __name__ == "__main__":니다 (YYYY-MM-DD HH:MM).
-3. 중복 방지: 
-   - (collected_at, product_code) 조합은 고유해야 합니다.
-   - 같은 날 동일 product_code의 경우 sales가 증가한 경우에만 저장됩니다.
+2. 저장 시각: collected_at은 분 단위(YYYY-MM-DD HH:MM)까지 기록합니다.
+3. 중복 방지: (collected_at, product_code) 조합은 고유해야 하며,
+   동일 일자 동일 product_code는 sales가 증가한 경우에만 저장합니다.
 4. 과거 데이터: 최근 7일의 누락 데이터를 자동으로 확인하고 수집합니다.
 """
 
