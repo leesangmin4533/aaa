@@ -28,6 +28,9 @@ from automation.config import (
 
     PAGE_LOAD_TIMEOUT,
     SCRIPT_DIR,
+    DEFAULT_SCRIPT,
+    LISTENER_SCRIPT,
+    NAVIGATION_SCRIPT,
 )
 from automation.driver import create_driver
 from automation.workflow import _run_collection_cycle, get_past_dates
@@ -97,8 +100,8 @@ def main() -> None:
                     collect_day_data_func=execute_collect_single_day_data,
                     write_data_func=write_sales_data,
                     db_path=db_path,
-                    automation_library_script="nexacro_automation_library.js",
-                    navigation_script="navigation.js", # 추가된 매개변수
+                    automation_library_script=DEFAULT_SCRIPT,
+                    navigation_script=NAVIGATION_SCRIPT, # 추가된 매개변수
                     field_order=FIELD_ORDER,
                     page_load_timeout=PAGE_LOAD_TIMEOUT,
                 )
@@ -118,8 +121,8 @@ def main() -> None:
             collect_day_data_func=execute_collect_single_day_data,
             write_data_func=write_sales_data,
             db_path=db_path,
-            automation_library_script="nexacro_automation_library.js",
-            navigation_script="navigation.js", # 추가된 매개변수
+            automation_library_script=DEFAULT_SCRIPT,
+            navigation_script=NAVIGATION_SCRIPT, # 추가된 매개변수
             field_order=FIELD_ORDER,
             page_load_timeout=PAGE_LOAD_TIMEOUT,
         )
@@ -171,8 +174,8 @@ if __name__ == "__main__":
             run_script_func=run_script,
             wait_for_page_func=wait_for_mix_ratio_page,
             page_load_timeout=PAGE_LOAD_TIMEOUT,
-            automation_library_script="nexacro_automation_library.js",
-            navigation_script="navigation.js",
+            automation_library_script=DEFAULT_SCRIPT,
+            navigation_script=NAVIGATION_SCRIPT,
         )
     else:
         main()
