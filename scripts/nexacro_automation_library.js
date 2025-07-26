@@ -34,46 +34,7 @@
     return true;
   }
 
-  async function autoClickAllMidCodes() {
-    const seen = new Set();
-    let scrollCount = 0;
-
-    while (true) {
-      const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
-      const newCodes = [];
-
-      for (const textEl of textCells) {
-        const code = textEl.innerText?.trim();
-        if (!/^\d{3}$/.test(code)) continue; // 중분류코드는 3자리 숫자
-        if (seen.has(code)) continue;
-
-        const clickId = textEl.id.replace(":text", "");
-        const clicked = await clickElementById(clickId);
-        if (!clicked) {
-          console.warn("❌ 중분류 클릭 실패 → ID:", clickId);
-          continue;
-        }
-
-        seen.add(code);
-        newCodes.push(code);
-        console.log(`✅ 중분류 클릭 완료: ${code}`);
-        // 렌더링 성능 측정 결과(2025-07-23)를 반영하여 700ms 대기
-        await delay(500); // 렌더링 대기
-      }
-
-      if (newCodes.length === 0) break;
-
-      const scrollBtn = document.querySelector("div[id$='gdList.vscrollbar.incbutton:icontext']");
-      if (!scrollBtn) break;
-
-      await clickElementById(scrollBtn.id);
-      scrollCount++;
-      console.log(` 중분류 스크롤 ${scrollCount}회`);
-      await delay(500);
-    }
-
-    console.log(" 전체 중분류 처리 완료. 총 개수:", seen.size);
-  }
+  
 
   // 콘솔 로그를 후킹하여 window.automation.logs에 저장
   const origConsoleLog = console.log;
@@ -285,24 +246,25 @@
 
   async function getAllMidCodesFromDataset(scope) {
     const midCodes = [];
-    const textCells = [...document.querySelectorAll("div[id*='gdList.body'][id*='cell_'][id$='_0:text']")];
+    const dsList = scope.dsList; // 넥사크로 데이터셋 객체 직접 접근
 
-    for (const textEl of textCells) {
-      const code = textEl.innerText?.trim();
-      if (!/^\d{3}$/.test(code)) continue; // 중분류코드는 3자리 숫자
+    if (!dsList) {
+      console.warn("[getAllMidCodesFromDataset] dsList 데이터셋을 찾을 수 없습니다.");
+      return midCodes;
+    }
 
-      const row = textEl.id.match(/cell_(\d+)_0:text/)?.[1];
-      const midNameEl = document.querySelector(`div[id*='gdList.body'][id*='cell_${row}_1:text']`);
-      const name = midNameEl?.innerText?.trim() || '';
+    for (let i = 0; i < dsList.getRowCount(); i++) {
+      const code = dsList.getColumn(i, "MID_CD");
+      const name = dsList.getColumn(i, "MID_NM");
 
       midCodes.push({
         code:             code,
         name:             name,
-        expectedQuantity: 0, // DOM 파싱에서는 기대수량 직접 얻기 어려움
-        row:              parseInt(row, 10), // 해당 중분류의 DOM 행 인덱스
+        expectedQuantity: parseInt(dsList.getColumn(i, "SALE_QTY") || 0, 10), // 데이터셋에서 직접 기대수량 가져옴
+        row:              i, // 데이터셋 행 인덱스
       });
     }
-    console.log(`[getAllMidCodesFromDataset] ${midCodes.length}개의 중분류를 DOM에서 찾았습니다.`);
+    console.log(`[getAllMidCodesFromDataset] ${midCodes.length}개의 중분류를 데이터셋에서 찾았습니다.`);
     return midCodes;
   }
 
@@ -383,8 +345,8 @@
       console.log("중분류 목록 로딩 완료.");
       await delay(700); // DOM 렌더링을 위한 추가 대기
 
-      // 3. 모든 중분류 항목이 로드되도록 스크롤 및 클릭
-      await autoClickAllMidCodes();
+      // 3. 모든 중분류 항목이 로드되도록 스크롤 및 클릭 (이 단계는 더 이상 필요하지 않습니다.)
+      // await autoClickAllMidCodes();
 
       // 4. 처리할 중분류 목록 가져오기 (Dataset에서 직접 가져옴)
       const midCodesToProcess = await getAllMidCodesFromDataset(mainForm.div_workForm.form.div2.form);
