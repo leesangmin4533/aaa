@@ -246,7 +246,7 @@
 
   async function getAllMidCodesFromDataset(scope) {
     const midCodes = [];
-    const dsList = scope.dsList; // 넥사크로 데이터셋 객체 직접 접근
+    const dsList = getMainForm()?.div_workForm?.form?.dsList; // 넥사크로 데이터셋 객체 직접 접근
 
     if (!dsList) {
       console.warn("[getAllMidCodesFromDataset] dsList 데이터셋을 찾을 수 없습니다.");
