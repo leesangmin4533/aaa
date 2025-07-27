@@ -163,6 +163,9 @@
 
       // 넥사크로 폼의 fn_callback 함수를 오버라이드
       form.fn_callback = function(serviceID, errorCode, errorMsg) {
+        // 진단 로그: 어떤 서비스 ID가 들어오는지 항상 출력
+        console.log(`[DIAGNOSTIC] fn_callback received: serviceID=${serviceID}, errorCode=${errorCode}`);
+
         // 원래의 콜백 함수를 먼저 실행하여 기존 로직을 유지
         if (typeof originalCallback === 'function') {
           originalCallback.apply(this, arguments);
@@ -456,12 +459,17 @@
       const midName = dsList.getColumn(rowIndex, "MID_NM");
       const expectedQty = parseInt(dsList.getColumn(rowIndex, "SALE_QTY"), 10);
 
-      // 중분류를 다시 클릭하는 로직은 검증 단계에서 불필요하므로 제거합니다.
-      // selectMiddleCodeRow(rowIndex);
       console.log(`▶ 중분류 [${midCode} - ${midName}] 검증 시작, 기준 수량: ${expectedQty}`);
 
-      await delay(2000);
+      // 1. 해당 중분류 행을 클릭하여 상세 데이터 조회를 트리거합니다.
+      selectMiddleCodeRow(rowIndex);
+      console.log(`  - [verify] '${midName}' 클릭. 상품 목록 로딩 대기...`);
 
+      // 2. 'searchDetail' 트랜잭션이 완료될 때까지 기다립니다.
+      await waitForTransaction("searchDetail", 30000); // 30초 타임아웃
+      console.log(`  - [verify] '${midName}' 상품 목록 로딩 완료.`);
+      
+      // 3. 트랜잭션 완료 후, dsDetail에서 실제 상품 수량 합계를 계산합니다.
       let actualQty = 0;
       for (let i = 0; i < dsDetail.getRowCount(); i++) {
         actualQty += parseInt(dsDetail.getColumn(i, "SALE_QTY"), 10) || 0;
