@@ -464,11 +464,29 @@
       selectMiddleCodeRow(rowIndex);
       console.log(`  - [verify] '${midName}' 클릭. 상품 목록 로딩 대기...`);
 
-      // 2. 'searchDetail' 트랜잭션이 완료될 때까지 기다립니다.
-      await waitForTransaction("searchDetail", 30000); // 30초 타임아웃
-      console.log(`  - [verify] '${midName}' 상품 목록 로딩 완료.`);
+      // 2. DOM 기반으로 상품 목록 로딩을 기다립니다. (기존 waitForTransaction 대체)
+      await new Promise((resolve, reject) => {
+        const timeout = 30000; // 30초 타임아웃
+        const start = Date.now();
+        const checkInterval = setInterval(() => {
+          if (Date.now() - start > timeout) {
+            clearInterval(checkInterval);
+            reject(new Error(`[verify] 상품 목록 DOM 로딩 시간 초과 (${timeout}ms).`));
+            return;
+          }
+          
+          // 상품이 없는 경우(0개)도 정상 처리하기 위해 dsDetail의 row count를 확인합니다.
+          // 로딩이 완료되면 Nexacro 내부의 로딩 이미지가 사라지는 것을 감지하는 것이 가장 안정적입니다.
+          const loadingImage = form.lookup("img_loading"); // 로딩 이미지 컴포넌트
+          if (!loadingImage || !loadingImage.visible) {
+              console.log(`  - [verify] '${midName}' 상품 목록 로딩 완료.`);
+              clearInterval(checkInterval);
+              resolve();
+          }
+        }, 500);
+      });
       
-      // 3. 트랜잭션 완료 후, dsDetail에서 실제 상품 수량 합계를 계산합니다.
+      // 3. 로딩 완료 후, dsDetail에서 실제 상품 수량 합계를 계산합니다.
       let actualQty = 0;
       for (let i = 0; i < dsDetail.getRowCount(); i++) {
         actualQty += parseInt(dsDetail.getColumn(i, "SALE_QTY"), 10) || 0;
