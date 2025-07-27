@@ -359,8 +359,10 @@
       if (midCodesToProcess.length === 0) {
         console.warn("처리할 중분류가 없습니다. 수집을 종료합니다.");
         window.automation.parsedData = []; // 데이터가 없는 경우 빈 배열로 설정
+        window.automation.midCodesSnapshot = []; // 스냅샷도 비워줍니다.
         return;
       }
+      window.automation.midCodesSnapshot = midCodesToProcess; // 중분류 스냅샷 저장
       
       const allProductsMap = new Map(); // 전체 상품 데이터를 저장할 Map (중복 방지 및 합산)
 
@@ -412,12 +414,12 @@
         console.log(`[완료] 중분류: ${mid.code} (${mid.name}). 현재까지 총 ${allProductsMap.size}개 상품 수집.`);
       }
 
+      // Map의 값을 배열로 변환하여 window.automation.parsedData에 저장
+      window.automation.parsedData = Array.from(allProductsMap.values());
+
       // 5. 최종 검증 및 결과 포맷팅
       const verification = await runSaleQtyVerification();
       console.log(`[runCollectionForDate] verification result: ${JSON.stringify(verification)}`);
-
-      // Map의 값을 배열로 변환하여 window.automation.parsedData에 저장
-      window.automation.parsedData = Array.from(allProductsMap.values());
       console.log(`🎉 전체 수집 완료. 총 ${allProductsMap.size}개 상품, ${midCodesToProcess.length}개 중분류.`);
 
     } catch (err) {
@@ -443,53 +445,24 @@
    * @param {number} rowIndex - 검증할 중분류의 dsList 내 행 인덱스
    * @returns {Promise<boolean>} 검증 성공 시 true, 실패 시 false 반환
    */
-  async function verifyMidSaleQty(rowIndex) {
+  async function verifyMidSaleQty(midCodeInfo) {
     try {
-      const form = getMainForm().div_workForm.form;
-      const dsList = form.dsList;
-      const dsDetail = form.dsDetail;
-
-      if (!dsList || !dsDetail) {
-        console.warn("검증에 필요한 데이터셋(dsList, dsDetail)이 없습니다.");
+      if (!window.automation.parsedData) { // parsedData가 없으면 검증 불가
+        console.warn("수집된 데이터(window.automation.parsedData)가 없습니다. 검증을 건너뜁니다.");
         return false;
       }
 
-      const midCode = dsList.getColumn(rowIndex, "MID_CD");
-      const midName = dsList.getColumn(rowIndex, "MID_NM");
-      const expectedQty = parseInt(dsList.getColumn(rowIndex, "SALE_QTY"), 10);
+      const midCode = midCodeInfo.code;
+      const midName = midCodeInfo.name;
+      const expectedQty = midCodeInfo.expectedQuantity;
 
       console.log(`▶ 중분류 [${midCode} - ${midName}] 검증 시작, 기준 수량: ${expectedQty}`);
 
-      // 1. 해당 중분류 행을 클릭하여 상세 데이터 조회를 트리거합니다.
-      selectMiddleCodeRow(rowIndex);
-      console.log(`  - [verify] '${midName}' 클릭. 상품 목록 로딩 대기...`);
-
-      // 2. DOM 기반으로 상품 목록 로딩을 기다립니다. (기존 waitForTransaction 대체)
-      await new Promise((resolve, reject) => {
-        const timeout = 30000; // 30초 타임아웃
-        const start = Date.now();
-        const checkInterval = setInterval(() => {
-          if (Date.now() - start > timeout) {
-            clearInterval(checkInterval);
-            reject(new Error(`[verify] 상품 목록 DOM 로딩 시간 초과 (${timeout}ms).`));
-            return;
-          }
-          
-          // 상품이 없는 경우(0개)도 정상 처리하기 위해 dsDetail의 row count를 확인합니다.
-          // 로딩이 완료되면 Nexacro 내부의 로딩 이미지가 사라지는 것을 감지하는 것이 가장 안정적입니다.
-          const loadingImage = form.lookup("img_loading"); // 로딩 이미지 컴포넌트
-          if (!loadingImage || !loadingImage.visible) {
-              console.log(`  - [verify] '${midName}' 상품 목록 로딩 완료.`);
-              clearInterval(checkInterval);
-              resolve();
-          }
-        }, 500);
-      });
-      
-      // 3. 로딩 완료 후, dsDetail에서 실제 상품 수량 합계를 계산합니다.
+      // 수집된 데이터(window.automation.parsedData)에서 해당 중분류의 상품 수량 합계를 계산합니다.
       let actualQty = 0;
-      for (let i = 0; i < dsDetail.getRowCount(); i++) {
-        actualQty += parseInt(dsDetail.getColumn(i, "SALE_QTY"), 10) || 0;
+      const productsForMidCode = window.automation.parsedData.filter(p => p.midCode === midCode);
+      for (const p of productsForMidCode) {
+        actualQty += p.sales; // 'sales' 필드를 합산
       }
 
       if (expectedQty === actualQty) {
@@ -500,7 +473,7 @@
         return false;
       }
     } catch (e) {
-      console.error(`[verifyMidSaleQty] 검증 중 오류 발생 (row: ${rowIndex}):`, e.message);
+      console.error(`[verifyMidSaleQty] 검증 중 오류 발생 (midCode: ${midCodeInfo?.code || 'N/A'}):`, e.message);
       return false;
     }
   }
@@ -511,34 +484,19 @@
    */
   async function runSaleQtyVerification() {
       console.log("===== 중분류-상품 수량 합계 검증 시작 =====");
-      const dsList = getMainForm()?.div_workForm?.form?.dsList;
-      if (!dsList) {
-          console.error("dsList를 찾을 수 없습니다. 검증을 중단합니다.");
-          return { success: false, failed_codes: ["dsList not found"] };
+      const midCodesSnapshot = window.automation.midCodesSnapshot;
+      if (!midCodesSnapshot || midCodesSnapshot.length === 0) {
+          console.error("수집된 중분류 스냅샷 데이터(window.automation.midCodesSnapshot)가 없습니다. 검증을 중단합니다.");
+          return { success: false, failed_codes: ["midCodesSnapshot not found"] };
       }
 
-      // dsList에 데이터가 로드될 때까지 대기
-      await new Promise((resolve, reject) => {
-        const checkInterval = setInterval(() => {
-          const currentDsList = getMainForm()?.div_workForm?.form?.dsList;
-          if (currentDsList && currentDsList.getRowCount() > 0) {
-            clearInterval(checkInterval);
-            resolve();
-          }
-        }, 500); // 0.5초마다 확인
-        setTimeout(() => {
-          clearInterval(checkInterval);
-          reject(new Error("dsList data loading timed out."));
-        }, 30000); // 30초 타임아웃
-      });
-
       const failed_codes = [];
-      for (let i = 0; i < dsList.getRowCount(); i++) {
-          const isSuccess = await verifyMidSaleQty(i);
+      for (const midCodeInfo of midCodesSnapshot) {
+          const isSuccess = await verifyMidSaleQty(midCodeInfo);
           if (!isSuccess) {
-              failed_codes.push(dsList.getColumn(i, "MID_CD"));
+              failed_codes.push(midCodeInfo.code);
           }
-          await delay(500);
+          // 검증은 라이브 데이터에 영향을 주지 않으므로 delay는 필요 없습니다.
       }
 
       console.log("===== 모든 중분류 검증 완료 =====");
