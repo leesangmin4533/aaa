@@ -163,17 +163,16 @@
 
       // 넥사크로 폼의 fn_callback 함수를 오버라이드
       form.fn_callback = function(serviceID, errorCode, errorMsg) {
-        // 진단 로그: 어떤 서비스 ID가 들어오는지 항상 출력
-        console.log(`[DIAGNOSTIC] fn_callback received: serviceID=${serviceID}, errorCode=${errorCode}`);
-
         // 원래의 콜백 함수를 먼저 실행하여 기존 로직을 유지
         if (typeof originalCallback === 'function') {
           originalCallback.apply(this, arguments);
         }
 
-        console.log(`[waitForTransaction] fn_callback 호출됨: 수신 서비스 ID='${serviceID}', 기대 서비스 ID='${svcID}', 에러 코드=${errorCode}, 에러 메시지='${errorMsg}'`);
+        const baseServiceID = serviceID.split('|')[0]; // 실제 서비스 ID는 '|'의 첫 부분
+        console.log(`[waitForTransaction] fn_callback 호출됨: 수신 서비스 ID='${serviceID}', 기본 ID='${baseServiceID}', 기대 ID='${svcID}'`);
+
         // 우리가 기다리던 서비스 ID와 일치하는지 확인
-        if (serviceID === svcID) {
+        if (baseServiceID === svcID) {
           clearTimeout(timeoutId); // 타임아웃 타이머 해제
           if (errorCode >= 0) { // 에러 코드가 0 이상이면 성공으로 간주
             console.log(`[waitForTransaction] '${svcID}' 트랜잭션 성공적으로 완료. Promise 해결.`);
