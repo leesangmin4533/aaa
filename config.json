@@ -1,7 +1,7 @@
 {
     "db_file": "code_outputs/integrated_sales.db",
     "scripts": {
-        "default": "nexacro_automation_library.js",
+        "default": "index.js",
         "listener": "data_collect_listener.js",
         "navigation": "navigation.js"
     },
