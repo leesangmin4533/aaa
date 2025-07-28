@@ -1,13 +1,19 @@
-from selenium.webdriver.remote.webdriver import WebDriver
 from pathlib import Path
 import json
 import os
 import sys
 import time
+from typing import Any
 from dotenv import load_dotenv
 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+try:  # pragma: no cover - optional selenium dependency
+    from selenium.webdriver.remote.webdriver import WebDriver
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+except Exception:  # pragma: no cover - allow import failure in tests
+    WebDriver = Any  # type: ignore
+    WebDriverWait = lambda *a, **k: None  # type: ignore
+    EC = None  # type: ignore
 
 # ``login_bgf.py`` 파일을 스크립트로 실행할 때도 상위 디렉터리의 모듈을
 # 찾을 수 있도록 ``sys.path`` 에 프로젝트 루트 경로를 추가한다.
