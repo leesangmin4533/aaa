@@ -32,8 +32,12 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # 현재 작업 디렉터리의 .env를 우선 읽는다
-    load_dotenv(dotenv_path=ROOT_DIR / ".env") # ROOT_DIR을 사용하여 .env 파일 경로 명시
+    # 우선 현재 작업 디렉터리의 .env를 시도하고, 없으면 프로젝트 루트의 .env를 불러온다
+    cwd_env = Path.cwd() / ".env"
+    if cwd_env.exists():
+        load_dotenv(dotenv_path=cwd_env)
+    elif Path.cwd() == ROOT_DIR:
+        load_dotenv(dotenv_path=ROOT_DIR / ".env", override=False)
 
     if path:
         try:
