@@ -38,12 +38,22 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # 우선 현재 작업 디렉터리의 .env를 시도하고, 없으면 프로젝트 루트의 .env를 불러온다
+    # 항상 프로젝트 루트의 .env 파일을 먼저 로드 시도
+    project_root_env = ROOT_DIR / ".env"
+    if project_root_env.exists():
+        log.debug(f"Attempting to load .env from Project Root: {project_root_env}", extra={'tag': 'env'})
+        load_dotenv(dotenv_path=project_root_env, override=True) # override=True로 하여 환경 변수 우선 적용
+    else:
+        log.warning(f"Project Root .env not found: {project_root_env}", extra={'tag': 'env'})
+
+    # 현재 작업 디렉토리의 .env 파일이 존재하고 프로젝트 루트와 다르면 추가로 로드 시도
     cwd_env = Path.cwd() / ".env"
-    if cwd_env.exists():
-        load_dotenv(dotenv_path=cwd_env)
-    elif Path.cwd() == ROOT_DIR:
-        load_dotenv(dotenv_path=ROOT_DIR / ".env", override=False)
+    if cwd_env.exists() and cwd_env != project_root_env:
+        log.debug(f"Attempting to load .env from CWD: {cwd_env}", extra={'tag': 'env'})
+        load_dotenv(dotenv_path=cwd_env, override=False)
+
+    log.debug(f"BGF_USER_ID after load_dotenv: {os.environ.get('BGF_USER_ID')}", extra={'tag': 'env'})
+    log.debug(f"BGF_PASSWORD after load_dotenv: {os.environ.get('BGF_PASSWORD')}", extra={'tag': 'env'})
 
     if path:
         try:
