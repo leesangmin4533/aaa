@@ -23,7 +23,7 @@
 {
     "db_file": "code_outputs/integrated_sales.db",
     "scripts": {
-        "automation_library": "nexacro_automation_library.js",
+        "automation_library": "index.js",
         "navigation": "navigation.js"
     },
     "field_order": [
@@ -70,7 +70,7 @@ python main.py
 각 수집 사이클(`_run_collection_cycle`)은 다음처럼 동작합니다.
 - Chrome 드라이버를 실행하고 로그인합니다.
 - `navigation.js`를 실행하여 목표 페이지로 이동합니다.
-- `nexacro_automation_library.js`를 브라우저에 주입하고, `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
+- `index.js`를 브라우저에 주입하고, `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
 - 수집된 데이터는 통합 DB에 저장됩니다.
 
 ## 데이터 포맷
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS mid_sales (
 );
 ```
 
-## 자동화 스크립트 상세 (`nexacro_automation_library.js`)
+## 자동화 스크립트 상세 (`index.js`)
 
 이 프로젝트의 핵심은 DOM 요소를 직접 제어하는 대신 Nexacro 프레임워크의 내부 API를 활용하는 것입니다.
 

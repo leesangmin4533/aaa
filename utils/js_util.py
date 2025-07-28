@@ -19,9 +19,9 @@ def execute_collect_single_day_data(driver: WebDriver, date_str: str) -> dict:
     const dateStr = arguments[0];
     
     if (!window.automation || typeof window.automation.runCollectionForDate !== 'function') {
-        return callback({ 
-            success: false, 
-            message: 'window.automation.runCollectionForDate function not found. Make sure nexacro_automation_library.js is loaded.' 
+        return callback({
+            success: false,
+            message: 'window.automation.runCollectionForDate function not found. Make sure index.js is loaded.'
         });
     }
 

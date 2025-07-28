@@ -75,7 +75,7 @@ def run_script(driver, name: str):
     return scripts_module.run_script(driver, name, SCRIPT_DIR)
 
 # 자바스크립트 파일 내용 로드
-with open(Path(SCRIPTS_DIR) / "nexacro_automation_library.js", "r", encoding="utf-8") as f:
+with open(Path(SCRIPTS_DIR) / "index.js", "r", encoding="utf-8") as f:
     NEXACRO_AUTOMATION_LIBRARY_JS = f.read()
 
 with open(Path(SCRIPTS_DIR) / "navigation.js", "r", encoding="utf-8") as f:
@@ -135,7 +135,7 @@ def main():
         # 이 함수는 Promise를 반환하므로, Promise가 해결될 때까지 기다려야 합니다.
         # Selenium의 execute_script는 Promise를 직접 기다리지 않으므로,
         # JS 내부에서 완료를 알리는 플래그나 데이터를 설정하도록 해야 합니다.
-        # nexacro_automation_library.js는 window.automation.isCollecting 플래그를 사용합니다.
+        # index.js는 window.automation.isCollecting 플래그를 사용합니다.
         
         # 데이터 수집 시작
         driver.execute_script(
