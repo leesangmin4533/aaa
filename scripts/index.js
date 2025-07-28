@@ -107,7 +107,7 @@
       if (getMainForm()) return true;
       await delay(500);
     }
-    throw new Error('mainForm이 15초 내 생성되지 않았습니다.');
+    throw new Error('mainForm이 30초 내 생성되지 않았습니다.');
   };
 
   async function getNestedNexacroComponent(pathComponents, initialScope, timeout = 30000) {
