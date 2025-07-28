@@ -33,7 +33,7 @@ def load_credentials(path: str | None = None) -> dict:
     populated from a .env file.
     """
     # 현재 작업 디렉터리의 .env를 우선 읽는다
-    load_dotenv(dotenv_path=Path.cwd() / ".env")
+    load_dotenv(dotenv_path=ROOT_DIR / ".env") # ROOT_DIR을 사용하여 .env 파일 경로 명시
 
     if path:
         try:
