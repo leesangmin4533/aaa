@@ -313,7 +313,20 @@
 
       // 날짜 입력 필드 컴포넌트 (calFromDay) 찾기
       console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작...");
-      const calFromDay = await getNexacroComponent("calFromDay", mainForm); // mainForm을 scope로 사용
+      // 단계별로 컴포넌트 탐색
+      const divWorkForm = await getNexacroComponent("div_workForm", mainForm, 30000);
+      if (!divWorkForm) throw new Error("div_workForm 컴포넌트를 찾을 수 없습니다.");
+      const form1 = await getNexacroComponent("form", divWorkForm, 30000);
+      if (!form1) throw new Error("div_workForm 내의 form 컴포넌트를 찾을 수 없습니다.");
+      const div2 = await getNexacroComponent("div2", form1, 30000);
+      if (!div2) throw new Error("form1 내의 div2 컴포넌트를 찾을 수 없습니다.");
+      const form2 = await getNexacroComponent("form", div2, 30000);
+      if (!form2) throw new Error("div2 내의 form 컴포넌트를 찾을 수 없습니다.");
+      const divSearch = await getNexacroComponent("div_search", form2, 30000);
+      if (!divSearch) throw new Error("form2 내의 div_search 컴포넌트를 찾을 수 없습니다.");
+      const form3 = await getNexacroComponent("form", divSearch, 30000);
+      if (!form3) throw new Error("div_search 내의 form 컴포넌트를 찾을 수 없습니다.");
+      const calFromDay = await getNexacroComponent("calFromDay", form3, 30000);
       if (!calFromDay) {
         throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트를 찾을 수 없습니다. getNexacroComponent가 null을 반환했습니다.");
       }
@@ -325,7 +338,7 @@
 
       // 검색 버튼 컴포넌트 (F_10) 찾기
       console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작...");
-      const searchBtn = await getNexacroComponent("F_10", mainForm); // mainForm을 scope로 사용
+      const searchBtn = await getNexacroComponent("F_10", mainForm.div_cmmbtn.form, 30000); // mainForm을 scope로 사용
       if (!searchBtn) {
         throw new Error("검색 버튼(F_10)을 찾을 수 없습니다. 경로 확인 필요.");
       }
