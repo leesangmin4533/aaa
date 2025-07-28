@@ -347,19 +347,14 @@
       // 날짜 입력 필드 컴포넌트 (calFromDay) 찾기
       console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작...");
       // 단계별로 컴포넌트 탐색
-      const divWorkForm = await getNexacroComponent("div_workForm", mainForm, 30000);
-      if (!divWorkForm) throw new Error("div_workForm 컴포넌트를 찾을 수 없습니다.");
-      const form1 = divWorkForm.form; // 직접 속성 접근
-      if (!form1) throw new Error("div_workForm 내의 form 속성을 찾을 수 없습니다.");
-      const div2 = await getNexacroComponent("div2", form1, 30000);
-      if (!div2) throw new Error("form1 내의 div2 컴포넌트를 찾을 수 없습니다.");
-      const form2 = div2.form; // 직접 속성 접근
-      if (!form2) throw new Error("div2 내의 form 속성을 찾을 수 없습니다.");
-      const divSearch = await getNexacroComponent("div_search", form2, 30000);
-      if (!divSearch) throw new Error("form2 내의 div_search 컴포넌트를 찾을 수 없습니다.");
-      const form3 = divSearch.form; // 직접 속성 접근
-      if (!form3) throw new Error("div_search 내의 form 속성을 찾을 수 없습니다.");
-      const calFromDay = await getNexacroComponent("calFromDay", form3, 30000);
+      const divWorkForm = await getNestedNexacroComponent(["div_workForm"], mainForm, 30000);
+      const form1 = await getNestedNexacroComponent(["form"], divWorkForm, 30000);
+      const div2 = await getNestedNexacroComponent(["div2"], form1, 30000);
+      const form2 = await getNestedNexacroComponent(["form"], div2, 30000);
+      const divSearch = await getNestedNexacroComponent(["div_search"], form2, 30000);
+      const form3 = await getNestedNexacroComponent(["form"], divSearch, 30000);
+      const calFromDay = await getNestedNexacroComponent(["calFromDay"], form3, 30000);
+
       if (!calFromDay) {
         throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트를 찾을 수 없습니다. getNexacroComponent가 null을 반환했습니다.");
       }
