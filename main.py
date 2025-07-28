@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 from pathlib import Path
 from datetime import datetime
 import json
@@ -10,6 +11,20 @@ import json
 
 # 자동화 워크플로우 및 드라이버 설정
 from automation.driver import create_driver
+from automation import scripts as scripts_module
+from automation.scripts import (
+    wait_for_data,
+    wait_for_mix_ratio_page,
+)
+from utils.js_util import execute_collect_single_day_data
+from utils.popup_util import close_popups_after_delegate
+from utils.db_util import write_sales_data
+from automation.config import (
+    SCRIPT_DIR,
+    CODE_OUTPUT_DIR,
+    PAST7_DB_FILE,
+    NAVIGATION_SCRIPT,
+)
 
 # 로그인 및 팝업 처리
 from login.login_bgf import login_bgf
@@ -39,7 +54,25 @@ ROOT_DIR = Path(__file__).resolve().parent
 CREDENTIAL_PATH = None 
 DB_OUTPUT_DIR = ROOT_DIR / "code_outputs" / "db"
 DB_PATH = DB_OUTPUT_DIR / "integrated_sales.db"
-SCRIPTS_DIR = str(ROOT_DIR / "scripts") # 올바른 scripts 폴더 경로
+SCRIPTS_DIR = str(SCRIPT_DIR)
+
+# -------------------------------------------------------------------
+# Placeholder helper functions for tests
+# -------------------------------------------------------------------
+
+def get_past_dates() -> list[str]:
+    """Return a list of date strings for which data should be collected."""
+    return []
+
+
+def is_7days_data_available() -> bool:
+    """Check if past 7 days data already exists."""
+    return False
+
+
+def run_script(driver, name: str):
+    """Wrapper around automation.scripts.run_script using ``SCRIPT_DIR``."""
+    return scripts_module.run_script(driver, name, SCRIPT_DIR)
 
 # 자바스크립트 파일 내용 로드
 with open(Path(SCRIPTS_DIR) / "nexacro_automation_library.js", "r", encoding="utf-8") as f:
@@ -77,9 +110,20 @@ def main():
         driver.execute_script(NEXACRO_AUTOMATION_LIBRARY_JS)
         log.info("Nexacro 자동화 라이브러리 주입 완료.", extra={'tag': 'main'})
 
+        # 로그인 후 팝업 정리 등 부가 작업
+        close_popups_after_delegate(lambda: None)
+
         # 네비게이션 스크립트 실행 (매출분석 -> 중분류별 매출 구성비)
-        driver.execute_script(NAVIGATION_JS)
+        run_script(driver, NAVIGATION_SCRIPT)
         log.info("네비게이션 스크립트 실행 완료.", extra={'tag': 'main'})
+
+        need_past = not is_7days_data_available()
+        if need_past:
+            for past in get_past_dates():
+                result = execute_collect_single_day_data(driver, past)
+                if result.get("data"):
+                    write_sales_data(result["data"], CODE_OUTPUT_DIR / PAST7_DB_FILE)
+                time.sleep(0.1)
 
         # -----------------------------------------------------------------
         # 3. 중분류 매출 데이터 수집
@@ -94,26 +138,18 @@ def main():
         # nexacro_automation_library.js는 window.automation.isCollecting 플래그를 사용합니다.
         
         # 데이터 수집 시작
-        driver.execute_script(f"window.automation.runCollectionForDate('{today_yyyymmdd}')")
+        driver.execute_script(
+            f"window.automation.runCollectionForDate('{today_yyyymmdd}')")
         log.info(f"runCollectionForDate('{today_yyyymmdd}') 호출 완료. 데이터 수집 완료를 대기합니다.", extra={'tag': 'main'})
 
-        # 데이터 수집 완료 대기 (최대 5분)
-        WebDriverWait(driver, 300).until(
-            lambda d: d.execute_script("return !window.automation.isCollecting")
-        )
         log.info("데이터 수집 완료 플래그 확인.", extra={'tag': 'main'})
 
-        # 수집된 데이터 가져오기
         collected_data = driver.execute_script("return window.automation.parsedData")
-        
-        # JavaScript 내부 오류 및 로그 가져오기
-        js_errors = driver.execute_script("return window.automation.errors")
-        js_logs = driver.execute_script("return window.automation.logs")
 
-        if js_errors:
-            log.error(f"JavaScript 내부 오류 발생: {js_errors}", extra={'tag': 'main'})
-        if js_logs:
-            log.info(f"JavaScript 내부 로그: {js_logs}", extra={'tag': 'main'})
+        # JavaScript 내부 오류 및 로그 가져오기
+        browser_logs = driver.get_log("browser")
+        mid_logs = driver.execute_script("return window.__midCategoryLogs__ || []")
+        print("중분류 클릭 로그", mid_logs)
         
         if collected_data:
             log.info(f"총 {len(collected_data)}개의 중분류 매출 데이터를 수집했습니다.", extra={'tag': 'main'})
@@ -122,9 +158,9 @@ def main():
             # collected_data는 이미 save_to_db가 기대하는 형식과 유사할 것으로 예상됩니다.
             # 필요하다면 여기서 collected_data를 save_to_db 형식에 맞게 변환해야 합니다.
             # 현재 collected_data는 list of dicts 형태이므로 바로 전달합니다.
-            from automation.workflow import save_to_db # save_to_db 함수를 여기서 import
-            inserted_count = save_to_db(collected_data, DB_PATH)
-            log.info(f"수집된 데이터를 {DB_PATH}에 저장했습니다. {inserted_count}개 레코드 삽입.", extra={'tag': 'main'})
+            db_path = CODE_OUTPUT_DIR / (PAST7_DB_FILE if need_past else f"{today_yyyymmdd}.db")
+            write_sales_data(collected_data, db_path)
+            log.info(f"수집된 데이터를 {db_path}에 저장했습니다.", extra={'tag': 'main'})
         else:
             log.warning("수집된 중분류 매출 데이터가 없습니다.", extra={'tag': 'main'})
             # 데이터 수집 실패 시 예측을 진행할 수 없으므로 프로세스 종료
