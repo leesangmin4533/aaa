@@ -7,6 +7,6 @@ def test_default_script_name():
     )
     config = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(config)
-    assert config.DEFAULT_SCRIPT == "nexacro_automation_library.js"
-    assert config.config["scripts"]["default"] == "nexacro_automation_library.js"
+    assert config.DEFAULT_SCRIPT == "index.js"
+    assert config.config["scripts"]["default"] == "index.js"
 
