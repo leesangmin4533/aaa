@@ -216,6 +216,39 @@
     throw new Error("mainForm이 15초 내 생성되지 않았습니다.");
   };
 
+  /**
+   * Nexacro 컴포넌트 경로를 단계별로 탐색하여 최종 컴포넌트를 찾습니다.
+   * @param {Array<string>} pathComponents - 컴포넌트 ID 또는 'form' 속성 이름의 배열 (예: ['div_workForm', 'form', 'div2', 'form', 'div_search', 'form', 'calFromDay'])
+   * @param {object} initialScope - 탐색을 시작할 초기 범위 (예: mainForm)
+   * @param {number} [timeout=30000] - 각 단계별 컴포넌트 탐색의 최대 대기 시간 (ms)
+   * @returns {Promise<object|null>} 최종 컴포넌트 객체 또는 null (타임아웃 시)
+   */
+  async function getNestedNexacroComponent(pathComponents, initialScope, timeout = 30000) {
+    let currentScope = initialScope;
+    for (let i = 0; i < pathComponents.length; i++) {
+      const componentId = pathComponents[i];
+      if (!currentScope) {
+        throw new Error(`이전 스코프가 null입니다. 경로: ${pathComponents.slice(0, i).join('.')}`);
+      }
+
+      if (componentId === 'form') {
+        // 'form'은 속성으로 직접 접근
+        currentScope = currentScope.form;
+        if (!currentScope) {
+          throw new Error(`'${pathComponents.slice(0, i).join('.')}' 내에 'form' 속성을 찾을 수 없습니다.`);
+        }
+        console.log(`[getNestedNexacroComponent] 속성 접근: ${pathComponents.slice(0, i + 1).join('.')}`);
+      } else {
+        // 컴포넌트 ID는 getNexacroComponent로 찾음
+        currentScope = await getNexacroComponent(componentId, currentScope, timeout);
+        if (!currentScope) {
+          throw new Error(`'${pathComponents.slice(0, i).join('.')}' 내에 컴포넌트 '${componentId}'를 찾을 수 없습니다.`);
+        }
+      }
+    }
+    return currentScope;
+  }
+
 
   // ==================================================================================
   // 3. 데이터 수집 함수 (Nexacro Dataset 활용)
@@ -316,16 +349,16 @@
       // 단계별로 컴포넌트 탐색
       const divWorkForm = await getNexacroComponent("div_workForm", mainForm, 30000);
       if (!divWorkForm) throw new Error("div_workForm 컴포넌트를 찾을 수 없습니다.");
-      const form1 = await getNexacroComponent("form", divWorkForm, 30000);
-      if (!form1) throw new Error("div_workForm 내의 form 컴포넌트를 찾을 수 없습니다.");
+      const form1 = divWorkForm.form; // 직접 속성 접근
+      if (!form1) throw new Error("div_workForm 내의 form 속성을 찾을 수 없습니다.");
       const div2 = await getNexacroComponent("div2", form1, 30000);
       if (!div2) throw new Error("form1 내의 div2 컴포넌트를 찾을 수 없습니다.");
-      const form2 = await getNexacroComponent("form", div2, 30000);
-      if (!form2) throw new Error("div2 내의 form 컴포넌트를 찾을 수 없습니다.");
+      const form2 = div2.form; // 직접 속성 접근
+      if (!form2) throw new Error("div2 내의 form 속성을 찾을 수 없습니다.");
       const divSearch = await getNexacroComponent("div_search", form2, 30000);
       if (!divSearch) throw new Error("form2 내의 div_search 컴포넌트를 찾을 수 없습니다.");
-      const form3 = await getNexacroComponent("form", divSearch, 30000);
-      if (!form3) throw new Error("div_search 내의 form 컴포넌트를 찾을 수 없습니다.");
+      const form3 = divSearch.form; // 직접 속성 접근
+      if (!form3) throw new Error("div_search 내의 form 속성을 찾을 수 없습니다.");
       const calFromDay = await getNexacroComponent("calFromDay", form3, 30000);
       if (!calFromDay) {
         throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트를 찾을 수 없습니다. getNexacroComponent가 null을 반환했습니다.");
