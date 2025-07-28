@@ -48,7 +48,12 @@
   // 콘솔 에러를 후킹하여 window.automation.logs 및 window.automation.errors에 저장
   const origConsoleError = console.error;
   console.error = function(...args) {
-    const errorMsg = "[ERROR] " + args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))).join(' ');
+    const errorMsg = "[ERROR] " + args.map(arg => {
+      if (arg instanceof Error) {
+        return arg.message; // Extract message from Error objects
+      }
+      return (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg));
+    }).join(' ');
     window.automation.logs.push(errorMsg);
     window.automation.errors.push(errorMsg);
     return origConsoleError.apply(console, args);
@@ -307,17 +312,20 @@
       }
 
       // 날짜 입력 필드 컴포넌트 (calFromDay) 찾기
-      // 넥사크로 컴포넌트 경로를 직접 사용 (주의: 경로 변경 시 수정 필요)
       console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작...");
-      const dateInput = mainForm.div_workForm.form.div2.form.div_search.form.calFromDay.calendaredit;
-      if (!dateInput) {
-        throw new Error("날짜 입력 필드(calFromDay.calendaredit)를 찾을 수 없습니다. 경로 확인 필요.");
+      const calFromDay = await getNexacroComponent("calFromDay", mainForm); // mainForm을 scope로 사용
+      if (!calFromDay) {
+        throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트를 찾을 수 없습니다. getNexacroComponent가 null을 반환했습니다.");
       }
+      if (!calFromDay.calendaredit) {
+        throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트에는 'calendaredit' 속성이 없습니다. 경로 확인 필요.");
+      }
+      const dateInput = calFromDay.calendaredit;
       console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 찾기 성공.");
 
       // 검색 버튼 컴포넌트 (F_10) 찾기
       console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작...");
-      const searchBtn = await getNexacroComponent("F_10", mainForm.div_cmmbtn.form); // getNexacroComponent를 사용하여 컴포넌트 대기
+      const searchBtn = await getNexacroComponent("F_10", mainForm); // mainForm을 scope로 사용
       if (!searchBtn) {
         throw new Error("검색 버튼(F_10)을 찾을 수 없습니다. 경로 확인 필요.");
       }
@@ -396,7 +404,7 @@
         // 상품 상세 그리드의 Dataset에서 상품 데이터 수집
         const products = await collectProductsFromDataset(mid.code, mid.name, mainForm.div_workForm.form.div2.form);
         
-        // 수집된 상품 데이터를 전체 상품 맵에 병합 (중분류-상품코드 기준으로 합산)
+        // 수집된 상품 데이터를 전체 상품 맵에 병합 (중복 방지 및 합산)
         products.forEach(p => {
             const key = `${p.midCode}_${p.productCode}`;
             if (allProductsMap.has(key)) {
@@ -423,7 +431,7 @@
       console.log(`🎉 전체 수집 완료. 총 ${allProductsMap.size}개 상품, ${midCodesToProcess.length}개 중분류.`);
 
     } catch (err) {
-      console.error("데이터 수집 중 심각한 오류 발생:", err);
+      console.error("데이터 수집 중 심각한 오류 발생:", err.message || err); // 오류 메시지 상세화
       window.automation.error = err.message; // 오류 메시지 저장
     } finally {
       window.automation.isCollecting = false; // 수집 종료 플래그 설정
