@@ -249,8 +249,37 @@
       dateInput.set_value('');
       await delay(500);
       dateInput.set_value(dateStr);
+
+      const hyphenDate = dateStr.includes('-') ? dateStr
+                          : dateStr.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+      try {
+        Object.defineProperty(mainForm, 'strYmd', {
+          configurable: true,
+          get: () => hyphenDate,
+          set: () => {}
+        });
+      } catch(e){
+        window.automation.logs.push('[ERROR] strYmd proxy failed: '+e.message);
+      }
+
       window.automation.logs.push(`[runCollectionForDate] Date set to ${dateStr}. Clicking search button...`);
-      searchBtn.click();
+
+      const btn = [...document.querySelectorAll('div')]
+        .find(el => el.innerText?.trim() === '조 회' && el.offsetParent !== null);
+      if (btn) {
+        const rect = btn.getBoundingClientRect();
+        ['mousedown','mouseup','click'].forEach(evt =>
+          btn.dispatchEvent(new MouseEvent(evt, {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            clientX: rect.left + rect.width / 2,
+            clientY: rect.top + rect.height / 2
+          }))
+        );
+      } else {
+        searchBtn.click();
+      }
       window.automation.logs.push("[runCollectionForDate] Waiting for mid list to load...");
       await new Promise((resolve,reject)=>{
         const iv=setInterval(()=>{
