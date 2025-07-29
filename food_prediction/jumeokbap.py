@@ -7,7 +7,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from utils.logger_config import setup_logging
+from utils.log_util import get_logger
 
 from analysis.jumeokbap_prediction import (
     get_configured_db_path,
@@ -19,7 +19,7 @@ from datetime import datetime
 
 
 # Configure logging using the shared project settings
-logger = setup_logging(ROOT_DIR)
+logger = get_logger(__name__)
 
 JUMEOKBAP_DB_PATH = (
     ROOT_DIR / "code_outputs" / "db" / "jumeokbap_predictions.db"
@@ -54,12 +54,6 @@ def save_prediction_to_db(forecast: float, mix_recommendations: dict):
     conn.close()
     logger.info(f"예측 결과가 {JUMEOKBAP_DB_PATH}에 저장되었습니다.")
 
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    filename=ROOT_DIR / "logs" / "automation.log",
-)
 
 
 def main():
