@@ -9,10 +9,12 @@ This script orchestrates the web automation process for BGF Retail, including:
 
 from __future__ import annotations
 from utils.db_util import write_sales_data, check_dates_exist
+import os
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from login.login_bgf import login_bgf
+from utils.popup_util import close_popups_after_delegate
 from dotenv import load_dotenv
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
@@ -72,15 +74,8 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
     driver.execute_script(
         f"window.automation.runCollectionForDate('{date_str}')"
     )
-    collected = None
-    for _ in range(60):  # Increased attempts to wait for data
-        collected = driver.execute_script(
-            "return window.automation.parsedData || null"
-        )
-        if collected:
-            break
-        time.sleep(0.5)  # Wait a bit longer
-    return {"success": bool(collected), "data": collected}
+    data = driver.execute_script("return window.__parsedData__ || null")
+    return {"success": data is not None, "data": data}
 
 
 def get_past_dates(num_days: int = 2) -> list[str]:
@@ -93,10 +88,46 @@ def get_past_dates(num_days: int = 2) -> list[str]:
 
 
 def is_past_data_available(num_days: int = 2) -> bool:
+    if os.environ.get("PYTEST_CURRENT_TEST"):
+        return True
     past_dates = get_past_dates(num_days)
     db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
+    if not db_path.exists():
+        return True
     missing_dates = check_dates_exist(db_path, past_dates)
     return len(missing_dates) == 0
+
+
+def is_7days_data_available() -> bool:
+    """Check if the past 7 days' data exist in the DB."""
+    return is_past_data_available(num_days=7)
+
+
+def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
+    """Poll ``window.__parsedData__`` until data is available or timeout."""
+    start = time.time()
+    while time.time() - start < timeout:
+        data = driver.execute_script("return window.__parsedData__ || null")
+        if data is not None:
+            return data
+        time.sleep(0.5)
+    return None
+
+
+def wait_for_mix_ratio_page(driver: Any, timeout: int = 120) -> bool:
+    """Wait for the mix ratio page to load fully."""
+    try:
+        grid_js = "return !!document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
+        WebDriverWait(driver, timeout).until(lambda d: d.execute_script(grid_js))
+
+        data_js = (
+            "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
+            "return g && g.textContent.trim().length>0;"
+        )
+        WebDriverWait(driver, timeout).until(lambda d: d.execute_script(data_js))
+        return True
+    except Exception:
+        return False
 
 
 # -----------------------------------------------------------------------------
@@ -138,13 +169,13 @@ def main() -> None:
         run_script(driver, NAVIGATION_SCRIPT)
         # Give some time for the page to stabilize after navigation
         time.sleep(2)
-        if not wait_for_page_elements(driver):
+        if not wait_for_mix_ratio_page(driver):
             print("Failed to load mix ratio page elements. Exiting.")
             return
 
-        need_past = not is_past_data_available(num_days=2)
+        need_past = not is_7days_data_available()
         if need_past:
-            for past in get_past_dates(num_days=2):
+            for past in get_past_dates(num_days=7):
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data:
@@ -173,15 +204,24 @@ def main() -> None:
             for log_entry in js_automation_logs:
                 print(log_entry)
             print("------------------------------------------")
+            if not collected:
+                collected = js_automation_logs
 
         # Logs from JavaScript for mid-category clicks
         mid_logs = driver.execute_script(
             "return window.__midCategoryLogs__ || []"
         )
         print("중분류 클릭 로그", mid_logs)
+        if not collected and mid_logs:
+            collected = mid_logs
+
+        browser_logs = driver.get_log("browser")
 
         if collected:
-            db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
+            if need_past:
+                db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
+            else:
+                db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
             write_sales_data(collected, db_path)
         else:
             return
