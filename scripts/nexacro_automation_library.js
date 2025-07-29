@@ -300,87 +300,34 @@
   //    (특정 날짜에 대한 전체 데이터 수집 흐름 제어)
   // ==================================================================================
 
-  /**
-   * 지정된 날짜의 전체 데이터 수집을 실행하는 메인 함수입니다.
-   * 이 함수는 날짜 설정, 메인 검색, 중분류 순회, 상품 데이터 수집의 전 과정을 제어합니다.
-   * @param {string} dateStr - 'YYYYMMDD' 형식의 날짜 문자열
-   */
   async function runCollectionForDate(dateStr) {
     if (window.automation.isCollecting) {
       console.warn("이미 데이터 수집이 진행 중입니다. 새로운 요청을 무시합니다.");
       return;
     }
-    window.automation.isCollecting = true; // 수집 시작 플래그 설정
-    window.automation.error = null; // 이전 오류 초기화
-    window.automation.errors = []; // 이전 오류 로그 초기화
-    window.automation.parsedData = null; // 이전 데이터 초기화
+    window.automation.isCollecting = true;
+    window.automation.error = null;
+    window.automation.parsedData = null;
     console.log(`[runCollectionForDate] ${dateStr} 데이터 수집을 시작합니다.`);
 
+    // 프록시 활성화 및 목표 날짜 설정
+    window.automationHelpers.setTargetDate(dateStr);
+    window.automationHelpers.hookTransaction('search');
+
     try {
-      // 1. 메인 폼 로딩 확인
       await ensureMainFormLoaded();
-
-      // 2. 메인 폼 및 필수 컴포넌트(날짜 입력 필드, 검색 버튼) 찾기
       const mainForm = getMainForm();
-      if (!mainForm) {
-        throw new Error("메인 폼(STMB011_M0)을 찾을 수 없습니다. 자동화를 시작할 수 없습니다.");
-      }
+      if (!mainForm) throw new Error("메인 폼을 찾을 수 없습니다.");
 
-      // 날짜 입력 필드 컴포넌트 (calFromDay) 찾기
-      console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작...");
-      // 단계별로 컴포넌트 탐색
-      const divWorkForm = await getNestedNexacroComponent(["div_workForm"], mainForm, 30000);
-      const form1 = await getNestedNexacroComponent(["form"], divWorkForm, 30000);
-      const div2 = await getNestedNexacroComponent(["div2"], form1, 30000);
-      const form2 = await getNestedNexacroComponent(["form"], div2, 30000);
-      const divSearch = await getNestedNexacroComponent(["div_search"], form2, 30000);
-      const form3 = await getNestedNexacroComponent(["form"], divSearch, 30000);
-      const calFromDay = await getNestedNexacroComponent(["calFromDay"], form3, 30000);
+      const searchBtn = await getNexacroComponent("F_10", mainForm.div_cmmbtn.form, 30000);
+      if (!searchBtn) throw new Error("검색 버튼(F_10)을 찾을 수 없습니다.");
 
-      if (!calFromDay) {
-        throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트를 찾을 수 없습니다. getNexacroComponent가 null을 반환했습니다.");
-      }
-      if (!calFromDay.calendaredit) {
-        throw new Error("날짜 입력 필드 'calFromDay' 컴포넌트에는 'calendaredit' 속성이 없습니다. 경로 확인 필요.");
-      }
-      const dateInput = calFromDay.calendaredit;
-      console.log("[runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 찾기 성공.");
-
-      // 검색 버튼 컴포넌트 (F_10) 찾기
-      console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작...");
-      const searchBtn = await getNexacroComponent("F_10", mainForm.div_cmmbtn.form, 30000); // mainForm을 scope로 사용
-      if (!searchBtn) {
-        throw new Error("검색 버튼(F_10)을 찾을 수 없습니다. 경로 확인 필요.");
-      }
-      console.log("[runCollectionForDate] 검색 버튼(F_10) 컴포넌트 찾기 성공.");
-
-      // 2. 날짜 설정 및 메인 검색 버튼 클릭 (트랜잭션 강제 재발행)
-      // 날짜를 초기화했다가 다시 설정하여, 앱이 변경을 인지하고 새 트랜잭션을 보내도록 함
-      dateInput.set_value("");
-      await delay(500); // UI 반영 대기 시간을 0.5초로 단축
-      dateInput.set_value(dateStr);
-      console.log(`날짜를 '${dateStr}'로 설정했습니다.`);
-
-      // 넥사크로 컴포넌트의 .click() 메서드를 사용하여 클릭 이벤트 트리거
+      // 검색 버튼 클릭 (프록시가 strYmd를 수정할 것임)
+      const searchPromise = waitForTransaction('search');
       searchBtn.click();
-      console.log("메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...");
-      
-      // 중분류 목록(gdList)이 로드될 때까지 대기
-      await new Promise((resolve, reject) => {
-        const checkInterval = setInterval(() => {
-          const firstMidCodeCell = document.querySelector("div[id*='gdList.body'][id*='cell_0_0:text']");
-          if (firstMidCodeCell && firstMidCodeCell.innerText.trim().length > 0) {
-            clearInterval(checkInterval);
-            resolve();
-          }
-        }, 500); // 0.5초마다 확인
-        setTimeout(() => {
-          clearInterval(checkInterval);
-          reject(new Error("중분류 목록 로딩 시간 초과."));
-        }, 120000); // 120초 타임아웃
-      });
-      console.log("중분류 목록 로딩 완료.");
-      await delay(700); // DOM 렌더링을 위한 추가 대기
+      console.log("메인 검색 버튼을 클릭했습니다. 프록시가 날짜를 수정하여 조회를 실행합니다.");
+      await searchPromise;
+      console.log("'search' 트랜잭션 완료. 중분류 목록 로딩 완료.");
 
       // 3. 모든 중분류 항목이 로드되도록 스크롤 및 클릭 (이 단계는 더 이상 필요하지 않습니다.)
       // await autoClickAllMidCodes();
