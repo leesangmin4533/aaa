@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Iterable, Optional
 import sys
+import subprocess
 
 # -----------------------------------------------------------------------------
 # Constants
@@ -56,7 +57,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-def wait_for_page_elements(driver: Any, timeout: int = 60) -> bool:
+def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
     """Wait for key elements on the '중분류 매출 구성비' page to be present.
     Specifically waits for the gdList body to appear.
     """
@@ -132,6 +133,7 @@ def main() -> None:
         run_script(driver, f"scripts/{default_script}")
 
         run_script(driver, NAVIGATION_SCRIPT)
+        time.sleep(2) # Give some time for the page to stabilize after navigation
         if not wait_for_page_elements(driver):
             print("Failed to load mix ratio page elements. Exiting.")
             return
@@ -145,10 +147,25 @@ def main() -> None:
                 if data:
                     write_sales_data(data, CODE_OUTPUT_DIR / PAST7_DB_FILE)
                 time.sleep(0.1)
+                # Get JavaScript logs after each collection attempt
+                js_automation_logs = driver.execute_script("return window.automation.logs || []")
+                if js_automation_logs:
+                    print(f"\n--- JavaScript Automation Logs for {past} ---")
+                    for log_entry in js_automation_logs:
+                        print(log_entry)
+                    print("------------------------------------------")
 
         today_str = datetime.now().strftime("%Y%m%d")
         result = execute_collect_single_day_data(driver, today_str)
         collected = result.get("data") if isinstance(result, dict) else None
+
+        # Get JavaScript logs after today's collection attempt
+        js_automation_logs = driver.execute_script("return window.automation.logs || []")
+        if js_automation_logs:
+            print(f"\n--- JavaScript Automation Logs for {today_str} ---")
+            for log_entry in js_automation_logs:
+                print(log_entry)
+            print("------------------------------------------")
 
         _browser_logs = driver.get_log("browser") # For debugging browser console logs
         mid_logs = driver.execute_script("return window.__midCategoryLogs__ || []") # Logs from JavaScript for mid-category clicks
@@ -164,7 +181,21 @@ def main() -> None:
         jumeokbap_script_path = SCRIPT_DIR.parent / "food_prediction" / "jumeokbap.py"
         python_executable = sys.executable
         print(f"Running jumeokbap.py: {python_executable} {jumeokbap_script_path}")
-        default_api.run_shell_command(command=f"\"{python_executable}\" \"{jumeokbap_script_path}\"", description="Run jumeokbap prediction script.")
+        try:
+            jumeokbap_result = subprocess.run(
+                [python_executable, str(jumeokbap_script_path)],
+                capture_output=True, text=True, check=True
+            )
+            print("\n--- Jumeokbap Prediction Output ---")
+            print(jumeokbap_result.stdout)
+            if jumeokbap_result.stderr:
+                print("--- Jumeokbap Prediction Error ---")
+                print(jumeokbap_result.stderr)
+            print("-----------------------------------")
+        except subprocess.CalledProcessError as e:
+            print(f"Error running jumeokbap.py: {e}")
+            print(f"Stdout: {e.stdout}")
+            print(f"Stderr: {e.stderr}")
 
     finally:
         if driver is not None:
