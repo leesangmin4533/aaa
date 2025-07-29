@@ -27,6 +27,9 @@ from pathlib import Path
 from typing import Any
 import sys
 import subprocess
+import logging # Import logging module
+
+from utils.logger_config import setup_logging # Import the new logging setup
 
 # -----------------------------------------------------------------------------
 # Constants
@@ -37,6 +40,9 @@ CODE_OUTPUT_DIR: Path = Path(__file__).resolve().parent / "code_outputs"
 # 모든 수집 결과가 저장될 통합 DB 파일 경로
 INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 NAVIGATION_SCRIPT: str = "scripts/navigation.js"
+
+# Initialize logger (will be configured in main)
+logger = logging.getLogger("bgf_automation")
 
 # -----------------------------------------------------------------------------
 # Placeholder hooks
@@ -67,7 +73,7 @@ def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
         )
         return True
     except Exception as e:
-        print(f"Error waiting for page elements: {e}")
+        logger.error(f"Error waiting for page elements: {e}")
         return False
 
 
@@ -182,7 +188,9 @@ def run_script(driver: Any, name: str) -> Any:
 
 
 def main() -> None:
-    print("Starting BGF Retail Automation...")
+    global logger # Declare logger as global to modify the module-level logger
+    logger = setup_logging(SCRIPT_DIR) # Configure the logger
+    logger.info("Starting BGF Retail Automation...")
     driver = None
     try:
         # Load environment variables from project root if available
@@ -190,6 +198,7 @@ def main() -> None:
 
         driver = create_driver()
         if not login_bgf(driver, credential_path=None):
+            logger.error("Login failed. Exiting.")
             return
 
         # Load helper scripts before the main automation script
@@ -208,7 +217,7 @@ def main() -> None:
         # Give some time for the page to stabilize after navigation
         time.sleep(2)
         if not wait_for_mix_ratio_page(driver):
-            print("Failed to load mix ratio page elements. Exiting.")
+            logger.error("Failed to load mix ratio page elements. Exiting.")
             return
 
         need_past = not is_past_data_available()
@@ -219,17 +228,17 @@ def main() -> None:
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
                     write_sales_data(data, CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE)
                 else:
-                    print("No valid data collected for", past)
+                    logger.warning("No valid data collected for %s", past)
                 time.sleep(0.1)
                 # Get JavaScript logs after each collection attempt
                 js_automation_logs = driver.execute_script(
                     "return window.automation.logs || []"
                 )
                 if js_automation_logs:
-                    print(f"\n--- JavaScript Automation Logs for {past} ---")
+                    logger.info(f"--- JavaScript Automation Logs for {past} ---")
                     for log_entry in js_automation_logs:
-                        print(log_entry)
-                    print("------------------------------------------")
+                        logger.info(log_entry)
+                    logger.info("------------------------------------------")
 
         today_str = datetime.now().strftime("%Y%m%d")
         result = execute_collect_single_day_data(driver, today_str)
@@ -240,10 +249,10 @@ def main() -> None:
             "return window.automation.logs || []"
         )
         if js_automation_logs:
-            print(f"\n--- JavaScript Automation Logs for {today_str} ---")
+            logger.info(f"--- JavaScript Automation Logs for {today_str} ---")
             for log_entry in js_automation_logs:
-                print(log_entry)
-            print("------------------------------------------")
+                logger.info(log_entry)
+            logger.info("------------------------------------------")
             if not collected:
                 collected = js_automation_logs
 
@@ -251,7 +260,7 @@ def main() -> None:
         mid_logs = driver.execute_script(
             "return window.__midCategoryLogs__ || []"
         )
-        print("중분류 클릭 로그", mid_logs)
+        logger.info(f"중분류 클릭 로그: {mid_logs}")
         if not collected and mid_logs:
             collected = mid_logs
 
@@ -264,17 +273,15 @@ def main() -> None:
                 db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
             write_sales_data(collected, db_path)
         else:
-            print("No valid data collected for today")
+            logger.warning("No valid data collected for today")
 
         # Run jumeokbap.py after data collection
         jumeokbap_script_path = (
             SCRIPT_DIR.parent / "food_prediction" / "jumeokbap.py"
         )
         python_executable = sys.executable
-        print(
-            "Running jumeokbap.py: %s %s",
-            python_executable,
-            jumeokbap_script_path,
+        logger.info(
+            f"Running jumeokbap.py: {python_executable} {jumeokbap_script_path}"
         )
         try:
             jumeokbap_result = subprocess.run(
@@ -283,23 +290,24 @@ def main() -> None:
                 text=True,
                 check=True,
             )
-            print("\n--- Jumeokbap Prediction Output ---")
-            print(jumeokbap_result.stdout)
+            logger.info("--- Jumeokbap Prediction Output ---")
+            logger.info(jumeokbap_result.stdout)
             if jumeokbap_result.stderr:
-                print("--- Jumeokbap Prediction Error ---")
-                print(jumeokbap_result.stderr)
-            print("-----------------------------------")
+                logger.error("--- Jumeokbap Prediction Error ---")
+                logger.error(jumeokbap_result.stderr)
+            logger.info("-----------------------------------")
         except subprocess.CalledProcessError as e:
-            print(f"Error running jumeokbap.py: {e}")
-            print(f"Stdout: {e.stdout}")
-            print(f"Stderr: {e.stderr}")
+            logger.error(f"Error running jumeokbap.py: {e}")
+            logger.error(f"Stdout: {e.stdout}")
+            logger.error(f"Stderr: {e.stderr}")
 
     finally:
         if driver is not None:
             try:
                 driver.quit()
-            except Exception:
-                pass
+                logger.info("WebDriver quit successfully.")
+            except Exception as e:
+                logger.error(f"Error quitting WebDriver: {e}")
 
 
 if __name__ == "__main__":
