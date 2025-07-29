@@ -31,13 +31,12 @@ NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
 def create_driver() -> Any:
     """Create and return a Selenium WebDriver instance."""
-    chromedriver_path = r"C:\Users\kanur\.cache\selenium\chromedriver\win64\138.0.7204.168\chromedriver.exe"
-    
-    service = Service(executable_path=chromedriver_path)
+    service = Service(ChromeDriverManager().install())
     options = Options()
     
     options.add_argument("--no-sandbox")
