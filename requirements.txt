@@ -1,3 +1,4 @@
+pandas
+scikit-learn
+holidays
 python-dotenv
-selenium
-webdriver-manager
