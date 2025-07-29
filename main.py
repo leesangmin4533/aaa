@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from login.login_bgf import login_bgf
+from dotenv import load_dotenv
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -115,16 +116,23 @@ def main() -> None:
     print("Starting BGF Retail Automation...")
     driver = None
     try:
+        # Load environment variables from project root if available
+        load_dotenv(SCRIPT_DIR / ".env", override=False)
+
         driver = create_driver()
         if not login_bgf(driver, credential_path=None):
             return
 
-        # Load default script (index.js) to initialize window.automation
+        # Load helper scripts before the main automation script
         import json
 
         with open(SCRIPT_DIR / "config.json", "r", encoding="utf-8") as f:
             config = json.load(f)
         default_script = config["scripts"]["default"]
+
+        # ``nexacro_helpers.js`` defines the ``window.automationHelpers`` object
+        # used by ``index.js``. It must be loaded first.
+        run_script(driver, "scripts/nexacro_helpers.js")
         run_script(driver, f"scripts/{default_script}")
 
         run_script(driver, NAVIGATION_SCRIPT)

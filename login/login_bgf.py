@@ -44,24 +44,9 @@ def load_credentials(path: str | None = None) -> dict:
     Otherwise, it loads credentials from environment variables, which can be
     populated from a .env file.
     """
-    # 항상 프로젝트 루트의 .env 파일을 먼저 로드 시도
-    project_root_env = ROOT_DIR / ".env"
-    if project_root_env.exists():
-        log.debug(
-            f"Attempting to load .env from Project Root: {project_root_env}",
-            extra={"tag": "env"},
-        )
-        # override=True로 하여 환경 변수 우선 적용
-        load_dotenv(dotenv_path=project_root_env, override=True)
-    else:
-        log.warning(
-            f"Project Root .env not found: {project_root_env}",
-            extra={"tag": "env"},
-        )
-
-    # 현재 작업 디렉토리의 .env 파일이 존재하고 프로젝트 루트와 다르면 추가로 로드 시도
+    # 현재 작업 디렉터리의 ``.env`` 파일을 먼저 시도한다
     cwd_env = Path.cwd() / ".env"
-    if cwd_env.exists() and cwd_env != project_root_env:
+    if cwd_env.exists():
         log.debug(
             f"Attempting to load .env from CWD: {cwd_env}",
             extra={"tag": "env"},
