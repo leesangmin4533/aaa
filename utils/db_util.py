@@ -13,7 +13,7 @@ import sqlite3
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-
+import random
 import sys
 
 if __package__:
@@ -23,6 +23,15 @@ else:  # pragma: no cover - fallback when executed directly
     from log_util import get_logger
 
 log = get_logger(__name__)
+
+# 프로젝트 루트 경로
+SCRIPT_DIR: Path = Path(__file__).resolve().parent.parent
+CODE_OUTPUT_DIR: Path = SCRIPT_DIR / "code_outputs"
+# 통합 매출 정보를 저장하는 SQLite DB 파일명
+INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
+JUMEOKBAP_DB_PATH = (
+    CODE_OUTPUT_DIR / "db" / "jumeokbap_predictions.db"
+)
 
 
 # ``write_sales_data`` 함수에서 허용하는 키 목록
@@ -212,6 +221,7 @@ def write_sales_data(records: list[dict[str, Any]], db_path: Path, collected_at_
     conn.close()
     return count
 
+
 def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
     """
     주어진 날짜 목록 중 DB에 데이터가 없는 날짜를 찾아 반환합니다.
@@ -243,3 +253,81 @@ def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
     conn.close()
     log.info(f"DB에 없는 날짜: {missing_dates}", extra={'tag': 'db'})
     return missing_dates
+
+def get_configured_db_path() -> Path:
+    """Returns the configured path to the integrated sales database."""
+    return CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
+
+
+def predict_jumeokbap_quantity(db_path: Path) -> float:
+    """Predicts the jumeokbap quantity based on historical data in the given
+    DB.
+    This is a placeholder implementation.
+    """
+    # In a real scenario, this would involve ML models, data analysis etc.
+    # For now, return a random float for demonstration.
+    log.info(f"[Jumeokbap Prediction] Using DB: {db_path}")
+    return random.uniform(50.0, 200.0)
+
+
+def recommend_product_mix(db_path: Path) -> dict[str, Any]:
+    """Recommends a product mix based on predicted quantity and other factors.
+    This is a placeholder implementation.
+    """
+    # In a real scenario, this would involve more complex logic.
+    log.info(f"[Product Mix Recommendation] Using DB: {db_path}")
+    return {
+        "참치마요": random.randint(10, 30),
+        "전주비빔": random.randint(5, 20),
+        "불닭": random.randint(5, 15),
+    }
+
+def save_prediction_to_db(forecast: float, mix_recommendations: dict):
+    conn = sqlite3.connect(JUMEOKBAP_DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS jumeokbap_predictions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            prediction_date TEXT,
+            forecast REAL,
+            mix_recommendations TEXT
+        )
+    """
+    )
+
+    prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Convert dict to string for storage
+    mix_recommendations_str = str(mix_recommendations)
+
+    cursor.execute(
+        "INSERT INTO jumeokbap_predictions (prediction_date, forecast,"
+        " mix_recommendations) VALUES (?, ?, ?)",
+        (prediction_date, forecast, mix_recommendations_str),
+    )
+    conn.commit()
+    conn.close()
+    log.info(f"예측 결과가 {JUMEOKBAP_DB_PATH}에 저장되었습니다.")
+
+
+def run_jumeokbap_prediction_and_save():
+    """
+    Runs the jumeokbap prediction and saves the result to the database.
+    """
+    try:
+        db_path = get_configured_db_path()
+
+        if not db_path.exists():
+            log.error(f"Database file not found at {db_path}")
+            return
+
+        log.info(f"Using database for prediction: '{db_path}'")
+
+        tomorrow_forecast = predict_jumeokbap_quantity(db_path)
+        mix_recommendations = recommend_product_mix(db_path)
+
+        save_prediction_to_db(tomorrow_forecast, mix_recommendations)
+
+    except Exception as e:
+        log.error(f"An error occurred during jumeokbap prediction: {e}")
