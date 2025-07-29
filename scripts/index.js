@@ -71,6 +71,11 @@
   async function getAllMidCodes() {
     return getAllMidCodesFromDataset();
   }
+  /**
+   * 지정한 날짜의 데이터를 수집한다.
+   * 조회된 모든 중분류를 차례대로 클릭하여 상품 정보를 모은다.
+   * 날짜를 몇 개 수집하느냐와는 관련이 없으며, 중분류 개수만큼 반복된다.
+   */
   async function runCollectionForDate(dateStr) {
     window.automation.logs.push(`[runCollectionForDate] Starting for date: ${dateStr}`);
     if (window.automation.isCollecting) {

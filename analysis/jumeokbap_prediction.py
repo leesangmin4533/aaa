@@ -5,12 +5,13 @@ from typing import Any
 # Constants from main.py for consistency
 SCRIPT_DIR: Path = Path(__file__).resolve().parent.parent
 CODE_OUTPUT_DIR: Path = SCRIPT_DIR / "code_outputs"
-PAST7_DB_FILE: str = "db/integrated_sales.db"
+# 통합 매출 정보를 저장하는 SQLite DB 파일명
+INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 
 
 def get_configured_db_path() -> Path:
     """Returns the configured path to the integrated sales database."""
-    return CODE_OUTPUT_DIR / PAST7_DB_FILE
+    return CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
 
 
 def predict_jumeokbap_quantity(db_path: Path) -> float:

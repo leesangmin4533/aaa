@@ -238,7 +238,7 @@ def test_main_writes_sales_data(tmp_path):
         patch.object(main, "wait_for_mix_ratio_page", return_value=True),
         patch.object(main, "run_script"),
         patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "is_7days_data_available", return_value=True),
+        patch.object(main, "is_past_data_available", return_value=True),
         patch.object(main.time, "sleep"),
         patch.object(main, "write_sales_data") as write_mock,
     ):
@@ -249,7 +249,7 @@ def test_main_writes_sales_data(tmp_path):
     write_mock.assert_called_once_with(parsed, db_path)
 
 
-def test_main_writes_past7_db_when_needed(tmp_path):
+def test_main_writes_integrated_db_when_needed(tmp_path):
     driver = Mock()
     driver.get_log = Mock(return_value=[])
 
@@ -266,14 +266,14 @@ def test_main_writes_past7_db_when_needed(tmp_path):
         patch.object(main, "execute_collect_single_day_data", return_value={"success": True, "data": []}),
         patch.object(main, "get_past_dates", return_value=["20240101"]),
         patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "is_7days_data_available", return_value=False),
+        patch.object(main, "is_past_data_available", return_value=False),
         patch.object(main.time, "sleep"),
         patch.object(main, "write_sales_data") as write_mock,
     ):
         driver.execute_script.side_effect = [[], [], parsed, None]
         main.main()
 
-    expected = out_dir / main.PAST7_DB_FILE
+    expected = out_dir / main.INTEGRATED_SALES_DB_FILE
     write_mock.assert_called_once_with(parsed, expected)
 
 

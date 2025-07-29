@@ -34,7 +34,8 @@ import subprocess
 
 SCRIPT_DIR: Path = Path(__file__).resolve().parent
 CODE_OUTPUT_DIR: Path = Path(__file__).resolve().parent / "code_outputs"
-PAST7_DB_FILE: str = "db/integrated_sales.db"
+# 모든 수집 결과가 저장될 통합 DB 파일 경로
+INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 
 # -----------------------------------------------------------------------------
@@ -110,6 +111,10 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
 
 
 def get_past_dates(num_days: int = 2) -> list[str]:
+    """Return a list of past dates for collecting historical data.
+
+    기본값은 ``num_days=2``로, 과거 2일 데이터를 수집할 때 사용됩니다.
+    """
     today = datetime.now()
     past_dates = []
     for i in range(1, num_days + 1):
@@ -119,19 +124,21 @@ def get_past_dates(num_days: int = 2) -> list[str]:
 
 
 def is_past_data_available(num_days: int = 2) -> bool:
+    """Return ``True`` if past data for ``num_days`` exist in the DB.
+
+    기본값은 ``num_days=2``로, 과거 2일 데이터가 이미 수집되었는지 확인합니다.
+    """
     if os.environ.get("PYTEST_CURRENT_TEST"):
         return True
     past_dates = get_past_dates(num_days)
-    db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
+    db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
     if not db_path.exists():
         return True
     missing_dates = check_dates_exist(db_path, past_dates)
     return len(missing_dates) == 0
 
 
-def is_7days_data_available() -> bool:
-    """Check if the past 7 days' data exist in the DB."""
-    return is_past_data_available(num_days=7)
+
 
 
 def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
@@ -204,13 +211,13 @@ def main() -> None:
             print("Failed to load mix ratio page elements. Exiting.")
             return
 
-        need_past = not is_7days_data_available()
+        need_past = not is_past_data_available()
         if need_past:
-            for past in get_past_dates(num_days=7):
+            for past in get_past_dates():
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
-                    write_sales_data(data, CODE_OUTPUT_DIR / PAST7_DB_FILE)
+                    write_sales_data(data, CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE)
                 else:
                     print("No valid data collected for", past)
                 time.sleep(0.1)
@@ -252,7 +259,7 @@ def main() -> None:
 
         if collected and isinstance(collected, list) and isinstance(collected[0], dict):
             if need_past:
-                db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
+                db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
             else:
                 db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
             write_sales_data(collected, db_path)
