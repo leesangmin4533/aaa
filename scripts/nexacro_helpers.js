@@ -1,3 +1,35 @@
+// Logger setup
+(() => {
+  function initLogger() {
+    window.automation = window.automation || {};
+    Object.assign(window.automation, {
+      logs: [],
+      errors: [],
+      error: null,
+      parsedData: null,
+      isCollecting: false,
+    });
+    window.__midCategoryLogs__ = window.__midCategoryLogs__ || [];
+    const origConsoleLog = console.log;
+    console.log = function (...args) {
+      window.automation.logs.push(
+        args.map(a => (typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a))).join(' ')
+      );
+      return origConsoleLog.apply(console, args);
+    };
+    const origConsoleError = console.error;
+    console.error = function (...args) {
+      const msg = '[ERROR] ' + args.map(a => (a instanceof Error ? a.message : typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a))).join(' ');
+      window.automation.logs.push(msg);
+      window.automation.errors.push(msg);
+      return origConsoleError.apply(console, args);
+    };
+  }
+  window.automationHelpers = window.automationHelpers || {};
+  window.automationHelpers.initLogger = initLogger;
+})();
+
+// Nexacro helpers
 (() => {
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -5,9 +37,6 @@
     const app = window.nexacro && typeof window.nexacro.getApplication === 'function'
       ? window.nexacro.getApplication()
       : null;
-    if (!app) {
-      console.warn('[getNexacroApp] Nexacro Application 객체를 찾을 수 없습니다.');
-    }
     return app;
   }
 
@@ -33,7 +62,6 @@
       }
       await delay(500);
     }
-    console.error(`[getNexacroComponent] ${componentId} 찾기 실패`);
     return null;
   }
 
@@ -79,10 +107,10 @@
       if (getMainForm()) return true;
       await delay(500);
     }
-    throw new Error('mainForm이 15초 내 생성되지 않았습니다.');
+    throw new Error('mainForm이 30초 내 생성되지 않았습니다.');
   };
 
-  async function getNestedNexacroComponent(pathComponents, initialScope, timeout = 30000) {
+  async function getNestedNexacroComponent(pathComponents, initialScope = null, timeout = 30000) {
     let scope = initialScope;
     for (let i = 0; i < pathComponents.length; i++) {
       const id = pathComponents[i];
@@ -100,7 +128,31 @@
     return scope;
   }
 
-  window.automationHelpers = window.automationHelpers || {};
+  async function clickElementById(id) {
+    const el = document.getElementById(id);
+    if (!el || el.offsetParent === null) {
+      console.warn(`⛔ 클릭 실패: ID ${id} 요소를 찾을 수 없거나 화면에 표시되지 않습니다.`);
+      return false;
+    }
+    try {
+      const rect = el.getBoundingClientRect();
+      ["mousedown", "mouseup", "click"].forEach(type =>
+        el.dispatchEvent(new MouseEvent(type, {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          clientX: rect.left + rect.width / 2,
+          clientY: rect.top + rect.height / 2
+        }))
+      );
+      console.log(`✅ 클릭 성공: ID ${id}`);
+      return true;
+    } catch (e) {
+      console.error(`클릭 이벤트 발생 중 오류: ${e}`);
+      return false;
+    }
+  }
+
   Object.assign(window.automationHelpers, {
     delay,
     getNexacroApp,
@@ -110,5 +162,45 @@
     selectMiddleCodeRow,
     ensureMainFormLoaded,
     getNestedNexacroComponent,
+    clickElementById,
+  });
+})();
+
+// Dataset utils
+(() => {
+  function parseDetailDataset(dsDetail, midCode, midName) {
+    const products = [];
+    if (!dsDetail) return products;
+    for (let i = 0; i < dsDetail.getRowCount(); i++) {
+      products.push({
+        midCode,
+        midName,
+        productCode: dsDetail.getColumn(i, 'ITEM_CD'),
+        productName: dsDetail.getColumn(i, 'ITEM_NM'),
+        sales: parseInt(dsDetail.getColumn(i, 'SALE_QTY') || 0, 10),
+        order_cnt: parseInt(dsDetail.getColumn(i, 'ORD_QTY') || 0, 10),
+        purchase: parseInt(dsDetail.getColumn(i, 'BUY_QTY') || 0, 10),
+        disposal: parseInt(dsDetail.getColumn(i, 'DISUSE_QTY') || 0, 10),
+        stock: parseInt(dsDetail.getColumn(i, 'STOCK_QTY') || 0, 10),
+      });
+    }
+    return products;
+  }
+  function parseListDataset(dsList) {
+    const mids = [];
+    if (!dsList) return mids;
+    for (let i = 0; i < dsList.getRowCount(); i++) {
+      mids.push({
+        code: dsList.getColumn(i, 'MID_CD'),
+        name: dsList.getColumn(i, 'MID_NM'),
+        expectedQuantity: parseInt(dsList.getColumn(i, 'SALE_QTY') || 0, 10),
+        row: i,
+      });
+    }
+    return mids;
+  }
+  Object.assign(window.automationHelpers, {
+    parseDetailDataset,
+    parseListDataset,
   });
 })();
