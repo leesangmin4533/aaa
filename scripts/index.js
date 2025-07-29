@@ -166,11 +166,17 @@
   });
 })();
 
-// Dataset utils
+// Dataset utils - modern implementations
 (() => {
-  function parseDetailDataset(dsDetail, midCode, midName) {
+  const { getMainForm } = window.automationHelpers;
+
+  function collectProductsFromDataset(midCode, midName) {
     const products = [];
-    if (!dsDetail) return products;
+    const dsDetail = getMainForm()?.div_workForm?.form?.dsDetail;
+    if (!dsDetail) {
+      console.warn('[collectProductsFromDataset] dsDetail 데이터셋을 찾을 수 없습니다.');
+      return products;
+    }
     for (let i = 0; i < dsDetail.getRowCount(); i++) {
       products.push({
         midCode,
@@ -184,11 +190,17 @@
         stock: parseInt(dsDetail.getColumn(i, 'STOCK_QTY') || 0, 10),
       });
     }
+    console.log(`[collectProductsFromDataset] '${midName}'의 상품 ${products.length}개를 데이터셋에서 수집합니다.`);
     return products;
   }
-  function parseListDataset(dsList) {
+
+  function getAllMidCodesFromDataset() {
     const mids = [];
-    if (!dsList) return mids;
+    const dsList = getMainForm()?.div_workForm?.form?.dsList;
+    if (!dsList) {
+      console.warn('[getAllMidCodesFromDataset] dsList 데이터셋을 찾을 수 없습니다.');
+      return mids;
+    }
     for (let i = 0; i < dsList.getRowCount(); i++) {
       mids.push({
         code: dsList.getColumn(i, 'MID_CD'),
@@ -197,11 +209,13 @@
         row: i,
       });
     }
+    console.log(`[getAllMidCodesFromDataset] ${mids.length}개의 중분류를 데이터셋에서 찾았습니다.`);
     return mids;
   }
+
   Object.assign(window.automationHelpers, {
-    parseDetailDataset,
-    parseListDataset,
+    collectProductsFromDataset,
+    getAllMidCodesFromDataset,
   });
 })();
 
@@ -214,18 +228,16 @@
     getNexacroComponent,
     selectMiddleCodeRow,
     ensureMainFormLoaded,
-    parseDetailDataset,
-    parseListDataset,
+    collectProductsFromDataset,
+    getAllMidCodesFromDataset,
     clickElementById,
   } = window.automationHelpers;
 
   async function collectProducts(midCode, midName) {
-    const dsDetail = getMainForm()?.div_workForm?.form?.dsDetail;
-    return parseDetailDataset(dsDetail, midCode, midName);
+    return collectProductsFromDataset(midCode, midName);
   }
   async function getAllMidCodes() {
-    const dsList = getMainForm()?.div_workForm?.form?.dsList;
-    return parseListDataset(dsList);
+    return getAllMidCodesFromDataset();
   }
   async function runCollectionForDate(dateStr) {
     window.automation.logs.push(`[runCollectionForDate] Starting for date: ${dateStr}`);
