@@ -68,7 +68,9 @@ def _setup_logger(name: str) -> logging.Logger:
     else:
         log_path = _get_log_path()
         log_path.parent.mkdir(parents=True, exist_ok=True)
-        file_handler = logging.FileHandler(log_path, mode="w", encoding="utf-8")
+        # 모드 "w"는 기존 로그 파일을 매번 덮어쓰므로 로그가 사라질 수 있다.
+        # 실행 기록을 누적하려면 append 모드("a")로 열어야 한다.
+        file_handler = logging.FileHandler(log_path, mode="a", encoding="utf-8")
         file_handler.setFormatter(fmt)
         logger.addHandler(file_handler)
 
