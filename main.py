@@ -29,7 +29,7 @@ import sys
 import subprocess
 import logging # Import logging module
 
-from utils.logger_config import setup_logging # Import the new logging setup
+from utils.log_util import get_logger
 
 # -----------------------------------------------------------------------------
 # Constants
@@ -41,10 +41,7 @@ CODE_OUTPUT_DIR: Path = Path(__file__).resolve().parent / "code_outputs"
 INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 
-# Initialize logger (will be configured in main)
-logger = logging.getLogger("bgf_automation")
-
-# -----------------------------------------------------------------------------
+logger = get_logger("bgf_automation")
 # Placeholder hooks
 # -----------------------------------------------------------------------------
 
@@ -189,7 +186,7 @@ def run_script(driver: Any, name: str) -> Any:
 
 def main() -> None:
     global logger # Declare logger as global to modify the module-level logger
-    logger = setup_logging(SCRIPT_DIR) # Configure the logger
+    logger = get_logger("bgf_automation") # Configure the logger
     logger.info("Starting BGF Retail Automation...")
     driver = None
     try:
