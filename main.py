@@ -8,11 +8,20 @@ This script orchestrates the web automation process for BGF Retail, including:
 """
 
 from __future__ import annotations
+from utils.db_util import write_sales_data, check_dates_exist
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from login.login_bgf import login_bgf
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
 
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Iterable, Optional
+from typing import Any
 import sys
 import subprocess
 
@@ -29,32 +38,18 @@ NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 # Placeholder hooks
 # -----------------------------------------------------------------------------
 
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
 
 def create_driver() -> Any:
     """Create and return a Selenium WebDriver instance."""
     service = Service(ChromeDriverManager().install())
     options = Options()
-    
+
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    
+
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
-
-from login.login_bgf import login_bgf
-
-
-
-
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
     """Wait for key elements on the '중분류 매출 구성비' page to be present.
@@ -62,7 +57,9 @@ def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
     """
     try:
         WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div[id*='gdList.body']"))
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, "div[id*='gdList.body']")
+            )
         )
         return True
     except Exception as e:
@@ -70,16 +67,18 @@ def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
         return False
 
 
-from utils.db_util import write_sales_data, check_dates_exist
-
 def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
-    driver.execute_script(f"window.automation.runCollectionForDate('{date_str}')")
+    driver.execute_script(
+        f"window.automation.runCollectionForDate('{date_str}')"
+    )
     collected = None
     for _ in range(60):  # Increased attempts to wait for data
-        collected = driver.execute_script("return window.automation.parsedData || null")
+        collected = driver.execute_script(
+            "return window.automation.parsedData || null"
+        )
         if collected:
             break
-        time.sleep(0.5) # Wait a bit longer
+        time.sleep(0.5)  # Wait a bit longer
     return {"success": bool(collected), "data": collected}
 
 
@@ -103,15 +102,13 @@ def is_past_data_available(num_days: int = 2) -> bool:
 # Core functionality
 # -----------------------------------------------------------------------------
 
+
 def run_script(driver: Any, name: str) -> Any:
     script_path = Path(SCRIPT_DIR) / name
     if not script_path.exists():
         raise FileNotFoundError(f"JavaScript file not found: {script_path}")
     script_text = script_path.read_text(encoding="utf-8")
     return driver.execute_script(script_text)
-
-
-
 
 
 def main() -> None:
@@ -122,21 +119,20 @@ def main() -> None:
         if not login_bgf(driver, credential_path=None):
             return
 
-        
-        
         # Load default script (index.js) to initialize window.automation
         import json
+
         with open(SCRIPT_DIR / "config.json", "r", encoding="utf-8") as f:
             config = json.load(f)
         default_script = config["scripts"]["default"]
         run_script(driver, f"scripts/{default_script}")
 
         run_script(driver, NAVIGATION_SCRIPT)
-        time.sleep(2) # Give some time for the page to stabilize after navigation
+        # Give some time for the page to stabilize after navigation
+        time.sleep(2)
         if not wait_for_page_elements(driver):
             print("Failed to load mix ratio page elements. Exiting.")
             return
-        
 
         need_past = not is_past_data_available(num_days=2)
         if need_past:
@@ -147,7 +143,9 @@ def main() -> None:
                     write_sales_data(data, CODE_OUTPUT_DIR / PAST7_DB_FILE)
                 time.sleep(0.1)
                 # Get JavaScript logs after each collection attempt
-                js_automation_logs = driver.execute_script("return window.automation.logs || []")
+                js_automation_logs = driver.execute_script(
+                    "return window.automation.logs || []"
+                )
                 if js_automation_logs:
                     print(f"\n--- JavaScript Automation Logs for {past} ---")
                     for log_entry in js_automation_logs:
@@ -159,15 +157,19 @@ def main() -> None:
         collected = result.get("data") if isinstance(result, dict) else None
 
         # Get JavaScript logs after today's collection attempt
-        js_automation_logs = driver.execute_script("return window.automation.logs || []")
+        js_automation_logs = driver.execute_script(
+            "return window.automation.logs || []"
+        )
         if js_automation_logs:
             print(f"\n--- JavaScript Automation Logs for {today_str} ---")
             for log_entry in js_automation_logs:
                 print(log_entry)
             print("------------------------------------------")
 
-        _browser_logs = driver.get_log("browser") # For debugging browser console logs
-        mid_logs = driver.execute_script("return window.__midCategoryLogs__ || []") # Logs from JavaScript for mid-category clicks
+        # Logs from JavaScript for mid-category clicks
+        mid_logs = driver.execute_script(
+            "return window.__midCategoryLogs__ || []"
+        )
         print("중분류 클릭 로그", mid_logs)
 
         if collected:
@@ -177,13 +179,21 @@ def main() -> None:
             return
 
         # Run jumeokbap.py after data collection
-        jumeokbap_script_path = SCRIPT_DIR.parent / "food_prediction" / "jumeokbap.py"
+        jumeokbap_script_path = (
+            SCRIPT_DIR.parent / "food_prediction" / "jumeokbap.py"
+        )
         python_executable = sys.executable
-        print(f"Running jumeokbap.py: {python_executable} {jumeokbap_script_path}")
+        print(
+            "Running jumeokbap.py: %s %s",
+            python_executable,
+            jumeokbap_script_path,
+        )
         try:
             jumeokbap_result = subprocess.run(
                 [python_executable, str(jumeokbap_script_path)],
-                capture_output=True, text=True, check=True
+                capture_output=True,
+                text=True,
+                check=True,
             )
             print("\n--- Jumeokbap Prediction Output ---")
             print(jumeokbap_result.stdout)
