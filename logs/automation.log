@@ -937,3 +937,185 @@
 [2025-07-30 07:56:37][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 60}
 [2025-07-30 07:56:37][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
 [2025-07-30 07:56:41][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:15:55][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:16:02][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:16:02][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:16:02][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:16:03][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:16:03][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:16:05][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:16:05][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:16:07][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:16:07][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:16:09][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:16:09][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:16:11][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:16:11][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:16:13][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:16:13][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:16:16][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:19:03][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:19:04][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:19:04][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 99}
+[2025-07-30 08:19:04][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:19:06][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:23:57][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:24:03][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:24:03][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:24:03][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:24:04][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:24:04][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:24:06][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:24:06][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:24:08][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:24:08][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:24:10][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:24:11][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:24:13][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:24:13][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:24:15][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:24:15][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:24:17][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:24:33][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 08:24:49][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 08:25:05][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:25:05][bgf_automation][system][WARNING] No valid data collected for today
+[2025-07-30 08:25:05][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:25:05][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 115}
+[2025-07-30 08:25:05][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:25:07][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:26:07][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:26:14][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:26:14][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:26:14][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:26:15][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:26:16][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:26:18][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:26:18][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:26:20][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:26:20][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:26:22][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:26:22][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:26:24][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:26:24][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:26:26][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:26:26][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:26:28][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:26:44][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 08:27:00][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 08:27:15][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:27:15][bgf_automation][system][WARNING] No valid data collected for today
+[2025-07-30 08:27:16][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:27:16][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 195}
+[2025-07-30 08:27:16][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:27:18][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:30:09][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:30:16][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:30:16][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:30:16][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:30:17][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:30:17][utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[2025-07-30 08:30:17][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 0
+[2025-07-30 08:30:17][login.login_bgf][login][INFO] Closed 0 popups after login.
+[2025-07-30 08:32:20][bgf_automation][system][ERROR] Failed to load mix ratio page elements. Exiting.
+[2025-07-30 08:32:22][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:33:22][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:33:28][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:33:28][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:33:28][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:33:29][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:33:30][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:33:32][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:33:32][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:33:34][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:33:34][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:33:36][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:33:36][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:33:38][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:33:38][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:33:40][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:33:40][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:33:44][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:33:59][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 08:34:14][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 08:34:29][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:34:29][bgf_automation][system][WARNING] No valid data collected for today
+[2025-07-30 08:34:30][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:34:30][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 67}
+[2025-07-30 08:34:30][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:34:32][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:37:58][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:38:04][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:38:04][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:38:05][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:38:06][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:38:06][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:38:08][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:38:08][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:38:10][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:38:10][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:38:12][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:38:12][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:38:14][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:38:14][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:38:16][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:38:16][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:38:19][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:38:34][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 08:38:49][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 08:39:04][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:39:04][bgf_automation][system][WARNING] No valid data collected for today
+[2025-07-30 08:39:05][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:39:05][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 131}
+[2025-07-30 08:39:05][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:39:07][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:39:41][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:39:47][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:39:47][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:39:47][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:39:48][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:39:49][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:39:51][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:39:51][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:39:53][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:39:53][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:39:55][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:39:55][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:39:57][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:39:57][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:39:59][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:39:59][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:40:01][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:40:17][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 08:40:32][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 08:40:47][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:40:47][bgf_automation][system][WARNING] No valid data collected for today
+[2025-07-30 08:40:48][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:40:48][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 92}
+[2025-07-30 08:40:48][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:40:50][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 08:41:32][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 08:41:38][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 08:41:38][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 08:41:38][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 08:41:39][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 08:41:39][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:41:41][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 08:41:41][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:41:43][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 08:41:43][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:41:45][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 08:41:45][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:41:47][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 08:41:47][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 08:41:49][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 08:41:49][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 08:41:52][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 08:42:07][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 08:42:22][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 08:42:38][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 08:42:38][bgf_automation][system][WARNING] No valid data collected for today
+[2025-07-30 08:42:38][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 08:42:38][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 199}
+[2025-07-30 08:42:38][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 08:42:40][bgf_automation][system][INFO] WebDriver quit successfully.
