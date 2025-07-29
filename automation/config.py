@@ -21,7 +21,8 @@ CODE_OUTPUT_DIR = Path(__file__).resolve().parents[1] / "code_outputs"
 
 # DB files
 ALL_SALES_DB_FILE = config["db_file"]
-PAST7_DB_FILE = config.get("past7_db_file", "past_7days.db")
+# 과거 데이터를 포함해 통합 저장될 SQLite 파일명
+INTEGRATED_SALES_DB_FILE = config.get("past7_db_file", "past_7days.db")
 
 # Script file names
 DEFAULT_SCRIPT = config["scripts"]["default"]
