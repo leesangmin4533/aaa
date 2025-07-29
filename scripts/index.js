@@ -1,5 +1,56 @@
 // Logger는 nexacro_helpers.js에서 정의됩니다.
 
+// Dataset utils - modern implementations
+(() => {
+  function collectProductsFromDataset(midCode, midName) {
+    const products = [];
+    const dsDetail = window.automationHelpers.getMainForm()?.div_workForm?.form?.dsDetail;
+    if (!dsDetail) {
+      console.warn("[collectProductsFromDataset] dsDetail \uB370\uC774\uD130\uC14B\uC744 \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.");
+      return products;
+    }
+    for (let i = 0; i < dsDetail.getRowCount(); i++) {
+      products.push({
+        midCode,
+        midName,
+        productCode: dsDetail.getColumn(i, "ITEM_CD"),
+        productName: dsDetail.getColumn(i, "ITEM_NM"),
+        sales: parseInt(dsDetail.getColumn(i, "SALE_QTY") || 0, 10),
+        order_cnt: parseInt(dsDetail.getColumn(i, "ORD_QTY") || 0, 10),
+        purchase: parseInt(dsDetail.getColumn(i, "BUY_QTY") || 0, 10),
+        disposal: parseInt(dsDetail.getColumn(i, "DISUSE_QTY") || 0, 10),
+        stock: parseInt(dsDetail.getColumn(i, "STOCK_QTY") || 0, 10),
+      });
+    }
+    console.log(`[collectProductsFromDataset] '${midName}'\uC758 \uC0C1\uD488 ${products.length}\uAC1C\uB97C \uB370\uC774\uD130\uC14B\uC5D0\uC11C \uC218\uC9D1\uD569\uB2C8\uB2E4.`);
+    return products;
+  }
+
+  function getAllMidCodesFromDataset() {
+    const mids = [];
+    const dsList = window.automationHelpers.getMainForm()?.div_workForm?.form?.dsList;
+    if (!dsList) {
+      console.warn("[getAllMidCodesFromDataset] dsList \uB370\uC774\uD130\uC14B\uC744 \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.");
+      return mids;
+    }
+    for (let i = 0; i < dsList.getRowCount(); i++) {
+      mids.push({
+        code: dsList.getColumn(i, "MID_CD"),
+        name: dsList.getColumn(i, "MID_NM"),
+        expectedQuantity: parseInt(dsList.getColumn(i, "SALE_QTY") || 0, 10),
+        row: i,
+      });
+    }
+    console.log(`[getAllMidCodesFromDataset] ${mids.length}\uAC1C\uC758 \uC911\uBD84\uB960\uB97C \uB370\uC774\uD130\uC14B\uC5D0\uC11C \uCC3E\uC558\uC2B5\uB2C8\uB2E4.`);
+    return mids;
+  }
+
+  Object.assign(window.automationHelpers, {
+    collectProductsFromDataset,
+    getAllMidCodesFromDataset,
+  });
+})();
+
 // Automation core
 (() => {
   const {
