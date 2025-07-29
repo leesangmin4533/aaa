@@ -85,7 +85,7 @@ def login_bgf(
     driver.get(url)
     try:
         WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe);")
+            lambda d: d.execute_script("return typeof nexacro !== 'undefined' && !!(nexacro.getApplication() && nexacro.getApplication().mainframe);")
         )
     except Exception as e:
         log.error(f"Nexacro application did not load: {e}", extra={'tag': 'login'})
@@ -132,7 +132,7 @@ try {{
         # Wait for the login form elements to be ready
         # This check is now more robust within the JS itself
         WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return !!(nexacro.getApplication() && nexacro.getApplication().mainframe && nexacro.getApplication().mainframe.HFrameSet00 && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form);")
+            lambda d: d.execute_script("return typeof nexacro !== 'undefined' && !!(nexacro.getApplication() && nexacro.getApplication().mainframe && nexacro.getApplication().mainframe.HFrameSet00 && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login && nexacro.getApplication().mainframe.HFrameSet00.LoginFrame.form.div_login.form);")
         )
         log.info("Login form elements are ready.", extra={'tag': 'login'})
         js_result = driver.execute_script(js)
