@@ -261,6 +261,8 @@ def main() -> None:
             "return window.__midCategoryLogs__ || []"
         )
         logger.info(f"중분류 클릭 로그: {mid_logs}")
+        # 테스트에서 표준 출력을 확인할 수 있도록 같은 내용을 출력한다.
+        print(f"중분류 클릭 로그: {mid_logs}")
         if not collected and mid_logs:
             collected = mid_logs
 
@@ -276,9 +278,10 @@ def main() -> None:
             logger.warning("No valid data collected for today")
 
         # Run jumeokbap.py after data collection
-        jumeokbap_script_path = (
-            SCRIPT_DIR.parent / "food_prediction" / "jumeokbap.py"
-        )
+        # jumeokbap.py 파일은 프로젝트 루트의 food_prediction 폴더에 위치한다.
+        # 이전에는 SCRIPT_DIR.parent를 사용해 잘못된 상위 디렉터리를 참조했으나
+        # 실제 경로는 SCRIPT_DIR / "food_prediction" / "jumeokbap.py" 이다.
+        jumeokbap_script_path = SCRIPT_DIR / "food_prediction" / "jumeokbap.py"
         python_executable = sys.executable
         logger.info(
             f"Running jumeokbap.py: {python_executable} {jumeokbap_script_path}"
