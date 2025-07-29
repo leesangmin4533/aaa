@@ -166,6 +166,7 @@
     }catch(e){
       window.automation.logs.push(`[ERROR] 데이터 수집 오류: ${e.message}`);
       window.automation.error=e.message;
+      window.automation.parsedData=[];
       window.automation.logs.push("[runCollectionForDate] Collection failed.");
     }finally{
       window.automation.isCollecting=false;
