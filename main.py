@@ -261,6 +261,7 @@ def main() -> None:
             "return window.__midCategoryLogs__ || []"
         )
         logger.info(f"중분류 클릭 로그: {mid_logs}")
+        print(f"중분류 클릭 로그: {mid_logs}")
         if not collected and mid_logs:
             collected = mid_logs
 
@@ -277,7 +278,7 @@ def main() -> None:
 
         # Run jumeokbap.py after data collection
         jumeokbap_script_path = (
-            SCRIPT_DIR.parent / "food_prediction" / "jumeokbap.py"
+            SCRIPT_DIR / "food_prediction" / "jumeokbap.py"
         )
         python_executable = sys.executable
         logger.info(

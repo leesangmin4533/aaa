@@ -1,19 +1,25 @@
+import logging
+import sys
+from pathlib import Path
+
+# Add the project root to sys.path before importing project modules
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from utils.logger_config import setup_logging
+
 from analysis.jumeokbap_prediction import (
     get_configured_db_path,
     predict_jumeokbap_quantity,
     recommend_product_mix,
 )
-import logging
-import sys
-from pathlib import Path
 import sqlite3
 from datetime import datetime
 
-# Add the project root to sys.path
-ROOT_DIR = Path(__file__).resolve().parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
 
+# Configure logging using the shared project settings
+logger = setup_logging(ROOT_DIR)
 
 JUMEOKBAP_DB_PATH = (
     ROOT_DIR / "code_outputs" / "db" / "jumeokbap_predictions.db"
@@ -46,26 +52,27 @@ def save_prediction_to_db(forecast: float, mix_recommendations: dict):
     )
     conn.commit()
     conn.close()
-    logging.info(f"예측 결과가 {JUMEOKBAP_DB_PATH}에 저장되었습니다.")
+    logger.info(f"예측 결과가 {JUMEOKBAP_DB_PATH}에 저장되었습니다.")
 
 
-#
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    filename=ROOT_DIR / "logs" / "automation.log",
 )
 
 
 def main():
     """ """
     try:
-        logging.info("")
+        logger.info("")
         db_path = get_configured_db_path()
 
         if not db_path:
-            logging.error("")
+            logger.error("")
             return
 
-        logging.info(f"'{db_path}' ")
+        logger.info(f"'{db_path}' ")
 
         tomorrow_forecast = predict_jumeokbap_quantity(db_path)
         mix_recommendations = recommend_product_mix(db_path)
@@ -73,9 +80,9 @@ def main():
         save_prediction_to_db(tomorrow_forecast, mix_recommendations)
 
     except FileNotFoundError:
-        logging.error(f": . : {db_path}")
+        logger.error(f": . : {db_path}")
     except Exception as e:
-        logging.error(f": {e}")
+        logger.error(f": {e}")
 
 
 if __name__ == "__main__":

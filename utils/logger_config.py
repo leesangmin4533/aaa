@@ -1,6 +1,7 @@
 import logging
 import json
 from pathlib import Path
+import sys
 
 def setup_logging(base_dir: Path, config_filename: str = "config.json") -> logging.Logger:
     """
@@ -43,7 +44,7 @@ def setup_logging(base_dir: Path, config_filename: str = "config.json") -> loggi
         logger.addHandler(file_handler)
 
         # Console Handler (for immediate feedback)
-        console_handler = logging.StreamHandler()
+        console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(logging.INFO)
         console_handler.setFormatter(formatter)
         logger.addHandler(console_handler)
