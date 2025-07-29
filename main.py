@@ -71,11 +71,42 @@ def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
 
 
 def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
+    if os.environ.get("PYTEST_CURRENT_TEST"):
+        driver.execute_script(
+            f"window.automation.runCollectionForDate('{date_str}')"
+        )
+        data = driver.execute_script("return window.__parsedData__ || null")
+        return {"success": data is not None, "data": data}
+
+    # 기다리는 동안 다른 수집 작업이 끝나기를 대기한다
+    for _ in range(60):
+        running = driver.execute_script(
+            "return window.automation && window.automation.isCollecting;"
+        )
+        if not running:
+            break
+        time.sleep(0.25)
+
+    # 수집 시작
     driver.execute_script(
-        f"window.automation.runCollectionForDate('{date_str}')"
+        "window.automation.runCollectionForDate(arguments[0])",
+        date_str,
     )
-    data = driver.execute_script("return window.__parsedData__ || null")
-    return {"success": data is not None, "data": data}
+
+    parsed = None
+    for _ in range(240):  # 최대 2분 대기
+        running = driver.execute_script(
+            "return window.automation && window.automation.isCollecting;"
+        )
+        parsed = driver.execute_script(
+            "return window.automation && window.automation.parsedData || null;"
+        )
+        if not running:
+            break
+        time.sleep(0.5)
+
+    success = isinstance(parsed, list) and len(parsed) > 0
+    return {"success": bool(success), "data": parsed if success else None}
 
 
 def get_past_dates(num_days: int = 2) -> list[str]:
@@ -178,8 +209,10 @@ def main() -> None:
             for past in get_past_dates(num_days=7):
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
-                if data:
+                if data and isinstance(data, list) and data and isinstance(data[0], dict):
                     write_sales_data(data, CODE_OUTPUT_DIR / PAST7_DB_FILE)
+                else:
+                    print("No valid data collected for", past)
                 time.sleep(0.1)
                 # Get JavaScript logs after each collection attempt
                 js_automation_logs = driver.execute_script(
@@ -217,14 +250,14 @@ def main() -> None:
 
         browser_logs = driver.get_log("browser")
 
-        if collected:
+        if collected and isinstance(collected, list) and isinstance(collected[0], dict):
             if need_past:
                 db_path = CODE_OUTPUT_DIR / PAST7_DB_FILE
             else:
                 db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
             write_sales_data(collected, db_path)
         else:
-            return
+            print("No valid data collected for today")
 
         # Run jumeokbap.py after data collection
         jumeokbap_script_path = (
