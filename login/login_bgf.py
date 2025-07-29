@@ -54,13 +54,11 @@ def load_credentials(path: str | None = None) -> dict:
         load_dotenv(dotenv_path=cwd_env, override=False)
 
     log.debug(
-        f"BGF_USER_ID after load_dotenv: {
-            os.environ.get('BGF_USER_ID')}",
+        f"BGF_USER_ID after load_dotenv: {os.environ.get('BGF_USER_ID')}",
         extra={"tag": "env"},
     )
     log.debug(
-        f"BGF_PASSWORD after load_dotenv: {
-            os.environ.get('BGF_PASSWORD')}",
+        f"BGF_PASSWORD after load_dotenv: {os.environ.get('BGF_PASSWORD')}",
         extra={"tag": "env"},
     )
 
