@@ -1,6 +1,6 @@
 (() => {
-  // Nexacro 핵심 헬퍼 함수들을 window.automation에서 가져옵니다.
-  const getMainForm = window.automation.getMainForm;
+  // Nexacro 핵심 헬퍼 함수들을 window.automationHelpers에서 가져옵니다.
+  const { getMainForm } = window.automationHelpers;
 
   async function collectProductsFromDataset(midCode, midName, scope) {
     const products = [];
@@ -52,8 +52,8 @@
     return midCodes;
   }
 
-  // window.automation 객체에 데이터 로직 함수들 노출
-  Object.assign(window.automation, {
+  // window.automationHelpers 객체에 데이터 로직 함수들 노출
+  Object.assign(window.automationHelpers, {
     collectProductsFromDataset,
     getAllMidCodesFromDataset,
   });
