@@ -136,7 +136,7 @@ def is_past_data_available(num_days: int = 2) -> bool:
     past_dates = get_past_dates(num_days)
     db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
     if not db_path.exists():
-        return True
+        return False
     missing_dates = check_dates_exist(db_path, past_dates)
     return len(missing_dates) == 0
 
@@ -273,31 +273,9 @@ def main() -> None:
         else:
             logger.warning("No valid data collected for today")
 
-        # Run jumeokbap.py after data collection
-        jumeokbap_script_path = (
-            SCRIPT_DIR / "food_prediction" / "jumeokbap.py"
-        )
-        python_executable = sys.executable
-        logger.info(
-            f"Running jumeokbap.py: {python_executable} {jumeokbap_script_path}"
-        )
-        try:
-            jumeokbap_result = subprocess.run(
-                [python_executable, str(jumeokbap_script_path)],
-                capture_output=True,
-                text=True,
-                check=True,
-            )
-            logger.info("--- Jumeokbap Prediction Output ---")
-            logger.info(jumeokbap_result.stdout)
-            if jumeokbap_result.stderr:
-                logger.error("--- Jumeokbap Prediction Error ---")
-                logger.error(jumeokbap_result.stderr)
-            logger.info("-----------------------------------")
-        except subprocess.CalledProcessError as e:
-            logger.error(f"Error running jumeokbap.py: {e}")
-            logger.error(f"Stdout: {e.stdout}")
-            logger.error(f"Stderr: {e.stderr}")
+        # Run jumeokbap prediction
+        from utils.db_util import run_jumeokbap_prediction_and_save
+        run_jumeokbap_prediction_and_save()
 
     finally:
         if driver is not None:
