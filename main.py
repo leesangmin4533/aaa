@@ -112,7 +112,6 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
     success = isinstance(parsed, list) and len(parsed) > 0
     return {"success": bool(success), "data": parsed if success else None}
 
-
 def get_past_dates(num_days: int = 2) -> list[str]:
     """Return a list of past dates for collecting historical data.
 
@@ -125,7 +124,6 @@ def get_past_dates(num_days: int = 2) -> list[str]:
         past_dates.append(past_date.strftime("%Y%m%d"))
     return past_dates
 
-
 def is_past_data_available(num_days: int = 2) -> bool:
     """Return ``True`` if past data for ``num_days`` exist in the DB.
 
@@ -133,14 +131,15 @@ def is_past_data_available(num_days: int = 2) -> bool:
     """
     if os.environ.get("PYTEST_CURRENT_TEST"):
         return True
-    past_dates = get_past_dates(num_days)
+    past_dates_for_script = get_past_dates(num_days)  # YYYYMMDD format
     db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
     if not db_path.exists():
         return False
-    missing_dates = check_dates_exist(db_path, past_dates)
+    
+    # Convert to YYYY-MM-DD for DB query
+    dates_to_check_in_db = [f"{d[:4]}-{d[4:6]}-{d[6:]}" for d in past_dates_for_script]
+    missing_dates = check_dates_exist(db_path, dates_to_check_in_db)
     return len(missing_dates) == 0
-
-
 
 
 
