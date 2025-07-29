@@ -10,7 +10,12 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 
 
 def _get_log_path() -> Path:
-    """Return log file path defined in config.json or default."""
+    """Return log file path from environment or config.json."""
+    env_path = os.environ.get("LOG_FILE")
+    if env_path:
+        p = Path(env_path).expanduser()
+        return p if p.is_absolute() else ROOT_DIR / p
+
     config_path = ROOT_DIR / "config.json"
     if config_path.exists():
         try:
@@ -19,11 +24,10 @@ def _get_log_path() -> Path:
             log_file = conf.get("log_file")
             if log_file:
                 path = Path(log_file)
-                if not path.is_absolute():
-                    return ROOT_DIR / path
-                return path
+                return path if path.is_absolute() else ROOT_DIR / path
         except Exception:
             pass
+
     return ROOT_DIR / "logs" / "automation.log"
 
 
