@@ -1,148 +1,91 @@
-// Logger setup
-(() => {
-  function initLogger() {
-    window.automationHelpers = window.automationHelpers || {};
-    if (typeof window.automationHelpers.hookConsole === 'function') {
-      window.automationHelpers.hookConsole(window.automation || {});
+if (!window.automation) {
+  window.automation = {};
+}
+
+// 헬퍼 함수 네임스페이스
+window.automationHelpers = {
+  originalTransaction: null,
+  isHooked: false,
+  targetDate: null,
+
+  /**
+   * Nexacro의 transaction 함수를 후킹하여 SSV 데이터를 조작합니다.
+   * @param {string} targetSvcID - 조작할 서비스 ID (예: "search")
+   */
+  hookTransaction(targetSvcID) {
+    if (this.isHooked) return; // 이미 후킹되어 있으면 중복 실행 방지
+
+    const app = window.nexacro.getApplication();
+    if (!app || typeof app.transaction !== 'function') {
+      console.error("Nexacro transaction 함수를 찾을 수 없습니다.");
+      return;
     }
-  }
-  window.automationHelpers = window.automationHelpers || {};
-  window.automationHelpers.initLogger = initLogger;
-})();
 
-// Nexacro helpers
-(() => {
-  const delay = ms => new Promise(res => setTimeout(res, ms));
+    this.originalTransaction = app.transaction;
+    const self = this;
 
-  function getNexacroApp() {
-    const app = window.nexacro && typeof window.nexacro.getApplication === 'function'
-      ? window.nexacro.getApplication()
-      : null;
-    return app;
-  }
-
-  function getMainForm() {
-    const app = getNexacroApp();
-    return app?.mainframe?.HFrameSet00?.VFrameSet00?.FrameSet?.STMB011_M0?.form || null;
-  }
-
-  async function getNexacroComponent(componentId, initialScope = null, timeout = 10000) {
-    const start = Date.now();
-    let scope = initialScope;
-    while (Date.now() - start < timeout) {
-      if (!scope) {
-        scope = getMainForm();
-        if (!scope) {
-          await delay(500);
-          continue;
-        }
+    app.transaction = function(strSvcID, strURL, strInDatasets, strOutDatasets, strArgument, strCallbackFunc, bAsync, nDataType, bCompress) {
+      console.log(`[HOOK_CALL] Original transaction called: svcID=${strSvcID}, strArgument=${strArgument}`);
+      let modifiedArgument = strArgument;
+      
+      // 목표 서비스 ID와 일치하고, 조작할 날짜가 설정된 경우
+      if (strSvcID.startsWith(targetSvcID) && self.targetDate) {
+        console.log(`[HOOK_MODIFY] Target svcID '${strSvcID}' matched. Attempting to change strYmd to '${self.targetDate}'.`);
+        modifiedArgument = self.updateSsv(strArgument, 'strYmd', self.targetDate);
+        console.log(`[HOOK_MODIFY] Modified argument: ${modifiedArgument}`);
       }
-      if (scope.lookup) {
-        const c = scope.lookup(componentId);
-        if (c) return c;
-      }
-      await delay(500);
+
+      // 원본 transaction 함수 호출
+      return self.originalTransaction.apply(this, [
+        strSvcID, strURL, strInDatasets, strOutDatasets, 
+        modifiedArgument, strCallbackFunc, bAsync, nDataType, bCompress
+      ]);
+    };
+
+    this.isHooked = true;
+    console.log("[HOOK] Nexacro transaction 함수가 활성화되었습니다.");
+  },
+
+  /**
+   * 후킹된 transaction 함수를 원본으로 복원합니다.
+   */
+  unhookTransaction() {
+    if (!this.isHooked || !this.originalTransaction) return;
+
+    const app = window.nexacro.getApplication();
+    if (app) {
+      app.transaction = this.originalTransaction;
     }
-    return null;
-  }
+    this.isHooked = false;
+    this.originalTransaction = null;
+    this.targetDate = null;
+    console.log("[HOOK] Nexacro transaction 함수가 비활성화되었습니다.");
+  },
 
-  function waitForTransaction(svcID, timeout = 15000) {
-    return new Promise((resolve, reject) => {
-      const form = getMainForm();
-      if (!form) return reject(new Error('main form not found'));
-      let original = form.fn_callback;
-      let restored = false;
-      const restore = () => {
-        if (!restored) {
-          form.fn_callback = original;
-          restored = true;
-        }
-      };
-      const tid = setTimeout(() => {
-        restore();
-        reject(new Error(`${svcID} timeout`));
-      }, timeout);
-      form.fn_callback = function(serviceID, errorCode, errorMsg) {
-        if (typeof original === 'function') original.apply(this, arguments);
-        if (serviceID.split('|')[0] === svcID) {
-          clearTimeout(tid);
-          restore();
-          if (errorCode >= 0) resolve();
-          else reject(new Error(errorMsg));
-        }
-      };
-    });
-  }
-
-  function selectMiddleCodeRow(rowIndex) {
-    const f = getMainForm();
-    const g = f?.div_workForm?.form?.div2?.form?.gdList;
-    if (!g) throw new Error('gdList not found');
-    g.selectRow(rowIndex);
-    const evt = new nexacro.GridClickEventInfo(g, 'oncellclick', false, false, false, false, 0, 0, rowIndex, rowIndex);
-    g.oncellclick._fireEvent(g, evt);
-  }
-
-  const ensureMainFormLoaded = async () => {
-    for (let i = 0; i < 50; i++) {
-      if (getMainForm()) return true;
-      await delay(500);
+  /**
+   * SSV(String-Separated Values) 형식의 문자열에서 특정 키의 값을 변경합니다.
+   * @param {string} ssv - 원본 SSV 문자열
+   * @param {string} key - 변경할 키
+   * @param {string} value - 새로운 값
+   * @returns {string} 수정된 SSV 문자열
+   */
+  updateSsv(ssv, key, value) {
+    const k = `${key}=`;
+    if (ssv.includes(k)) {
+      // 정규식을 사용하여 키=값 쌍을 교체
+      const regex = new RegExp(`${key}=[^ ]*`);
+      return ssv.replace(regex, `${key}=${value}`);
+    } else {
+      // 키가 없으면 새로 추가
+      return ssv ? `${ssv} ${key}=${value}` : `${key}=${value}`;
     }
-    throw new Error('mainForm이 30초 내 생성되지 않았습니다.');
-  };
+  },
 
-  async function getNestedNexacroComponent(pathComponents, initialScope = null, timeout = 30000) {
-    let scope = initialScope;
-    for (let i = 0; i < pathComponents.length; i++) {
-      const id = pathComponents[i];
-      if (!scope) throw new Error(`scope null at ${pathComponents.slice(0, i).join('.')}`);
-      if (scope[id]) {
-        scope = scope[id];
-      } else if (id === 'form') {
-        scope = scope.form;
-        if (!scope) throw new Error('form not found');
-      } else {
-        scope = await getNexacroComponent(id, scope, timeout);
-        if (!scope) throw new Error(`${id} not found`);
-      }
-    }
-    return scope;
+  /**
+   * 조작할 목표 날짜를 설정합니다.
+   * @param {string} dateStr - YYYYMMDD 형식의 날짜
+   */
+  setTargetDate(dateStr) {
+    this.targetDate = dateStr;
   }
-
-  async function clickElementById(id) {
-    const el = document.getElementById(id);
-    if (!el || el.offsetParent === null) {
-      console.warn(`⛔ 클릭 실패: ID ${id} 요소를 찾을 수 없거나 화면에 표시되지 않습니다.`);
-      return false;
-    }
-    try {
-      const rect = el.getBoundingClientRect();
-      ["mousedown", "mouseup", "click"].forEach(type =>
-        el.dispatchEvent(new MouseEvent(type, {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-          clientX: rect.left + rect.width / 2,
-          clientY: rect.top + rect.height / 2
-        }))
-      );
-      console.log(`✅ 클릭 성공: ID ${id}`);
-      return true;
-    } catch (e) {
-      console.error(`클릭 이벤트 발생 중 오류: ${e}`);
-      return false;
-    }
-  }
-
-  Object.assign(window.automationHelpers, {
-    delay,
-    getNexacroApp,
-    getMainForm,
-    getNexacroComponent,
-    waitForTransaction,
-    selectMiddleCodeRow,
-    ensureMainFormLoaded,
-    getNestedNexacroComponent,
-    clickElementById,
-  });
-})();
+};
