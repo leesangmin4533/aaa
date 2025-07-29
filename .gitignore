@@ -1,5 +1,1 @@
-__pycache__/
-*.pyc
-credentials.json
-automation.log
-logs/
+.env
