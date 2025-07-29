@@ -1,0 +1,939 @@
+[2025-07-29 18:14:17][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-29 18:14:18][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-29 18:14:18][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+2025-07-29 18:14:18,347 - bgf_automation - INFO - Starting BGF Retail Automation...
+[2025-07-29 18:14:24][login.login_bgf][env][DEBUG] Attempting to load .env from CWD: C:\Users\kanur\OneDrive\문서\GitHub\aaa\.env
+[2025-07-29 18:14:24][login.login_bgf][env][DEBUG] BGF_USER_ID after load_dotenv: 46513
+[2025-07-29 18:14:24][login.login_bgf][env][DEBUG] BGF_PASSWORD after load_dotenv: 1113
+[2025-07-29 18:14:25][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-29 18:14:25][login.login_bgf][login][INFO] Login script executed
+[2025-07-29 18:14:25][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-29 18:14:25][login.login_bgf][login][INFO] Login succeeded
+[2025-07-29 18:14:26][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-29 18:14:26][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:14:28][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-29 18:14:28][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:14:30][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-29 18:14:30][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:14:32][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-29 18:14:32][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:14:34][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-29 18:14:34][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:14:36][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-29 18:14:36][login.login_bgf][login][INFO] Closed 5 popups after login.
+2025-07-29 18:14:38,879 - bgf_automation - INFO - WebDriver quit successfully.
+[2025-07-29 18:24:20][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+[2025-07-29 18:24:20][utils.popup_util][system][DEBUG] Logger 'utils.popup_util' initialized
+[2025-07-29 18:24:20][login.login_bgf][system][DEBUG] Logger 'login.login_bgf' initialized
+2025-07-29 18:24:20,985 - bgf_automation - INFO - Starting BGF Retail Automation...
+[2025-07-29 18:24:27][login.login_bgf][env][DEBUG] Attempting to load .env from CWD: C:\Users\kanur\OneDrive\문서\GitHub\aaa\.env
+[2025-07-29 18:24:27][login.login_bgf][env][DEBUG] BGF_USER_ID after load_dotenv: 46513
+[2025-07-29 18:24:27][login.login_bgf][env][DEBUG] BGF_PASSWORD after load_dotenv: 1113
+[2025-07-29 18:24:27][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-29 18:24:27][login.login_bgf][login][INFO] Login script executed
+[2025-07-29 18:24:27][login.login_bgf][login][DEBUG] [검증] 비밀번호 필드 값: 1113
+[2025-07-29 18:24:27][login.login_bgf][login][INFO] Login succeeded
+[2025-07-29 18:24:28][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-29 18:24:28][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:24:30][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-29 18:24:30][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:24:32][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-29 18:24:32][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:24:34][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-29 18:24:34][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:24:36][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-29 18:24:36][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-29 18:24:38][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-29 18:24:38][login.login_bgf][login][INFO] Closed 5 popups after login.
+2025-07-29 18:25:47,448 - bgf_automation - INFO - --- JavaScript Automation Logs for 20250729 ---
+2025-07-29 18:25:47,448 - bgf_automation - INFO - Nexacro 자동화 라이브러리가 로드되었습니다. `runCollectionForDate('YYYYMMDD')` 또는 `runSaleQtyVerification()`를 호출하여 사용하세요.
+2025-07-29 18:25:47,448 - bgf_automation - INFO - 🔍 매출분석 메뉴 진입 시도...
+2025-07-29 18:25:47,448 - bgf_automation - INFO - 🔍 요소 검색 중: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext (매출분석)
+2025-07-29 18:25:47,448 - bgf_automation - INFO - obj.name : STMB000_M0
+2025-07-29 18:25:47,448 - bgf_automation - INFO - sPdivID : pdiv_topMenu_STMB000_M0
+2025-07-29 18:25:47,448 - bgf_automation - INFO - this.isValidObject(sPdivID) : false
+2025-07-29 18:25:47,448 - bgf_automation - INFO - n2DepthCnt : 2
+2025-07-29 18:25:47,459 - bgf_automation - INFO - ✅ 클릭 성공: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.div_topMenu.form.STMB000_M0:icontext (매출분석)
+2025-07-29 18:25:47,459 - bgf_automation - INFO - ⏳ 서브메뉴 로딩 대기 중...
+2025-07-29 18:25:47,459 - bgf_automation - INFO - 🔍 중분류별 매출 구성비 메뉴 진입 시도...
+2025-07-29 18:25:47,459 - bgf_automation - INFO - 🔍 요소 검색 중: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text (중분류별 매출 구성비)
+2025-07-29 18:25:47,459 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : getNotice (strServiceUrl :svc::search/selNoticeTotalSearch) (20250729182440)
+2025-07-29 18:25:47,459 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,459 - bgf_automation - INFO - >>>>>>>>>>>>>>>. : STMB011_M0
+2025-07-29 18:25:47,459 - bgf_automation - INFO - >>>>>>>>>>>>>>>. : MB::STMB011_M0.xfdl
+2025-07-29 18:25:47,459 - bgf_automation - INFO - ✅ 클릭 성공: mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text (중분류별 매출 구성비)
+2025-07-29 18:25:47,459 - bgf_automation - INFO - ⏳ 페이지 로딩 대기 중...
+2025-07-29 18:25:47,459 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : menulog_20250729 (strServiceUrl :svc::log/saveAccLog) (20250729182440)
+2025-07-29 18:25:47,459 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,463 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,463 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,463 - bgf_automation - INFO - ----------- 서비스 ID  : getNotice|fn_callback|true|2025-07-29 18:24:40 614|1753781080614|8e62b2add09d497994b10a40121527e0
+2025-07-29 18:25:47,464 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,464 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,464 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,464 - bgf_automation - INFO - ----------- 서비스 ID  : menulog_20250729|gfn_menulogCallback|true|2025-07-29 18:24:40 720|1753781080720|7b3faadc9aae40c69dbcadb5f9784731
+2025-07-29 18:25:47,465 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,465 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : search (strServiceUrl :svc::stmb011/selSearch) (20250729182440)
+2025-07-29 18:25:47,466 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,466 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,467 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,467 - bgf_automation - INFO - ----------- 서비스 ID  : search|fn_callback|true|2025-07-29 18:24:40 839|1753781080839|e55e0b47f85e41f7bc042eb69c91d4dc
+2025-07-29 18:25:47,467 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,468 - bgf_automation - INFO - [runCollectionForDate] 20250729 데이터 수집을 시작합니다.
+2025-07-29 18:25:47,468 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 탐색 시작...
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNexacroComponent] 컴포넌트 대기 중: "div_workForm" (시간 초과: 30000ms)
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNexacroComponent] 성공! 컴포넌트 찾음: "div_workForm"
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNestedNexacroComponent] 속성 접근: form
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNexacroComponent] 컴포넌트 대기 중: "div2" (시간 초과: 30000ms)
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNexacroComponent] 성공! 컴포넌트 찾음: "div2"
+2025-07-29 18:25:47,469 - bgf_automation - INFO - [getNestedNexacroComponent] 속성 접근: form
+2025-07-29 18:25:47,473 - bgf_automation - INFO - [getNexacroComponent] 컴포넌트 대기 중: "div_search" (시간 초과: 30000ms)
+2025-07-29 18:25:47,473 - bgf_automation - INFO - [getNexacroComponent] 성공! 컴포넌트 찾음: "div_search"
+2025-07-29 18:25:47,473 - bgf_automation - INFO - [getNestedNexacroComponent] 속성 접근: form
+2025-07-29 18:25:47,473 - bgf_automation - INFO - [getNexacroComponent] 컴포넌트 대기 중: "calFromDay" (시간 초과: 30000ms)
+2025-07-29 18:25:47,475 - bgf_automation - INFO - [getNexacroComponent] 성공! 컴포넌트 찾음: "calFromDay"
+2025-07-29 18:25:47,475 - bgf_automation - INFO - [runCollectionForDate] 날짜 입력 필드(calFromDay) 컴포넌트 찾기 성공.
+2025-07-29 18:25:47,475 - bgf_automation - INFO - [runCollectionForDate] 검색 버튼(F_10) 컴포넌트 탐색 시작...
+2025-07-29 18:25:47,475 - bgf_automation - INFO - [getNexacroComponent] 컴포넌트 대기 중: "F_10" (시간 초과: 30000ms)
+2025-07-29 18:25:47,476 - bgf_automation - INFO - [getNexacroComponent] 성공! 컴포넌트 찾음: "F_10"
+2025-07-29 18:25:47,476 - bgf_automation - INFO - [runCollectionForDate] 검색 버튼(F_10) 컴포넌트 찾기 성공.
+2025-07-29 18:25:47,476 - bgf_automation - INFO - 날짜를 '20250729'로 설정했습니다.
+2025-07-29 18:25:47,477 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : search (strServiceUrl :svc::stmb011/selSearch) (20250729182441)
+2025-07-29 18:25:47,477 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,477 - bgf_automation - INFO - 메인 검색 버튼을 클릭했습니다. 중분류 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,478 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,479 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,479 - bgf_automation - INFO - ----------- 서비스 ID  : search|fn_callback|true|2025-07-29 18:24:41 791|1753781081791|3972c76a273f4364a0fb2cfd5af57a49
+2025-07-29 18:25:47,480 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,480 - bgf_automation - INFO - 중분류 목록 로딩 완료.
+2025-07-29 18:25:47,480 - bgf_automation - INFO - ✅ 네비게이션 완료
+2025-07-29 18:25:47,481 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,481 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,482 - bgf_automation - INFO - [getAllMidCodesFromDataset] 37개의 중분류를 데이터셋에서 찾았습니다.
+2025-07-29 18:25:47,482 - bgf_automation - INFO - 
+[시작] 중분류: 002 (주먹밥)
+2025-07-29 18:25:47,482 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,483 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,483 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182443)
+2025-07-29 18:25:47,484 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,484 - bgf_automation - INFO - '주먹밥'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,484 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,485 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,485 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:43 27|1753781083027|e137ec8e3a9c4bc2a1d0c7c7596c6c53
+2025-07-29 18:25:47,485 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,487 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,487 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,488 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,488 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,489 - bgf_automation - INFO - [collectProductsFromDataset] '주먹밥'의 상품 6개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,489 - bgf_automation - INFO - [완료] 중분류: 002 (주먹밥). 현재까지 총 6개 상품 수집.
+2025-07-29 18:25:47,489 - bgf_automation - INFO - 
+[시작] 중분류: 003 (김밥)
+2025-07-29 18:25:47,490 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,490 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,491 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182444)
+2025-07-29 18:25:47,492 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,493 - bgf_automation - INFO - '김밥'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,493 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,494 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,494 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:44 756|1753781084756|9c6b7c44940943b1b68f3693802767dc
+2025-07-29 18:25:47,495 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,495 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,496 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,496 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,497 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,497 - bgf_automation - INFO - [collectProductsFromDataset] '김밥'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,498 - bgf_automation - INFO - [완료] 중분류: 003 (김밥). 현재까지 총 7개 상품 수집.
+2025-07-29 18:25:47,498 - bgf_automation - INFO - 
+[시작] 중분류: 004 (샌드위치류)
+2025-07-29 18:25:47,499 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,499 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,499 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182446)
+2025-07-29 18:25:47,500 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,500 - bgf_automation - INFO - '샌드위치류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,501 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,502 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,502 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:46 495|1753781086495|dd97f0db73fd4d6ab69a3dc356ed5bb0
+2025-07-29 18:25:47,502 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,502 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,502 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,504 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,504 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,505 - bgf_automation - INFO - [collectProductsFromDataset] '샌드위치류'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,505 - bgf_automation - INFO - [완료] 중분류: 004 (샌드위치류). 현재까지 총 8개 상품 수집.
+2025-07-29 18:25:47,505 - bgf_automation - INFO - 
+[시작] 중분류: 005 (햄버거류)
+2025-07-29 18:25:47,506 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,506 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,506 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182448)
+2025-07-29 18:25:47,507 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,507 - bgf_automation - INFO - '햄버거류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,507 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,507 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,507 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:48 242|1753781088242|9f5129bfbbaa42b0b993ef943bd64271
+2025-07-29 18:25:47,507 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,507 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,510 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,510 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,510 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,510 - bgf_automation - INFO - [collectProductsFromDataset] '햄버거류'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,511 - bgf_automation - INFO - [완료] 중분류: 005 (햄버거류). 현재까지 총 9개 상품 수집.
+2025-07-29 18:25:47,511 - bgf_automation - INFO - 
+[시작] 중분류: 010 (제조음료)
+2025-07-29 18:25:47,511 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,511 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,512 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182449)
+2025-07-29 18:25:47,512 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,513 - bgf_automation - INFO - '제조음료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,513 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,513 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,514 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:49 975|1753781089975|9bc41982941f4e35a07319999261cbe5
+2025-07-29 18:25:47,514 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,515 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,515 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,515 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,515 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,515 - bgf_automation - INFO - [collectProductsFromDataset] '제조음료'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,517 - bgf_automation - INFO - [완료] 중분류: 010 (제조음료). 현재까지 총 10개 상품 수집.
+2025-07-29 18:25:47,517 - bgf_automation - INFO - 
+[시작] 중분류: 012 (빵)
+2025-07-29 18:25:47,517 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,519 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,519 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182451)
+2025-07-29 18:25:47,519 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,520 - bgf_automation - INFO - '빵'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,520 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,520 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,520 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:51 712|1753781091712|2aad4ef6c2df4e4eb47e19849f5c03d0
+2025-07-29 18:25:47,521 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,521 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,521 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,522 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,522 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,522 - bgf_automation - INFO - [collectProductsFromDataset] '빵'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - [완료] 중분류: 012 (빵). 현재까지 총 12개 상품 수집.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - 
+[시작] 중분류: 014 (디저트)
+2025-07-29 18:25:47,523 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182453)
+2025-07-29 18:25:47,523 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,523 - bgf_automation - INFO - '디저트'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,523 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,523 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,523 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:53 438|1753781093438|18cd92cb5b5e48888f62d485f5040197
+2025-07-29 18:25:47,523 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,523 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,523 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,529 - bgf_automation - INFO - [collectProductsFromDataset] '디저트'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,529 - bgf_automation - INFO - [완료] 중분류: 014 (디저트). 현재까지 총 13개 상품 수집.
+2025-07-29 18:25:47,529 - bgf_automation - INFO - 
+[시작] 중분류: 015 (비스켓/쿠키)
+2025-07-29 18:25:47,530 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,530 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,530 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182455)
+2025-07-29 18:25:47,531 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,531 - bgf_automation - INFO - '비스켓/쿠키'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,531 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,532 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,532 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:55 146|1753781095146|c28c9b34917b49c29bc6f8e68b457fa3
+2025-07-29 18:25:47,532 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,534 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - [collectProductsFromDataset] '비스켓/쿠키'의 상품 6개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - [완료] 중분류: 015 (비스켓/쿠키). 현재까지 총 19개 상품 수집.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - 
+[시작] 중분류: 016 (스낵류)
+2025-07-29 18:25:47,534 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,534 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182456)
+2025-07-29 18:25:47,534 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,534 - bgf_automation - INFO - '스낵류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,539 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,539 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,540 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:56 883|1753781096883|895d53ff1da441e89b0a7f926ba7490e
+2025-07-29 18:25:47,540 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,541 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,541 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,541 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,543 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,543 - bgf_automation - INFO - [collectProductsFromDataset] '스낵류'의 상품 8개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,543 - bgf_automation - INFO - [완료] 중분류: 016 (스낵류). 현재까지 총 27개 상품 수집.
+2025-07-29 18:25:47,544 - bgf_automation - INFO - 
+[시작] 중분류: 020 (캔디)
+2025-07-29 18:25:47,544 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,544 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,545 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182458)
+2025-07-29 18:25:47,546 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,546 - bgf_automation - INFO - '캔디'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,547 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,547 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,548 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:24:58 622|1753781098622|02d2e11be87c409e9daa6b77b7a424c8
+2025-07-29 18:25:47,548 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,549 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,549 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,549 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,550 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,550 - bgf_automation - INFO - [collectProductsFromDataset] '캔디'의 상품 7개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,551 - bgf_automation - INFO - [완료] 중분류: 020 (캔디). 현재까지 총 34개 상품 수집.
+2025-07-29 18:25:47,551 - bgf_automation - INFO - 
+[시작] 중분류: 021 (일반아이스크림)
+2025-07-29 18:25:47,552 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,553 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,553 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182500)
+2025-07-29 18:25:47,554 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,554 - bgf_automation - INFO - '일반아이스크림'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,555 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,555 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,555 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:00 342|1753781100342|40dcee4bbeea4f468d6c7568c6e8d395
+2025-07-29 18:25:47,555 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,555 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,555 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,555 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,555 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,555 - bgf_automation - INFO - [collectProductsFromDataset] '일반아이스크림'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,555 - bgf_automation - INFO - [완료] 중분류: 021 (일반아이스크림). 현재까지 총 36개 상품 수집.
+2025-07-29 18:25:47,559 - bgf_automation - INFO - 
+[시작] 중분류: 022 (마른안주류)
+2025-07-29 18:25:47,559 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,560 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,560 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182502)
+2025-07-29 18:25:47,560 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,561 - bgf_automation - INFO - '마른안주류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,561 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,561 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,562 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:02 70|1753781102070|5d1e0b802e464fec8dbfd1c6f1613f03
+2025-07-29 18:25:47,562 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,563 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,563 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,563 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,565 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,565 - bgf_automation - INFO - [collectProductsFromDataset] '마른안주류'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,566 - bgf_automation - INFO - [완료] 중분류: 022 (마른안주류). 현재까지 총 38개 상품 수집.
+2025-07-29 18:25:47,566 - bgf_automation - INFO - 
+[시작] 중분류: 023 (육가공류)
+2025-07-29 18:25:47,567 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,567 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,567 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182503)
+2025-07-29 18:25:47,568 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,568 - bgf_automation - INFO - '육가공류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,569 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,569 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,570 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:03 783|1753781103783|4a46bfa50dd9459aa1c58afb567ba420
+2025-07-29 18:25:47,570 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,570 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,570 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,571 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,571 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,571 - bgf_automation - INFO - [collectProductsFromDataset] '육가공류'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,571 - bgf_automation - INFO - [완료] 중분류: 023 (육가공류). 현재까지 총 40개 상품 수집.
+2025-07-29 18:25:47,572 - bgf_automation - INFO - 
+[시작] 중분류: 027 (농산식재료)
+2025-07-29 18:25:47,572 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,572 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,572 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182505)
+2025-07-29 18:25:47,574 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,574 - bgf_automation - INFO - '농산식재료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,574 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,575 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,575 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:05 502|1753781105502|5b3888640c4241579febbe0a0c5870b0
+2025-07-29 18:25:47,575 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,575 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,576 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,576 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,576 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,576 - bgf_automation - INFO - [collectProductsFromDataset] '농산식재료'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,577 - bgf_automation - INFO - [완료] 중분류: 027 (농산식재료). 현재까지 총 41개 상품 수집.
+2025-07-29 18:25:47,578 - bgf_automation - INFO - 
+[시작] 중분류: 028 (축수산식재료)
+2025-07-29 18:25:47,578 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,579 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,579 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182507)
+2025-07-29 18:25:47,580 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,580 - bgf_automation - INFO - '축수산식재료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,580 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,580 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,581 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:07 253|1753781107253|a7759dad188c40b89538d1cfbaf082af
+2025-07-29 18:25:47,581 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,581 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,582 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,582 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,582 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,583 - bgf_automation - INFO - [collectProductsFromDataset] '축수산식재료'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,583 - bgf_automation - INFO - [완료] 중분류: 028 (축수산식재료). 현재까지 총 43개 상품 수집.
+2025-07-29 18:25:47,584 - bgf_automation - INFO - 
+[시작] 중분류: 032 (면류)
+2025-07-29 18:25:47,584 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,585 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,585 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182508)
+2025-07-29 18:25:47,586 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,586 - bgf_automation - INFO - '면류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,588 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,588 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,588 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:08 967|1753781108967|59cc1f99fb794a769ae514cf8e3939fa
+2025-07-29 18:25:47,589 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,589 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,589 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - [collectProductsFromDataset] '면류'의 상품 17개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - [완료] 중분류: 032 (면류). 현재까지 총 60개 상품 수집.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - 
+[시작] 중분류: 033 (상온즉석식)
+2025-07-29 18:25:47,590 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,590 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182510)
+2025-07-29 18:25:47,590 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,594 - bgf_automation - INFO - '상온즉석식'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,594 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,594 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,595 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:10 704|1753781110704|af697f50c67841c5aea18da675d59228
+2025-07-29 18:25:47,595 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,596 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,596 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,597 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,597 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,597 - bgf_automation - INFO - [collectProductsFromDataset] '상온즉석식'의 상품 3개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,597 - bgf_automation - INFO - [완료] 중분류: 033 (상온즉석식). 현재까지 총 63개 상품 수집.
+2025-07-29 18:25:47,599 - bgf_automation - INFO - 
+[시작] 중분류: 035 (냉장즉석식)
+2025-07-29 18:25:47,599 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,599 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,599 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182512)
+2025-07-29 18:25:47,599 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,599 - bgf_automation - INFO - '냉장즉석식'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,599 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,599 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,599 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:12 449|1753781112449|64c14f27a36642d399e637e399b99456
+2025-07-29 18:25:47,599 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,599 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,604 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,604 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,605 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,605 - bgf_automation - INFO - [collectProductsFromDataset] '냉장즉석식'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,606 - bgf_automation - INFO - [완료] 중분류: 035 (냉장즉석식). 현재까지 총 64개 상품 수집.
+2025-07-29 18:25:47,606 - bgf_automation - INFO - 
+[시작] 중분류: 036 (의약외품)
+2025-07-29 18:25:47,607 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,607 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,607 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182514)
+2025-07-29 18:25:47,607 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,609 - bgf_automation - INFO - '의약외품'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,609 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,609 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,610 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:14 177|1753781114177|1ace0d54d5534fea9dfd57f568c716c2
+2025-07-29 18:25:47,611 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,611 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,612 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,612 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,612 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,613 - bgf_automation - INFO - [collectProductsFromDataset] '의약외품'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,613 - bgf_automation - INFO - [완료] 중분류: 036 (의약외품). 현재까지 총 65개 상품 수집.
+2025-07-29 18:25:47,614 - bgf_automation - INFO - 
+[시작] 중분류: 039 (과일야채음료)
+2025-07-29 18:25:47,614 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,614 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,615 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182515)
+2025-07-29 18:25:47,615 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,616 - bgf_automation - INFO - '과일야채음료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,617 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,617 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,617 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:15 917|1753781115917|5546277a36be47d791c70e58683ab6ef
+2025-07-29 18:25:47,618 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,618 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,619 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,619 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,619 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,621 - bgf_automation - INFO - [collectProductsFromDataset] '과일야채음료'의 상품 4개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,621 - bgf_automation - INFO - [완료] 중분류: 039 (과일야채음료). 현재까지 총 69개 상품 수집.
+2025-07-29 18:25:47,621 - bgf_automation - INFO - 
+[시작] 중분류: 040 (기능건강음료)
+2025-07-29 18:25:47,622 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,622 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,622 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182517)
+2025-07-29 18:25:47,622 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,622 - bgf_automation - INFO - '기능건강음료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,622 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,622 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,622 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:17 642|1753781117642|6b8d293c0b4e4627b79ec19f89247b95
+2025-07-29 18:25:47,622 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,625 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,625 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,625 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,626 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,626 - bgf_automation - INFO - [collectProductsFromDataset] '기능건강음료'의 상품 9개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,626 - bgf_automation - INFO - [완료] 중분류: 040 (기능건강음료). 현재까지 총 78개 상품 수집.
+2025-07-29 18:25:47,627 - bgf_automation - INFO - 
+[시작] 중분류: 041 (생수)
+2025-07-29 18:25:47,627 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,627 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,627 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182519)
+2025-07-29 18:25:47,628 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,628 - bgf_automation - INFO - '생수'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,629 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,629 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,629 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:19 367|1753781119367|088c158e9e1f48bfa12656e8e3cee345
+2025-07-29 18:25:47,630 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,631 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,631 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,632 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,632 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,632 - bgf_automation - INFO - [collectProductsFromDataset] '생수'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,632 - bgf_automation - INFO - [완료] 중분류: 041 (생수). 현재까지 총 80개 상품 수집.
+2025-07-29 18:25:47,632 - bgf_automation - INFO - 
+[시작] 중분류: 042 (커피음료)
+2025-07-29 18:25:47,635 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,635 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,635 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182521)
+2025-07-29 18:25:47,635 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,636 - bgf_automation - INFO - '커피음료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,636 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,636 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,637 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:21 96|1753781121096|b40e03731e5a4fee8c566568f6a845bb
+2025-07-29 18:25:47,637 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,637 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,637 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,638 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,638 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,638 - bgf_automation - INFO - [collectProductsFromDataset] '커피음료'의 상품 5개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,639 - bgf_automation - INFO - [완료] 중분류: 042 (커피음료). 현재까지 총 85개 상품 수집.
+2025-07-29 18:25:47,639 - bgf_automation - INFO - 
+[시작] 중분류: 044 (탄산음료)
+2025-07-29 18:25:47,639 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,641 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,641 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182522)
+2025-07-29 18:25:47,641 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,642 - bgf_automation - INFO - '탄산음료'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,642 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,642 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,642 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:22 843|1753781122843|56ccf1bf0d464bb690d11c4ec1f628cd
+2025-07-29 18:25:47,643 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,643 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,643 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,644 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,644 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,644 - bgf_automation - INFO - [collectProductsFromDataset] '탄산음료'의 상품 5개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,645 - bgf_automation - INFO - [완료] 중분류: 044 (탄산음료). 현재까지 총 90개 상품 수집.
+2025-07-29 18:25:47,645 - bgf_automation - INFO - 
+[시작] 중분류: 046 (요구르트)
+2025-07-29 18:25:47,645 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,646 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,646 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182524)
+2025-07-29 18:25:47,647 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,648 - bgf_automation - INFO - '요구르트'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,648 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,649 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,650 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:24 565|1753781124565|8035c75c8605433eac7c860ad982277b
+2025-07-29 18:25:47,650 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,650 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - [collectProductsFromDataset] '요구르트'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - [완료] 중분류: 046 (요구르트). 현재까지 총 92개 상품 수집.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - 
+[시작] 중분류: 047 (우유)
+2025-07-29 18:25:47,651 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,651 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182526)
+2025-07-29 18:25:47,651 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,655 - bgf_automation - INFO - '우유'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,655 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,656 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,656 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:26 295|1753781126295|68156ec0ce1849ddaf072dc886c5c396
+2025-07-29 18:25:47,657 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,657 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,658 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - [collectProductsFromDataset] '우유'의 상품 8개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - [완료] 중분류: 047 (우유). 현재까지 총 100개 상품 수집.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - 
+[시작] 중분류: 048 (얼음)
+2025-07-29 18:25:47,659 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,659 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182528)
+2025-07-29 18:25:47,662 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,662 - bgf_automation - INFO - '얼음'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,662 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,664 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,664 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:28 32|1753781128032|baa27b5f5ccc41cfa7a2a4e189a2b411
+2025-07-29 18:25:47,665 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,665 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,665 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,666 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,666 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,666 - bgf_automation - INFO - [collectProductsFromDataset] '얼음'의 상품 3개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,667 - bgf_automation - INFO - [완료] 중분류: 048 (얼음). 현재까지 총 103개 상품 수집.
+2025-07-29 18:25:47,667 - bgf_automation - INFO - 
+[시작] 중분류: 049 (맥주)
+2025-07-29 18:25:47,668 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,668 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,669 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182529)
+2025-07-29 18:25:47,669 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,669 - bgf_automation - INFO - '맥주'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,670 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,670 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,671 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:29 770|1753781129770|444ce3ccaa114ad288820ce177dd352e
+2025-07-29 18:25:47,671 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,671 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,671 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,672 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,672 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,672 - bgf_automation - INFO - [collectProductsFromDataset] '맥주'의 상품 6개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,672 - bgf_automation - INFO - [완료] 중분류: 049 (맥주). 현재까지 총 109개 상품 수집.
+2025-07-29 18:25:47,674 - bgf_automation - INFO - 
+[시작] 중분류: 050 (소주)
+2025-07-29 18:25:47,674 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,674 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,675 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182531)
+2025-07-29 18:25:47,675 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,675 - bgf_automation - INFO - '소주'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,676 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,676 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,676 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:31 500|1753781131500|2d51d3f451984cbf92c264314cdc527f
+2025-07-29 18:25:47,676 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,676 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,677 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,677 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,677 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,677 - bgf_automation - INFO - [collectProductsFromDataset] '소주'의 상품 2개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,678 - bgf_automation - INFO - [완료] 중분류: 050 (소주). 현재까지 총 111개 상품 수집.
+2025-07-29 18:25:47,678 - bgf_automation - INFO - 
+[시작] 중분류: 051 (전통주)
+2025-07-29 18:25:47,678 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,679 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,679 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182533)
+2025-07-29 18:25:47,679 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,679 - bgf_automation - INFO - '전통주'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,680 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,680 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,680 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:33 237|1753781133237|e968ea68f4e04c35af6dec68035fe53c
+2025-07-29 18:25:47,680 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,681 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,681 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,681 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,682 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,682 - bgf_automation - INFO - [collectProductsFromDataset] '전통주'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,682 - bgf_automation - INFO - [완료] 중분류: 051 (전통주). 현재까지 총 112개 상품 수집.
+2025-07-29 18:25:47,682 - bgf_automation - INFO - 
+[시작] 중분류: 053 (와인)
+2025-07-29 18:25:47,683 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,683 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,683 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182534)
+2025-07-29 18:25:47,683 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,683 - bgf_automation - INFO - '와인'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,685 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,685 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,685 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:34 952|1753781134952|2edef7a94b7f42d09581fe02f7c02e25
+2025-07-29 18:25:47,685 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,685 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,685 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,686 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,686 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,686 - bgf_automation - INFO - [collectProductsFromDataset] '와인'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,686 - bgf_automation - INFO - [완료] 중분류: 053 (와인). 현재까지 총 113개 상품 수집.
+2025-07-29 18:25:47,686 - bgf_automation - INFO - 
+[시작] 중분류: 060 (홈/주방용품)
+2025-07-29 18:25:47,687 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,687 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,687 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182536)
+2025-07-29 18:25:47,687 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,687 - bgf_automation - INFO - '홈/주방용품'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,687 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,688 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,688 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:36 678|1753781136678|496acc422990446d95e4ef7d0fe78590
+2025-07-29 18:25:47,688 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,688 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,689 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,689 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,689 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,689 - bgf_automation - INFO - [collectProductsFromDataset] '홈/주방용품'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,689 - bgf_automation - INFO - [완료] 중분류: 060 (홈/주방용품). 현재까지 총 114개 상품 수집.
+2025-07-29 18:25:47,690 - bgf_automation - INFO - 
+[시작] 중분류: 072 (담배)
+2025-07-29 18:25:47,690 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,690 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,690 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182538)
+2025-07-29 18:25:47,690 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,691 - bgf_automation - INFO - '담배'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,691 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,691 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,691 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:38 423|1753781138423|bd55a210755e4d6db31a2cf96944cb10
+2025-07-29 18:25:47,692 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,692 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,692 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,692 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,692 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,692 - bgf_automation - INFO - [collectProductsFromDataset] '담배'의 상품 10개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,694 - bgf_automation - INFO - [완료] 중분류: 072 (담배). 현재까지 총 124개 상품 수집.
+2025-07-29 18:25:47,694 - bgf_automation - INFO - 
+[시작] 중분류: 073 (전자담배)
+2025-07-29 18:25:47,694 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,694 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,694 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182540)
+2025-07-29 18:25:47,695 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,695 - bgf_automation - INFO - '전자담배'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,695 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,695 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,695 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:40 146|1753781140146|a1e33dba0bfd4fb498781950978fb464
+2025-07-29 18:25:47,695 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,696 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,696 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,696 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,696 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [collectProductsFromDataset] '전자담배'의 상품 6개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [완료] 중분류: 073 (전자담배). 현재까지 총 130개 상품 수집.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - 
+[시작] 중분류: 100 (RI아이스크림)
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182541)
+2025-07-29 18:25:47,697 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,697 - bgf_automation - INFO - 'RI아이스크림'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,697 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,697 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,697 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:41 874|1753781141874|15ea19dc3c584529bfd36340213c57c1
+2025-07-29 18:25:47,697 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,697 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [collectProductsFromDataset] 'RI아이스크림'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,697 - bgf_automation - INFO - [완료] 중분류: 100 (RI아이스크림). 현재까지 총 131개 상품 수집.
+2025-07-29 18:25:47,700 - bgf_automation - INFO - 
+[시작] 중분류: 605 (기타주류)
+2025-07-29 18:25:47,700 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,700 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,700 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182543)
+2025-07-29 18:25:47,700 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,700 - bgf_automation - INFO - '기타주류'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,701 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,701 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,701 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:43 610|1753781143610|eba4f52a5aa44534a434711d0cf9c2ae
+2025-07-29 18:25:47,701 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,701 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,703 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,703 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,703 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,703 - bgf_automation - INFO - [collectProductsFromDataset] '기타주류'의 상품 3개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,703 - bgf_automation - INFO - [완료] 중분류: 605 (기타주류). 현재까지 총 134개 상품 수집.
+2025-07-29 18:25:47,703 - bgf_automation - INFO - 
+[시작] 중분류: 900 (소모품)
+2025-07-29 18:25:47,704 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,704 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,704 - bgf_automation - INFO - *********** 트랜잭션 호출 전 svcID : searchDetail (strServiceUrl :svc::stmb011/selDetailSearch) (20250729182545)
+2025-07-29 18:25:47,704 - bgf_automation - INFO - *********** 트랜잭션 호출 전 httptimeout : 60
+2025-07-29 18:25:47,704 - bgf_automation - INFO - '소모품'을 클릭했습니다. 상품 목록 로딩을 기다립니다...
+2025-07-29 18:25:47,705 - bgf_automation - INFO - ----------- 에러 코드 1 : 0
+2025-07-29 18:25:47,705 - bgf_automation - INFO - ----------- 에러 코드 2 : 
+2025-07-29 18:25:47,705 - bgf_automation - INFO - ----------- 서비스 ID  : searchDetail|fn_callback|true|2025-07-29 18:25:45 329|1753781145329|9752d88f79374431aed81f1d3c4504ff
+2025-07-29 18:25:47,705 - bgf_automation - INFO - *********** 트랜잭션 호출 후 httptimeout : 60
+2025-07-29 18:25:47,706 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,706 - bgf_automation - INFO - 상품 목록 로딩 완료.
+2025-07-29 18:25:47,706 - bgf_automation - INFO - [getNexacroApp] Nexacro Application 객체를 찾았습니다.
+2025-07-29 18:25:47,706 - bgf_automation - INFO - [getMainForm] 메인 폼(STMB011_M0)을 찾았습니다.
+2025-07-29 18:25:47,706 - bgf_automation - INFO - [collectProductsFromDataset] '소모품'의 상품 1개를 데이터셋에서 수집합니다.
+2025-07-29 18:25:47,707 - bgf_automation - INFO - [완료] 중분류: 900 (소모품). 현재까지 총 135개 상품 수집.
+2025-07-29 18:25:47,707 - bgf_automation - INFO - ===== 중분류-상품 수량 합계 검증 시작 =====
+2025-07-29 18:25:47,707 - bgf_automation - INFO - ▶ 중분류 [002 - 주먹밥] 검증 시작, 기준 수량: 6
+2025-07-29 18:25:47,708 - bgf_automation - INFO - ✅ [002] 수량 일치 → 기준 6 == 합계 6
+2025-07-29 18:25:47,708 - bgf_automation - INFO - ▶ 중분류 [003 - 김밥] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,708 - bgf_automation - INFO - ✅ [003] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,709 - bgf_automation - INFO - ▶ 중분류 [004 - 샌드위치류] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,710 - bgf_automation - INFO - ✅ [004] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,710 - bgf_automation - INFO - ▶ 중분류 [005 - 햄버거류] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,710 - bgf_automation - INFO - ✅ [005] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,710 - bgf_automation - INFO - ▶ 중분류 [010 - 제조음료] 검증 시작, 기준 수량: 4
+2025-07-29 18:25:47,710 - bgf_automation - INFO - ✅ [010] 수량 일치 → 기준 4 == 합계 4
+2025-07-29 18:25:47,711 - bgf_automation - INFO - ▶ 중분류 [012 - 빵] 검증 시작, 기준 수량: 3
+2025-07-29 18:25:47,711 - bgf_automation - INFO - ✅ [012] 수량 일치 → 기준 3 == 합계 3
+2025-07-29 18:25:47,711 - bgf_automation - INFO - ▶ 중분류 [014 - 디저트] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,712 - bgf_automation - INFO - ✅ [014] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,712 - bgf_automation - INFO - ▶ 중분류 [015 - 비스켓/쿠키] 검증 시작, 기준 수량: 7
+2025-07-29 18:25:47,712 - bgf_automation - INFO - ✅ [015] 수량 일치 → 기준 7 == 합계 7
+2025-07-29 18:25:47,713 - bgf_automation - INFO - ▶ 중분류 [016 - 스낵류] 검증 시작, 기준 수량: 9
+2025-07-29 18:25:47,713 - bgf_automation - INFO - ✅ [016] 수량 일치 → 기준 9 == 합계 9
+2025-07-29 18:25:47,713 - bgf_automation - INFO - ▶ 중분류 [020 - 캔디] 검증 시작, 기준 수량: 9
+2025-07-29 18:25:47,713 - bgf_automation - INFO - ✅ [020] 수량 일치 → 기준 9 == 합계 9
+2025-07-29 18:25:47,715 - bgf_automation - INFO - ▶ 중분류 [021 - 일반아이스크림] 검증 시작, 기준 수량: 4
+2025-07-29 18:25:47,715 - bgf_automation - INFO - ✅ [021] 수량 일치 → 기준 4 == 합계 4
+2025-07-29 18:25:47,715 - bgf_automation - INFO - ▶ 중분류 [022 - 마른안주류] 검증 시작, 기준 수량: 2
+2025-07-29 18:25:47,716 - bgf_automation - INFO - ✅ [022] 수량 일치 → 기준 2 == 합계 2
+2025-07-29 18:25:47,716 - bgf_automation - INFO - ▶ 중분류 [023 - 육가공류] 검증 시작, 기준 수량: 4
+2025-07-29 18:25:47,716 - bgf_automation - INFO - ✅ [023] 수량 일치 → 기준 4 == 합계 4
+2025-07-29 18:25:47,717 - bgf_automation - INFO - ▶ 중분류 [027 - 농산식재료] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,717 - bgf_automation - INFO - ✅ [027] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,717 - bgf_automation - INFO - ▶ 중분류 [028 - 축수산식재료] 검증 시작, 기준 수량: 2
+2025-07-29 18:25:47,717 - bgf_automation - INFO - ✅ [028] 수량 일치 → 기준 2 == 합계 2
+2025-07-29 18:25:47,717 - bgf_automation - INFO - ▶ 중분류 [032 - 면류] 검증 시작, 기준 수량: 25
+2025-07-29 18:25:47,718 - bgf_automation - INFO - ✅ [032] 수량 일치 → 기준 25 == 합계 25
+2025-07-29 18:25:47,718 - bgf_automation - INFO - ▶ 중분류 [033 - 상온즉석식] 검증 시작, 기준 수량: 3
+2025-07-29 18:25:47,718 - bgf_automation - INFO - ✅ [033] 수량 일치 → 기준 3 == 합계 3
+2025-07-29 18:25:47,718 - bgf_automation - INFO - ▶ 중분류 [035 - 냉장즉석식] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,719 - bgf_automation - INFO - ✅ [035] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,719 - bgf_automation - INFO - ▶ 중분류 [036 - 의약외품] 검증 시작, 기준 수량: 10
+2025-07-29 18:25:47,719 - bgf_automation - INFO - ✅ [036] 수량 일치 → 기준 10 == 합계 10
+2025-07-29 18:25:47,720 - bgf_automation - INFO - ▶ 중분류 [039 - 과일야채음료] 검증 시작, 기준 수량: 8
+2025-07-29 18:25:47,720 - bgf_automation - INFO - ✅ [039] 수량 일치 → 기준 8 == 합계 8
+2025-07-29 18:25:47,721 - bgf_automation - INFO - ▶ 중분류 [040 - 기능건강음료] 검증 시작, 기준 수량: 38
+2025-07-29 18:25:47,721 - bgf_automation - INFO - ✅ [040] 수량 일치 → 기준 38 == 합계 38
+2025-07-29 18:25:47,721 - bgf_automation - INFO - ▶ 중분류 [041 - 생수] 검증 시작, 기준 수량: 2
+2025-07-29 18:25:47,721 - bgf_automation - INFO - ✅ [041] 수량 일치 → 기준 2 == 합계 2
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ▶ 중분류 [042 - 커피음료] 검증 시작, 기준 수량: 5
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ✅ [042] 수량 일치 → 기준 5 == 합계 5
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ▶ 중분류 [044 - 탄산음료] 검증 시작, 기준 수량: 7
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ✅ [044] 수량 일치 → 기준 7 == 합계 7
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ▶ 중분류 [046 - 요구르트] 검증 시작, 기준 수량: 9
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ✅ [046] 수량 일치 → 기준 9 == 합계 9
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ▶ 중분류 [047 - 우유] 검증 시작, 기준 수량: 15
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ✅ [047] 수량 일치 → 기준 15 == 합계 15
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ▶ 중분류 [048 - 얼음] 검증 시작, 기준 수량: 6
+2025-07-29 18:25:47,722 - bgf_automation - INFO - ✅ [048] 수량 일치 → 기준 6 == 합계 6
+2025-07-29 18:25:47,726 - bgf_automation - INFO - ▶ 중분류 [049 - 맥주] 검증 시작, 기준 수량: 19
+2025-07-29 18:25:47,726 - bgf_automation - INFO - ✅ [049] 수량 일치 → 기준 19 == 합계 19
+2025-07-29 18:25:47,726 - bgf_automation - INFO - ▶ 중분류 [050 - 소주] 검증 시작, 기준 수량: 3
+2025-07-29 18:25:47,727 - bgf_automation - INFO - ✅ [050] 수량 일치 → 기준 3 == 합계 3
+2025-07-29 18:25:47,727 - bgf_automation - INFO - ▶ 중분류 [051 - 전통주] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,727 - bgf_automation - INFO - ✅ [051] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,727 - bgf_automation - INFO - ▶ 중분류 [053 - 와인] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,728 - bgf_automation - INFO - ✅ [053] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,728 - bgf_automation - INFO - ▶ 중분류 [060 - 홈/주방용품] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,728 - bgf_automation - INFO - ✅ [060] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,728 - bgf_automation - INFO - ▶ 중분류 [072 - 담배] 검증 시작, 기준 수량: 13
+2025-07-29 18:25:47,729 - bgf_automation - INFO - ✅ [072] 수량 일치 → 기준 13 == 합계 13
+2025-07-29 18:25:47,729 - bgf_automation - INFO - ▶ 중분류 [073 - 전자담배] 검증 시작, 기준 수량: 32
+2025-07-29 18:25:47,729 - bgf_automation - INFO - ✅ [073] 수량 일치 → 기준 32 == 합계 32
+2025-07-29 18:25:47,730 - bgf_automation - INFO - ▶ 중분류 [100 - RI아이스크림] 검증 시작, 기준 수량: 1
+2025-07-29 18:25:47,730 - bgf_automation - INFO - ✅ [100] 수량 일치 → 기준 1 == 합계 1
+2025-07-29 18:25:47,730 - bgf_automation - INFO - ▶ 중분류 [605 - 기타주류] 검증 시작, 기준 수량: 3
+2025-07-29 18:25:47,731 - bgf_automation - INFO - ✅ [605] 수량 일치 → 기준 3 == 합계 3
+2025-07-29 18:25:47,732 - bgf_automation - INFO - ▶ 중분류 [900 - 소모품] 검증 시작, 기준 수량: 3
+2025-07-29 18:25:47,732 - bgf_automation - INFO - ✅ [900] 수량 일치 → 기준 3 == 합계 3
+2025-07-29 18:25:47,733 - bgf_automation - INFO - ===== 모든 중분류 검증 완료 =====
+2025-07-29 18:25:47,733 - bgf_automation - INFO - [runCollectionForDate] verification result: {"success":true,"failed_codes":[]}
+2025-07-29 18:25:47,733 - bgf_automation - INFO - 🎉 전체 수집 완료. 총 135개 상품, 37개 중분류.
+2025-07-29 18:25:47,734 - bgf_automation - INFO - ------------------------------------------
+2025-07-29 18:25:47,746 - bgf_automation - INFO - 중분류 클릭 로그: []
+2025-07-29 18:25:47,772 - bgf_automation - INFO - Running jumeokbap.py: C:\Users\kanur\AppData\Local\Programs\Python\Python312\python.exe C:\Users\kanur\OneDrive\문서\GitHub\aaa\food_prediction\jumeokbap.py
+[2025-07-29 18:25:47][utils.db_util][system][DEBUG] Logger 'utils.db_util' initialized
+2025-07-29 18:25:48,175 - bgf_automation - INFO - 
+2025-07-29 18:25:48,175 - INFO - 
+2025-07-29 18:25:48,175 - bgf_automation - INFO - 'C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db' 
+2025-07-29 18:25:48,175 - INFO - 'C:\Users\kanur\OneDrive\����\GitHub\aaa\code_outputs\db\integrated_sales.db' 
+2025-07-29 18:25:48,175 - bgf_automation - ERROR - : unable to open database file
+2025-07-29 18:25:48,175 - ERROR - : unable to open database file
+2025-07-29 18:25:48,200 - bgf_automation - INFO - --- Jumeokbap Prediction Output ---
+2025-07-29 18:25:48,200 - bgf_automation - INFO - 2025-07-29 18:25:48,175 - bgf_automation - INFO - 
+2025-07-29 18:25:48,175 - bgf_automation - INFO - 'C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db' 
+[Jumeokbap Prediction] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+[Product Mix Recommendation] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+2025-07-29 18:25:48,175 - bgf_automation - ERROR - : unable to open database file
+
+2025-07-29 18:25:48,201 - bgf_automation - INFO - -----------------------------------
+2025-07-29 18:25:50,409 - bgf_automation - INFO - WebDriver quit successfully.
+[2025-07-30 06:48:27][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 06:48:41][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 06:48:41][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 06:48:41][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 06:48:42][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 06:48:42][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 06:48:44][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 06:48:44][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 06:48:46][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 06:48:46][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 06:48:48][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 06:48:48][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 06:48:50][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 06:48:50][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 06:48:52][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 06:48:52][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 06:49:47][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 06:49:47][bgf_automation][system][INFO] Running jumeokbap.py: C:\Users\kanur\AppData\Local\Programs\Python\Python312\python.exe C:\Users\kanur\OneDrive\문서\GitHub\aaa\food_prediction\jumeokbap.py
+[2025-07-30 06:49:47][__main__][system][INFO] 
+[2025-07-30 06:49:47][__main__][system][INFO] 'C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db' 
+[2025-07-30 06:49:47][__main__][system][ERROR] : unable to open database file
+[2025-07-30 06:49:47][bgf_automation][system][INFO] --- Jumeokbap Prediction Output ---
+[2025-07-30 06:49:47][bgf_automation][system][INFO] [Jumeokbap Prediction] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+[Product Mix Recommendation] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+
+[2025-07-30 06:49:47][bgf_automation][system][ERROR] --- Jumeokbap Prediction Error ---
+[2025-07-30 06:49:47][bgf_automation][system][ERROR] [2025-07-30 06:49:47][__main__][system][INFO] 
+[2025-07-30 06:49:47][__main__][system][INFO] 'C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db' 
+[2025-07-30 06:49:47][__main__][system][ERROR] : unable to open database file
+
+[2025-07-30 06:49:47][bgf_automation][system][INFO] -----------------------------------
+[2025-07-30 06:49:49][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 07:10:34][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 07:10:42][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 07:10:42][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 07:10:42][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 07:10:43][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 07:10:43][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:10:45][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 07:10:45][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:10:47][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 07:10:47][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:10:49][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 07:10:49][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:10:51][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 07:10:51][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:10:53][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 07:10:53][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 07:11:58][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 07:11:58][utils.db_util][system][ERROR] Database file not found at C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+[2025-07-30 07:12:00][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 07:12:51][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 07:12:57][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 07:12:57][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 07:12:57][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 07:12:58][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 07:12:59][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:13:01][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 07:13:01][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:13:03][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 07:13:03][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:13:05][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 07:13:05][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:13:07][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 07:13:07][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:13:09][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 07:13:09][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 07:15:53][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 07:15:53][utils.db_util][system][INFO] Using database for prediction: 'C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db'
+[2025-07-30 07:15:53][utils.db_util][system][INFO] [Jumeokbap Prediction] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+[2025-07-30 07:15:53][utils.db_util][system][INFO] [Product Mix Recommendation] Using DB: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\integrated_sales.db
+[2025-07-30 07:15:53][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 07:15:57][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 07:52:49][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 07:52:57][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 07:53:34][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 07:53:41][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 07:53:41][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 07:53:41][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 07:53:42][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 07:53:42][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:53:44][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 07:53:44][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:53:46][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 07:53:46][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:53:48][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 07:53:48][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:53:50][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 07:53:50][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 07:53:52][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 07:53:52][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 07:53:55][utils.db_util][db][INFO] DB에 없는 날짜: ['20250729', '20250728']
+[2025-07-30 07:56:37][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 07:56:37][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 07:56:37][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 60}
+[2025-07-30 07:56:37][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 07:56:41][bgf_automation][system][INFO] WebDriver quit successfully.
