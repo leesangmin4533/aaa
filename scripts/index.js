@@ -216,6 +216,7 @@
     ensureMainFormLoaded,
     parseDetailDataset,
     parseListDataset,
+    clickElementById,
   } = window.automationHelpers;
 
   async function collectProducts(midCode, midName) {
@@ -296,6 +297,7 @@
     }finally{
       window.automation.isCollecting=false;
     }
+  }
 
   async function verifyMidSaleQty(midInfo){
     if(!window.automation.parsedData) return false;
