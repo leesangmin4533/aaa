@@ -1542,3 +1542,22 @@ Stacktrace:
 [2025-07-30 16:01:08][login.login_bgf][login][INFO] Closed 5 popups after login.
 [2025-07-30 16:01:11][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
 [2025-07-30 16:01:13][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 16:22:01][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 16:22:08][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 16:22:08][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 16:22:08][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 16:22:09][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 16:22:09][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 16:22:11][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 16:22:11][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 16:22:13][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 16:22:13][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 16:22:15][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 16:22:15][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 16:22:17][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 16:22:17][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 16:22:19][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 16:22:19][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 16:22:22][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 16:22:32][bgf_automation][system][WARNING] changeDateAndSearch 함수가 로드되지 않았습니다.
+[2025-07-30 16:22:34][bgf_automation][system][INFO] WebDriver quit successfully.
