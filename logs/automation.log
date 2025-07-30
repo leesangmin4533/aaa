@@ -1561,3 +1561,35 @@ Stacktrace:
 [2025-07-30 16:22:22][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
 [2025-07-30 16:22:32][bgf_automation][system][WARNING] changeDateAndSearch 함수가 로드되지 않았습니다.
 [2025-07-30 16:22:34][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 21:33:35][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 21:33:43][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 21:33:43][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 21:33:43][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 21:33:44][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 21:33:44][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 21:33:46][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 21:33:46][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 21:33:48][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 21:33:48][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 21:33:50][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 21:33:50][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 21:33:52][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 21:33:52][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 21:33:54][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 21:33:54][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 21:33:57][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 21:36:01][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 21:38:21][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 21:40:41][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 21:40:41][bgf_automation][system][WARNING] No valid data collected for 20250730
+[2025-07-30 21:40:42][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-30 21:40:42][utils.db_util][system][INFO] 추천 상품 조합: {'주)참치마요김치제육더블1': 191}
+[2025-07-30 21:40:42][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-30 21:40:42][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
+[2025-07-30 21:40:42][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html?version=0.46682779045011435 5 The key "target-densitydpi" is not supported.
+[2025-07-30 21:40:42][bgf_automation][system][INFO] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
+[2025-07-30 21:40:42][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
+[2025-07-30 21:40:42][bgf_automation][system][INFO] console-api 291:14 "처리할 중분류가 없습니다. 수집을 종료합니다."
+[2025-07-30 21:40:42][bgf_automation][system][INFO] console-api 278:14 "이미 데이터 수집이 진행 중입니다. 새로운 요청을 무시합니다."
+[2025-07-30 21:40:42][bgf_automation][system][INFO] console-api 278:14 "이미 데이터 수집이 진행 중입니다. 새로운 요청을 무시합니다."
+[2025-07-30 21:40:44][bgf_automation][system][INFO] WebDriver quit successfully.
