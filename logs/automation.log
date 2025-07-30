@@ -1432,3 +1432,39 @@ Stacktrace:
 [2025-07-30 10:54:17][login.login_bgf][login][INFO] Closed 5 popups after login.
 [2025-07-30 10:54:20][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
 [2025-07-30 10:54:22][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 11:26:24][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 11:26:31][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 11:26:31][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 11:26:31][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 11:26:32][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 11:26:32][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:26:34][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 11:26:34][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:26:36][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 11:26:36][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:26:38][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 11:26:38][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:26:40][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 11:26:40][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:26:42][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 11:26:42][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 11:26:45][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 11:26:47][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 11:47:55][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 11:48:02][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 11:48:02][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 11:48:02][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 11:48:03][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 11:48:03][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:48:05][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 11:48:05][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:48:07][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 11:48:07][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:48:09][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 11:48:09][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:48:11][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 11:48:11][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 11:48:13][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 11:48:13][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 11:48:16][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 11:48:18][bgf_automation][system][INFO] WebDriver quit successfully.
