@@ -2,3 +2,6 @@ pandas
 scikit-learn
 holidays
 python-dotenv
+requests
+webdriver-manager
+selenium
