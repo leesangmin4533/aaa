@@ -312,10 +312,13 @@ def run_jumeokbap_prediction_and_save():
     """주먹밥 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
     try:
         db_path = get_configured_db_path()
-        Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
+        db_path.parent.mkdir(parents=True, exist_ok=True)
         if not db_path.exists():
-            log.error(f"데이터베이스 파일을 찾을 수 없습니다: {db_path}")
-            return
+            log.info(
+                f"데이터베이스가 없어 새로 생성합니다: {db_path}",
+                extra={"tag": "system"},
+            )
+            init_db(db_path)
 
         forecast = predict_jumeokbap_quantity(db_path)
         mix = recommend_product_mix(db_path, forecast)
