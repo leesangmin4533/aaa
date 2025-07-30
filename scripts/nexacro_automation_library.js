@@ -1,5 +1,4 @@
 (() => {
-  try {
   // ==================================================================================
   // 1. 네임스페이스 및 기본 설정
   // ==================================================================================
@@ -301,6 +300,7 @@
   // ==================================================================================
 
   async function runCollectionForDate(dateStr) {
+    console.log(`[runCollectionForDate] ${dateStr} 데이터 수집을 시작합니다.`);
     if (window.automation.isCollecting) {
       console.warn("이미 데이터 수집이 진행 중입니다. 새로운 요청을 무시합니다.");
       return;
@@ -308,29 +308,14 @@
     window.automation.isCollecting = true;
     window.automation.error = null;
     window.automation.parsedData = null;
-    console.log(`[runCollectionForDate] ${dateStr} 데이터 수집을 시작합니다.`);
-
-    // 프록시 활성화 및 목표 날짜 설정
-    window.automationHelpers.setTargetDate(dateStr);
-    window.automationHelpers.hookTransaction('search');
 
     try {
       await ensureMainFormLoaded();
       const mainForm = getMainForm();
       if (!mainForm) throw new Error("메인 폼을 찾을 수 없습니다.");
 
-      const searchBtn = await getNexacroComponent("F_10", mainForm.div_cmmbtn.form, 30000);
-      if (!searchBtn) throw new Error("검색 버튼(F_10)을 찾을 수 없습니다.");
-
-      // 검색 버튼 클릭 (프록시가 strYmd를 수정할 것임)
-      const searchPromise = waitForTransaction('search');
-      searchBtn.click();
-      console.log("메인 검색 버튼을 클릭했습니다. 프록시가 날짜를 수정하여 조회를 실행합니다.");
-      await searchPromise;
-      console.log("'search' 트랜잭션 완료. 중분류 목록 로딩 완료.");
-
-      // 3. 모든 중분류 항목이 로드되도록 스크롤 및 클릭 (이 단계는 더 이상 필요하지 않습니다.)
-      // await autoClickAllMidCodes();
+      // 날짜 설정 및 조회 버튼 클릭은 date_changer.js로 분리
+      await window.automation.changeDateAndSearch(dateStr);
 
       // 4. 처리할 중분류 목록 가져오기 (Dataset에서 직접 가져옴)
       const midCodesToProcess = await getAllMidCodesFromDataset(mainForm.div_workForm.form.div2.form);
