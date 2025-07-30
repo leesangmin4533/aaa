@@ -208,6 +208,7 @@ def main() -> None:
         # used by ``index.js``. It must be loaded first.
         run_script(driver, "scripts/nexacro_helpers.js")
         run_script(driver, f"scripts/{default_script}")
+        run_script(driver, "scripts/date_changer.js")
 
         run_script(driver, NAVIGATION_SCRIPT)
         # Give some time for the page to stabilize after navigation
