@@ -59,9 +59,10 @@
 
 ## 사용법
 
-필요한 Python 라이브러리를 설치한 후, 다음 명령어로 자동화를 시작합니다.
+먼저 아래 명령어로 프로젝트 의존성을 설치한 뒤 자동화를 시작합니다.
 
 ```bash
+pip install -r requirements.txt
 python -m aaa
 # 또는
 python main.py
@@ -80,6 +81,20 @@ python main.py
 - `navigation.js`를 실행하여 목표 페이지로 이동합니다.
 - `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
 - 수집된 데이터는 통합 DB에 저장됩니다.
+
+## 의존성 설치 및 테스트
+
+프로젝트에서 필요한 패키지는 `requirements.txt` 파일에 정의되어 있습니다. 다음 명령어로 설치할 수 있습니다.
+
+```bash
+pip install -r requirements.txt
+```
+
+테스트는 `pytest`를 사용하여 실행합니다.
+
+```bash
+pytest
+```
 
 ## 데이터 포맷
 
