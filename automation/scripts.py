@@ -91,18 +91,13 @@ def collect_mid_category_data(driver, scripts_dir: str) -> Any:
         result = run_script(driver, "get_mid_category_data.js", scripts_dir)
         if result and result.get("error"):
             log.error(
-                f"Mid-category collection script failed: {
-                    result['error']}",
+                f"Mid-category collection script failed: {result['error']}",
                 extra={"tag": "collect"},
             )
             return None
 
         log.info(
-            f"Successfully collected {
-                len(
-                    result.get(
-                        'data',
-                        []))} mid-categories.",
+            f"Successfully collected {len(result.get('data', []))} mid-categories.",
             extra={"tag": "collect"},
         )
         return result.get("data")

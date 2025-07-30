@@ -83,13 +83,11 @@ def _process_and_save_data(
         return
 
     log.debug(
-        f"Attempting to save {
-            len(records)} records to DB.",
+        f"Attempting to save {len(records)} records to DB.",
         extra={"tag": "db"},
     )
     log.debug(
-        f"First record to save: {
-            records[0] if records else 'N/A'}",
+        f"First record to save: {records[0] if records else 'N/A'}",
         extra={"tag": "db"},
     )
 
@@ -241,8 +239,7 @@ def _run_collection_cycle(
                 else:
                     error_msg = result.get("message", "Unknown error")
                     log.error(
-                        f"Collection script for {date_to_collect} failed:"
-                        f" {error_msg}",
+                        f"Collection script for {date_to_collect} failed: {error_msg}",
                         extra={"tag": "main"},
                     )
             except Exception:
