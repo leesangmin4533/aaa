@@ -1229,3 +1229,206 @@
 [2025-07-30 10:09:23][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
 [2025-07-30 10:09:23][login.login_bgf][login][INFO] Closed 5 popups after login.
 [2025-07-30 10:09:25][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 10:15:39][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 10:15:45][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 10:15:45][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 10:15:45][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 10:15:46][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 10:15:46][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:15:48][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 10:15:48][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:15:50][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 10:15:50][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:15:52][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 10:15:52][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:15:54][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 10:15:54][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:15:56][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 10:15:56][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 10:18:59][bgf_automation][system][ERROR] [browser] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753838141705}
+[2025-07-30 10:18:59][bgf_automation][system][ERROR] [browser] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html?version=0.576609436889452 5 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753838144820}
+[2025-07-30 10:18:59][bgf_automation][system][ERROR] [browser] {'level': 'SEVERE', 'message': 'https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)', 'source': 'network', 'timestamp': 1753838145379}
+[2025-07-30 10:18:59][bgf_automation][system][ERROR] [browser] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753838145379}
+[2025-07-30 10:18:59][bgf_automation][system][ERROR] wait_for_mix_ratio_page failed: Message: 
+
+[2025-07-30 10:18:59][bgf_automation][system][ERROR] Failed to load mix ratio page elements. Exiting.
+[2025-07-30 10:19:01][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 10:20:29][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 10:20:36][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 10:20:36][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 10:20:36][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 10:20:37][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 10:20:37][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:20:39][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 10:20:39][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:20:41][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 10:20:41][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:20:43][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 10:20:43][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:20:45][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 10:20:45][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:20:47][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 10:20:47][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 10:23:50][bgf_automation][system][ERROR] [browser] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753838432402}
+[2025-07-30 10:23:50][bgf_automation][system][ERROR] [browser] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/index.html?version=0.9851892971149441 5 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753838435449}
+[2025-07-30 10:23:50][bgf_automation][system][ERROR] [browser] {'level': 'SEVERE', 'message': 'https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)', 'source': 'network', 'timestamp': 1753838436007}
+[2025-07-30 10:23:50][bgf_automation][system][ERROR] [browser] {'level': 'WARNING', 'message': 'https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.', 'source': 'rendering', 'timestamp': 1753838436007}
+[2025-07-30 10:23:50][bgf_automation][system][ERROR] wait_for_mix_ratio_page failed: Message: 
+
+[2025-07-30 10:23:50][bgf_automation][system][ERROR] Failed to load mix ratio page elements. Exiting.
+[2025-07-30 10:23:52][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 10:32:21][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 10:32:29][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 10:32:29][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 10:32:29][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 10:32:30][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 10:32:30][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:32:32][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 10:32:32][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:32:34][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 10:32:34][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:32:36][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 10:32:36][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:32:38][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 10:32:38][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:32:40][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 10:32:40][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 10:32:43][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 10:32:53][bgf_automation][system][ERROR] Selenium 날짜 설정 및 조회 중 오류 발생: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xe5ba83+63395]
+	GetHandleVerifier [0x0xe5bac4+63460]
+	(No symbol) [0x0xca2113]
+	(No symbol) [0x0xcea85e]
+	(No symbol) [0x0xceabfb]
+	(No symbol) [0x0xd32f92]
+	(No symbol) [0x0xd0f3f4]
+	(No symbol) [0x0xd307ba]
+	(No symbol) [0x0xd0f1a6]
+	(No symbol) [0x0xcde7b2]
+	(No symbol) [0x0xcdf654]
+	GetHandleVerifier [0x0x10d8883+2672035]
+	GetHandleVerifier [0x0x10d3cba+2652634]
+	GetHandleVerifier [0x0xe82bca+223466]
+	GetHandleVerifier [0x0xe72cb8+158168]
+	GetHandleVerifier [0x0xe7978d+185517]
+	GetHandleVerifier [0x0xe63b78+96408]
+	GetHandleVerifier [0x0xe63d02+96802]
+	GetHandleVerifier [0x0xe4e90a+9770]
+	BaseThreadInitThunk [0x0x760d5d49+25]
+	RtlInitializeExceptionChain [0x0x76fad1ab+107]
+	RtlGetAppContainerNamedObjectPath [0x0x76fad131+561]
+
+[2025-07-30 10:32:53][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 10:33:04][bgf_automation][system][ERROR] Selenium 날짜 설정 및 조회 중 오류 발생: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xe5ba83+63395]
+	GetHandleVerifier [0x0xe5bac4+63460]
+	(No symbol) [0x0xca2113]
+	(No symbol) [0x0xcea85e]
+	(No symbol) [0x0xceabfb]
+	(No symbol) [0x0xd32f92]
+	(No symbol) [0x0xd0f3f4]
+	(No symbol) [0x0xd307ba]
+	(No symbol) [0x0xd0f1a6]
+	(No symbol) [0x0xcde7b2]
+	(No symbol) [0x0xcdf654]
+	GetHandleVerifier [0x0x10d8883+2672035]
+	GetHandleVerifier [0x0x10d3cba+2652634]
+	GetHandleVerifier [0x0xe82bca+223466]
+	GetHandleVerifier [0x0xe72cb8+158168]
+	GetHandleVerifier [0x0xe7978d+185517]
+	GetHandleVerifier [0x0xe63b78+96408]
+	GetHandleVerifier [0x0xe63d02+96802]
+	GetHandleVerifier [0x0xe4e90a+9770]
+	BaseThreadInitThunk [0x0x760d5d49+25]
+	RtlInitializeExceptionChain [0x0x76fad1ab+107]
+	RtlGetAppContainerNamedObjectPath [0x0x76fad131+561]
+
+[2025-07-30 10:33:04][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 10:33:14][bgf_automation][system][ERROR] Selenium 날짜 설정 및 조회 중 오류 발생: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xe5ba83+63395]
+	GetHandleVerifier [0x0xe5bac4+63460]
+	(No symbol) [0x0xca2113]
+	(No symbol) [0x0xcea85e]
+	(No symbol) [0x0xceabfb]
+	(No symbol) [0x0xd32f92]
+	(No symbol) [0x0xd0f3f4]
+	(No symbol) [0x0xd307ba]
+	(No symbol) [0x0xd0f1a6]
+	(No symbol) [0x0xcde7b2]
+	(No symbol) [0x0xcdf654]
+	GetHandleVerifier [0x0x10d8883+2672035]
+	GetHandleVerifier [0x0x10d3cba+2652634]
+	GetHandleVerifier [0x0xe82bca+223466]
+	GetHandleVerifier [0x0xe72cb8+158168]
+	GetHandleVerifier [0x0xe7978d+185517]
+	GetHandleVerifier [0x0xe63b78+96408]
+	GetHandleVerifier [0x0xe63d02+96802]
+	GetHandleVerifier [0x0xe4e90a+9770]
+	BaseThreadInitThunk [0x0x760d5d49+25]
+	RtlInitializeExceptionChain [0x0x76fad1ab+107]
+	RtlGetAppContainerNamedObjectPath [0x0x76fad131+561]
+
+[2025-07-30 10:33:14][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 10:33:14][utils.db_util][system][ERROR] 데이터베이스 파일을 찾을 수 없습니다: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\integrated_sales.db
+[2025-07-30 10:33:17][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 10:34:47][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 10:34:54][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 10:34:54][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 10:34:54][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 10:34:55][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 10:34:55][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:34:57][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 10:34:57][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:34:59][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 10:34:59][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:35:01][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 10:35:01][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:35:03][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 10:35:03][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:35:05][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 10:35:05][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 10:35:07][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 10:35:10][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 10:39:11][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 10:39:18][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 10:39:18][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 10:39:18][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 10:39:19][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 10:39:19][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:39:21][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 10:39:21][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:39:23][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 10:39:23][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:39:25][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 10:39:25][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:39:27][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 10:39:27][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:39:29][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 10:39:29][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 10:39:32][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 10:41:52][bgf_automation][system][WARNING] No valid data collected for 20250729
+[2025-07-30 10:44:12][bgf_automation][system][WARNING] No valid data collected for 20250728
+[2025-07-30 10:46:31][bgf_automation][system][INFO] 중분류 클릭 로그: []
+[2025-07-30 10:46:31][utils.db_util][system][ERROR] 데이터베이스 파일을 찾을 수 없습니다: C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\integrated_sales.db
+[2025-07-30 10:46:33][bgf_automation][system][INFO] WebDriver quit successfully.
+[2025-07-30 10:53:59][bgf_automation][system][INFO] Starting BGF Retail Automation...
+[2025-07-30 10:54:05][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-30 10:54:05][login.login_bgf][login][INFO] Login script executed
+[2025-07-30 10:54:05][login.login_bgf][login][INFO] Login succeeded
+[2025-07-30 10:54:06][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-30 10:54:07][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:54:09][utils.popup_util][modal_closer][INFO] Attempt 2/5 to find and close popups.
+[2025-07-30 10:54:09][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:54:11][utils.popup_util][modal_closer][INFO] Attempt 3/5 to find and close popups.
+[2025-07-30 10:54:11][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:54:13][utils.popup_util][modal_closer][INFO] Attempt 4/5 to find and close popups.
+[2025-07-30 10:54:13][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:54:15][utils.popup_util][modal_closer][INFO] Attempt 5/5 to find and close popups.
+[2025-07-30 10:54:15][utils.popup_util][modal_closer][INFO] Successfully simulated click on a popup close element.
+[2025-07-30 10:54:17][utils.popup_util][modal_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-30 10:54:17][login.login_bgf][login][INFO] Closed 5 popups after login.
+[2025-07-30 10:54:20][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29', '2025-07-28']
+[2025-07-30 10:54:22][bgf_automation][system][INFO] WebDriver quit successfully.
