@@ -21,7 +21,7 @@
 
 ```json
 {
-    "db_file": "code_outputs/integrated_sales.db",
+    "db_file": "code_outputs/db/integrated_sales.db",
     "scripts": {
         "default": "nexacro_automation_library.js",
         "listener": "data_collect_listener.js",

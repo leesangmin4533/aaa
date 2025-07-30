@@ -9,6 +9,7 @@ This script orchestrates the web automation process for BGF Retail, including:
 
 from __future__ import annotations
 from utils.db_util import write_sales_data, check_dates_exist
+from utils.config import DB_FILE
 import os
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -75,6 +76,11 @@ def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
         return True
     except Exception as e:
         logger.error(f"wait_for_mix_ratio_page failed: {e}")
+        try:
+            for entry in driver.get_log("browser"):
+                logger.error(entry.get("message"))
+        except Exception:
+            pass
         return False
 
 
@@ -174,6 +180,11 @@ def wait_for_mix_ratio_page(driver: Any, timeout: int = 120) -> bool:
         return True
     except Exception as e:
         logger.error(f"wait_for_mix_ratio_page failed: {e}")
+        try:
+            for entry in driver.get_log("browser"):
+                logger.error(entry.get("message"))
+        except Exception:
+            pass
         return False
 
 
@@ -266,9 +277,23 @@ def main() -> None:
         if not collected and mid_logs:
             collected = mid_logs
 
+        if collected and isinstance(collected, list) and collected and isinstance(collected[0], dict):
+            target_db = (
+                Path(DB_FILE) if need_past else CODE_OUTPUT_DIR / f"{today_str}.db"
+            )
+            write_sales_data(collected, target_db)
+        else:
+            logger.warning("No valid data collected for %s", today_str)
+
         # Run jumeokbap prediction
         from utils.db_util import run_jumeokbap_prediction_and_save
         run_jumeokbap_prediction_and_save()
+
+        try:
+            for entry in driver.get_log("browser"):
+                logger.info(entry.get("message"))
+        except Exception:
+            pass
 
     finally:
         if driver is not None:
