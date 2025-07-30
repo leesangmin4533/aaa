@@ -153,6 +153,7 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, collected_at_
 
 def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
     """주어진 날짜 목록 중 DB에 데이터가 없는 날짜를 찾아 반환합니다."""
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     if not db_path.exists():
         return dates_to_check
 
@@ -173,6 +174,7 @@ def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
 
 def get_sales_data_for_training(db_path: Path) -> pd.DataFrame:
     """DB에서 주먹밥 판매 데이터를 읽어와 날짜 특성을 추가합니다."""
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     if not db_path.exists():
         return pd.DataFrame()
 
@@ -283,6 +285,7 @@ def predict_jumeokbap_quantity(db_path: Path) -> float:
 
 def recommend_product_mix(db_path: Path, predicted_sales: float) -> dict:
     """예측된 총 판매량을 기반으로 상품 조합을 추천합니다."""
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     if not db_path.exists():
         return {}
 
@@ -309,6 +312,7 @@ def run_jumeokbap_prediction_and_save():
     """주먹밥 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
     try:
         db_path = get_configured_db_path()
+        Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
         if not db_path.exists():
             log.error(f"데이터베이스 파일을 찾을 수 없습니다: {db_path}")
             return
@@ -317,6 +321,7 @@ def run_jumeokbap_prediction_and_save():
         mix = recommend_product_mix(db_path, forecast)
 
         # 예측 결과 저장
+        JUMEOKBAP_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(JUMEOKBAP_DB_PATH) as conn:
             cursor = conn.cursor()
             cursor.execute("""

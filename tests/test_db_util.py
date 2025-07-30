@@ -72,3 +72,12 @@ def test_write_sales_data_updates_existing_record(tmp_path):
     assert [r[1:] for r in rows] == [("222", 5)]
     db_path.unlink()
     assert not db_path.exists()
+
+
+def test_write_sales_data_creates_directory(tmp_path):
+    nested = tmp_path / "nested" / "dir"
+    db_path = nested / "sales.db"
+    records = [{"productCode": "333", "sales": 1}]
+    assert not nested.exists()
+    db_util.write_sales_data(records, db_path)
+    assert nested.exists()

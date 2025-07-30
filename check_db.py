@@ -4,6 +4,7 @@ from pathlib import Path
 db_path = Path(
     "C:/Users/kanur/OneDrive/문서/GitHub/aaa/code_outputs/all_sales_data.db"
 )
+db_path.parent.mkdir(parents=True, exist_ok=True)
 
 if not db_path.exists():
     print(f"Database file not found: {db_path}")

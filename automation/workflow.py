@@ -132,6 +132,7 @@ def _handle_final_logs(driver: Any) -> None:
 
 def save_to_db(records: list[dict[str, Any]], db_path: Path) -> int:
     """Save records to the SQLite database."""
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
