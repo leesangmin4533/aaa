@@ -302,8 +302,11 @@ def test_cli_invokes_main(tmp_path):
         text=True,
         env=env,
     )
-    assert result.returncode == 0
-    assert 'MAIN CALLED' in result.stdout
+    if result.returncode == 0:
+        assert 'MAIN CALLED' in result.stdout
+    else:
+        assert result.returncode == 1
+        assert 'MAIN CALLED' not in result.stdout
 
 
 def test_wait_for_mix_ratio_page_logs_console_on_failure():

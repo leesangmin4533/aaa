@@ -11,24 +11,32 @@ from __future__ import annotations
 from utils.db_util import write_sales_data, check_dates_exist
 from utils.config import DB_FILE
 import os
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
+import sys
+import logging
+
+try:
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.chrome.options import Options
+    from webdriver_manager.chrome import ChromeDriverManager
+    from selenium.webdriver.chrome.service import Service
+    from selenium import webdriver
+except ImportError as exc:  # pragma: no cover - dependency missing
+    logging.getLogger(__name__).warning(
+        "Selenium or webdriver-manager not available: %s", exc
+    )
+    sys.exit(1)
+
 from login.login_bgf import login_bgf
 from utils.popup_util import close_popups_after_delegate
 from dotenv import load_dotenv
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
 
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
-import sys
 import subprocess
-import logging # Import logging module
 
 from utils.log_util import get_logger
 
