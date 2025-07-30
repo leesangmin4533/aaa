@@ -30,6 +30,7 @@ import subprocess
 import logging # Import logging module
 
 from utils.log_util import get_logger
+from utils.config import DB_FILE
 
 # -----------------------------------------------------------------------------
 # Constants
@@ -37,8 +38,6 @@ from utils.log_util import get_logger
 
 SCRIPT_DIR: Path = Path(__file__).resolve().parent
 CODE_OUTPUT_DIR: Path = Path(__file__).resolve().parent / "code_outputs"
-# 모든 수집 결과가 저장될 통합 DB 파일 경로
-INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 
 logger = get_logger("bgf_automation")
@@ -132,7 +131,7 @@ def is_past_data_available(num_days: int = 2) -> bool:
     if os.environ.get("PYTEST_CURRENT_TEST"):
         return True
     past_dates_for_script = get_past_dates(num_days)  # YYYYMMDD format
-    db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
+    db_path = Path(DB_FILE)
     if not db_path.exists():
         return False
     
@@ -223,7 +222,7 @@ def main() -> None:
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
-                    write_sales_data(data, CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE)
+                    write_sales_data(data, Path(DB_FILE))
                 else:
                     logger.warning("No valid data collected for %s", past)
                 time.sleep(0.1)
@@ -266,7 +265,7 @@ def main() -> None:
 
         if collected and isinstance(collected, list) and isinstance(collected[0], dict):
             if need_past:
-                db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
+                db_path = Path(DB_FILE)
             else:
                 db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
             write_sales_data(collected, db_path)
