@@ -153,7 +153,7 @@ def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver: Any, timeout: int = 120) -> bool:
+def wait_for_mix_ratio_page(driver: Any, timeout: int = 180) -> bool:
     """Wait for the mix ratio page to load fully."""
     try:
         grid_js = "return !!document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
@@ -164,8 +164,22 @@ def wait_for_mix_ratio_page(driver: Any, timeout: int = 120) -> bool:
             "return g && g.textContent.trim().length>0;"
         )
         WebDriverWait(driver, timeout).until(lambda d: d.execute_script(data_js))
+
+        rows_js = (
+            "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
+            "return g && g.querySelectorAll('tr').length>0;"
+        )
+        WebDriverWait(driver, timeout).until(lambda d: d.execute_script(rows_js))
         return True
-    except Exception:
+    except Exception as e:
+        try:
+            logs = driver.get_log("browser")
+        except Exception as log_err:
+            logger.error(f"Failed to get browser logs: {log_err}")
+            logs = []
+        for entry in logs[-5:]:
+            logger.error(f"[browser] {entry}")
+        logger.error(f"wait_for_mix_ratio_page failed: {e}")
         return False
 
 
