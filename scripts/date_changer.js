@@ -16,23 +16,18 @@
       return;
     }
 
-    const calFromDay = form.div_workForm.form.div2.form.div_search.form.calFromDay;
-    if (calFromDay) {
-      calFromDay.set_value(dateStr);
-      console.log(`[SET] calFromDay 값 → ${dateStr}`);
-    } else {
-      console.warn("[WARN] calFromDay 컴포넌트를 찾을 수 없습니다.");
+    try {
+        form.div_workForm.form.div2.form.div_search.form.calFromDay.set_value(dateStr);
+        console.log(`[SET] calFromDay 값 → ${dateStr}`);
+    } catch (e) {
+        console.warn("[WARN] 날짜 설정 실패: " + e.message);
     }
 
-    const searchBtn = form.div_cmmbtn.form.F_10;
-    if (searchBtn) {
-      // waitForTransaction은 nexacro_automation_library.js에 정의되어 있으므로 직접 호출
-      // Promise를 반환하므로 Python에서 await 처리 필요
-      window.automation.waitForTransaction('search'); 
-      searchBtn.click();
-      console.log("[ACTION] 조회 버튼(F_10) 클릭");
-    } else {
-      console.warn("[WARN] 조회 버튼(F_10)을 찾을 수 없습니다.");
+    try {
+        form.div_cmmbtn.form.F_10.click();
+        console.log("[ACTION] 조회 버튼(F_10) 클릭");
+    } catch (e) {
+        console.warn("[WARN] 조회 버튼 클릭 실패: " + e.message);
     }
   };
 })();
