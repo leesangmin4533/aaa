@@ -1,4 +1,5 @@
 import json
+import logging
 from pathlib import Path
 
 from utils.log_util import get_logger
@@ -36,4 +37,4 @@ PAGE_LOAD_TIMEOUT = config["timeouts"]["page_load"]
 CYCLE_INTERVAL = config["cycle_interval_seconds"]
 
 # Logger for modules in this package
-log = get_logger(__name__)
+log = get_logger(__name__, level=logging.DEBUG)
