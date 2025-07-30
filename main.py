@@ -222,6 +222,7 @@ def main() -> None:
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
+                    Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
                     write_sales_data(data, Path(DB_FILE))
                 else:
                     logger.warning("No valid data collected for %s", past)
@@ -268,12 +269,14 @@ def main() -> None:
                 db_path = Path(DB_FILE)
             else:
                 db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
+            Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
             write_sales_data(collected, db_path)
         else:
             logger.warning("No valid data collected for today")
 
         # Run jumeokbap prediction
         from utils.db_util import run_jumeokbap_prediction_and_save
+        Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
         run_jumeokbap_prediction_and_save()
 
     finally:

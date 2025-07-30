@@ -7,6 +7,7 @@ from datetime import datetime
 
 def init_hourly_db(db_path: Path) -> sqlite3.Connection:
     """증분 저장을 위한 테이블과 스냅샷 테이블 초기화."""
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path)
     conn.execute("""
     CREATE TABLE IF NOT EXISTS hourly_sales (
