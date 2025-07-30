@@ -224,6 +224,9 @@
       return products;
     }
 
+    console.log(`[DEBUG] 상품 수집 시작 - ${midName}`);
+    console.log(`[DEBUG] dsDetail row count: ${dsDetail.getRowCount()}`);
+
     for (let i = 0; i < dsDetail.getRowCount(); i++) {
       products.push({
         midCode:     midCode,
@@ -272,7 +275,7 @@
   // ==================================================================================
 
   function runCollectionForDate(dateStr) {
-    console.log(`[runCollectionForDate] ${dateStr} 데이터 수집을 시작합니다.`);
+    console.log(`[DEBUG] runCollectionForDate start: ${dateStr}`);
     if (window.automation.isCollecting) {
       console.warn("이미 데이터 수집이 진행 중입니다. 새로운 요청을 무시합니다.");
       return;
@@ -299,8 +302,7 @@
     // 4. 각 중분류를 순회하며 상품 데이터 수집
     for (let i = 0; i < midCodesToProcess.length; i++) { // for...of 대신 일반 for 루프 사용
       const mid = midCodesToProcess[i];
-      console.log(`
-[시작] 중분류: ${mid.code} (${mid.name})`);
+      console.log(`[DEBUG] 중분류 수집 시작 - ${mid.code} (${mid.name})`);
 
       selectMiddleCodeRow(mid.row);
       

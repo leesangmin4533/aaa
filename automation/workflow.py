@@ -228,6 +228,9 @@ def _run_collection_cycle(
 
         # YYYY-MM-DD 형식을 YYYYMMDD로 변경하여 JS 함수에 전달
         date_yyyymmdd = date_to_collect.replace("-", "")
+        log.debug(
+            f"중분류 수집 시작: {date_yyyymmdd}", extra={"tag": "collect"}
+        )
         result = collect_day_data_func(driver, date_yyyymmdd)
 
         parsed_data = []

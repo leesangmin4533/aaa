@@ -42,7 +42,7 @@ CODE_OUTPUT_DIR: Path = Path(__file__).resolve().parent / "code_outputs"
 INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 
-logger = get_logger("bgf_automation")
+logger = get_logger("bgf_automation", level=logging.DEBUG)
 # Placeholder hooks
 # -----------------------------------------------------------------------------
 
@@ -214,7 +214,7 @@ def run_script(driver: Any, name: str) -> Any:
 
 def main() -> None:
     global logger # Declare logger as global to modify the module-level logger
-    logger = get_logger("bgf_automation") # Configure the logger
+    logger = get_logger("bgf_automation", level=logging.DEBUG) # Configure the logger
     logger.info("Starting BGF Retail Automation...")
     driver = None
     try:
