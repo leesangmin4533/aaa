@@ -101,6 +101,17 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
             break
         time.sleep(0.25)
 
+    # ``window.automation.changeDateAndSearch`` 함수가 준비될 때까지 대기
+    try:
+        WebDriverWait(driver, 10).until(
+            lambda d: d.execute_script(
+                "return typeof window.automation !== 'undefined' && "
+                "typeof window.automation.changeDateAndSearch === 'function';"
+            )
+        )
+    except Exception:
+        logger.warning("changeDateAndSearch 함수가 로드되지 않았습니다.")
+
     # 수집 시작
     driver.execute_script(
         "window.automation.runCollectionForDate(arguments[0])",
