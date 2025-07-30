@@ -30,7 +30,6 @@ import subprocess
 import logging # Import logging module
 
 from utils.log_util import get_logger
-from utils.config import DB_FILE
 
 # -----------------------------------------------------------------------------
 # Constants
@@ -38,6 +37,8 @@ from utils.config import DB_FILE
 
 SCRIPT_DIR: Path = Path(__file__).resolve().parent
 CODE_OUTPUT_DIR: Path = Path(__file__).resolve().parent / "code_outputs"
+# 모든 수집 결과가 저장될 통합 DB 파일 경로
+INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 NAVIGATION_SCRIPT: str = "scripts/navigation.js"
 
 logger = get_logger("bgf_automation")
@@ -63,13 +64,17 @@ def wait_for_page_elements(driver: Any, timeout: int = 120) -> bool:
     """
     try:
         WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, "div[id*='gdList.body']")
+            lambda d: d.execute_script("return !!document.querySelector('[id*=\"gdList\"][id*=\"body\"]');")
+        )
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script(
+                "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
+                "return g && g.textContent.trim().length>0;"
             )
         )
         return True
     except Exception as e:
-        logger.error(f"Error waiting for page elements: {e}")
+        logger.error(f"wait_for_mix_ratio_page failed: {e}")
         return False
 
 
@@ -111,6 +116,7 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
     success = isinstance(parsed, list) and len(parsed) > 0
     return {"success": bool(success), "data": parsed if success else None}
 
+
 def get_past_dates(num_days: int = 2) -> list[str]:
     """Return a list of past dates for collecting historical data.
 
@@ -131,7 +137,7 @@ def is_past_data_available(num_days: int = 2) -> bool:
     if os.environ.get("PYTEST_CURRENT_TEST"):
         return True
     past_dates_for_script = get_past_dates(num_days)  # YYYYMMDD format
-    db_path = Path(DB_FILE)
+    db_path = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
     if not db_path.exists():
         return False
     
@@ -153,32 +159,20 @@ def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver: Any, timeout: int = 180) -> bool:
+def wait_for_mix_ratio_page(driver: Any, timeout: int = 120) -> bool:
     """Wait for the mix ratio page to load fully."""
     try:
-        grid_js = "return !!document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
-        WebDriverWait(driver, timeout).until(lambda d: d.execute_script(grid_js))
-
-        data_js = (
-            "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
-            "return g && g.textContent.trim().length>0;"
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return !!document.querySelector('[id*=\"gdList\"][id*=\"body\"]');")
         )
-        WebDriverWait(driver, timeout).until(lambda d: d.execute_script(data_js))
-
-        rows_js = (
-            "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
-            "return g && g.querySelectorAll('tr').length>0;"
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script(
+                "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
+                "return g && g.textContent.trim().length>0;"
+            )
         )
-        WebDriverWait(driver, timeout).until(lambda d: d.execute_script(rows_js))
         return True
     except Exception as e:
-        try:
-            logs = driver.get_log("browser")
-        except Exception as log_err:
-            logger.error(f"Failed to get browser logs: {log_err}")
-            logs = []
-        for entry in logs[-5:]:
-            logger.error(f"[browser] {entry}")
         logger.error(f"wait_for_mix_ratio_page failed: {e}")
         return False
 
@@ -217,11 +211,8 @@ def main() -> None:
             config = json.load(f)
         default_script = config["scripts"]["default"]
 
-        # ``nexacro_helpers.js`` defines the ``window.automationHelpers`` object
-        # used by ``index.js``. It must be loaded first.
-        run_script(driver, "scripts/nexacro_helpers.js")
+        # Load nexacro_automation_library.js (contains data collection logic)
         run_script(driver, f"scripts/{default_script}")
-        run_script(driver, "scripts/date_changer.js")
 
         run_script(driver, NAVIGATION_SCRIPT)
         # Give some time for the page to stabilize after navigation
@@ -236,8 +227,7 @@ def main() -> None:
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
-                    Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
-                    write_sales_data(data, Path(DB_FILE))
+                    write_sales_data(data, CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE)
                 else:
                     logger.warning("No valid data collected for %s", past)
                 time.sleep(0.1)
@@ -276,21 +266,8 @@ def main() -> None:
         if not collected and mid_logs:
             collected = mid_logs
 
-        browser_logs = driver.get_log("browser")
-
-        if collected and isinstance(collected, list) and isinstance(collected[0], dict):
-            if need_past:
-                db_path = Path(DB_FILE)
-            else:
-                db_path = CODE_OUTPUT_DIR / f"{today_str}.db"
-            Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
-            write_sales_data(collected, db_path)
-        else:
-            logger.warning("No valid data collected for today")
-
         # Run jumeokbap prediction
         from utils.db_util import run_jumeokbap_prediction_and_save
-        Path(DB_FILE).parent.mkdir(parents=True, exist_ok=True)
         run_jumeokbap_prediction_and_save()
 
     finally:
