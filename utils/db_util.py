@@ -29,9 +29,13 @@ else:  # pragma: no cover - fallback when executed directly
 log = get_logger(__name__)
 
 # --- 경로 및 상수 설정 ---
+if __package__:
+    from .config import DB_FILE, ROOT_DIR
+else:  # pragma: no cover - fallback when executed directly
+    from config import DB_FILE, ROOT_DIR
+
 SCRIPT_DIR: Path = Path(__file__).resolve().parent.parent
 CODE_OUTPUT_DIR: Path = SCRIPT_DIR / "code_outputs"
-INTEGRATED_SALES_DB_FILE: str = "db/integrated_sales.db"
 JUMEOKBAP_DB_PATH = CODE_OUTPUT_DIR / "db" / "jumeokbap_predictions.db"
 
 # --- 데이터베이스 관리 함수 ---
@@ -51,7 +55,14 @@ def init_db(path: Path) -> sqlite3.Connection:
     return conn
 
 def get_configured_db_path() -> Path:
-    return CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
+    return ROOT_DIR / DB_FILE
+
+def _get_value(record: dict[str, any], *keys: str):
+    for k in keys:
+        if k in record:
+            return record[k]
+    return None
+
 
 def write_sales_data(records: list[dict[str, any]], db_path: Path, collected_at_override: str | None = None) -> int:
     """매출 데이터를 통합 DB에 저장합니다."""
@@ -62,10 +73,81 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, collected_at_
     cur = conn.cursor()
     current_date = collected_at_val.split()[0]
 
-    # ... (rest of the function remains the same)
+    insert_sql = """
+    INSERT INTO mid_sales (
+        collected_at, mid_code, mid_name, product_code, product_name,
+        sales, order_cnt, purchase, disposal, stock
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+
+    update_sql = """
+    UPDATE mid_sales SET
+        collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?,
+        sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?
+    WHERE product_code = ? AND SUBSTR(collected_at, 1, 10) = ?
+    """
+
+    for rec in records:
+        product_code = _get_value(rec, "productCode", "product_code")
+        sales_raw = _get_value(rec, "sales", "SALE_QTY")
+        if product_code is None or sales_raw is None:
+            continue
+        try:
+            sales = int(sales_raw)
+        except (ValueError, TypeError):
+            continue
+
+        mid_code = _get_value(rec, "midCode", "mid_code")
+        mid_name = _get_value(rec, "midName", "mid_name")
+        product_name = _get_value(rec, "productName", "product_name")
+        order_cnt = _get_value(rec, "order", "order_cnt", "ORD_QTY")
+        purchase = _get_value(rec, "purchase", "BUY_QTY")
+        disposal = _get_value(rec, "disposal", "DISUSE_QTY")
+        stock = _get_value(rec, "stock", "STOCK_QTY")
+
+        cur.execute(
+            "SELECT sales FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
+            (product_code, current_date),
+        )
+        row = cur.fetchone()
+        if row:
+            if sales > (row[0] or 0):
+                cur.execute(
+                    update_sql,
+                    (
+                        collected_at_val,
+                        mid_code,
+                        mid_name,
+                        product_name,
+                        sales,
+                        order_cnt,
+                        purchase,
+                        disposal,
+                        stock,
+                        product_code,
+                        current_date,
+                    ),
+                )
+        else:
+            cur.execute(
+                insert_sql,
+                (
+                    collected_at_val,
+                    mid_code,
+                    mid_name,
+                    product_code,
+                    product_name,
+                    sales,
+                    order_cnt,
+                    purchase,
+                    disposal,
+                    stock,
+                ),
+            )
 
     conn.commit()
-    count = cur.rowcount
+    cur.execute("SELECT COUNT(*) FROM mid_sales")
+    count = cur.fetchone()[0]
     conn.close()
     return count
 

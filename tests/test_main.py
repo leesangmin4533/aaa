@@ -101,6 +101,7 @@ _spec = importlib.util.spec_from_file_location(
 )
 main = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(main)
+import utils.config as config_mod
 
 
 def test_run_script_reads_and_executes(tmp_path):
@@ -232,6 +233,7 @@ def test_main_writes_sales_data(tmp_path):
 
     with (
         patch.object(main, "CODE_OUTPUT_DIR", out_dir),
+        patch.object(config_mod, "DB_FILE", str(out_dir / "integrated.db")),
         patch.object(main, "create_driver", return_value=driver),
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
@@ -273,7 +275,7 @@ def test_main_writes_integrated_db_when_needed(tmp_path):
         driver.execute_script.side_effect = [[], [], parsed, None]
         main.main()
 
-    expected = out_dir / main.INTEGRATED_SALES_DB_FILE
+    expected = pathlib.Path(config_mod.DB_FILE)
     write_mock.assert_called_once_with(parsed, expected)
 
 
