@@ -304,3 +304,24 @@ def test_cli_invokes_main(tmp_path):
     )
     assert result.returncode == 0
     assert 'MAIN CALLED' in result.stdout
+
+
+def test_wait_for_mix_ratio_page_logs_console_on_failure():
+    driver = Mock()
+    driver.get_log = Mock(return_value=[{"message": "foo"}, {"message": "bar"}])
+
+    wait_mock = Mock()
+    wait_mock.until.side_effect = Exception("boom")
+
+    with (
+        patch.object(main, "WebDriverWait", return_value=wait_mock),
+        patch.object(main, "logger") as logger,
+    ):
+        ok = main.wait_for_mix_ratio_page(driver, timeout=1)
+
+    assert not ok
+    driver.get_log.assert_called_once_with("browser")
+    errors = [str(c.args[0]) for c in logger.error.call_args_list]
+    assert any("foo" in e for e in errors)
+    assert any("bar" in e for e in errors)
+
