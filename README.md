@@ -44,6 +44,7 @@
 - `scripts`: 자동화에 사용될 JavaScript 파일 목록입니다.
   - `default`: 핵심 데이터 수집 로직이 담긴 Nexacro 최적화 라이브러리입니다.
   - `listener`: 실시간 DOM 변화를 감지하여 데이터를 수집하는 스크립트입니다.
+  - `date_changer`: 날짜를 변경하고 조회 버튼을 누르는 스크립트입니다.
   - `navigation`: 목표 페이지로 이동하는 스크립트입니다.
 
 ### 2. 로그인 정보
@@ -74,8 +75,10 @@ python main.py
 
 각 수집 사이클(`_run_collection_cycle`)은 다음처럼 동작합니다.
 - Chrome 드라이버를 실행하고 로그인합니다.
+- `nexacro_automation_library.js`를 브라우저에 주입합니다.
+- `date_changer.js`를 로드해 날짜 변경 기능을 준비합니다.
 - `navigation.js`를 실행하여 목표 페이지로 이동합니다.
-- `nexacro_automation_library.js`를 브라우저에 주입하고, `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
+- `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
 - 수집된 데이터는 통합 DB에 저장됩니다.
 
 ## 데이터 포맷

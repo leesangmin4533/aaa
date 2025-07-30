@@ -236,6 +236,8 @@ def main() -> None:
         # Load nexacro_automation_library.js (contains data collection logic)
         run_script(driver, f"scripts/{default_script}")
 
+        run_script(driver, "scripts/date_changer.js")
+
         run_script(driver, NAVIGATION_SCRIPT)
         # Give some time for the page to stabilize after navigation
         time.sleep(2)
