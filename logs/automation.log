@@ -1,9 +1,3 @@
-[2025-07-31 10:06:28][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29']
-[2025-07-31 10:07:03][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
-[2025-07-31 10:07:03][utils.db_util][system][INFO] 추천 상품 조합: [{'product_code': '8800271900953', 'product_name': '주)3XL매콤돈�[2025-07-31 10:07:03][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
-[2025-07-31 10:07:03][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html?version=0.10831504326385721 5 The key "target-densitydpi" is not supported.
-[2025-07-31 10:07:03][bgf_automation][system][INFO] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
-[2025-07-31 10:07:03][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
-[2025-07-31 10:07:06][bgf_automation][system][INFO] WebDriver quit successfully.
- '주)압도적리치스팸마요1', 'recommended_quantity': 11}, {'product_code': '8800279676348', 'product_name': '주)3XL바싹제육불고기1', 'recommended_quantity': 11}, {'product_code': '8800279676522', 'product_name': '주)3XL쟌슨빌부대삼각1', 'recommended_quantity': 11}, {'product_code': '8800279677307', 'product_name': '주)화끈불제육삼각1', 'recommended_quantity': 11}, {'product_code': '8801771033981', 'product_name': '주)리치치킨마요삼각1', 'recommended_quantity': 11}, {'product_code': '8801771034100', 'product_name': '주)감자탕볶음밥맛삼각1', 'recommended_quantity': 11}, {'product_code': '8809948346506', 'product_name': '주)3XL베이컨참치마요1', 'recommended_quantity': 11}, {'product_code': '8809948346629', 'product_name': '주)참치마요김치제육더블1', 'recommended_quantity': 23}]
-[2025-07-31 10:07:03][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
+[2025-07-31 10:11:30][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-31 10:11:30][utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[2025-07-31 10:11:30][utils.po[2025-07-31 10:11:30][login.login_bgf][login][INFO] Closed 0 popups after login.
