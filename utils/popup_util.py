@@ -187,12 +187,13 @@ def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
         return true;
     }
 
-    const textSelectors = ['닫기', '확인', '취소', 'Close', 'OK', 'Cancel', '×', 'X'];
+    const textSelectors = ['닫기', '확인', '취소', 'Close', 'OK', 'Cancel', '×', 'X', '확인하기'];
     const idSelectors = [
         'btn_topClose', 'btnClose',
         'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_close',
         'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_closeTop',
-        'mainframe.HFrameSet00.VFrameSet00.TopFrame.STZZ210_P0.form.btn_enter'
+        'mainframe.HFrameSet00.VFrameSet00.TopFrame.STZZ210_P0.form.btn_enter',
+        'mainframe.HFrameSet00.VFrameSet00.TopFrame.selBusinessAlarmMessage.form.btn_enter'
     ];
     const classSelectors = ['close', 'popup-close', 'btn_pop_close'];
 
@@ -222,17 +223,19 @@ def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
         try:
             was_popup_closed = driver.execute_script(js_script)
             if was_popup_closed:
-                log.info("Found and closed a popup.")
                 closed_count += 1
                 # If we closed one, immediately check for another one.
                 time.sleep(0.5)
             else:
-                # If no popup was found, wait a bit before trying again.
+                # If no popup was found in this iteration, wait a bit before trying again.
                 time.sleep(0.5)
         except Exception as e:
             log.error(f"An error occurred during popup closing script: {e}")
             # Stop on error to avoid flooding logs
             break
     
-    log.info(f"Finished popup closing process. Total closed: {closed_count}")
+    if closed_count > 0:
+        log.info(f"Successfully closed {closed_count} popups.")
+    else:
+        log.info("No popups were found or closed within the timeout.")
     return closed_count
