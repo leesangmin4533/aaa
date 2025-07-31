@@ -252,10 +252,10 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
         url = f"http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={api_key}&pageNo=1&numOfRows=1000&dataType=JSON&base_date={date_str}&base_time=0500&nx={nx}&ny={ny}"
         
         try:
+            log.debug(f"Weather API request URL for {date}: {url}")
             response = requests.get(url)
             response.raise_for_status() # 오류 발생 시 예외 처리
             
-            # [추가] 응답 텍스트를 로그로 출력하여 확인
             log.debug(f"Weather API response for {date}: {response.text}")
 
             data = response.json()
