@@ -4,7 +4,7 @@ import json
 import os
 import sys
 import time
-from typing import Any
+from typing import Any, Dict
 from dotenv import load_dotenv
 
 try:  # pragma: no cover - optional selenium dependency
@@ -37,53 +37,47 @@ except Exception:  # pragma: no cover - fallback for tests
 log = get_logger(__name__)
 
 
-def load_credentials(path: str | None = None) -> dict:
-    """Load login credentials from a JSON file or environment variables.
+def load_credentials(credential_keys: Dict[str, str]) -> dict:
+    """Load login credentials from environment variables using provided keys.
 
-    If a path to a JSON file is provided, it loads credentials from that file.
-    Otherwise, it loads credentials from environment variables, which can be
-    populated from a .env file.
+    It loads credentials from environment variables, which can be
+    populated from a .env file. The `credential_keys` dictionary specifies
+    which environment variables to use for the ID and password.
     """
-    # 현재 작업 디렉터리의 ``.env`` 파일을 먼저 시도한다
-    cwd_env = Path.cwd() / ".env"
-    if cwd_env.exists():
-        log.debug(
-            f"Attempting to load .env from CWD: {cwd_env}",
-            extra={"tag": "env"},
-        )
-        load_dotenv(dotenv_path=cwd_env, override=False)
+    # .env 파일을 명시적으로 로드합니다.
+    env_path = ROOT_DIR / ".env"
+    if env_path.exists():
+        log.debug(f"Loading .env file from: {env_path}", extra={"tag": "env"})
+        load_dotenv(dotenv_path=env_path, override=True)
+    else:
+        log.warning(f".env file not found at {env_path}", extra={"tag": "env"})
+
+
+    id_env_var = credential_keys.get("id")
+    pw_env_var = credential_keys.get("password")
+
+    if not id_env_var or not pw_env_var:
+        raise ValueError("`credential_keys` must contain 'id' and 'password' keys.")
+
+    user_id = os.environ.get(id_env_var)
+    password = os.environ.get(pw_env_var)
 
     log.debug(
-        f"BGF_USER_ID after load_dotenv: {os.environ.get('BGF_USER_ID')}",
+        f"Loading credentials from env vars: ID_VAR='{id_env_var}', PW_VAR='{pw_env_var}'",
         extra={"tag": "env"},
     )
-    log.debug(
-        f"BGF_PASSWORD after load_dotenv: {os.environ.get('BGF_PASSWORD')}",
-        extra={"tag": "env"},
-    )
-
-    if path:
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            raise RuntimeError(f"Failed to load credentials from {path}: {e}")
-
-    # 환경 변수에서 자격 증명 로드
-    user_id = os.environ.get("BGF_USER_ID")
-    password = os.environ.get("BGF_PASSWORD")
 
     if user_id and password:
         return {"id": user_id, "password": password}
 
     raise RuntimeError(
-        "Credentials not provided. Set BGF_USER_ID/BGF_PASSWORD in .env or "
-        "specify a JSON file."
+        f"Credentials not found in environment variables. "
+        f"Please set {id_env_var} and {pw_env_var} in your .env file."
     )
 
 
 def login_bgf(
-    driver: WebDriver, credential_path: str | None = None, timeout: int = 30
+    driver: WebDriver, credential_keys: Dict[str, str], timeout: int = 30
 ) -> bool:
     """Perform login on BGF Retail store page.
 
@@ -106,7 +100,7 @@ def login_bgf(
         )
         return False
 
-    creds = load_credentials(credential_path)
+    creds = load_credentials(credential_keys)
     user_id = creds.get("id")
     password = creds.get("password")
 
