@@ -144,3 +144,5 @@ CREATE TABLE IF NOT EXISTS mid_sales (
 - **안정적인 컴포넌트 제어**: `lookup()`, `set_rowposition()`, `triggerEvent()` 등 Nexacro 내부 API를 사용하여 컴포넌트를 안정적으로 제어합니다.
 ## 프로젝트 요약
 자세한 요약은 PROJECT_SUMMARY.txt 파일을 참조하세요.
+
+더 자세한 실행 흐름은 `BGF_Automation_Flow.md` 문서를 참고하세요.
