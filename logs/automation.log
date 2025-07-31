@@ -1,4 +1,150 @@
 [2025-07-31 16:52:11][utils.popup_util][system][INFO] Starting to poll for popups...
-025-07-31 16:52:11][login.login_bgf][login][INFO] Login script executed
-[2025-07-31 16:52:11][login.login_bgf][login][INFO] Login succeeded
-FO] Starting BGF Retail Automation...
+[2[2025-07-31 16:52:27][utils.db_util][db][INFO] DB에 없는 날짜: []
+[2025-07-31 16:52:39][utils.db_util][system][DEBUG] Weather API request URL for 2025-07-31: https://apihub.kma.go.kr/api/typ01/url/fct_afs_ds.php?tmfc1=2025073105&tmfc2=2025073105&disp=1&a[2025-07-31 16:52:39][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
+[2025-07-31 16:52:39][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html?version=0.2936731471453541 5 The key "target-densitydpi" is not supported.
+[2025-07-31 16:52:39][bgf_automation][system][INFO] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
+[2025-07-31 16:52:39][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
+[2025-07-31 16:52:41][bgf_automation][system][INFO] WebDriver quit successfully.
+  wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 107,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "jaedongjang",
+    man_fc: "장재동",
+    cnt: 2,
+    wf_sv1: "□ (종합) 오늘~내일 평북과 함경도 곳에 따라 비\n  ○ (오늘, 31일) 전 지역 대체로 흐리고, 평북과 함경도 곳에 따라 가끔 비\n  ○ (내일, 8월 1일) 전 지역 대체로 흐리고, 평북과 함경도 곳에 따라 가끔 비\n  ○ (모레, 8월 2일) 전 지역 대체로 흐리고, 오전부터 오후 사이 전 지역 곳에 따라 가끔 비\n  ○ (글피, 8월 3일) 전 지역 대체로 흐리고, 오후부터 평안도와 함경도 곳에 따라 가끔 비\n\n* 예상 강수량(31일)\n- 평북, 함경도: 5~20mm\n\n* 예상 강수량(8월 1일)\n- 평북, 함경도: 10~50mm\n\n* 예상 강수량(8월 2일)\n- 평안도, 함경도, 황해도: 5~20mm",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 108,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "jaedongjang",
+    man_fc: "장재동",
+    cnt: 2,
+    wf_sv1: "□ (종합) 당분간 무더위와 열대야 주의, 서해안과 남해안, 제주도해안 너울 유의\n  ○ (오늘, 31일) 남부지방 대체로 맑겠으나, 중부지방과 제주도 구름많음,\n                  아침(06~09시)까지 제주도 곳에 따라 비, 오전(06~12시)까지 강원영서북부와 전남서해안 곳에 따라 비, \n                  아침(06~09시)까지 수도권과 충청권남부, 전북, 경북북서내륙 곳에 따라 0.1mm 미만 빗방울              \n  ○ (내일~모레, 8월 1~2일) 전국 가끔 구름많겠으나, 제주도 대체로 흐림    \n  ○ (글피, 8월 3일) 전국 가끔 구름많다가, 차차 흐려짐, 밤(18~24시)부터 제주도 비             \n \n* 예상 강수량(31일) \n- (강원도) 강원영서북부: 5mm 미만\n- (전라권) 전남서해안: 5~20mm\n- (제주도) 제주도: 5mm 미만",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 109,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "lan98",
+    man_fc: "이혜란",
+    cnt: 2,
+    wf_sv1: "□ (종합) 당분간 무더위와 열대야, 온열질환 등 건강관리 주의, 서해중부해상 너울 유의\n  ○ (오늘, 31일) 구름많음, 서울.인천.경기도와 서해5도 아침(06~09시)까지 일부 지역 0.1mm 미만 빗방울\n  ○ (내일, 8월 1일) 가끔 구름많음, 서해5도 대체로 흐림\n  ○ (모레, 8월 2일) 구름많음\n  ○ (글피, 8월 3일) 대체로 흐림, 서해5도 구름많음\n \n",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 131,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "genius60",
+    man_fc: "권진호",
+    cnt: 2,
+    wf_sv1: "□ (종합) 당분간 무더위와 열대야, 건강관리 유의\n  ○ (오늘, 31일) 구름많다가 밤부터 맑아짐, 아침(06~09시)까지 충북남부 중심 곳에 따라 0.1mm 미만 빗방울\n  ○ (내일, 8월 1일) 대체로 맑음\n  ○ (모레, 8월 2일) 가끔 구름많음\n  ○ (글피, 8월 3일) 가끔 구름많다가 차차 흐려짐",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 133,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "jeromi",
+    man_fc: "유홍종",
+    cnt: 2,
+    wf_sv1: "□ (종합) 충남권 전 지역 폭염경보, 당분간 무더위와 열대야, 건강관리 각별히 유의\n  ○ (오늘, 31일) 대체로 흐리다가 오후부터 차차 맑아짐, 아침(06~09시)까지 충남권남부 곳에 따라 0.1mm 미만 빗방울\n  ○ (내일~모레, 8월 1~2일) 가끔 구름많음\n  ○ (글피, 8월 3일) 대체로 흐림",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 143,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "lhm79",
+    man_fc: "이호민",
+    cnt: 2,
+    wf_sv1: "□ (종합) 당분간 무더위와 열대야, 건강관리 유의\n  ○ (오늘, 31일) 구름많다가 낮부터 맑아짐, 아침(06~09시)까지 경북북서내륙 곳에 따라 0.1mm 미만 빗방울\n  ○ (내일, 8월 1일) 대체로 맑음\n  ○ (모레, 8월 2일) 가끔 구름많음\n  ○ (글피, 8월 3일) 가끔 구름많다가 차차 흐려짐\n",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 146,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "skylover",
+    man_fc: "국정호",
+    cnt: 2,
+    wf_sv1: "□ (종합) 당분간 무더위와 열대야 주의, 서해안 너울 유의\n  ○ (오늘, 31일) 구름많다가 오후부터 맑아짐, 아침(06~09시)까지 전북 곳에 따라 0.1mm 미만 빗방울\n  ○ (내일, 8월 1일) 대체로 맑음\n  ○ (모레, 8월 2일) 가끔 구름많음\n  ○ (글피, 8월 3일) 가끔 구름많다가 차차 흐려짐",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 156,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "gwkang",
+    man_fc: "강가웅",
+    cnt: 2,
+    wf_sv1: "□ (종합) 오늘 오전 전남서해안 가끔 비, 당분간 무더위와 열대야 주의, 전남해안 너울 유의\n  ○ (오늘, 31일) 구름많다가 오후부터 맑아짐, 오전(06~12시)까지 전남서해안 가끔 비\n  ○ (내일~모레, 8월 1~2일) 가끔 구름많음\n  ○ (글피, 8월 3일) 대체로 흐림\n\n*  예상 강수량(31일) \n- 전남서해안: 5~20mm",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 159,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "jko0097",
+    man_fc: "전경옥",
+    cnt: 2,
+    wf_sv1: "□ (종합) 당분간 무더위와 열대야, 부산과 경남남해안 너울, 오늘까지 남해동부바깥먼바다 풍랑 유의\n  ○ (오늘~내일, 31일~8월 1일) 대체로 맑음\n  ○ (모레, 8월 2일) 가끔 구름많음\n  ○ (글피, 8월 3일) 가끔 구름많다가, 차차 흐려짐",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  },
+  {
+    stn_id: 184,
+    tm_fc: "2025.07.31.05:00",
+    man_fc_id: "lmh502",
+    man_fc: "이명훈",
+    cnt: 2,
+    wf_sv1: "□ (종합) 오늘 아침까지 곳에 따라 가끔 비, 당분간 무더위와 열대야 건강관리 주의, 풍랑·너울 유의\n ○ (오늘, 31일) 흐리다가 오후부터 구름많음, 오늘 아침(06~09시)까지 서부지역 중심 가끔 비\n ○ (내일~모레, 8월 1~2일) 대체로 흐림\n ○ (글피, 8월 3일) 대체로 흐림, 밤(18~24시)부터 비\n\n* 예상 강수량(31일 아침까지)\n - 제주도: 5mm 미만\n",
+    wf_sv2: "",
+    wf_sv3: "",
+    wn: "※ 특보 및 예비특보 발표현황은 아래의 사이트를 참고하시기 바랍니다.\n- 기상청 날씨누리(www.weather.go.kr)\n- 방재기상정보시스템(afso.kma.go.kr)\n※ 특정관리해역 특보현황(afso.kma.go.kr/m/wrnSpec.jsp)",
+    wr: "o 없음",
+    rem: ""
+  }
+  ]
+}
+#7777END
+
+[2025-07-31 16:52:39][utils.db_util][system][ERROR] 2025-07-31 날씨 데이터 파싱 중 오류 발생: Expecting ',' delimiter: line 5 column 27 (char 69)
+[2025-07-31 16:52:39][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
+[2025-07-31 16:52:39][utils.db_util][system][INFO] 추천 상품 조합: [{'product_code': '8800271900953', 'product_name': '주)3XL매콤돈까스삼각1', 'recommended_quantity': 9}, {'product_code': '8800271902513', 'product_name': '주)치즈닭갈비볶음밥맛1', 'recommended_quantity': 9}, {'product_code': '8800275320290', 'product_name': '주)계란버터간장삼각1', 'recommended_quantity': 14}, {'product_code': '8800275320696', 'product_name': '주)더뉴치킨마요삼각1', 'recommended_quantity': 9}, {'product_code': '8800279670889', 'product_name': '주)3XL베이컨햄마요김치1', 'recommended_quantity': 4}, {'product_code': '8800279672357', 'product_name': '주)뉴3XL동원고추참치1', 'recommended_quantity': 4}, {'product_code': '8800279672579', 'product_name': '주)오일컷담백참치삼각1', 'recommended_quantity': 4}, {'product_code': '8800279675105', 'product_name': '주)청양참치마요삼각1', 'recommended_quantity': 4}, {'product_code': '8800279675808', 'product_name': '주)압도적리치스팸마요1', 'recommended_quantity': 9}, {'product_code': '8800279676348', 'product_name': '주)3XL바싹제육불고기1', 'recommended_quantity': 9}, {'product_code': '8800279676522', 'product_name': '주)3XL쟌슨빌부대삼각1', 'recommended_quantity': 4}, {'product_code': '8800279677307', 'product_name': '주)화끈불제육삼각1', 'recommended_quantity': 4}, {'product_code': '8801771033981', 'product_name': '주)리치치킨마요삼각1', 'recommended_quantity': 4}, {'product_code': '8801771034100', 'product_name': '주)감자탕볶음밥맛삼각1', 'recommended_quantity': 4}, {'product_code': '8801771034148', 'product_name': '주)떡볶이맛볶음밥1', 'recommended_quantity': 4}, {'product_code': '8809948346506', 'product_name': '주)3XL베이컨참치마요1', 'recommended_quantity': 4}, {'product_code': '8809948346629', 'product_name': '주)참치마요김치제육더블1', 'recommended_quantity': 4}]
+[2025-07-31 16:52:39][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
