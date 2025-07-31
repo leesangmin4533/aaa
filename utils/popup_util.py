@@ -168,8 +168,8 @@ def ensure_focus_popup_closed(driver: WebDriver, timeout: float = 5.0, stable_ti
 def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
     """Find and close all popups within a given timeout using a robust JS script.
 
-    This function repeatedly executes a JavaScript snippet to find and click
-    any popup close buttons until no more are found or the timeout is reached.
+    This function repeatedly polls and executes a JavaScript snippet to find and
+    click any popup close buttons until the timeout is reached.
     """
     closed_count = 0
     start_time = time.time()
@@ -217,19 +217,21 @@ def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
     return false;
     """
 
+    log.info("Starting to poll for popups...")
     while time.time() - start_time < timeout:
         try:
             was_popup_closed = driver.execute_script(js_script)
             if was_popup_closed:
                 log.info("Found and closed a popup.")
                 closed_count += 1
-                time.sleep(1) # Wait briefly for the DOM to update
-                continue
+                # If we closed one, immediately check for another one.
+                time.sleep(0.5)
             else:
-                log.info("No more popups found, finishing.")
-                break
+                # If no popup was found, wait a bit before trying again.
+                time.sleep(0.5)
         except Exception as e:
             log.error(f"An error occurred during popup closing script: {e}")
+            # Stop on error to avoid flooding logs
             break
     
     log.info(f"Finished popup closing process. Total closed: {closed_count}")
