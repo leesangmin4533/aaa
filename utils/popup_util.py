@@ -4,6 +4,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
+from typing import Any
 
 from .log_util import get_logger
 
@@ -164,6 +165,71 @@ def ensure_focus_popup_closed(driver: WebDriver, timeout: float = 5.0, stable_ti
             break
 
 
-def close_popups_after_delegate(func, *args, **kwargs):
-    """Execute ``func`` and return its result."""
-    return func(*args, **kwargs)
+def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
+    """Find and close all popups within a given timeout.
+
+    This function repeatedly finds and closes popups until no more are found
+    or the timeout is reached.
+    """
+    from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+
+    popup_selectors = [
+        "div.div_pop_wrap[style*='display: block']",
+        "div.div_pop_wrap[style*='display:flex']",
+        "div.pop_wrap[style*='display: block']",
+    ]
+    close_button_selectors = ["a.btn_pop_close", "button.btn_pop_close"]
+
+    closed_count = 0
+    start_time = time.time()
+
+    while time.time() - start_time < timeout:
+        popups_found_in_iteration = False
+        for popup_selector in popup_selectors:
+            try:
+                popups = driver.find_elements(By.CSS_SELECTOR, popup_selector)
+                for popup in popups:
+                    if not popup.is_displayed():
+                        continue
+
+                    for btn_selector in close_button_selectors:
+                        try:
+                            close_button = popup.find_element(By.CSS_SELECTOR, btn_selector)
+                            if close_button.is_displayed() and close_button.is_enabled():
+                                driver.execute_script("arguments[0].click();", close_button)
+                                log.info("Successfully clicked a popup close button.")
+
+                                # Wait for the popup to become stale (disappear)
+                                WebDriverWait(driver, 2).until(
+                                    EC.staleness_of(popup)
+                                )
+
+                                closed_count += 1
+                                popups_found_in_iteration = True
+                                break  # Move to the next popup
+                        except StaleElementReferenceException:
+                            # Popup was closed by a previous action, which is fine.
+                            popups_found_in_iteration = True
+                            break
+                        except Exception:
+                            # Other exceptions (e.g., button not found) are ignored
+                            pass
+                    if popups_found_in_iteration:
+                        break # Re-scan for all popups from the start
+            except StaleElementReferenceException:
+                 # The popup disappeared while we were iterating, which is a good thing.
+                popups_found_in_iteration = True
+                break
+            except Exception as e:
+                log.warning(f"Error finding popups with selector {popup_selector}: {e}")
+        
+        # If we went through a full loop without finding any popups, we can exit early.
+        if not popups_found_in_iteration:
+            break
+        
+        time.sleep(0.2) # Small delay to prevent a tight loop
+
+    log.info(f"Finished popup closing process. Total closed: {closed_count}")
+    return closed_count
