@@ -166,70 +166,76 @@ def ensure_focus_popup_closed(driver: WebDriver, timeout: float = 5.0, stable_ti
 
 
 def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
-    """Find and close all popups within a given timeout.
+    """Find and close all popups within a given timeout using a robust JS script.
 
-    This function repeatedly finds and closes popups until no more are found
-    or the timeout is reached.
+    This function repeatedly executes a JavaScript snippet to find and click
+    any popup close buttons until no more are found or the timeout is reached.
     """
-    from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-
-    popup_selectors = [
-        "div.div_pop_wrap[style*='display: block']",
-        "div.div_pop_wrap[style*='display:flex']",
-        "div.pop_wrap[style*='display: block']",
-    ]
-    close_button_selectors = ["a.btn_pop_close", "button.btn_pop_close"]
-
     closed_count = 0
     start_time = time.time()
 
+    # This JavaScript is a combination of robust selectors from the old implementation.
+    js_script = """
+    function simulateClick(element) {
+        const rect = element.getBoundingClientRect();
+        const eventOptions = {
+            bubbles: true, cancelable: true, view: window,
+            clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2
+        };
+        element.dispatchEvent(new MouseEvent('mousedown', eventOptions));
+        element.dispatchEvent(new MouseEvent('mouseup', eventOptions));
+        element.dispatchEvent(new MouseEvent('click', eventOptions));
+        return true;
+    }
+
+    const textSelectors = ['닫기', '확인', '취소', 'Close', 'OK', 'Cancel', '×', 'X'];
+    const idSelectors = [
+        'btn_topClose', 'btnClose',
+        'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_close',
+        'mainframe.HFrameSet00.VFrameSet00.FrameSet.WorkFrame.STZZ120_P0.form.btn_closeTop',
+        'mainframe.HFrameSet00.VFrameSet00.TopFrame.STZZ210_P0.form.btn_enter'
+    ];
+    const classSelectors = ['close', 'popup-close', 'btn_pop_close'];
+
+    for (const id of idSelectors) {
+        const el = document.getElementById(id);
+        if (el && el.offsetParent !== null) return simulateClick(el);
+    }
+    for (const text of textSelectors) {
+        const elems = document.querySelectorAll('button, a, div');
+        for (const el of elems) {
+            if (el.innerText && el.innerText.trim() === text && el.offsetParent !== null) {
+                return simulateClick(el);
+            }
+        }
+    }
+    for (const cls of classSelectors) {
+        const elems = document.querySelectorAll('.' + cls);
+        for (const el of elems) {
+            if (el.offsetParent !== null) return simulateClick(el);
+        }
+    }
+    return false;
+    """
+
     while time.time() - start_time < timeout:
-        popups_found_in_iteration = False
-        for popup_selector in popup_selectors:
-            try:
-                popups = driver.find_elements(By.CSS_SELECTOR, popup_selector)
-                for popup in popups:
-                    if not popup.is_displayed():
-                        continue
+        try:
+            # Execute the script. It will return true if it found and clicked a button.
+            was_popup_closed = driver.execute_script(js_script)
 
-                    for btn_selector in close_button_selectors:
-                        try:
-                            close_button = popup.find_element(By.CSS_SELECTOR, btn_selector)
-                            if close_button.is_displayed() and close_button.is_enabled():
-                                driver.execute_script("arguments[0].click();", close_button)
-                                log.info("Successfully clicked a popup close button.")
-
-                                # Wait for the popup to become stale (disappear)
-                                WebDriverWait(driver, 2).until(
-                                    EC.staleness_of(popup)
-                                )
-
-                                closed_count += 1
-                                popups_found_in_iteration = True
-                                break  # Move to the next popup
-                        except StaleElementReferenceException:
-                            # Popup was closed by a previous action, which is fine.
-                            popups_found_in_iteration = True
-                            break
-                        except Exception:
-                            # Other exceptions (e.g., button not found) are ignored
-                            pass
-                    if popups_found_in_iteration:
-                        break # Re-scan for all popups from the start
-            except StaleElementReferenceException:
-                 # The popup disappeared while we were iterating, which is a good thing.
-                popups_found_in_iteration = True
+            if was_popup_closed:
+                log.info("Found and closed a popup.")
+                closed_count += 1
+                time.sleep(0.5) # Wait briefly for the DOM to update after a close
+                continue # Immediately try to find another popup
+            else:
+                # If the script returns false, no more popups were found
+                log.info("No more popups found, finishing.")
                 break
-            except Exception as e:
-                log.warning(f"Error finding popups with selector {popup_selector}: {e}")
-        
-        # If we went through a full loop without finding any popups, we can exit early.
-        if not popups_found_in_iteration:
-            break
-        
-        time.sleep(0.2) # Small delay to prevent a tight loop
 
+        except Exception as e:
+            log.error(f"An error occurred during popup closing script: {e}")
+            break # Exit on error
+    
     log.info(f"Finished popup closing process. Total closed: {closed_count}")
     return closed_count
