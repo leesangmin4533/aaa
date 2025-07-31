@@ -27,10 +27,10 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 try:
-    from utils.popup_util import close_all_modals
+    from utils.popup_util import close_popups_after_delegate
 except Exception:  # pragma: no cover - fallback for tests
 
-    def close_all_modals(*_a, **_k):
+    def close_popups_after_delegate(*_a, **_k):
         return 0
 
 
@@ -204,8 +204,8 @@ try {
         )
         log.info("Login succeeded", extra={"tag": "login"})
         try:
-            time.sleep(1)  # Give time for popups to appear after login
-            closed_count = close_all_modals(driver)
+            # The new function handles waiting intelligently, so sleep is not needed.
+            closed_count = close_popups_after_delegate(driver)
             log.info(
                 f"Closed {closed_count} popups after login.",
                 extra={"tag": "login"},
