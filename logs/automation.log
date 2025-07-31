@@ -1,4 +1,4 @@
-[2025-07-31 10:16:00][utils.popup_util][system][INFO] No more popups found, finishing.
-[2025-07-31 10:16:00][utils.popup_util][system][INFO] Finished popup closing process. Total closed: 0
-n_bgf][login][INFO] Login succeeded
-[2025-07-31 10:16:00][login.login_bgf][login][INFO] Closed 0 popups after login.
+[2025-07-31 10:25:58][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-31 10:25:58][login.login_bgf][login][INFO] Login script executed
+[2025-07-31 10:25:58][login.login_bgf][login][INFO] Login succeeded
+[2025-07-31 10:25:58][login.login_bgf][login][INFO] Popup monitor script injected and started.
