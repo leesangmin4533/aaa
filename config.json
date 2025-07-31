@@ -1,5 +1,20 @@
 {
-    "db_file": "code_outputs/db/integrated_sales.db",
+    "stores": {
+        "hoban": {
+            "db_file": "code_outputs/db/hoban.db",
+            "credentials_env": {
+                "id": "BGF_HOBAN_ID",
+                "password": "BGF_HOBAN_PW"
+            }
+        },
+        "dongyang": {
+            "db_file": "code_outputs/db/dongyang.db",
+            "credentials_env": {
+                "id": "BGF_DONGYANG_ID",
+                "password": "BGF_DONGYANG_PW"
+            }
+        }
+    },
     "scripts": {
         "default": "nexacro_automation_library.js",
         "listener": "data_collect_listener.js",
