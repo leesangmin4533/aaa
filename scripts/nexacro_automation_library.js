@@ -123,6 +123,15 @@
     window.automation.parsedData = null;
 
     try {
+      // [NEW] 메인 폼(STMB011_M0)이 로드될 때까지 대기
+      console.log("[runCollectionForDate] 메인 폼(STMB011_M0) 로딩 대기 중...");
+      await waitForCondition(
+        () => getMainForm() !== null,
+        30000, // 30초 타임아웃
+        "메인 폼(STMB011_M0) 로딩 시간 초과"
+      );
+      console.log("[runCollectionForDate] 메인 폼 로딩 완료.");
+
       // 날짜 설정 및 조회 버튼 클릭
       window.automation.changeDateAndSearch(dateStr);
 
