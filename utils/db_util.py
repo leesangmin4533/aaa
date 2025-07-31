@@ -21,6 +21,7 @@ import holidays
 import requests
 import logging
 import json
+import re
 
 if __package__:
     from .log_util import get_logger
@@ -265,7 +266,12 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
 
             # 응답 텍스트에서 불필요한 문자열 제거
             cleaned_response_text = response.text.replace('#START7777', '').replace('#7777END', '').strip()
-            data = json.loads(cleaned_response_text)
+            
+            # JSON 키에 따옴표가 없는 경우 추가 (더 강력한 정규식 사용)
+            # 예: {key: value} -> {"key": value}
+            processed_response_text = re.sub(r'(\b\w+\b)\s*:', r'"\1":', cleaned_response_text)
+            
+            data = json.loads(processed_response_text)
 
             # fct_afs_ds.php API 응답 파싱
             # 응답이 리스트 형태일 수 있으므로 첫 번째 요소를 가져옵니다.
