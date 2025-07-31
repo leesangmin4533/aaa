@@ -310,6 +310,14 @@ def main() -> None:
         run_jumeokbap_prediction_and_save()
 
         try:
+            # Retrieve and print popup monitor logs
+            popup_logs = driver.execute_script("return window.popupMonitorLogs || [];")
+            if popup_logs:
+                logger.info("--- Popup Monitor Logs ---")
+                for log_entry in popup_logs:
+                    logger.info(log_entry)
+                logger.info("--------------------------")
+
             for entry in driver.get_log("browser"):
                 logger.info(entry.get("message"))
         except Exception:
