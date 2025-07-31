@@ -1,8 +1,3 @@
-[2025-07-31 09:17:13][utils.db_util][db][INFO] DB에 없는 날짜: ['2025-07-29']
-[2025-07-31 09:17:50][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
-[2025-07-31 09:17:50][utils.db_util][system][INFO] 추천 상품 조합: {'주)3XL매콤돈까스삼각1': 6, '주)3XL바싹제육불고기1':[2025-07-31 09:17:50][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
-[2025-07-31 09:17:50][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html?version=0.7663489210728666 5 The key "target-densitydpi" is not supported.
-[2025-07-31 09:17:50][bgf_automation][system][INFO] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
-[2025-07-31 09:17:50][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
-[2025-07-31 09:17:53][bgf_automation][system][INFO] WebDriver quit successfully.
-al_closer][INFO] Finished popup closing process. Total closed: 5
+[2025-07-31 09:52:45][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
+[2025-07-31 09:52:45][utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
+[2025-07-31 09:52:45][utils.po[2025-07-31 09:52:45][login.login_bgf][login][INFO] Closed 0 popups after login.
