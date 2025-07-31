@@ -48,7 +48,10 @@ def init_db(path: Path) -> sqlite3.Connection:
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         collected_at TEXT, mid_code TEXT, mid_name TEXT, product_code TEXT, 
         product_name TEXT, sales INTEGER, order_cnt INTEGER, purchase INTEGER, 
-        disposal INTEGER, stock INTEGER, UNIQUE(collected_at, product_code)
+        disposal INTEGER, stock INTEGER,
+        weekday INTEGER, month INTEGER, week_of_year INTEGER, is_holiday INTEGER,
+        temperature REAL, rainfall REAL,
+        UNIQUE(collected_at, product_code)
     );
     """)
     conn.commit()
@@ -84,16 +87,32 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
     insert_sql = """
     INSERT INTO mid_sales (
         collected_at, mid_code, mid_name, product_code, product_name,
-        sales, order_cnt, purchase, disposal, stock
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        sales, order_cnt, purchase, disposal, stock,
+        weekday, month, week_of_year, is_holiday, temperature, rainfall
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
 
     update_sql = """
     UPDATE mid_sales SET
         collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?,
-        sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?
+        sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?,
+        weekday = ?, month = ?, week_of_year = ?, is_holiday = ?, temperature = ?, rainfall = ?
     WHERE product_code = ? AND SUBSTR(collected_at, 1, 10) = ?
     """
+
+    # 현재 날짜의 파생 특성 및 날씨 데이터 미리 가져오기
+    current_date_dt = datetime.strptime(current_date, "%Y-%m-%d").date()
+    
+    # 요일, 월, 주차, 공휴일 여부 계산
+    weekday = current_date_dt.weekday()
+    month = current_date_dt.month
+    week_of_year = current_date_dt.isocalendar()[1]
+    is_holiday = int(current_date_dt in holidays.KR())
+
+    # 날씨 데이터 가져오기
+    weather_df = get_weather_data([current_date_dt])
+    temperature = weather_df['temperature'].iloc[0] if not weather_df.empty else 0.0
+    rainfall = weather_df['rainfall'].iloc[0] if not weather_df.empty else 0.0
 
     for rec in records:
         product_code = _get_value(rec, "productCode", "product_code")
@@ -132,6 +151,7 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
                         purchase,
                         disposal,
                         stock,
+                        weekday, month, week_of_year, is_holiday, temperature, rainfall,
                         product_code,
                         current_date,
                     ),
@@ -150,6 +170,7 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
                     purchase,
                     disposal,
                     stock,
+                    weekday, month, week_of_year, is_holiday, temperature, rainfall,
                 ),
             )
 
