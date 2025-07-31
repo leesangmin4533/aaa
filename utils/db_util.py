@@ -20,6 +20,7 @@ from sklearn.metrics import mean_squared_error
 import holidays
 import requests
 import logging
+import json
 
 if __package__:
     from .log_util import get_logger
@@ -262,12 +263,14 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             
             log.debug(f"Weather API response for {date}: {response.text}")
 
-            data = response.json()
+            # 응답 텍스트에서 불필요한 문자열 제거
+            cleaned_response_text = response.text.replace('#START7777', '').replace('#7777END', '').strip()
+            data = json.loads(cleaned_response_text)
 
             # fct_afs_ds.php API 응답 파싱
             # 응답이 리스트 형태일 수 있으므로 첫 번째 요소를 가져옵니다.
-            if isinstance(data, list) and len(data) > 0:
-                item = data[0]
+            if isinstance(data, dict) and "fct_afs_ds" in data and isinstance(data["fct_afs_ds"], list) and len(data["fct_afs_ds"]) > 0:
+                item = data["fct_afs_ds"][0]
                 avg_temp = float(item.get('TA', 0)) # 기온
                 
                 # PREP (강수유무코드): 1(비), 2(비/눈), 4(눈/비), 3(눈)
