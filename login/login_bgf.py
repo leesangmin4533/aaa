@@ -204,10 +204,18 @@ try {
         )
         log.info("Login succeeded", extra={"tag": "login"})
         try:
-            # The new function handles waiting intelligently, so sleep is not needed.
-            closed_count = close_popups_after_delegate(driver)
-            log.info(
-                f"Closed {closed_count} popups after login.",
+            # Inject and start the popup monitor script.
+            monitor_script_path = ROOT_DIR / "scripts" / "popup_monitor.js"
+            if monitor_script_path.exists():
+                monitor_script = monitor_script_path.read_text(encoding="utf-8")
+                driver.execute_script(monitor_script)
+                driver.execute_script("window.popupTools.startMonitor();")
+                log.info("Popup monitor script injected and started.", extra={"tag": "login"})
+            else:
+                log.warning("Popup monitor script not found.", extra={"tag": "login"})
+        except Exception as e:
+            log.warning(
+                f"An error occurred during popup monitoring setup: {e}",
                 extra={"tag": "login"},
             )
         except Exception as e:
