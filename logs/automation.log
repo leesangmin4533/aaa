@@ -1,4 +1,13 @@
-[2025-07-31 10:25:58][login.login_bgf][login][INFO] Login form elements are ready.
-[2025-07-31 10:25:58][login.login_bgf][login][INFO] Login script executed
-[2025-07-31 10:25:58][login.login_bgf][login][INFO] Login succeeded
-[2025-07-31 10:25:58][login.login_bgf][login][INFO] Popup monitor script injected and started.
+[2025-07-31 10:31:00][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-07-31 10:31:00][login.login_bgf][login][INFO] Login script executed
+[2025-07-31 10:31:00][login.login_bgf][login][INFO] Login succeeded
+FO] Starting BGF Retail Automation...
+[2025-07-31 10:31:00][bgf_automation][system][INFO] Popup monitor has been injected and is running.
+[2025-07-31 10:33:00][bgf_automation][system][ERROR] wait_for_mix_ratio_page failed: Message: 
+
+[2025-07-31 10:33:00][bgf_automation][system][ERROR] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
+[2025-07-31 10:33:00][bgf_automation][system][ERROR] https://store.bgfretail.com/websrc/deploy/index.html?version=0.3655887996405781 5 The key "target-densitydpi" is not supported.
+[2025-07-31 10:33:00][bgf_automation][system][ERROR] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
+[2025-07-31 10:33:00][bgf_automation][system][ERROR] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
+[2025-07-31 10:33:00][bgf_automation][system][ERROR] Failed to load mix ratio page elements. Exiting.
+[2025-07-31 10:33:02][bgf_automation][system][INFO] WebDriver quit successfully.
