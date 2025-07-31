@@ -249,20 +249,31 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     nx, ny = 60, 127 
 
     for date in dates:
-        # 동네예보 격자자료 - 단기예보 API 사용
-        # tmfc: 발표시간 (년월일시, 3시간 간격)
-        # tmef: 발효시간 (년월일시, 1시간 간격)
-        # vars: 예보변수 (TMP: 기온, RN1: 1시간 강수량)
-        
-        base_date_str = date.strftime('%Y%m%d')
-        # 발표시간은 05시로 고정 (가장 가까운 3시간 간격 발표 시간)
-        base_time_str = "0500" 
-        
-        # 발효시간은 현재 날짜의 06시로 설정 (예시)
-        # 실제 사용 시에는 예측하고자 하는 시간대에 맞춰 tmef를 설정해야 합니다.
-        fcst_time_str = "0600" 
+        # 동네예보 단기예보조회 API 사용
+        # base_date: 발표일자 (YYYYMMDD)
+        # base_time: 발표시각 (HHMM, 02,05,...,23시)
+        # nx, ny: 격자 좌표
+        # dataType: JSON
+        # category: TMP (기온), PCP (강수량)
 
-        url = f"https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-dfs_shrt_grd?tmfc={base_date_str}{base_time_str}&tmef={base_date_str}{fcst_time_str}&vars=TMP,RN1&nx={nx}&ny={ny}&authKey={api_key}"
+        base_date_str = date.strftime('%Y%m%d')
+        
+        # 현재 시간 기준으로 가장 가까운 발표 시간 찾기
+        now = datetime.now()
+        current_hour = now.hour
+        
+        # 단기예보 발표 시간 리스트
+        # 02, 05, 08, 11, 14, 17, 20, 23
+        publish_times = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
+        
+        base_time_str = publish_times[0] # 기본값 설정
+        for pt in publish_times:
+            if current_hour * 100 + now.minute >= int(pt):
+                base_time_str = pt
+            else:
+                break
+
+        url = f"https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getVilageFcst?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
         
         try:
             log.debug(f"Weather API request URL for {date}: {url}")
@@ -271,22 +282,30 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             
             log.debug(f"Weather API response for {date}: {response.text}")
 
-            # 응답은 텍스트 형태로 오므로, 직접 파싱해야 합니다.
-            # 예시 응답: "TMP=25.0\nRN1=0.0"
+            data = response.json()
             
             avg_temp = 0.0
             total_rainfall = 0.0
             
-            lines = response.text.strip().split('\n')
-            for line in lines:
-                if line.startswith("TMP="):
+            items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
+            
+            for item in items:
+                category = item.get('category')
+                fcst_value = item.get('fcstValue')
+                
+                if category == 'TMP': # 기온
                     try:
-                        avg_temp = float(line.split('=')[1])
+                        avg_temp = float(fcst_value)
                     except ValueError:
                         pass
-                elif line.startswith("RN1="):
+                elif category == 'PCP': # 강수량
+                    # 강수량은 범주 값으로 제공될 수 있으므로, 실제 값으로 변환 필요
+                    # 여기서는 간단히 0mm 초과면 강수량으로 간주
                     try:
-                        total_rainfall = float(line.split('=')[1])
+                        if fcst_value and fcst_value != "강수없음": # "강수없음" 문자열 처리
+                            total_rainfall = float(fcst_value)
+                        else:
+                            total_rainfall = 0.0
                     except ValueError:
                         pass
 
