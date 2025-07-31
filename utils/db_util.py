@@ -249,31 +249,20 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     nx, ny = 60, 127 
 
     for date in dates:
-        # 동네예보 단기예보조회 API 사용
+        # 동네예보 초단기실황조회 API 사용
         # base_date: 발표일자 (YYYYMMDD)
-        # base_time: 발표시각 (HHMM, 02,05,...,23시)
+        # base_time: 발표시각 (HHMM, 정시 단위)
         # nx, ny: 격자 좌표
         # dataType: JSON
-        # category: TMP (기온), PCP (강수량)
+        # category: T1H (1시간 기온), RN1 (1시간 강수량)
 
         base_date_str = date.strftime('%Y%m%d')
         
-        # 현재 시간 기준으로 가장 가까운 발표 시간 찾기
+        # 현재 시간 기준으로 가장 가까운 정시를 base_time으로 설정
         now = datetime.now()
-        current_hour = now.hour
-        
-        # 단기예보 발표 시간 리스트
-        # 02, 05, 08, 11, 14, 17, 20, 23
-        publish_times = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
-        
-        base_time_str = publish_times[0] # 기본값 설정
-        for pt in publish_times:
-            if current_hour * 100 + now.minute >= int(pt):
-                base_time_str = pt
-            else:
-                break
+        base_time_str = now.strftime('%H00') # 정시
 
-        url = f"https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getVilageFcst?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
+        url = f"https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
         
         try:
             log.debug(f"Weather API request URL for {date}: {url}")
@@ -291,21 +280,16 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             
             for item in items:
                 category = item.get('category')
-                fcst_value = item.get('fcstValue')
+                obsr_value = item.get('obsrValue') # 실황 값은 obsrValue로 제공
                 
-                if category == 'TMP': # 기온
+                if category == 'T1H': # 1시간 기온
                     try:
-                        avg_temp = float(fcst_value)
+                        avg_temp = float(obsr_value)
                     except ValueError:
                         pass
-                elif category == 'PCP': # 강수량
-                    # 강수량은 범주 값으로 제공될 수 있으므로, 실제 값으로 변환 필요
-                    # 여기서는 간단히 0mm 초과면 강수량으로 간주
+                elif category == 'RN1': # 1시간 강수량
                     try:
-                        if fcst_value and fcst_value != "강수없음": # "강수없음" 문자열 처리
-                            total_rainfall = float(fcst_value)
-                        else:
-                            total_rainfall = 0.0
+                        total_rainfall = float(obsr_value)
                     except ValueError:
                         pass
 
