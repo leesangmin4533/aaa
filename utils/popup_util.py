@@ -174,7 +174,6 @@ def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
     closed_count = 0
     start_time = time.time()
 
-    # This JavaScript is a combination of robust selectors from the original implementation.
     js_script = """
     function simulateClick(element) {
         const rect = element.getBoundingClientRect();
@@ -220,22 +219,18 @@ def close_popups_after_delegate(driver: Any, timeout: int = 15) -> int:
 
     while time.time() - start_time < timeout:
         try:
-            # Execute the script. It will return true if it found and clicked a button.
             was_popup_closed = driver.execute_script(js_script)
-
             if was_popup_closed:
                 log.info("Found and closed a popup.")
                 closed_count += 1
-                time.sleep(1) # Wait briefly for the DOM to update after a close
-                continue # Immediately try to find another popup
+                time.sleep(1) # Wait briefly for the DOM to update
+                continue
             else:
-                # If the script returns false, no more popups were found
                 log.info("No more popups found, finishing.")
                 break
-
         except Exception as e:
             log.error(f"An error occurred during popup closing script: {e}")
-            break # Exit on error
+            break
     
     log.info(f"Finished popup closing process. Total closed: {closed_count}")
     return closed_count
