@@ -247,8 +247,6 @@ def main() -> None:
         run_script(driver, "scripts/date_changer.js")
 
         run_script(driver, NAVIGATION_SCRIPT)
-        # Give some time for the page to stabilize after navigation
-        time.sleep(2)
         if not wait_for_mix_ratio_page(driver):
             logger.error("Failed to load mix ratio page elements. Exiting.")
             return
