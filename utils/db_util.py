@@ -21,7 +21,6 @@ import holidays
 import requests
 import logging
 import json
-import re
 
 if __package__:
     from .log_util import get_logger
@@ -250,12 +249,20 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     nx, ny = 60, 127 
 
     for date in dates:
-        date_str_tmfc = date.strftime('%Y%m%d') + "05" # 발표시간 05시
+        # 동네예보 격자자료 - 단기예보 API 사용
+        # tmfc: 발표시간 (년월일시, 3시간 간격)
+        # tmef: 발효시간 (년월일시, 1시간 간격)
+        # vars: 예보변수 (TMP: 기온, RN1: 1시간 강수량)
         
-        # 새로운 API URL 및 파라미터
-            # 단기예보 데이터 조회 API 엔드포인트 사용 (승인된 fct_afs_ds.php)
-        date_str_tmfc = date.strftime('%Y%m%d') + "05" # 발표시간 05시
-        url = f"https://apihub.kma.go.kr/api/typ01/url/fct_afs_ds.php?tmfc1={date_str_tmfc}&tmfc2={date_str_tmfc}&disp=1&authKey={api_key}"
+        base_date_str = date.strftime('%Y%m%d')
+        # 발표시간은 05시로 고정 (가장 가까운 3시간 간격 발표 시간)
+        base_time_str = "0500" 
+        
+        # 발효시간은 현재 날짜의 06시로 설정 (예시)
+        # 실제 사용 시에는 예측하고자 하는 시간대에 맞춰 tmef를 설정해야 합니다.
+        fcst_time_str = "0600" 
+
+        url = f"https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-dfs_shrt_grd?tmfc={base_date_str}{base_time_str}&tmef={base_date_str}{fcst_time_str}&vars=TMP,RN1&nx={nx}&ny={ny}&authKey={api_key}"
         
         try:
             log.debug(f"Weather API request URL for {date}: {url}")
@@ -264,28 +271,26 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             
             log.debug(f"Weather API response for {date}: {response.text}")
 
-            # 응답 텍스트에서 불필요한 문자열 제거
-            cleaned_response_text = response.text.replace('#START7777', '').replace('#7777END', '').strip()
+            # 응답은 텍스트 형태로 오므로, 직접 파싱해야 합니다.
+            # 예시 응답: "TMP=25.0\nRN1=0.0"
             
-            # JSON 키에 따옴표가 없는 경우 추가 (더 강력한 정규식 사용)
-            # 예: {key: value} -> {"key": value}
-            processed_response_text = re.sub(r'(\b\w+\b)\s*:', r'"\1":', cleaned_response_text)
+            avg_temp = 0.0
+            total_rainfall = 0.0
             
-            data = json.loads(processed_response_text)
+            lines = response.text.strip().split('\n')
+            for line in lines:
+                if line.startswith("TMP="):
+                    try:
+                        avg_temp = float(line.split('=')[1])
+                    except ValueError:
+                        pass
+                elif line.startswith("RN1="):
+                    try:
+                        total_rainfall = float(line.split('=')[1])
+                    except ValueError:
+                        pass
 
-            # fct_afs_ds.php API 응답 파싱
-            # 응답이 리스트 형태일 수 있으므로 첫 번째 요소를 가져옵니다.
-            if isinstance(data, dict) and "fct_afs_ds" in data and isinstance(data["fct_afs_ds"], list) and len(data["fct_afs_ds"]) > 0:
-                item = data["fct_afs_ds"][0]
-                avg_temp = float(item.get('TA', 0)) # 기온
-                
-                # PREP (강수유무코드): 1(비), 2(비/눈), 4(눈/비), 3(눈)
-                prep_code = item.get('PREP', 0)
-                total_rainfall = 10.0 if prep_code in [1, 2, 3, 4] else 0.0 # 강수유무에 따라 강수량 가정
-                
-                weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
-            else:
-                log.warning(f"{date}의 날씨 데이터를 가져오지 못했습니다. 응답 구조 확인 필요.")
+            weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
 
         except requests.exceptions.RequestException as e:
             log.error(f"{date} 날씨 데이터 요청 중 오류 발생: {e}")
