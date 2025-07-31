@@ -283,25 +283,33 @@ def predict_jumeokbap_quantity(db_path: Path) -> float:
     log.info(f"예측된 내일 주먹밥 판매량: {prediction[0]:.2f}개")
     return prediction[0]
 
-def recommend_product_mix(db_path: Path, predicted_sales: float) -> dict:
+def recommend_product_mix(db_path: Path, predicted_sales: float) -> list[dict[str, any]]:
     """예측된 총 판매량을 기반으로 상품 조합을 추천합니다."""
     db_path.parent.mkdir(parents=True, exist_ok=True)
     if not db_path.exists():
-        return {}
+        return []
 
     with sqlite3.connect(db_path) as conn:
-        query = "SELECT product_name, SUM(sales) as sales FROM mid_sales WHERE mid_name = '주먹밥' GROUP BY product_name"
+        # 상품 코드도 함께 조회하도록 쿼리 수정
+        query = "SELECT product_code, product_name, SUM(sales) as sales FROM mid_sales WHERE mid_name = '주먹밥' GROUP BY product_code, product_name"
         df = pd.read_sql(query, conn)
 
     if df.empty:
-        return {}
+        return []
 
     total_sales = df['sales'].sum()
+    if total_sales == 0:
+        return []
+        
     df['ratio'] = df['sales'] / total_sales
     
-    recommendations = {}
+    recommendations = []
     for _, row in df.iterrows():
-        recommendations[row['product_name']] = int(predicted_sales * row['ratio'])
+        recommendations.append({
+            "product_code": row["product_code"],
+            "product_name": row["product_name"],
+            "recommended_quantity": int(predicted_sales * row["ratio"])
+        })
         
     log.info(f"추천 상품 조합: {recommendations}")
     return recommendations
@@ -327,17 +335,44 @@ def run_jumeokbap_prediction_and_save():
         JUMEOKBAP_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(JUMEOKBAP_DB_PATH) as conn:
             cursor = conn.cursor()
+            # 1. 예측 마스터 테이블 생성
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS jumeokbap_predictions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT, prediction_date TEXT, 
-                forecast REAL, mix_recommendations TEXT
+                id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                prediction_date TEXT, 
+                forecast REAL
             )
             """)
-            prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            cursor.execute(
-                "INSERT INTO jumeokbap_predictions (prediction_date, forecast, mix_recommendations) VALUES (?, ?, ?)",
-                (prediction_date, forecast, str(mix))
+            # 2. 예측 아이템 상세 테이블 생성
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS jumeokbap_prediction_items (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                prediction_id INTEGER,
+                product_code TEXT,
+                product_name TEXT,
+                recommended_quantity INTEGER,
+                FOREIGN KEY (prediction_id) REFERENCES jumeokbap_predictions (id)
             )
+            """)
+            
+            prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            
+            # 3. 마스터 테이블에 예측 정보 삽입
+            cursor.execute(
+                "INSERT INTO jumeokbap_predictions (prediction_date, forecast) VALUES (?, ?)",
+                (prediction_date, forecast)
+            )
+            prediction_id = cursor.lastrowid # 방금 삽입된 마스터 레코드의 ID 가져오기
+
+            # 4. 아이템 테이블에 추천 상품 목록 삽입
+            if mix:
+                item_insert_sql = "INSERT INTO jumeokbap_prediction_items (prediction_id, product_code, product_name, recommended_quantity) VALUES (?, ?, ?, ?)"
+                items_to_insert = [
+                    (prediction_id, item['product_code'], item['product_name'], item['recommended_quantity'])
+                    for item in mix
+                ]
+                cursor.executemany(item_insert_sql, items_to_insert)
+
             conn.commit()
         log.info(f"예측 결과가 {JUMEOKBAP_DB_PATH}에 저장되었습니다.")
 
