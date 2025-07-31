@@ -27,7 +27,7 @@ else:  # pragma: no cover - fallback when executed directly
     sys.path.append(str(Path(__file__).resolve().parent))
     from log_util import get_logger
 
-log = get_logger(__name__)
+log = get_logger(__name__, level=logging.DEBUG)
 
 # --- 경로 및 상수 설정 ---
 if __package__:
@@ -248,34 +248,39 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     nx, ny = 60, 127 
 
     for date in dates:
-        date_str = date.strftime('%Y%m%d')
-        url = f"http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={api_key}&pageNo=1&numOfRows=1000&dataType=JSON&base_date={date_str}&base_time=0500&nx={nx}&ny={ny}"
+        date_str_tmfc = date.strftime('%Y%m%d') + "05" # 발표시간 05시
+        
+        # 새로운 API URL 및 파라미터
+            # 단기예보 데이터 조회 API 엔드포인트 사용 (승인된 fct_afs_ds.php)
+        date_str_tmfc = date.strftime('%Y%m%d') + "05" # 발표시간 05시
+        url = f"https://apihub.kma.go.kr/api/typ01/url/fct_afs_ds.php?tmfc1={date_str_tmfc}&tmfc2={date_str_tmfc}&disp=1&authKey={api_key}"
         
         try:
             log.debug(f"Weather API request URL for {date}: {url}")
             response = requests.get(url)
-            response.raise_for_status() # 오류 발생 시 예외 처리
+            response.raise_for_status() # HTTP 오류 (4xx, 5xx) 발생 시 예외 처리
             
             log.debug(f"Weather API response for {date}: {response.text}")
 
             data = response.json()
-            
-            items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
-            if not items:
-                log.warning(f"{date}의 날씨 데이터를 가져오지 못했습니다.")
-                continue
 
-            daily_temps = [float(item['fcstValue']) for item in items if item['category'] == 'TMP']
-            daily_rainfall = [float(item['fcstValue']) for item in items if item['category'] == 'PCP' and item['fcstValue'] != '강수없음']
-
-            avg_temp = sum(daily_temps) / len(daily_temps) if daily_temps else 0
-            total_rainfall = sum(daily_rainfall) if daily_rainfall else 0
-            
-            weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
+            # fct_afs_ds.php API 응답 파싱
+            # 응답이 리스트 형태일 수 있으므로 첫 번째 요소를 가져옵니다.
+            if isinstance(data, list) and len(data) > 0:
+                item = data[0]
+                avg_temp = float(item.get('TA', 0)) # 기온
+                
+                # PREP (강수유무코드): 1(비), 2(비/눈), 4(눈/비), 3(눈)
+                prep_code = item.get('PREP', 0)
+                total_rainfall = 10.0 if prep_code in [1, 2, 3, 4] else 0.0 # 강수유무에 따라 강수량 가정
+                
+                weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
+            else:
+                log.warning(f"{date}의 날씨 데이터를 가져오지 못했습니다. 응답 구조 확인 필요.")
 
         except requests.exceptions.RequestException as e:
             log.error(f"{date} 날씨 데이터 요청 중 오류 발생: {e}")
-        except (KeyError, ValueError) as e:
+        except (KeyError, ValueError, IndexError) as e: # IndexError 추가
             log.error(f"{date} 날씨 데이터 파싱 중 오류 발생: {e}")
 
     return pd.DataFrame(weather_data)
