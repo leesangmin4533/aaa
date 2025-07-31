@@ -1,12 +1,32 @@
-[2025-07-31 10:39:58][utils.db_util][system][WARNING] 학습 데이터가 부족하여 기본 예측을 수행합니다.
-[2025-07-31 10:39:58][utils.db_util][system][INFO] 추천 상품 조합: [{'product_code': '8800271900953', 'product_name': '주)3XL매콤돈까스삼각1', 'recommended_quantity': 15}, {'product_code': '8800271902513', 'produ[2025-07-31 10:39:58][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
-[2025-07-31 10:39:58][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/index.html?version=0.3880351764579105 5 The key "target-densitydpi" is not supported.
-[2025-07-31 10:39:58][bgf_automation][system][INFO] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
-[2025-07-31 10:39:58][bgf_automation][system][INFO] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
-[2025-07-31 10:40:00][bgf_automation][system][INFO] WebDriver quit successfully.
-0279676348', 'product_name': '주)3XL바싹제육불고기1', 'recommended_quantity': 7}, {'product_code': '8800279676522', 'product_name': '주)3XL쟌슨빌부대삼각1', 'recommended_quantity': 7}, {'product_code': '8800279677307', 'product_name': '주)화끈불제육삼각1', 'recommended_quantity': 7}, {'product_code': '8801771033981', 'product_name': '주)리치치킨마요삼각1', 'recommended_quantity': 7}, {'product_code': '8801771034100', 'product_name': '주)감자탕볶음밥맛삼각1', 'recommended_quantity': 7}, {'product_code': '8809948346506', 'product_name': '주)3XL베이컨참치마요1', 'recommended_quantity': 7}, {'product_code': '8809948346629', 'product_name': '주)참치마요김치제육더블1', 'recommended_quantity': 7}]
-[2025-07-31 10:39:58][utils.db_util][system][INFO] 예측 결과가 C:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\jumeokbap_predictions.db에 저장되었습니다.
-opup_util][system][INFO] Found and closed a popup.
-[2025-07-31 10:39:18][utils.popup_util][system][INFO] Found and closed a popup.
-[2025-07-31 10:39:18][utils.popup_util][system][INFO] Found and closed a popup.
-[2025-07-31 10:39:19][utils.popup_util][system][INFO] Finished popup closing process. Total closed: 27
+[2025-07-31 11:32:54][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-07-31 11:33:10][utils.popup_util][system][INFO] Successfully closed 10 popups.
+1:32:54][login.login_bgf][login][INFO] Login succeeded
+FO] Starting BGF Retail Automation...
+[2025-07-31 11:33:55][bgf_automation][system][ERROR] wait_for_mix_ratio_page failed: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=138.0.7204.183)
+Stacktrace:
+	GetHandleVerifier [0x0x10cba83+63395]
+	GetHandleVerifier [0x0x10cbac4+63460]
+	(No symbol) [0x0xf12113]
+	(No symbol) [0x0xf01b20]
+	(No symbol) [0x0xf1f922]
+	(No symbol) [0x0xf85c9c]
+	(No symbol) [0x0xfa0099]
+	(No symbol) [0x0xf7f1a6]
+	(No symbol) [0x0xf4e7b2]
+	(No symbol) [0x0xf4f654]
+	GetHandleVerifier [0x0x1348883+2672035]
+	GetHandleVerifier [0x0x1343cba+2652634]
+	GetHandleVerifier [0x0x10f2bca+223466]
+	GetHandleVerifier [0x0x10e2cb8+158168]
+	GetHandleVerifier [0x0x10e978d+185517]
+	GetHandleVerifier [0x0x10d3b78+96408]
+	GetHandleVerifier [0x0x10d3d02+96802]
+	GetHandleVerifier [0x0x10be90a+9770]
+	BaseThreadInitThunk [0x0x760d5d49+25]
+	RtlInitializeExceptionChain [0x0x76fad1ab+107]
+	RtlGetAppContainerNamedObjectPath [0x0x76fad131+561]
+
+[2025-07-31 11:33:55][bgf_automation][system][ERROR] Failed to load mix ratio page elements. Exiting.
+[2025-07-31 11:33:57][bgf_automation][system][INFO] WebDriver quit successfully.
