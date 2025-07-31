@@ -19,6 +19,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import holidays
 import requests
+import logging
 
 if __package__:
     from .log_util import get_logger
@@ -253,6 +254,10 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
         try:
             response = requests.get(url)
             response.raise_for_status() # 오류 발생 시 예외 처리
+            
+            # [추가] 응답 텍스트를 로그로 출력하여 확인
+            log.debug(f"Weather API response for {date}: {response.text}")
+
             data = response.json()
             
             items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
