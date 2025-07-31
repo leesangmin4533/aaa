@@ -58,6 +58,19 @@
     }
   }
 
+  async function waitForElementByNexacroId(id, timeout = 10000) { // 10 seconds default
+    const start = Date.now();
+    while (Date.now() - start < timeout) {
+        const el = await findElementByNexacroId(id); // Re-use existing find logic
+        if (el && el.offsetParent !== null) { // Check for visibility
+            return el;
+        }
+        await new Promise(resolve => setTimeout(resolve, 250)); // Poll every 250ms
+    }
+    console.warn(`[waitForElementByNexacroId] Timeout waiting for element: ${id}`);
+    return null;
+  }
+
   (async () => {
     try {
       // 1. 매출분석 탭 클릭
@@ -69,12 +82,16 @@
         return;
       }
       
-      // 메뉴 표시를 위한 대기
+      // [수정] 서브메뉴가 로딩될 때까지 대기
       console.log("⏳ 서브메뉴 로딩 대기 중...");
-      await delay(2000);
+      const subMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text";
+      const subMenuEl = await waitForElementByNexacroId(subMenuId, 5000); // 5초 대기
+      if (!subMenuEl) {
+        console.error("❌ 서브메뉴 로딩 시간 초과");
+        return;
+      }
 
       // 2. 중분류별 매출 구성비 클릭
-      const subMenuId = "mainframe.HFrameSet00.VFrameSet00.TopFrame.form.pdiv_topMenu_STMB000_M0.form.STMB011_M0:text";
       console.log("🔍 중분류별 매출 구성비 메뉴 진입 시도...");
       const ok2 = await clickByExactId(subMenuId, "중분류별 매출 구성비");
       if (!ok2) {
@@ -82,12 +99,8 @@
         return;
       }
 
-      // 페이지 로딩 대기
-      console.log("⏳ 페이지 로딩 대기 중...");
-      await delay(2000);
-      
-      // 로딩 완료 표시
-      console.log("✅ 네비게이션 완료");
+      // [수정] 페이지 로딩 대기는 Python의 wait_for_mix_ratio_page에 위임
+      console.log("✅ 네비게이션 완료 (페이지 로딩은 Python에서 대기)");
     } catch (e) {
       console.error(`네비게이션 중 오류 발생: ${e}`);
     }
