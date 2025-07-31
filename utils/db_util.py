@@ -64,14 +64,22 @@ def _get_value(record: dict[str, any], *keys: str):
     return None
 
 
-def write_sales_data(records: list[dict[str, any]], db_path: Path, collected_at_override: str | None = None) -> int:
+def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_str: str | None = None) -> int:
     """매출 데이터를 통합 DB에 저장합니다."""
     conn = init_db(db_path)
-    collected_at_val = (
-        collected_at_override if collected_at_override else datetime.now().strftime("%Y-%m-%d %H:%M")
-    )
+
+    # target_date_str이 제공되면(과거 데이터 수집 시), 해당 날짜를 사용합니다.
+    # 그렇지 않으면(오늘 데이터 수집 시), 현재 날짜를 사용합니다.
+    if target_date_str:
+        # 입력 형식 'YYYYMMDD'를 'YYYY-MM-DD'로 변환합니다.
+        current_date = f"{target_date_str[:4]}-{target_date_str[4:6]}-{target_date_str[6:]}"
+        collected_at_val = f"{current_date} 00:00:00"  # 과거 데이터는 시간을 0시로 고정합니다.
+    else:
+        now = datetime.now()
+        collected_at_val = now.strftime("%Y-%m-%d %H:%M:%S")
+        current_date = now.strftime("%Y-%m-%d")
+
     cur = conn.cursor()
-    current_date = collected_at_val.split()[0]
 
     insert_sql = """
     INSERT INTO mid_sales (
