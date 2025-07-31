@@ -257,7 +257,8 @@ def main() -> None:
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
-                    write_sales_data(data, CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE)
+                    # 과거 날짜(past)를 target_date_str 인자로 전달합니다.
+                    write_sales_data(data, CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE, target_date_str=past)
                 else:
                     logger.warning("No valid data collected for %s", past)
                 time.sleep(0.1)
