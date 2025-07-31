@@ -31,10 +31,7 @@ else:  # pragma: no cover - fallback when executed directly
 log = get_logger(__name__, level=logging.DEBUG)
 
 # --- 경로 및 상수 설정 ---
-if __package__:
-    from .config import DB_FILE, ROOT_DIR
-else:  # pragma: no cover - fallback when executed directly
-    from config import DB_FILE, ROOT_DIR
+
 
 SCRIPT_DIR: Path = Path(__file__).resolve().parent.parent
 CODE_OUTPUT_DIR: Path = SCRIPT_DIR / "code_outputs"
@@ -59,8 +56,7 @@ def init_db(path: Path) -> sqlite3.Connection:
     conn.commit()
     return conn
 
-def get_configured_db_path() -> Path:
-    return ROOT_DIR / DB_FILE
+
 
 def _get_value(record: dict[str, any], *keys: str):
     for k in keys:
@@ -372,24 +368,25 @@ def recommend_product_mix(db_path: Path, predicted_sales: float) -> list[dict[st
 
 # --- 실행 함수 ---
 
-def run_jumeokbap_prediction_and_save():
+def run_jumeokbap_prediction_and_save(sales_db_path: Path) -> None:
     """주먹밥 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
     try:
-        db_path = get_configured_db_path()
-        db_path.parent.mkdir(parents=True, exist_ok=True)
-        if not db_path.exists():
-            log.info(
-                f"데이터베이스가 없어 새로 생성합니다: {db_path}",
-                extra={"tag": "system"},
+        if not sales_db_path.exists():
+            log.warning(
+                f"Sales DB not found at {sales_db_path}, skipping prediction.",
+                extra={"tag": "prediction"},
             )
-            init_db(db_path)
+            return
 
-        forecast = predict_jumeokbap_quantity(db_path)
-        mix = recommend_product_mix(db_path, forecast)
+        forecast = predict_jumeokbap_quantity(sales_db_path)
+        mix = recommend_product_mix(sales_db_path, forecast)
 
-        # 예측 결과 저장
-        JUMEOKBAP_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with sqlite3.connect(JUMEOKBAP_DB_PATH) as conn:
+        # 예측 결과 저장 DB 경로를 매장별로 동적으로 생성
+        store_name = sales_db_path.stem
+        prediction_db_path = sales_db_path.parent / f"jumeokbap_predictions_{store_name}.db"
+
+        prediction_db_path.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite3.connect(prediction_db_path) as conn:
             cursor = conn.cursor()
             # 1. 예측 마스터 테이블 생성
             cursor.execute("""
@@ -430,7 +427,7 @@ def run_jumeokbap_prediction_and_save():
                 cursor.executemany(item_insert_sql, items_to_insert)
 
             conn.commit()
-        log.info(f"예측 결과가 {JUMEOKBAP_DB_PATH}에 저장되었습니다.")
+        log.info(f"Prediction results for store '{store_name}' saved to {prediction_db_path}")
 
     except Exception as e:
-        log.error(f"주먹밥 예측 중 오류 발생: {e}", exc_info=True)
+        log.error(f"Error during jumeokbap prediction for {sales_db_path.name}: {e}", exc_info=True)
