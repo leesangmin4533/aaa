@@ -303,9 +303,7 @@ def main() -> None:
             collected = mid_logs
 
         if collected and isinstance(collected, list) and collected and isinstance(collected[0], dict):
-            target_db = (
-                Path(DB_FILE) if need_past else CODE_OUTPUT_DIR / f"{today_str}.db"
-            )
+            target_db = CODE_OUTPUT_DIR / INTEGRATED_SALES_DB_FILE
             write_sales_data(collected, target_db)
         else:
             logger.warning("No valid data collected for %s", today_str)
