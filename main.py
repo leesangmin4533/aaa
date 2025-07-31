@@ -234,6 +234,11 @@ def main() -> None:
             logger.error("Login failed. Exiting.")
             return
 
+        # 로그인 직후 나타나는 팝업을 모두 닫습니다.
+        # 이 함수는 팝업이 모두 사라질 때까지 대기합니다.
+        from utils.popup_util import close_popups_after_delegate
+        close_popups_after_delegate(driver)
+
         # Load helper scripts before the main automation script
         import json
 
