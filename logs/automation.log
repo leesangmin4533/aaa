@@ -1,3 +1,10 @@
 [2025-07-31 10:11:30][utils.popup_util][modal_closer][INFO] Attempt 1/5 to find and close popups.
 [2025-07-31 10:11:30][utils.popup_util][modal_closer][INFO] No more popups found in this attempt.
-[2025-07-31 10:11:30][utils.po[2025-07-31 10:11:30][login.login_bgf][login][INFO] Closed 0 popups after login.
+[2025-07-31 10:11:30][utils.po[2025-07-31 10:11:30][login.login_bgf][[2025-07-31 10:13:30][bgf_automation][system][ERROR] wait_for_mix_ratio_page failed: Message: 
+
+[2025-07-31 10:13:30][bgf_automation][system][ERROR] https://store.bgfretail.com/websrc/deploy/index.html 5 The key "target-densitydpi" is not supported.
+[2025-07-31 10:13:30][bgf_automation][system][ERROR] https://store.bgfretail.com/websrc/deploy/index.html?version=0.9016244820420841 5 The key "target-densitydpi" is not supported.
+[2025-07-31 10:13:30][bgf_automation][system][ERROR] https://store.bgfretail.com/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)
+[2025-07-31 10:13:30][bgf_automation][system][ERROR] https://store.bgfretail.com/websrc/deploy/nexacro17lib/framework/Framework.js 0 The key "target-densitydpi" is not supported.
+[2025-07-31 10:13:30][bgf_automation][system][ERROR] Failed to load mix ratio page elements. Exiting.
+[2025-07-31 10:13:32][bgf_automation][system][INFO] WebDriver quit successfully.
