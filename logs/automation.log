@@ -1,1 +1,15 @@
-[2025-08-01 16:23:05][__main__][system][INFO] Scheduler started. Waiting for the next scheduled run...
+[2025-08-01 17:00:11][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 17:00:26][utils.popup_util][system][INFO] Successfully closed 26 popups.
+[2025-08-01 17:01:27][utils.popup_ut[2025-08-01 17:03:10][__main__][system][INFO] Scheduled job finished successfully for all stores.
+NFO] Successfully closed 27 popups.
+n_bgf][login][INFO] Login script executed
+[2025-08-01 17:01:27][login.login_bgf][login][INFO] Login succeeded
+et to load...
+[2025-08-01 17:00:28][bgf_automation][system][INFO] Dataset loaded and stable with 44 rows.
+[2025-08-01 17:01:20][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-01 17:01:20][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
+[2025-08-01 17:01:20][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-01 17:01:43][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-01 17:01:46][bgf_automation][system][INFO] Dataset loaded and stable with 43 rows.
+[2025-08-01 17:03:10][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
+[2025-08-01 17:03:10][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
