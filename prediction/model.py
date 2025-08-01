@@ -121,30 +121,104 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
     return prediction[0]
 
 def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
-    """예측된 총 판매량을 기반으로 특정 중분류 내 상품 조합을 추천합니다."""
+    """
+    예측된 총 판매량을 기반으로 인기 상품과 데이터 부족 상품을 조합하여 추천합니다.
+    - 정수 부: 가장 인기 있는 상품으로 추천
+    - 소수 부: 판매 데이터가 적은 상품을 추천하여 데이터 수집을 유도
+    - 잔여 수량: 추천된 상품들의 판매량 비율에 따라 잔여 수량을 배분
+    """
     if not db_path.exists():
+        log.warning(f"Database not found at {db_path}. Cannot generate recommendations.")
         return []
 
     with sqlite3.connect(db_path) as conn:
-        query = f"SELECT product_code, product_name, SUM(sales) as sales FROM mid_sales WHERE mid_code = '{mid_code}' GROUP BY product_code, product_name"
+        query = f"""
+            SELECT 
+                product_code, 
+                product_name, 
+                SUM(sales) as total_sales
+            FROM mid_sales 
+            WHERE mid_code = '{mid_code}' 
+            GROUP BY product_code, product_name
+            HAVING SUM(sales) > 0
+        """
         df = pd.read_sql(query, conn)
 
     if df.empty:
+        log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations.")
         return []
 
-    total_sales_in_category = df['sales'].sum()
-    if total_sales_in_category == 0:
-        return []
-        
-    df['ratio'] = df['sales'] / total_sales_in_category
-    
+    df = df.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
+
+    insufficient_data_threshold = 10
+    popular_products_df = df[df['total_sales'] >= insufficient_data_threshold]
+    unpopular_products_df = df[df['total_sales'] < insufficient_data_threshold]
+
     recommendations = []
-    for _, row in df.iterrows():
+    base_recommendations = []
+    num_popular_to_recommend = int(predicted_sales)
+    has_fractional_part = (predicted_sales - num_popular_to_recommend) > 0.01
+
+    actual_popular_to_recommend = min(num_popular_to_recommend, len(popular_products_df))
+    if actual_popular_to_recommend > 0:
+        top_popular_df = popular_products_df.head(actual_popular_to_recommend)
+        for _, row in top_popular_df.iterrows():
+            base_recommendations.append(row.to_dict())
+
+    if has_fractional_part:
+        unpopular_products_to_choose_from = unpopular_products_df[
+            ~unpopular_products_df['product_code'].isin([rec['product_code'] for rec in base_recommendations])
+        ]
+        if not unpopular_products_to_choose_from.empty:
+            chosen_unpopular = unpopular_products_to_choose_from.sample(n=1)
+            base_recommendations.append(chosen_unpopular.iloc[0].to_dict())
+        else:
+            remaining_popular_products = popular_products_df[
+                ~popular_products_df['product_code'].isin([rec['product_code'] for rec in base_recommendations])
+            ]
+            if not remaining_popular_products.empty:
+                next_popular = remaining_popular_products.head(1)
+                base_recommendations.append(next_popular.iloc[0].to_dict())
+
+    if not base_recommendations:
+        log.warning(f"[{mid_code}] Could not form a base recommendation list.")
+        return []
+
+    recommended_df = pd.DataFrame(base_recommendations)
+    total_sales_of_recommended = recommended_df['total_sales'].sum()
+
+    if total_sales_of_recommended == 0:
+        # 모든 추천 상품의 판매량이 0일 경우, 균등하게 배분
+        log.warning(f"[{mid_code}] Total sales of recommended items is zero. Distributing quantity evenly.")
+        recommended_df['ratio'] = 1 / len(recommended_df)
+    else:
+        recommended_df['ratio'] = recommended_df['total_sales'] / total_sales_of_recommended
+
+    # 각 상품에 기본 1개씩 할당하고 남은 잔여 수량 계산
+    initial_assigned_quantity = len(recommended_df)
+    remaining_quantity = predicted_sales - initial_assigned_quantity
+
+    # 최종 추천 목록 생성
+    for _, row in recommended_df.iterrows():
+        # 기본 1개 + 잔여 수량 배분
+        additional_quantity = round(remaining_quantity * row['ratio'])
+        final_quantity = 1 + additional_quantity
+        
         recommendations.append({
             "product_code": row["product_code"],
             "product_name": row["product_name"],
-            "recommended_quantity": int(predicted_sales * row["ratio"])
+            "recommended_quantity": int(max(1, final_quantity)), # 최소 1개 보장
+            "reason": "popular_item" if row['total_sales'] >= insufficient_data_threshold else "data_gathering"
         })
-        
-    log.info(f"[{mid_code}] 추천 상품 조합: {recommendations}")
+
+    # 총 추천 수량이 예측 수량과 근사하도록 조정
+    total_recommended_quantity = sum(rec['recommended_quantity'] for rec in recommendations)
+    if total_recommended_quantity < int(predicted_sales):
+        # 예측 수량보다 적게 추천되었을 경우, 가장 인기있는 상품에 수량 추가
+        if recommendations:
+            recommendations[0]["recommended_quantity"] += int(predicted_sales) - total_recommended_quantity
+
+    log.info(f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(recommendations)} types of items with total quantity of {sum(r['recommended_quantity'] for r in recommendations)}.")
+    log.info(f"[{mid_code}] Recommendation details: {recommendations}")
+    
     return recommendations
