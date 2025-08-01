@@ -12,6 +12,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from prediction.model import get_training_data_for_category, train_and_predict, get_weather_data, recommend_product_mix
+from prediction.monitor import update_performance_log
 
 log = logging.getLogger(__name__)
 
@@ -244,3 +245,6 @@ def run_all_category_predictions(sales_db_path: Path):
         conn.commit()
     
     log.info(f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료. DB 저장 위치: {prediction_db_path}")
+
+    # 모델 성능 모니터링 실행
+    update_performance_log(sales_db_path, prediction_db_path)
