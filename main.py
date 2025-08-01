@@ -140,10 +140,10 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
     return {"success": bool(success), "data": parsed if success else None}
 
 
-def get_past_dates(num_days: int = 2) -> list[str]:
+def get_past_dates(num_days: int = 7) -> list[str]:
     """Return a list of past dates for collecting historical data.
 
-    기본값은 ``num_days=2``로, 과거 2일 데이터를 수집할 때 사용됩니다.
+    기본값은 ``num_days=7``로, 과거 7일 데이터를 수집할 때 사용됩니다.
     """
     today = datetime.now()
     past_dates = []
@@ -152,21 +152,21 @@ def get_past_dates(num_days: int = 2) -> list[str]:
         past_dates.append(past_date.strftime("%Y%m%d"))
     return past_dates
 
-def is_past_data_available(db_path: Path, num_days: int = 2) -> bool:
-    """Return ``True`` if past data for ``num_days`` exist in the DB.
+def get_missing_past_dates(db_path: Path, num_days: int = 7) -> list[str]:
+    """Return a list of past dates for which data is missing in the DB.
 
-    기본값은 ``num_days=2``로, 과거 2일 데이터가 이미 수집되었는지 확인합니다.
+    기본값은 ``num_days=7``로, 과거 7일 데이터 중 누락된 날짜를 확인합니다.
     """
     if os.environ.get("PYTEST_CURRENT_TEST"):
-        return True
+        return [] # For testing, assume no missing dates
+    
     past_dates_for_script = get_past_dates(num_days)  # YYYYMMDD format
-    if not db_path.exists():
-        return False
     
     # Convert to YYYY-MM-DD for DB query
     dates_to_check_in_db = [f"{d[:4]}-{d[4:6]}-{d[6:]}" for d in past_dates_for_script]
+    
     missing_dates = check_dates_exist(db_path, dates_to_check_in_db)
-    return len(missing_dates) == 0
+    return [d.replace("-", "") for d in missing_dates] # Return in YYYYMMDD format
 
 
 def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
@@ -258,9 +258,10 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
             return
 
         db_path = SCRIPT_DIR / store_config["db_file"]
-        need_past = not is_past_data_available(db_path)
-        if need_past:
-            for past in get_past_dates():
+        missing_past_dates = get_missing_past_dates(db_path)
+        if missing_past_dates:
+            logger.info(f"Missing past dates for {store_name}: {missing_past_dates}. Attempting to collect...")
+            for past in missing_past_dates:
                 result = execute_collect_single_day_data(driver, past)
                 data = result.get("data") if isinstance(result, dict) else None
                 if data and isinstance(data, list) and data and isinstance(data[0], dict):
