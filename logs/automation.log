@@ -230,3 +230,49 @@ et to load...
 [2025-08-02 06:48:05][bgf_automation][system][INFO] Dataset loaded and stable with 32 rows.
 [2025-08-02 06:49:26][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
 [2025-08-02 06:49:26][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
+[2025-08-02 08:10:20][bgf_automation][system][DEBUG] Logger 'bgf_automation' initialized
+[2025-08-02 08:10:20][bgf_automation][system][DEBUG] Logger 'bgf_automation' initialized
+[2025-08-02 08:10:20][bgf_automation][system][INFO] Starting BGF Retail Automation for all stores...
+[2025-08-02 08:10:20][bgf_automation][system][INFO] --- Starting automation for store: hoban ---
+[2025-08-02 08:10:28][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-08-02 08:10:28][login.login_bgf][login][INFO] Login script executed
+[2025-08-02 08:10:28][login.login_bgf][login][INFO] Login succeeded
+[2025-08-02 08:10:28][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-02 08:10:44][utils.popup_util][system][INFO] Successfully closed 27 popups.
+[2025-08-02 08:10:44][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-02 08:10:47][bgf_automation][system][INFO] Dataset loaded and stable with 21 rows.
+[2025-08-02 08:12:32][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-02 08:12:32][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
+[2025-08-02 08:12:32][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-02 08:12:40][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-08-02 08:12:40][login.login_bgf][login][INFO] Login script executed
+[2025-08-02 08:12:40][login.login_bgf][login][INFO] Login succeeded
+[2025-08-02 08:12:40][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-02 08:12:55][utils.popup_util][system][INFO] Successfully closed 26 popups.
+[2025-08-02 08:12:55][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-02 08:12:58][bgf_automation][system][INFO] Dataset loaded and stable with 34 rows.
+[2025-08-02 08:14:01][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
+[2025-08-02 08:14:01][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
+[2025-08-02 08:33:51][bgf_automation][system][DEBUG] Logger 'bgf_automation' initialized
+[2025-08-02 08:33:51][bgf_automation][system][DEBUG] Logger 'bgf_automation' initialized
+[2025-08-02 08:33:51][bgf_automation][system][INFO] Starting BGF Retail Automation for all stores...
+[2025-08-02 08:33:51][bgf_automation][system][INFO] --- Starting automation for store: hoban ---
+[2025-08-02 08:33:59][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-08-02 08:33:59][login.login_bgf][login][INFO] Login script executed
+[2025-08-02 08:33:59][login.login_bgf][login][INFO] Login succeeded
+[2025-08-02 08:33:59][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-02 08:34:14][utils.popup_util][system][INFO] Successfully closed 26 popups.
+[2025-08-02 08:34:14][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-02 08:34:18][bgf_automation][system][INFO] Dataset loaded and stable with 21 rows.
+[2025-08-02 08:35:30][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-02 08:35:30][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
+[2025-08-02 08:35:30][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-02 08:35:38][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-08-02 08:35:38][login.login_bgf][login][INFO] Login script executed
+[2025-08-02 08:35:38][login.login_bgf][login][INFO] Login succeeded
+[2025-08-02 08:35:38][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-02 08:35:53][utils.popup_util][system][INFO] Successfully closed 26 popups.
+[2025-08-02 08:35:53][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-02 08:35:56][bgf_automation][system][INFO] Dataset loaded and stable with 36 rows.
+[2025-08-02 08:37:23][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
+[2025-08-02 08:37:23][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
