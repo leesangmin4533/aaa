@@ -11,7 +11,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from prediction.model import get_training_data_for_category, train_and_predict, get_weather_data
+from prediction.model import get_training_data_for_category, train_and_predict, get_weather_data, recommend_product_mix
 
 log = logging.getLogger(__name__)
 
@@ -184,6 +184,16 @@ def init_prediction_db(db_path: Path):
             UNIQUE(target_date, mid_code)
         )
         """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS category_prediction_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            prediction_id INTEGER, -- category_predictions 테이블의 id 참조
+            product_code TEXT,
+            product_name TEXT,
+            recommended_quantity INTEGER,
+            FOREIGN KEY (prediction_id) REFERENCES category_predictions (id)
+        )
+        """)
         conn.commit()
 
 def run_all_category_predictions(sales_db_path: Path):
@@ -201,29 +211,36 @@ def run_all_category_predictions(sales_db_path: Path):
     prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     target_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
-    for index, row in mid_categories.iterrows():
-        mid_code = row['mid_code']
-        mid_name = row['mid_name']
-        
-        training_data = get_training_data_for_category(sales_db_path, mid_code)
-        predicted_sales = train_and_predict(mid_code, training_data)
-        
-        predictions_to_save.append({
-            'prediction_date': prediction_date,
-            'target_date': target_date,
-            'mid_code': mid_code,
-            'mid_name': mid_name,
-            'predicted_sales': predicted_sales
-        })
-
     with sqlite3.connect(prediction_db_path) as conn:
         cursor = conn.cursor()
-        insert_sql = """ 
-        INSERT OR REPLACE INTO category_predictions 
-        (prediction_date, target_date, mid_code, mid_name, predicted_sales)
-        VALUES (:prediction_date, :target_date, :mid_code, :mid_name, :predicted_sales)
-        """
-        cursor.executemany(insert_sql, predictions_to_save)
+        for index, row in mid_categories.iterrows():
+            mid_code = row['mid_code']
+            mid_name = row['mid_name']
+            
+            training_data = get_training_data_for_category(sales_db_path, mid_code)
+            predicted_sales = train_and_predict(mid_code, training_data)
+            
+            # category_predictions 테이블에 예측 결과 저장
+            cursor.execute(""" 
+            INSERT OR REPLACE INTO category_predictions 
+            (prediction_date, target_date, mid_code, mid_name, predicted_sales)
+            VALUES (?, ?, ?, ?, ?)
+            """, (prediction_date, target_date, mid_code, mid_name, predicted_sales))
+            prediction_id = cursor.lastrowid # 방금 삽입된 예측의 ID
+
+            # 상품 조합 추천 및 저장
+            recommended_mix = recommend_product_mix(sales_db_path, mid_code, predicted_sales)
+            if recommended_mix:
+                item_insert_sql = """
+                INSERT INTO category_prediction_items 
+                (prediction_id, product_code, product_name, recommended_quantity)
+                VALUES (?, ?, ?, ?)
+                """
+                items_to_insert = [
+                    (prediction_id, item['product_code'], item['product_name'], item['recommended_quantity'])
+                    for item in recommended_mix
+                ]
+                cursor.executemany(item_insert_sql, items_to_insert)
         conn.commit()
     
-    log.info(f"[{store_name}] 총 {len(predictions_to_save)}개 카테고리 예측 완료. DB 저장 위치: {prediction_db_path}")
+    log.info(f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료. DB 저장 위치: {prediction_db_path}")
