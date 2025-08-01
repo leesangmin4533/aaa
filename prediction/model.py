@@ -110,3 +110,32 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
     prediction = model.predict(tomorrow_df[features])
     log.info(f"[{mid_code}] 예측된 내일 판매량: {prediction[0]:.2f}개")
     return prediction[0]
+
+def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
+    """예측된 총 판매량을 기반으로 특정 중분류 내 상품 조합을 추천합니다."""
+    if not db_path.exists():
+        return []
+
+    with sqlite3.connect(db_path) as conn:
+        query = f"SELECT product_code, product_name, SUM(sales) as sales FROM mid_sales WHERE mid_code = '{mid_code}' GROUP BY product_code, product_name"
+        df = pd.read_sql(query, conn)
+
+    if df.empty:
+        return []
+
+    total_sales_in_category = df['sales'].sum()
+    if total_sales_in_category == 0:
+        return []
+        
+    df['ratio'] = df['sales'] / total_sales_in_category
+    
+    recommendations = []
+    for _, row in df.iterrows():
+        recommendations.append({
+            "product_code": row["product_code"],
+            "product_name": row["product_name"],
+            "recommended_quantity": int(predicted_sales * row["ratio"])
+        })
+        
+    log.info(f"[{mid_code}] 추천 상품 조합: {recommendations}")
+    return recommendations
