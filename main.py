@@ -180,26 +180,43 @@ def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
     return None
 
 
-def wait_for_mix_ratio_page(driver: Any, timeout: int = 120) -> bool:
-    """Wait for the mix ratio page to load fully."""
+def wait_for_dataset_to_load(driver: Any, timeout: int = 120) -> bool:
+    """Waits for the dsList dataset to be loaded and stable."""
+    logger.info("Waiting for dsList dataset to load...")
     try:
-        WebDriverWait(driver, timeout).until(
-            lambda d: d.execute_script("return !!document.querySelector('[id*=\"gdList\"][id*=\"body\"]');")
-        )
-        WebDriverWait(driver, timeout).until(
+        # 1. Wait for the main form to be available
+        WebDriverWait(driver, 20).until(
             lambda d: d.execute_script(
-                "const g=document.querySelector('[id*=\"gdList\"][id*=\"body\"]');"
-                "return g && g.textContent.trim().length>0;"
+                "return nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;"
             )
         )
-        return True
+
+        # 2. Wait for the dataset row count to be greater than 0 and stable
+        last_row_count = -1
+        stable_since = time.time()
+        start_time = time.time()
+
+        while time.time() - start_time < timeout:
+            row_count = driver.execute_script(
+                "return nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.dsList.getRowCount();"
+            )
+            
+            if row_count > 0:
+                if row_count == last_row_count:
+                    if time.time() - stable_since > 2: # Stable for 2 seconds
+                        logger.info(f"Dataset loaded and stable with {row_count} rows.")
+                        return True
+                else:
+                    last_row_count = row_count
+                    stable_since = time.time()
+            
+            time.sleep(0.5)
+
+        logger.error(f"Timeout waiting for dataset to load and stabilize. Final row count: {last_row_count}")
+        return False
+
     except Exception as e:
-        logger.error(f"wait_for_mix_ratio_page failed: {e}")
-        try:
-            for entry in driver.get_log("browser"):
-                logger.error(entry.get("message"))
-        except Exception:
-            pass
+        logger.error(f"An error occurred while waiting for the dataset: {e}")
         return False
 
 
@@ -231,7 +248,7 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
         run_script(driver, "scripts/date_changer.js")
         run_script(driver, NAVIGATION_SCRIPT)
 
-        if not wait_for_mix_ratio_page(driver):
+        if not wait_for_dataset_to_load(driver):
             logger.error(f"Failed to load mix ratio page for {store_name}. Skipping.")
             return
 
