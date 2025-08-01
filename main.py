@@ -278,8 +278,8 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
         else:
             logger.warning(f"No valid data collected for {today_str} at store {store_name}")
 
-        from utils.db_util import run_jumeokbap_prediction_and_save
-        run_jumeokbap_prediction_and_save(db_path)
+        from utils.db_util import run_all_category_predictions
+        run_all_category_predictions(db_path)
 
     finally:
         if driver is not None:
