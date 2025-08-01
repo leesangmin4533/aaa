@@ -1,15 +1,17 @@
-[2025-08-01 15:00:08][utils.popup_util][system][INFO] Starting to poll for popups...
-[2025-08-01 15:00:23][utils.popup_util][system][INFO] Successfully closed 27 popups.
-[2025-08-01 15:00:47][utils.popup_ut[2025-08-01 15:01:21][__main__][system][INFO] Scheduled job finished successfully for all stores.
-NFO] Successfully closed 27 popups.
+[2025-08-01 15:27:18][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 15:27:33][utils.popup_util][system][INFO] Successfully closed 27 popups.
+[2025-08-01 15:29:51][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 15:30:06][utils.popup_util][system][INFO] Successfully closed 27 popups.
 n_bgf][login][INFO] Login script executed
-[2025-08-01 15:00:47][login.login_bgf][login][INFO] Login succeeded
+[2025-08-01 15:29:51][login.login_bgf][login][INFO] Login succeeded
 et to load...
-[2025-08-01 15:00:26][bgf_automation][system][INFO] Dataset loaded and stable with 39 rows.
-[2025-08-01 15:00:41][bgf_automation][system][INFO] WebDriver quit for store: hoban.
-[2025-08-01 15:00:41][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
-[2025-08-01 15:00:41][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
-[2025-08-01 15:01:02][bgf_automation][system][INFO] Waiting for dsList dataset to load...
-[2025-08-01 15:01:05][bgf_automation][system][INFO] Dataset loaded and stable with 41 rows.
-[2025-08-01 15:01:20][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
-[2025-08-01 15:01:20][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
+[2025-08-01 15:27:35][bgf_automation][system][INFO] Dataset loaded and stable with 39 rows.
+[2025-08-01 15:27:35][bgf_automation][system][INFO] Missing past dates for hoban: ['20250729', '20250728', '20250727', '20250726', '20250725']. Attempting to collect...
+[2025-08-01 15:29:45][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-01 15:29:45][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
+[2025-08-01 15:29:45][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-01 15:30:06][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-01 15:30:09][bgf_automation][system][INFO] Dataset loaded and stable with 41 rows.
+[2025-08-01 15:30:09][bgf_automation][system][INFO] Missing past dates for dongyang: ['20250729', '20250728', '20250727', '20250726', '20250725']. Attempting to collect...
+[2025-08-01 15:32:27][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
+[2025-08-01 15:32:27][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
