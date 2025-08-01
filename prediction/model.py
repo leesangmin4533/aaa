@@ -86,9 +86,12 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
 
 def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
     """주어진 학습 데이터로 모델을 훈련하고 내일의 판매량을 예측합니다."""
-    if training_df.empty or len(training_df) < 7:
-        log.warning(f"[{mid_code}] 학습 데이터가 부족하여 기본 예측(Random)을 수행합니다.")
+    if training_df.empty:
+        log.warning(f"[{mid_code}] 학습 데이터가 없어 기본 예측(Random)을 수행합니다.")
         return random.uniform(10.0, 50.0) # 카테고리별 기본 예측값
+
+    if len(training_df) < 7:
+        log.warning(f"[{mid_code}] 학습 데이터가 7일 미만입니다. 예측 정확도가 낮을 수 있습니다.")
 
     weather_df = get_weather_data(training_df['date'].tolist())
     df = pd.merge(training_df, weather_df, on='date')
