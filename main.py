@@ -184,22 +184,27 @@ def wait_for_dataset_to_load(driver: Any, timeout: int = 120) -> bool:
     """Waits for the dsList dataset to be loaded and stable."""
     logger.info("Waiting for dsList dataset to load...")
     try:
-        # 1. Wait for the main form to be available
-        WebDriverWait(driver, 20).until(
-            lambda d: d.execute_script(
-                "return nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;"
-            )
-        )
+        # 1. Wait for the main form object to be available
+        js_check_form = """
+        const app = nexacro.getApplication();
+        if (!app || !app.mainframe || !app.mainframe.HFrameSet00 || !app.mainframe.HFrameSet00.VFrameSet00 || !app.mainframe.HFrameSet00.VFrameSet00.FrameSet) return false;
+        const form = app.mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0;
+        return !!(form && form.form);
+        """
+        WebDriverWait(driver, 30).until(lambda d: d.execute_script(js_check_form))
 
         # 2. Wait for the dataset row count to be greater than 0 and stable
+        js_get_rows = """
+        const form = nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form;
+        if (!form || !form.div_workForm || !form.div_workForm.form || !form.div_workForm.form.dsList) return 0;
+        return form.div_workForm.form.dsList.getRowCount();
+        """
         last_row_count = -1
         stable_since = time.time()
         start_time = time.time()
 
         while time.time() - start_time < timeout:
-            row_count = driver.execute_script(
-                "return nexacro.getApplication().mainframe.HFrameSet00.VFrameSet00.FrameSet.STMB011_M0.form.div_workForm.form.dsList.getRowCount();"
-            )
+            row_count = driver.execute_script(js_get_rows)
             
             if row_count > 0:
                 if row_count == last_row_count:
