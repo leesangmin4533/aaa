@@ -144,6 +144,27 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
             )
 
     conn.commit()
+
+    # 모든 상품 레코드 처리가 끝난 후, 해당 날짜의 날씨 및 파생 특성을 일괄 업데이트
+    update_weather_sql = """
+    UPDATE mid_sales SET
+        weekday = ?,
+        month = ?,
+        week_of_year = ?,
+        is_holiday = ?,
+        temperature = ?,
+        rainfall = ?
+    WHERE SUBSTR(collected_at, 1, 10) = ?
+    """
+    cur.execute(
+        update_weather_sql,
+        (
+            weekday, month, week_of_year, is_holiday, temperature, rainfall,
+            current_date,
+        ),
+    )
+    conn.commit()
+
     cur.execute("SELECT COUNT(*) FROM mid_sales")
     count = cur.fetchone()[0]
     conn.close()
