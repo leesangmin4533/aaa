@@ -7,8 +7,9 @@ from collections import defaultdict
 def save_table_data_to_file(db_path, output_file_path):
     """
     Connects to an SQLite database. If prediction tables are found, it groups
-    items by category. Otherwise, it saves all table contents to a text file,
-    excluding rows where 'sales' or 'recommended_quantity' is 0.
+    items by category and includes the count of items in the category header.
+    Otherwise, it saves all table contents to a text file, excluding rows
+    where 'sales' or 'recommended_quantity' is 0.
     """
     if not os.path.exists(db_path):
         print(f"Error: Database file not found at '{db_path}'")
@@ -23,33 +24,26 @@ def save_table_data_to_file(db_path, output_file_path):
         with open(output_file_path, 'w', encoding='utf-8') as f:
             f.write(f"Database: {db_path}\n\n")
 
-            # Check if the required tables for grouped view exist
             if 'category_predictions' in tables and 'category_prediction_items' in tables:
                 print("Found prediction tables. Grouping items by category.")
                 
-                # Get category names
                 cursor.execute("SELECT id, mid_name FROM category_predictions")
-                predictions = cursor.fetchall()
-                # Create a mapping from prediction_id to mid_name
-                prediction_id_to_mid_name = {pred[0]: pred[1] for pred in predictions}
+                prediction_id_to_mid_name = {pred[0]: pred[1] for pred in cursor.fetchall()}
 
-                # Get all items
                 cursor.execute("SELECT prediction_id, product_name, recommended_quantity FROM category_prediction_items")
                 items = cursor.fetchall()
 
-                # Group items by mid_name
                 grouped_items = defaultdict(list)
                 for item in items:
                     prediction_id, product_name, rec_qty = item
                     if int(rec_qty) == 0:
-                        continue # Skip items with 0 recommended quantity
+                        continue
                     
                     mid_name = prediction_id_to_mid_name.get(prediction_id, "Unknown Category")
                     grouped_items[mid_name].append((product_name, rec_qty))
 
-                # Write grouped data to file
                 for mid_name, products in sorted(grouped_items.items()):
-                    f.write(f"--- Category: {mid_name} ---\n")
+                    f.write(f"--- Category: {mid_name} ({len(products)} items) ---\n")
                     f.write("Product Name | Recommended Quantity\n")
                     f.write("------------------------------------\n")
                     for product_name, rec_qty in products:
