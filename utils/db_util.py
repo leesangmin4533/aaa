@@ -1,41 +1,19 @@
-
-"""
-매출 데이터 DB 관리 및 예측 모듈
-
-- 통합 DB에서 매출 데이터를 관리합니다.
-- 과거 판매량, 날짜, 공휴일, 날씨 데이터를 기반으로 판매량을 예측합니다.
-"""
-
-from __future__ import annotations
-
 import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
-import random
-import sys
-import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-import holidays
-import requests
 import logging
-import json
+import pandas as pd
+import holidays
 
-if __package__:
-    from .log_util import get_logger
-else:  # pragma: no cover - fallback when executed directly
-    sys.path.append(str(Path(__file__).resolve().parent))
-    from log_util import get_logger
+# prediction.model 모듈을 임포트하기 위해 경로 추가
+import sys
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
-log = get_logger(__name__, level=logging.DEBUG)
+from prediction.model import get_training_data_for_category, train_and_predict, get_weather_data
 
-# --- 경로 및 상수 설정 ---
-
-
-SCRIPT_DIR: Path = Path(__file__).resolve().parent.parent
-CODE_OUTPUT_DIR: Path = SCRIPT_DIR / "code_outputs"
-JUMEOKBAP_DB_PATH = CODE_OUTPUT_DIR / "db" / "jumeokbap_predictions.db"
+log = logging.getLogger(__name__)
 
 # --- 데이터베이스 관리 함수 ---
 
@@ -57,7 +35,6 @@ def init_db(path: Path) -> sqlite3.Connection:
     return conn
 
 
-
 def _get_value(record: dict[str, any], *keys: str):
     for k in keys:
         if k in record:
@@ -69,12 +46,9 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
     """매출 데이터를 통합 DB에 저장합니다."""
     conn = init_db(db_path)
 
-    # target_date_str이 제공되면(과거 데이터 수집 시), 해당 날짜를 사용합니다.
-    # 그렇지 않으면(오늘 데이터 수집 시), 현재 날짜를 사용합니다.
     if target_date_str:
-        # 입력 형식 'YYYYMMDD'를 'YYYY-MM-DD'로 변환합니다.
         current_date = f"{target_date_str[:4]}-{target_date_str[4:6]}-{target_date_str[6:]}"
-        collected_at_val = f"{current_date} 00:00:00"  # 과거 데이터는 시간을 0시로 고정합니다.
+        collected_at_val = f"{current_date} 00:00:00"
     else:
         now = datetime.now()
         collected_at_val = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -98,16 +72,12 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
     WHERE product_code = ? AND SUBSTR(collected_at, 1, 10) = ?
     """
 
-    # 현재 날짜의 파생 특성 및 날씨 데이터 미리 가져오기
     current_date_dt = datetime.strptime(current_date, "%Y-%m-%d").date()
-    
-    # 요일, 월, 주차, 공휴일 여부 계산
     weekday = current_date_dt.weekday()
     month = current_date_dt.month
     week_of_year = current_date_dt.isocalendar()[1]
     is_holiday = int(current_date_dt in holidays.KR())
 
-    # 날씨 데이터 가져오기
     weather_df = get_weather_data([current_date_dt])
     temperature = weather_df['temperature'].iloc[0] if not weather_df.empty else 0.0
     rainfall = weather_df['rainfall'].iloc[0] if not weather_df.empty else 0.0
@@ -199,235 +169,61 @@ def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
 
 # --- 예측 모델 구현 ---
 
-def get_sales_data_for_training(db_path: Path) -> pd.DataFrame:
-    """DB에서 주먹밥 판매 데이터를 읽어와 날짜 특성을 추가합니다."""
+def init_prediction_db(db_path: Path):
+    """모든 카테고리의 예측 결과를 저장할 DB와 테이블을 초기화합니다."""
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    if not db_path.exists():
-        return pd.DataFrame()
-
     with sqlite3.connect(db_path) as conn:
-        query = "SELECT collected_at, SUM(sales) as total_sales FROM mid_sales WHERE mid_name = '주먹밥' GROUP BY SUBSTR(collected_at, 1, 10)"
-        df = pd.read_sql(query, conn)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS category_predictions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            prediction_date TEXT, -- 예측을 수행한 날짜
+            target_date TEXT,     -- 예측 대상 날짜
+            mid_code TEXT,        -- 중분류 코드
+            mid_name TEXT,        -- 중분류명
+            predicted_sales REAL, -- 예측된 판매량
+            UNIQUE(target_date, mid_code)
+        )
+        """)
+        conn.commit()
 
-    if df.empty:
-        return pd.DataFrame()
+def run_all_category_predictions(sales_db_path: Path):
+    """모든 중분류에 대해 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
+    store_name = sales_db_path.stem
+    prediction_db_path = sales_db_path.parent / f"category_predictions_{store_name}.db"
+    init_prediction_db(prediction_db_path)
 
-    df['date'] = pd.to_datetime(df['collected_at']).dt.date
-    df['weekday'] = df['date'].apply(lambda x: x.weekday())
-    df['month'] = df['date'].apply(lambda x: x.month)
-    df['week_of_year'] = df['date'].apply(lambda x: x.isocalendar()[1])
+    log.info(f"[{store_name}] 모든 카테고리 예측 시작...")
+
+    with sqlite3.connect(sales_db_path) as conn:
+        mid_categories = pd.read_sql("SELECT DISTINCT mid_code, mid_name FROM mid_sales", conn)
     
-    kr_holidays = holidays.KR()
-    df['is_holiday'] = df['date'].apply(lambda x: x in kr_holidays).astype(int)
-    
-    return df[['date', 'total_sales', 'weekday', 'month', 'week_of_year', 'is_holiday']]
+    predictions_to_save = []
+    prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    target_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
-import os
-from dotenv import load_dotenv
-
-# .env 파일에서 환경 변수 로드
-load_dotenv()
-
-def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
-    """기상청 API를 통해 과거 날씨 데이터를 가져옵니다."""
-    api_key = os.environ.get("KMA_API_KEY")
-    if not api_key:
-        log.warning("기상청 API 키가 설정되지 않았습니다. 임의의 날씨 데이터로 대체합니다.")
-        weather_data = []
-        for date in dates:
-            temp = random.uniform(5, 25)
-            rainfall = random.uniform(0, 20) if random.random() > 0.7 else 0
-            weather_data.append({'date': date, 'temperature': temp, 'rainfall': rainfall})
-        return pd.DataFrame(weather_data)
-
-    weather_data = []
-    # 서울의 좌표 (기상청 API는 지점별로 데이터를 제공)
-    nx, ny = 60, 127 
-
-    for date in dates:
-        # 동네예보 초단기실황조회 API 사용
-        # base_date: 발표일자 (YYYYMMDD)
-        # base_time: 발표시각 (HHMM, 정시 단위)
-        # nx, ny: 격자 좌표
-        # dataType: JSON
-        # category: T1H (1시간 기온), RN1 (1시간 강수량)
-
-        base_date_str = date.strftime('%Y%m%d')
+    for index, row in mid_categories.iterrows():
+        mid_code = row['mid_code']
+        mid_name = row['mid_name']
         
-        # 현재 시간 기준으로 가장 가까운 정시를 base_time으로 설정
-        now = datetime.now()
-        base_time_str = now.strftime('%H00') # 정시
-
-        url = f"https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
+        training_data = get_training_data_for_category(sales_db_path, mid_code)
+        predicted_sales = train_and_predict(mid_code, training_data)
         
-        try:
-            log.debug(f"Weather API request URL for {date}: {url}")
-            response = requests.get(url)
-            response.raise_for_status() # HTTP 오류 (4xx, 5xx) 발생 시 예외 처리
-            
-            log.debug(f"Weather API response for {date}: {response.text}")
-
-            data = response.json()
-            
-            avg_temp = 0.0
-            total_rainfall = 0.0
-            
-            items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
-            
-            for item in items:
-                category = item.get('category')
-                obsr_value = item.get('obsrValue') # 실황 값은 obsrValue로 제공
-                
-                if category == 'T1H': # 1시간 기온
-                    try:
-                        avg_temp = float(obsr_value)
-                    except ValueError:
-                        pass
-                elif category == 'RN1': # 1시간 강수량
-                    try:
-                        total_rainfall = float(obsr_value)
-                    except ValueError:
-                        pass
-
-            weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
-
-        except requests.exceptions.RequestException as e:
-            log.error(f"{date} 날씨 데이터 요청 중 오류 발생: {e}")
-        except (KeyError, ValueError, IndexError) as e: # IndexError 추가
-            log.error(f"{date} 날씨 데이터 파싱 중 오류 발생: {e}")
-
-    return pd.DataFrame(weather_data)
-
-def predict_jumeokbap_quantity(db_path: Path) -> float:
-    """과거 데이터와 날씨 정보를 기반으로 주먹밥 판매량을 예측합니다."""
-    sales_df = get_sales_data_for_training(db_path)
-    if sales_df.empty or len(sales_df) < 7:
-        log.warning("학습 데이터가 부족하여 기본 예측을 수행합니다.")
-        return random.uniform(50.0, 200.0)
-
-    # 날씨 데이터 추가 (현재는 임의 데이터)
-    weather_df = get_weather_data(sales_df['date'].tolist())
-    df = pd.merge(sales_df, weather_df, on='date')
-
-    features = ['weekday', 'month', 'week_of_year', 'is_holiday', 'temperature', 'rainfall']
-    target = 'total_sales'
-
-    X = df[features]
-    y = df[target]
-
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
-    model.fit(X, y)
-
-    # 내일 날짜로 예측
-    tomorrow = datetime.now().date() + timedelta(days=1)
-    tomorrow_weather = get_weather_data([tomorrow])
-    tomorrow_features = {
-        'weekday': tomorrow.weekday(),
-        'month': tomorrow.month,
-        'week_of_year': tomorrow.isocalendar()[1],
-        'is_holiday': int(tomorrow in holidays.KR()),
-        'temperature': tomorrow_weather['temperature'].iloc[0],
-        'rainfall': tomorrow_weather['rainfall'].iloc[0]
-    }
-    tomorrow_df = pd.DataFrame([tomorrow_features])
-    
-    prediction = model.predict(tomorrow_df[features])
-    log.info(f"예측된 내일 주먹밥 판매량: {prediction[0]:.2f}개")
-    return prediction[0]
-
-def recommend_product_mix(db_path: Path, predicted_sales: float) -> list[dict[str, any]]:
-    """예측된 총 판매량을 기반으로 상품 조합을 추천합니다."""
-    db_path.parent.mkdir(parents=True, exist_ok=True)
-    if not db_path.exists():
-        return []
-
-    with sqlite3.connect(db_path) as conn:
-        # 상품 코드도 함께 조회하도록 쿼리 수정
-        query = "SELECT product_code, product_name, SUM(sales) as sales FROM mid_sales WHERE mid_name = '주먹밥' GROUP BY product_code, product_name"
-        df = pd.read_sql(query, conn)
-
-    if df.empty:
-        return []
-
-    total_sales = df['sales'].sum()
-    if total_sales == 0:
-        return []
-        
-    df['ratio'] = df['sales'] / total_sales
-    
-    recommendations = []
-    for _, row in df.iterrows():
-        recommendations.append({
-            "product_code": row["product_code"],
-            "product_name": row["product_name"],
-            "recommended_quantity": int(predicted_sales * row["ratio"])
+        predictions_to_save.append({
+            'prediction_date': prediction_date,
+            'target_date': target_date,
+            'mid_code': mid_code,
+            'mid_name': mid_name,
+            'predicted_sales': predicted_sales
         })
-        
-    log.info(f"추천 상품 조합: {recommendations}")
-    return recommendations
 
-# --- 실행 함수 ---
-
-def run_jumeokbap_prediction_and_save(sales_db_path: Path) -> None:
-    """주먹밥 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
-    try:
-        if not sales_db_path.exists():
-            log.warning(
-                f"Sales DB not found at {sales_db_path}, skipping prediction.",
-                extra={"tag": "prediction"},
-            )
-            return
-
-        forecast = predict_jumeokbap_quantity(sales_db_path)
-        mix = recommend_product_mix(sales_db_path, forecast)
-
-        # 예측 결과 저장 DB 경로를 매장별로 동적으로 생성
-        store_name = sales_db_path.stem
-        prediction_db_path = sales_db_path.parent / f"jumeokbap_predictions_{store_name}.db"
-
-        prediction_db_path.parent.mkdir(parents=True, exist_ok=True)
-        with sqlite3.connect(prediction_db_path) as conn:
-            cursor = conn.cursor()
-            # 1. 예측 마스터 테이블 생성
-            cursor.execute("""
-            CREATE TABLE IF NOT EXISTS jumeokbap_predictions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                prediction_date TEXT, 
-                forecast REAL
-            )
-            """)
-            # 2. 예측 아이템 상세 테이블 생성
-            cursor.execute("""
-            CREATE TABLE IF NOT EXISTS jumeokbap_prediction_items (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                prediction_id INTEGER,
-                product_code TEXT,
-                product_name TEXT,
-                recommended_quantity INTEGER,
-                FOREIGN KEY (prediction_id) REFERENCES jumeokbap_predictions (id)
-            )
-            """)
-            
-            prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            
-            # 3. 마스터 테이블에 예측 정보 삽입
-            cursor.execute(
-                "INSERT INTO jumeokbap_predictions (prediction_date, forecast) VALUES (?, ?)",
-                (prediction_date, forecast)
-            )
-            prediction_id = cursor.lastrowid # 방금 삽입된 마스터 레코드의 ID 가져오기
-
-            # 4. 아이템 테이블에 추천 상품 목록 삽입
-            if mix:
-                item_insert_sql = "INSERT INTO jumeokbap_prediction_items (prediction_id, product_code, product_name, recommended_quantity) VALUES (?, ?, ?, ?)"
-                items_to_insert = [
-                    (prediction_id, item['product_code'], item['product_name'], item['recommended_quantity'])
-                    for item in mix
-                ]
-                cursor.executemany(item_insert_sql, items_to_insert)
-
-            conn.commit()
-        log.info(f"Prediction results for store '{store_name}' saved to {prediction_db_path}")
-
-    except Exception as e:
-        log.error(f"Error during jumeokbap prediction for {sales_db_path.name}: {e}", exc_info=True)
+    with sqlite3.connect(prediction_db_path) as conn:
+        cursor = conn.cursor()
+        insert_sql = """ 
+        INSERT OR REPLACE INTO category_predictions 
+        (prediction_date, target_date, mid_code, mid_name, predicted_sales)
+        VALUES (:prediction_date, :target_date, :mid_code, :mid_name, :predicted_sales)
+        """
+        cursor.executemany(insert_sql, predictions_to_save)
+        conn.commit()
+    
+    log.info(f"[{store_name}] 총 {len(predictions_to_save)}개 카테고리 예측 완료. DB 저장 위치: {prediction_db_path}")
