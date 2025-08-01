@@ -11,6 +11,7 @@ from pathlib import Path
 import random
 
 log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
 
 def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     """기상청 API를 통해 과거 날씨 데이터를 가져옵니다."""
