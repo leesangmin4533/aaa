@@ -6,10 +6,9 @@ from collections import defaultdict
 
 def save_table_data_to_file(db_path, output_file_path):
     """
-    Connects to an SQLite database. If prediction tables are found, it groups
-    items by category and includes the count of items in the category header.
-    Otherwise, it saves all table contents to a text file, excluding rows
-    where 'sales' or 'recommended_quantity' is 0.
+    Connects to an SQLite database. If prediction tables are found, it displays
+    the total predicted sales for each category, followed by a list of recommended
+    products with their quantities. Otherwise, it saves all table contents.
     """
     if not os.path.exists(db_path):
         print(f"Error: Database file not found at '{db_path}'")
@@ -27,27 +26,34 @@ def save_table_data_to_file(db_path, output_file_path):
             if 'category_predictions' in tables and 'category_prediction_items' in tables:
                 print("Found prediction tables. Grouping items by category.")
                 
-                cursor.execute("SELECT id, mid_name FROM category_predictions")
-                prediction_id_to_mid_name = {pred[0]: pred[1] for pred in cursor.fetchall()}
-
-                cursor.execute("SELECT prediction_id, product_name, recommended_quantity FROM category_prediction_items")
+                # Get category predictions and items
+                cursor.execute("SELECT id, mid_name, predicted_sales FROM category_predictions")
+                predictions = cursor.fetchall()
+                
+                cursor.execute("SELECT prediction_id, product_name, recommended_quantity FROM category_prediction_items WHERE recommended_quantity > 0")
                 items = cursor.fetchall()
 
-                grouped_items = defaultdict(list)
+                # Group items by prediction_id
+                items_by_prediction_id = defaultdict(list)
                 for item in items:
                     prediction_id, product_name, rec_qty = item
-                    if int(rec_qty) == 0:
-                        continue
-                    
-                    mid_name = prediction_id_to_mid_name.get(prediction_id, "Unknown Category")
-                    grouped_items[mid_name].append((product_name, rec_qty))
+                    items_by_prediction_id[prediction_id].append((product_name, rec_qty))
 
-                for mid_name, products in sorted(grouped_items.items()):
-                    f.write(f"--- Category: {mid_name} ({len(products)} items) ---\n")
+                # Write grouped data to file
+                for pred_id, mid_name, predicted_sales in predictions:
+                    f.write(f"--- Category: {mid_name} | Predicted Sales: {predicted_sales:.2f} ---\n")
+                    
+                    recommended_products = items_by_prediction_id.get(pred_id, [])
+                    
+                    f.write(f"Recommended Products ({len(recommended_products)} items):\n")
                     f.write("Product Name | Recommended Quantity\n")
                     f.write("------------------------------------\n")
-                    for product_name, rec_qty in products:
-                        f.write(f"{product_name} | {rec_qty}\n")
+                    
+                    if not recommended_products:
+                        f.write("(No recommended products with quantity > 0)\n")
+                    else:
+                        for product_name, rec_qty in recommended_products:
+                            f.write(f"{product_name} | {rec_qty}\n")
                     f.write("\n")
 
             else:
@@ -59,26 +65,14 @@ def save_table_data_to_file(db_path, output_file_path):
                     f.write(" | ".join(columns) + "\n")
                     f.write("-" * (len(" | ".join(columns)) + 2) + "\n")
 
-                    sales_col_index = columns.index('sales') if 'sales' in columns else -1
-                    rec_qty_col_index = columns.index('recommended_quantity') if 'recommended_quantity' in columns else -1
-
                     cursor.execute(f"SELECT * FROM {table_name}")
                     rows = cursor.fetchall()
 
                     if not rows:
                         f.write("(No data)\n")
                     else:
-                        rows_written = 0
-                        for row in rows:
-                            if sales_col_index != -1 and float(row[sales_col_index]) == 0:
-                                continue
-                            if rec_qty_col_index != -1 and int(row[rec_qty_col_index]) == 0:
-                                continue
-                            f.write(" | ".join(map(str, row)) + "\n")
-                            rows_written += 1
-                        if rows_written == 0:
-                             f.write("(All rows had a value of 0 in the filtered columns or the table was empty)\n")
-                    f.write("\n")
+                        f.write("\n".join([" | ".join(map(str, row)) for row in rows]))
+                    f.write("\n\n")
 
         print(f"Successfully saved database content to {output_file_path}")
 
