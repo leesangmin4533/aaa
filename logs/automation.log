@@ -1,11 +1,11 @@
-[2025-08-01 10:00:25][utils.popup_util][system][INFO] Starting to poll for popups...
-[2025-08-01 10:00:41][utils.popup_util][system][INFO] Successfully closed 27 popups.
-[2025-08-01 10:00:51][utils.popup_ut[2025-08-01 10:01:09][__main__][system][INFO] Scheduled job finished successfully for all stores.
-NFO] Successfully closed 26 popups.
+[2025-08-01 10:02:15][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 10:02:30][utils.popup_util][system][INFO] Successfully closed 27 popups.
+[2025-08-01 10:02:38][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 10:02:54][utils.popup_util][system][INFO] Successfully closed 27 popups.
 n_bgf][login][INFO] Login script executed
-[2025-08-01 10:00:51][login.login_bgf][login][INFO] Login succeeded
+[2025-08-01 10:02:38][login.login_bgf][login][INFO] Login succeeded
 et to load...
-[2025-08-01 10:00:41][bgf_automation][system][ERROR] An error occurred while waiting for the dataset: Message: javascript error: circular reference
+[2025-08-01 10:02:30][bgf_automation][system][ERROR] An error occurred while waiting for the dataset: Message: javascript error: circular reference
   (Session info: chrome=138.0.7204.183)
 Stacktrace:
 	GetHandleVerifier [0x0x9eba83+63395]
@@ -31,11 +31,11 @@ Stacktrace:
 	RtlInitializeExceptionChain [0x0x7796d1ab+107]
 	RtlGetAppContainerNamedObjectPath [0x0x7796d131+561]
 
-[2025-08-01 10:00:41][bgf_automation][system][ERROR] Failed to load mix ratio page for hoban. Skipping.
-[2025-08-01 10:00:43][bgf_automation][system][INFO] WebDriver quit for store: hoban.
-[2025-08-01 10:00:43][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
-[2025-08-01 10:01:06][bgf_automation][system][INFO] Waiting for dsList dataset to load...
-[2025-08-01 10:01:06][bgf_automation][system][ERROR] An error occurred while waiting for the dataset: Message: javascript error: circular reference
+[2025-08-01 10:02:30][bgf_automation][system][ERROR] Failed to load mix ratio page for hoban. Skipping.
+[2025-08-01 10:02:32][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-01 10:02:32][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-01 10:02:54][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-01 10:02:54][bgf_automation][system][ERROR] An error occurred while waiting for the dataset: Message: javascript error: circular reference
   (Session info: chrome=138.0.7204.183)
 Stacktrace:
 	GetHandleVerifier [0x0x9eba83+63395]
@@ -61,5 +61,5 @@ Stacktrace:
 	RtlInitializeExceptionChain [0x0x7796d1ab+107]
 	RtlGetAppContainerNamedObjectPath [0x0x7796d131+561]
 
-[2025-08-01 10:01:06][bgf_automation][system][ERROR] Failed to load mix ratio page for dongyang. Skipping.
-[2025-08-01 10:01:08][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
+[2025-08-01 10:02:54][bgf_automation][system][ERROR] Failed to load mix ratio page for dongyang. Skipping.
+[2025-08-01 10:02:56][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
