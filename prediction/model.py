@@ -36,11 +36,16 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
         
         try:
             response = requests.get(url)
-            response.raise_for_status()
+            response.raise_for_status() # HTTP 오류 (4xx, 5xx) 발생 시 예외 처리
             data = response.json()
+            log.debug(f"Weather API raw response for {date}: {json.dumps(data, indent=2)}")
+            
             avg_temp = 0.0
             total_rainfall = 0.0
+            
             items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
+            log.debug(f"Weather API parsed items for {date}: {items}")
+
             for item in items:
                 category = item.get('category')
                 obsr_value = item.get('obsrValue')
@@ -52,7 +57,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
                     except (ValueError, TypeError): pass
             weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
         except Exception as e:
-            log.error(f"{date} 날씨 데이터 요청/파싱 중 오류: {e}")
+            log.error(f"{date} 날씨 데이터 요청/파싱 중 오류: {e}", exc_info=True)
             weather_data.append({'date': date, 'temperature': 0, 'rainfall': 0})
 
     return pd.DataFrame(weather_data)
