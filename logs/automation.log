@@ -36,3 +36,29 @@ et to load...
 [2025-08-01 17:44:54][bgf_automation][system][INFO] Dataset loaded and stable with 46 rows.
 [2025-08-01 17:45:43][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
 [2025-08-01 17:45:43][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
+[2025-08-01 17:54:10][__main__][system][INFO] Scheduler started. Waiting for the next scheduled run...
+[2025-08-01 18:00:00][__main__][system][INFO] Scheduler triggered. Starting automation for all stores.
+[2025-08-01 18:00:02][bgf_automation][system][DEBUG] Logger 'bgf_automation' initialized
+[2025-08-01 18:00:02][bgf_automation][system][DEBUG] Logger 'bgf_automation' initialized
+[2025-08-01 18:00:02][bgf_automation][system][INFO] Starting BGF Retail Automation for all stores...
+[2025-08-01 18:00:02][bgf_automation][system][INFO] --- Starting automation for store: hoban ---
+[2025-08-01 18:00:08][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-08-01 18:00:08][login.login_bgf][login][INFO] Login script executed
+[2025-08-01 18:00:08][login.login_bgf][login][INFO] Login succeeded
+[2025-08-01 18:00:08][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 18:00:23][utils.popup_util][system][INFO] Successfully closed 27 popups.
+[2025-08-01 18:00:23][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-01 18:00:26][bgf_automation][system][INFO] Dataset loaded and stable with 46 rows.
+[2025-08-01 18:01:49][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-01 18:01:49][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
+[2025-08-01 18:01:49][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-01 18:01:55][login.login_bgf][login][INFO] Login form elements are ready.
+[2025-08-01 18:01:55][login.login_bgf][login][INFO] Login script executed
+[2025-08-01 18:01:55][login.login_bgf][login][INFO] Login succeeded
+[2025-08-01 18:01:55][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-01 18:02:11][utils.popup_util][system][INFO] Successfully closed 27 popups.
+[2025-08-01 18:02:11][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-01 18:02:14][bgf_automation][system][INFO] Dataset loaded and stable with 48 rows.
+[2025-08-01 18:03:22][bgf_automation][system][INFO] WebDriver quit for store: dongyang.
+[2025-08-01 18:03:22][bgf_automation][system][INFO] --- Finished automation for store: dongyang ---
+[2025-08-01 18:03:22][__main__][system][INFO] Scheduled job finished successfully for all stores.
