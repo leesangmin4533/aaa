@@ -137,6 +137,7 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
         time.sleep(0.5)
 
     success = isinstance(parsed, list) and len(parsed) > 0
+    logger.info(f"[execute_collect_single_day_data] Raw data from JS: {parsed}")
     return {"success": bool(success), "data": parsed if success else None}
 
 
@@ -274,10 +275,19 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
         result = execute_collect_single_day_data(driver, today_str)
         collected = result.get("data") if isinstance(result, dict) else None
 
-        if collected and isinstance(collected, list) and collected and isinstance(collected[0], dict):
-            write_sales_data(collected, db_path)
-        else:
-            logger.warning(f"No valid data collected for {today_str} at store {store_name}")
+        try:
+            if collected and isinstance(collected, list) and collected and isinstance(collected[0], dict):
+                logger.info(f"[{store_name}] Successfully collected {len(collected)} records for {today_str}.")
+                logger.info(f"[{store_name}] Data to be written: {collected}")
+                logger.info(f"[{store_name}] --- Calling write_sales_data ---")
+                write_sales_data(collected, db_path)
+                logger.info(f"[{store_name}] --- Returned from write_sales_data ---")
+                for handler in logger.handlers:
+                    handler.flush()
+            else:
+                logger.warning(f"No valid data collected for {today_str} at store {store_name}. Collected data: {collected}")
+        except Exception as e:
+            logger.error(f"Error calling write_sales_data for store {store_name}: {e}", exc_info=True)
 
         from utils.db_util import run_all_category_predictions
         run_all_category_predictions(db_path)
@@ -289,7 +299,6 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
     logger.info(f"--- Finished automation for store: {store_name} ---")
 
 def main() -> None:
-    global logger
     logger = get_logger("bgf_automation", level=logging.DEBUG)
     logger.info("Starting BGF Retail Automation for all stores...")
 
