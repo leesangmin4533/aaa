@@ -1,8 +1,10 @@
 [2025-08-02 15:11:22][utils.popup_util][system][INFO] Starting to poll for popups...
 [2[2025-08-02 15:11:40][utils.db_util][db][INFO] DB에 없는 날짜: []
-[2025-08-02 15:11:50][utils.db_util][system][INFO] DB: hoban.db. Received 135 records to write for date: today.
-[2025-08-02 15:11:50][utils.db_util][system][DEBUG] DB connection to hoban.db successful.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 1/135: {'disposal': 0, 'midCode': '001', 'midName': '도시락', 'order_cnt': 1, 'productCode': '8801771034438', 'productName': '도)한끼만족뉴함박치킨1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 [2025-08-02 16:34:34][utils.popup_util][system][INFO] Starting to poll for popups...
+[2025-08-02 16:34:49][utils.popup_util][system][INFO] Successfully closed 26 popups.
+n_bgf][login][INFO] Login script executed
+[2025-08-02 16:34:34][login.login_bgf][login][INFO] Login succeeded
+ 'midCode': '001', 'midName': '도시락', 'order_cnt': 1, 'productCode': '8801771034438', 'productName': '도)한끼만족뉴함박치킨1', 'purchase': 0, 'sales': 1, 'stock': 0}
 [2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801771034438, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
 [2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801771034438 with sales 1.
 [2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 2/135: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800271902315', 'productName': '주)3XL리챔청양마요삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}
@@ -311,104 +313,853 @@
 [2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 103/135: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 0, 'productCode': '8801069422176', 'productName': '티니핑)빤짝핑바나나우유', 'purchase': 0, 'sales': 1, 'stock': 1}
 [2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801069422176, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
 [2025-08-02 15:12:00][util[2025-08-02 15:12:00][bgf_automation][system][INFO] [hoban] --- Returned from write_sales_data ---
-:12:00][utils.db_util][system][DEBUG] Processing record 104/135: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 0, 'productCode': '8809197840336', 'productName': 'del)벤티컵얼음400g', 'purchase': 0, 'sales': 3, 'stock': 6}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8809197840336, Date: 2025-08-02, New Sales: 3, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8809197840336 with sales 3.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 105/135: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 2, 'productCode': '8809197840107', 'productName': 'del)빅컵얼음230g', 'purchase': 0, 'sales': 1, 'stock': 11}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8809197840107, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8809197840107 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 106/135: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 1, 'productCode': '8809197840091', 'productName': 'del)컵얼음180g', 'purchase': 30, 'sales': 1, 'stock': 29}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8809197840091, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8809197840091 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 107/135: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 0, 'productCode': '8809404250057', 'productName': '동양)아이스웰얼음1kg', 'purchase': 1, 'sales': 1, 'stock': 1}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8809404250057, Date: 2025-08-02, New Sales: 1, Existing Row: None
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8809404250057 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 108/135: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 0, 'productCode': '8801114106921', 'productName': '풀무원)돌얼음2.5kg', 'purchase': 0, 'sales': 1, 'stock': 2}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801114106921, Date: 2025-08-02, New Sales: 1, Existing Row: None
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801114106921 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 109/135: {'disposal': 0, 'midCode': '049', 'midName': '맥주', 'order_cnt': 1, 'productCode': '8801858048136', 'productName': '카스아이스캔464ml', 'purchase': 0, 'sales': 1, 'stock': 9}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801858048136, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801858048136 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 110/135: {'disposal': 0, 'midCode': '049', 'midName': '맥주', 'order_cnt': 1, 'productCode': '8801119740113', 'productName': '테라캔500ml', 'purchase': 0, 'sales': 4, 'stock': 7}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801119740113, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801119740113 with sales 4.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 111/135: {'disposal': 0, 'midCode': '049', 'midName': '맥주', 'order_cnt': 0, 'productCode': '8801119241719', 'productName': '필라이트후레쉬P1.6L', 'purchase': 0, 'sales': 1, 'stock': 3}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801119241719, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801119241719 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 112/135: {'disposal': 0, 'midCode': '050', 'midName': '소주', 'order_cnt': 1, 'productCode': '8801048951017', 'productName': '신참이슬병360ml지함', 'purchase': 0, 'sales': 3, 'stock': 10}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801048951017, Date: 2025-08-02, New Sales: 3, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801048951017 with sales 3.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 113/135: {'disposal': 0, 'midCode': '060', 'midName': '홈/주방용품', 'order_cnt': 0, 'productCode': '2200000079947', 'productName': '종량(가정)20L', 'purchase': 0, 'sales': 1, 'stock': -208}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 2200000079947, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 2200000079947 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 114/135: {'disposal': 0, 'midCode': '060', 'midName': '홈/주방용품', 'order_cnt': 0, 'productCode': '8801252042105', 'productName': '크린랩)위생장갑', 'purchase': 0, 'sales': 1, 'stock': 1}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801252042105, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801252042105 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 115/135: {'disposal': 0, 'midCode': '061', 'midName': '문구류', 'order_cnt': 0, 'productCode': '8801067068635', 'productName': '모나미)예감적중트윈펜', 'purchase': 0, 'sales': 1, 'stock': 3}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801067068635, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801067068635 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 116/135: {'disposal': 0, 'midCode': '061', 'midName': '문구류', 'order_cnt': 0, 'productCode': '8801222370016', 'productName': '포유)테이팩스절연테이프', 'purchase': 0, 'sales': 1, 'stock': 1}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801222370016, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801222370016 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 117/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116000456', 'productName': '더원블루1mg', 'purchase': 0, 'sales': 1, 'stock': 20}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116000456, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116000456 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 118/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088023403', 'productName': '말보로비스타트로피컬', 'purchase': 0, 'sales': 1, 'stock': 16}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 0000088023403, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023403 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 119/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088023434', 'productName': '비스타수퍼슬림트로피컬', 'purchase': 0, 'sales': 2, 'stock': 10}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 0000088023434, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023434 with sales 2.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 120/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116001712', 'productName': '에쎄수0.1mg', 'purchase': 0, 'sales': 2, 'stock': 30}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116001712, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116001712 with sales 2.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 121/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116025251', 'productName': '에쎄이츠딥브라운1mg', 'purchase': 0, 'sales': 1, 'stock': 22}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116025251, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116025251 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 122/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '8801116006007', 'productName': '에쎄체인지W1mg', 'purchase': 0, 'sales': 2, 'stock': 6}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116006007, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116006007 with sales 2.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 123/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116008490', 'productName': '에쎄체인지린1mg', 'purchase': 0, 'sales': 3, 'stock': 13}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116008490, Date: 2025-08-02, New Sales: 3, Existing Row: (2,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116008490 with sales 3.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 124/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '8801116007257', 'productName': '에쎄체인지업', 'purchase': 0, 'sales': 1, 'stock': 11}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116007257, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116007257 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 125/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '8801116015887', 'productName': '에쎄체인지프로즌', 'purchase': 0, 'sales': 1, 'stock': 7}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116015887, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116015887 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 126/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116013319', 'productName': '에쎄히말라야1mg', 'purchase': 0, 'sales': 1, 'stock': 27}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116013319, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116013319 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 127/135: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088021997', 'productName': '켄트스위치1mg신', 'purchase': 0, 'sales': 3, 'stock': 12}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 0000088021997, Date: 2025-08-02, New Sales: 3, Existing Row: (3,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 0000088021997 with sales 3.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 128/135: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 4, 'productCode': '8801116012176', 'productName': 'LIL액상카트리지', 'purchase': 0, 'sales': 11, 'stock': 71}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116012176, Date: 2025-08-02, New Sales: 11, Existing Row: (11,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116012176 with sales 11.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 129/135: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116012435', 'productName': 'MIIX믹스', 'purchase': 0, 'sales': 2, 'stock': 24}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116012435, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116012435 with sales 2.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 130/135: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116025671', 'productName': '그래뉼라아이스', 'purchase': 0, 'sales': 2, 'stock': 6}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801116025671, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801116025671 with sales 2.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 131/135: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '0000088024189', 'productName': '테리아블랙루비', 'purchase': 0, 'sales': 2, 'stock': 19}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 0000088024189, Date: 2025-08-02, New Sales: 2, Existing Row: None
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 0000088024189 with sales 2.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 132/135: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '0000088023045', 'productName': '테리아엠버', 'purchase': 0, 'sales': 1, 'stock': 30}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 0000088023045, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023045 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 133/135: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 1, 'productCode': '0000088024349', 'productName': '하이퍼용네오다크토바코', 'purchase': 0, 'sales': 10, 'stock': 15}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 0000088024349, Date: 2025-08-02, New Sales: 10, Existing Row: (10,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 0000088024349 with sales 10.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 134/135: {'disposal': 0, 'midCode': '100', 'midName': 'RI아이스크림', 'order_cnt': 0, 'productCode': '8801104142373', 'productName': '빙그레)투게더홈', 'purchase': 0, 'sales': 1, 'stock': 0}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 8801104142373, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 8801104142373 with sales 1.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Processing record 135/135: {'disposal': 0, 'midCode': '900', 'midName': '소모품', 'order_cnt': 0, 'productCode': '2201148653150', 'productName': '친환경봉투판매용', 'purchase': 0, 'sales': 5, 'stock': -1818}
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Product: 2201148653150, Date: 2025-08-02, New Sales: 5, Existing Row: (3,)
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Inserted or updated record for 2201148653150 with sales 5.
-[2025-08-02 15:12:00][utils.db_util][system][INFO] DB: hoban.db. Wrote/Updated 135 records. Skipped 0.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] Final weather update for 2025-08-02 completed.
-[2025-08-02 15:12:00][utils.db_util][system][INFO] Total rows in hoban.db: 3935.
-[2025-08-02 15:12:00][utils.db_util][system][DEBUG] DB connection to hoban.db closed.
-[2025-08-02 15:12:00][utils.db_util][system][INFO] [hoban] 모든 카테고리 예측 시작...
+[2025-08-02 16:34:25][bgf_automation][system][INFO] WebDriver quit for store: hoban.
+[2025-08-02 16:34:25][bgf_automation][system][INFO] --- Finished automation for store: hoban ---
+[2025-08-02 16:34:25][bgf_automation][system][INFO] --- Starting automation for store: dongyang ---
+[2025-08-02 16:34:49][bgf_automation][system][INFO] Waiting for dsList dataset to load...
+[2025-08-02 16:34:51][bgf_automation][system][INFO] Dataset loaded and stable with 49 rows.
+[2025-08-02 16:35:05][bgf_automation][system][INFO] [execute_collect_single_day_data] Raw data from JS: [{'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800279670506', 'productName': '주)3XLT1치킨마요삼각2', 'purchase': 1, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800279677932', 'productName': '주)3XLXO비빔삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800279677987', 'productName': '주)3XL간장우삼겹삼각2', 'purchase': 1, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800271902315', 'productName': '주)3XL리챔청양마요삼각1', 'purchase': 0, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800271900953', 'productName': '주)3XL매콤돈까스삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800271902407', 'productName': '주)3XL맵싹소고기고추장2', 'purchase': 1, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8809948346292', 'productName': '주)소고기고추장삼각2', 'purchase': 1, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800279675815', 'productName': '주)압도적리치스팸마요2', 'purchase': 1, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800279670766', 'productName': '주)압도적태양초전주비빔1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800279671008', 'productName': '주)집밥장조림삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '003', 'midName': '김밥', 'order_cnt': 1, 'productCode': '8809453269918', 'productName': '김)뉴스팸김치김밥2', 'purchase': 1, 'sales': 1, 'stock': -2}, {'disposal': 0, 'midCode': '003', 'midName': '김밥', 'order_cnt': 1, 'productCode': '8800271902728', 'productName': '김)집밥장조림김밥2', 'purchase': 1, 'sales': 1, 'stock': -3}, {'disposal': 0, 'midCode': '003', 'midName': '김밥', 'order_cnt': 0, 'productCode': '8801771303251', 'productName': '김)화끈불제육김밥2', 'purchase': 1, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8809895794795', 'productName': '샌)바질치킨토마토샌드1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8800279678205', 'productName': '샌)아삭햄감자맛살2', 'purchase': 1, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8809895794993', 'productName': '샌)케이준치킨샌드2', 'purchase': 1, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8800279677086', 'productName': '샌)포테이토갈릭크림1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 0, 'productCode': '8809692956303', 'productName': '핫)오리지널핫도그2', 'purchase': 0, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 0, 'productCode': '8809692958161', 'productName': '핫)톡톡소시지라구도그2', 'purchase': 1, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 1, 'productCode': '8801068933468', 'productName': '햄)3단맥스숯불바베큐2', 'purchase': 0, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 0, 'productCode': '8809692958123', 'productName': '햄)매콤칠리비프버거1', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '010', 'midName': '제조음료', 'order_cnt': 0, 'productCode': '2202000107644', 'productName': '25뉴get아이스아메XL', 'purchase': 0, 'sales': 6, 'stock': -967}, {'disposal': 0, 'midCode': '010', 'midName': '제조음료', 'order_cnt': 0, 'productCode': '2202000107637', 'productName': '25뉴get아이스아메벤티', 'purchase': 0, 'sales': 2, 'stock': -44}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '5410126132038', 'productName': '로투스)오리지널와플', 'purchase': 0, 'sales': 1, 'stock': 1}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '5410126132472', 'productName': '로투스)초코와플', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '8802259020912', 'productName': '롯데)찰옥수수미니샌드5입', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 1, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '8801068934212', 'productName': '삼립)끼리벨기에와플', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068931839', 'productName': '삼립)순백우유식빵', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068409215', 'productName': '삼립)찰옥수수이야기', 'purchase': 0, 'sales': 2, 'stock': 0}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068934724', 'productName': '삼립)포켓몬치즈데니쉬', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068933871', 'productName': '삼립)흑임자이야기', 'purchase': 0, 'sales': 1, 'stock': 1}, {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '6933352832217', 'productName': '키즈웰)까먹는바나나빵', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011739', 'productName': 'MDS)젤리블리도넛피치', 'purchase': 0, 'sales': 2, 'stock': 2}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011715', 'productName': 'MDS)젤리블리애플망고', 'purchase': 0, 'sales': 1, 'stock': 13}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011401', 'productName': 'MDS)젤리블리애플샤인', 'purchase': 0, 'sales': 1, 'stock': 1}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011333', 'productName': 'MDS)젤리블리제로피치플럼', 'purchase': 0, 'sales': 2, 'stock': -1}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 2, 'productCode': '8801753108058', 'productName': '연세)생크림우유롤케익', 'purchase': 0, 'sales': 1, 'stock': -1}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 1, 'productCode': '8801753108775', 'productName': '연세)초코생크림빵', 'purchase': 0, 'sales': 2, 'stock': 0}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8809411844331', 'productName': '이웃집)두바이식초코쿠키', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 3, 'productCode': '8804455400932', 'productName': '피크민)커스터드도넛', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '0009800800056', 'productName': '매일)페레로누텔라앤고', 'purchase': 0, 'sales': 1, 'stock': 0}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801117141301', 'productName': '오리온)고래밥볶음양념', 'purchase': 0, 'sales': 1, 'stock': 5}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801117534912', 'productName': '오리온)초코파이12입', 'purchase': 0, 'sales': 1, 'stock': 3}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801204009743', 'productName': '청우)자색군고구마스틱80g', 'purchase': 0, 'sales': 1, 'stock': 2}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 3, 'productCode': '8801111186117', 'productName': '크라운)쿠크다스크림', 'purchase': 3, 'sales': 3, 'stock': 5}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801019602504', 'productName': '해태)구운감자', 'purchase': 0, 'sales': 1, 'stock': 3}, {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801019307089', 'productName': '해태)크림웨하스', 'purchase': 0, 'sales': 1, 'stock': 5}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8803173410018', 'productName': 'PBICK)카라멜러스크', 'purchase': 0, 'sales': 1, 'stock': 4}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043036078', 'productName': '농심)매운새우깡90g', 'purchase': 0, 'sales': 1, 'stock': 24}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043031196', 'productName': '농심)메론킥60g', 'purchase': 0, 'sales': 1, 'stock': 6}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043035989', 'productName': '농심)새우깡90g', 'purchase': 0, 'sales': 1, 'stock': 10}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043048774', 'productName': '농심)쫄병짜파게티맛', 'purchase': 0, 'sales': 1, 'stock': 4}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8805856103729', 'productName': '미찌)곰표팝콘오리지널맛', 'purchase': 0, 'sales': 1, 'stock': 7}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801073310698', 'productName': '삼양)짱구115g', 'purchase': 0, 'sales': 3, 'stock': 9}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801045913704', 'productName': '오뚜기)콘크림크리스피롤', 'purchase': 0, 'sales': 1, 'stock': 13}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801117694906', 'productName': '오리온)꼬북칩초코츄러스', 'purchase': 0, 'sales': 1, 'stock': 13}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801117777609', 'productName': '오리온)눈을감자56g', 'purchase': 0, 'sales': 1, 'stock': 14}, {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801117765903', 'productName': '오리온)도도한나쵸치즈92g', 'purchase': 0, 'sales': 1, 'stock': 17}, {'disposal': 0, 'midCode': '017', 'midName': '시리얼', 'order_cnt': 0, 'productCode': '8801037095876', 'productName': '동서)오곡코코볼바33g', 'purchase': 0, 'sales': 3, 'stock': 3}, {'disposal': 0, 'midCode': '019', 'midName': '초콜릿', 'order_cnt': 0, 'productCode': '6914973603189', 'productName': '마즈)엠앤엠밀크초콜릿37g', 'purchase': 0, 'sales': 1, 'stock': 9}, {'disposal': 0, 'midCode': '019', 'midName': '초콜릿', 'order_cnt': 0, 'productCode': '0000080974482', 'productName': '매일)킨더초콜릿조이보이', 'purchase': 0, 'sales': 1, 'stock': 16}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801043068178', 'productName': '농심)멘토스사워파인애플', 'purchase': 0, 'sales': 2, 'stock': 2}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801043013918', 'productName': '농심)후르트텔라요거트', 'purchase': 0, 'sales': 1, 'stock': 3}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801062885404', 'productName': '롯데)핵짱셔요후르츠', 'purchase': 0, 'sales': 1, 'stock': 11}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809682781007', 'productName': '스마일)젤리바운스큐브', 'purchase': 0, 'sales': 2, 'stock': 3}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '7610700607046', 'productName': '일신)리콜라허브레몬', 'purchase': 0, 'sales': 1, 'stock': 2}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '4037400715889', 'productName': '일신)캇예스사우어구미', 'purchase': 0, 'sales': 2, 'stock': 3}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '6971162151623', 'productName': '코코)스웨디시과일젤리', 'purchase': 0, 'sales': 1, 'stock': 6}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801111188012', 'productName': '크라운)새콤달콤포도', 'purchase': 0, 'sales': 1, 'stock': 7}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809971931250', 'productName': '피치)트위젤슬라이스구미', 'purchase': 0, 'sales': 1, 'stock': 4}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809234907770', 'productName': '훼밀리)무케루구미복숭아', 'purchase': 0, 'sales': 1, 'stock': 1}, {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809234907756', 'productName': '훼밀리)무케루구미포도', 'purchase': 0, 'sales': 1, 'stock': 6}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361217', 'productName': '라라스윗)복숭아요거트바', 'purchase': 0, 'sales': 3, 'stock': 7}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361033', 'productName': '라라스윗)저당바닐라콘', 'purchase': 0, 'sales': 1, 'stock': 22}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361101', 'productName': '라라스윗)제로오렌지바', 'purchase': 0, 'sales': 1, 'stock': 16}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361125', 'productName': '라라스윗)제로포도바', 'purchase': 0, 'sales': 1, 'stock': 7}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361187', 'productName': '라라스윗)쿨소다쭈쭈바', 'purchase': 0, 'sales': 1, 'stock': 16}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801062623488', 'productName': '롯데)더블비얀코', 'purchase': 0, 'sales': 2, 'stock': 7}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801118251313', 'productName': '롯데)빵빠레초코', 'purchase': 0, 'sales': 1, 'stock': 11}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801062874729', 'productName': '롯데)색고드름', 'purchase': 0, 'sales': 2, 'stock': 17}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8802259023357', 'productName': '롯데)저당설레임밀크', 'purchase': 0, 'sales': 1, 'stock': 11}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104123280', 'productName': '빙그레)메로나', 'purchase': 0, 'sales': 1, 'stock': 36}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104307048', 'productName': '빙그레)부드러운빵또아', 'purchase': 0, 'sales': 1, 'stock': 17}, {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104949019', 'productName': '빙그레)저당딥앤쫀득초코', 'purchase':[2025-08-02 16:35:05][utils.db_util][system][INFO] DB: dongyang.db. Received 279 records to write for date: today.
+[2025-08-02 16:35:05][utils.db_util][system][DEBUG] DB connection to dongyang.db successful.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 1/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800279670506', 'productName': '주)3XLT1치킨마요삼각2', 'purchase': 1, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279670506, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279670506 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 2/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800279677932', 'productName': '주)3XLXO비빔삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279677932, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279677932 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 3/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800279677987', 'productName': '주)3XL간장우삼겹삼각2', 'purchase': 1, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279677987, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279677987 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 4/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800271902315', 'productName': '주)3XL리챔청양마요삼각1', 'purchase': 0, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800271902315, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800271902315 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 5/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800271900953', 'productName': '주)3XL매콤돈까스삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800271900953, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800271900953 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 6/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800271902407', 'productName': '주)3XL맵싹소고기고추장2', 'purchase': 1, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800271902407, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800271902407 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 7/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8809948346292', 'productName': '주)소고기고추장삼각2', 'purchase': 1, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809948346292, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809948346292 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 8/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800279675815', 'productName': '주)압도적리치스팸마요2', 'purchase': 1, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279675815, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279675815 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 9/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 1, 'productCode': '8800279670766', 'productName': '주)압도적태양초전주비빔1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279670766, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279670766 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 10/279: {'disposal': 0, 'midCode': '002', 'midName': '주먹밥', 'order_cnt': 0, 'productCode': '8800279671008', 'productName': '주)집밥장조림삼각1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279671008, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279671008 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 11/279: {'disposal': 0, 'midCode': '003', 'midName': '김밥', 'order_cnt': 1, 'productCode': '8809453269918', 'productName': '김)뉴스팸김치김밥2', 'purchase': 1, 'sales': 1, 'stock': -2}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809453269918, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809453269918 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 12/279: {'disposal': 0, 'midCode': '003', 'midName': '김밥', 'order_cnt': 1, 'productCode': '8800271902728', 'productName': '김)집밥장조림김밥2', 'purchase': 1, 'sales': 1, 'stock': -3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800271902728, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800271902728 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 13/279: {'disposal': 0, 'midCode': '003', 'midName': '김밥', 'order_cnt': 0, 'productCode': '8801771303251', 'productName': '김)화끈불제육김밥2', 'purchase': 1, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801771303251, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801771303251 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 14/279: {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8809895794795', 'productName': '샌)바질치킨토마토샌드1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809895794795, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809895794795 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 15/279: {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8800279678205', 'productName': '샌)아삭햄감자맛살2', 'purchase': 1, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279678205, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279678205 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 16/279: {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8809895794993', 'productName': '샌)케이준치킨샌드2', 'purchase': 1, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809895794993, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809895794993 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 17/279: {'disposal': 0, 'midCode': '004', 'midName': '샌드위치류', 'order_cnt': 0, 'productCode': '8800279677086', 'productName': '샌)포테이토갈릭크림1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8800279677086, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8800279677086 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 18/279: {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 0, 'productCode': '8809692956303', 'productName': '핫)오리지널핫도그2', 'purchase': 0, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809692956303, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809692956303 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 19/279: {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 0, 'productCode': '8809692958161', 'productName': '핫)톡톡소시지라구도그2', 'purchase': 1, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809692958161, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809692958161 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 20/279: {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 1, 'productCode': '8801068933468', 'productName': '햄)3단맥스숯불바베큐2', 'purchase': 0, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801068933468, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801068933468 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 21/279: {'disposal': 0, 'midCode': '005', 'midName': '햄버거류', 'order_cnt': 0, 'productCode': '8809692958123', 'productName': '햄)매콤칠리비프버거1', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809692958123, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809692958123 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 22/279: {'disposal': 0, 'midCode': '010', 'midName': '제조음료', 'order_cnt': 0, 'productCode': '2202000107644', 'productName': '25뉴get아이스아메XL', 'purchase': 0, 'sales': 6, 'stock': -967}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 2202000107644, Date: 2025-08-02, New Sales: 6, Existing Row: (3,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 2202000107644 with sales 6.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 23/279: {'disposal': 0, 'midCode': '010', 'midName': '제조음료', 'order_cnt': 0, 'productCode': '2202000107637', 'productName': '25뉴get아이스아메벤티', 'purchase': 0, 'sales': 2, 'stock': -44}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 2202000107637, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 2202000107637 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 24/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '5410126132038', 'productName': '로투스)오리지널와플', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 5410126132038, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 5410126132038 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 25/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '5410126132472', 'productName': '로투스)초코와플', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 5410126132472, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 5410126132472 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 26/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '8802259020912', 'productName': '롯데)찰옥수수미니샌드5입', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8802259020912, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8802259020912 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 27/279: {'disposal': 1, 'midCode': '012', 'midName': '빵', 'order_cnt': 0, 'productCode': '8801068934212', 'productName': '삼립)끼리벨기에와플', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801068934212, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801068934212 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 28/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068931839', 'productName': '삼립)순백우유식빵', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801068931839, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801068931839 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 29/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068409215', 'productName': '삼립)찰옥수수이야기', 'purchase': 0, 'sales': 2, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801068409215, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801068409215 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 30/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068934724', 'productName': '삼립)포켓몬치즈데니쉬', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801068934724, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801068934724 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 31/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '8801068933871', 'productName': '삼립)흑임자이야기', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801068933871, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801068933871 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 32/279: {'disposal': 0, 'midCode': '012', 'midName': '빵', 'order_cnt': 1, 'productCode': '6933352832217', 'productName': '키즈웰)까먹는바나나빵', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 6933352832217, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 6933352832217 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 33/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011739', 'productName': 'MDS)젤리블리도넛피치', 'purchase': 0, 'sales': 2, 'stock': 2}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8805684011739, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8805684011739 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 34/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011715', 'productName': 'MDS)젤리블리애플망고', 'purchase': 0, 'sales': 1, 'stock': 13}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8805684011715, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8805684011715 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 35/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011401', 'productName': 'MDS)젤리블리애플샤인', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8805684011401, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8805684011401 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 36/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8805684011333', 'productName': 'MDS)젤리블리제로피치플럼', 'purchase': 0, 'sales': 2, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8805684011333, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8805684011333 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 37/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 2, 'productCode': '8801753108058', 'productName': '연세)생크림우유롤케익', 'purchase': 0, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801753108058, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801753108058 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 38/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 1, 'productCode': '8801753108775', 'productName': '연세)초코생크림빵', 'purchase': 0, 'sales': 2, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801753108775, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801753108775 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 39/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 0, 'productCode': '8809411844331', 'productName': '이웃집)두바이식초코쿠키', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809411844331, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809411844331 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 40/279: {'disposal': 0, 'midCode': '014', 'midName': '디저트', 'order_cnt': 3, 'productCode': '8804455400932', 'productName': '피크민)커스터드도넛', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8804455400932, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8804455400932 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 41/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '0009800800056', 'productName': '매일)페레로누텔라앤고', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 0009800800056, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 0009800800056 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 42/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801117141301', 'productName': '오리온)고래밥볶음양념', 'purchase': 0, 'sales': 1, 'stock': 5}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801117141301, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801117141301 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 43/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801117534912', 'productName': '오리온)초코파이12입', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801117534912, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801117534912 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 44/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801204009743', 'productName': '청우)자색군고구마스틱80g', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801204009743, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801204009743 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 45/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 3, 'productCode': '8801111186117', 'productName': '크라운)쿠크다스크림', 'purchase': 3, 'sales': 3, 'stock': 5}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801111186117, Date: 2025-08-02, New Sales: 3, Existing Row: (3,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801111186117 with sales 3.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 46/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801019602504', 'productName': '해태)구운감자', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801019602504, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801019602504 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 47/279: {'disposal': 0, 'midCode': '015', 'midName': '비스켓/쿠키', 'order_cnt': 0, 'productCode': '8801019307089', 'productName': '해태)크림웨하스', 'purchase': 0, 'sales': 1, 'stock': 5}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801019307089, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801019307089 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 48/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8803173410018', 'productName': 'PBICK)카라멜러스크', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8803173410018, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8803173410018 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 49/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043036078', 'productName': '농심)매운새우깡90g', 'purchase': 0, 'sales': 1, 'stock': 24}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801043036078, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801043036078 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 50/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043031196', 'productName': '농심)메론킥60g', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801043031196, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801043031196 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 51/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043035989', 'productName': '농심)새우깡90g', 'purchase': 0, 'sales': 1, 'stock': 10}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801043035989, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801043035989 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 52/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801043048774', 'productName': '농심)쫄병짜파게티맛', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801043048774, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801043048774 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 53/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8805856103729', 'productName': '미찌)곰표팝콘오리지널맛', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8805856103729, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8805856103729 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 54/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801073310698', 'productName': '삼양)짱구115g', 'purchase': 0, 'sales': 3, 'stock': 9}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801073310698, Date: 2025-08-02, New Sales: 3, Existing Row: (3,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801073310698 with sales 3.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 55/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801045913704', 'productName': '오뚜기)콘크림크리스피롤', 'purchase': 0, 'sales': 1, 'stock': 13}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801045913704, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801045913704 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 56/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801117694906', 'productName': '오리온)꼬북칩초코츄러스', 'purchase': 0, 'sales': 1, 'stock': 13}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801117694906, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801117694906 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 57/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801117777609', 'productName': '오리온)눈을감자56g', 'purchase': 0, 'sales': 1, 'stock': 14}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801117777609, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801117777609 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 58/279: {'disposal': 0, 'midCode': '016', 'midName': '스낵류', 'order_cnt': 0, 'productCode': '8801117765903', 'productName': '오리온)도도한나쵸치즈92g', 'purchase': 0, 'sales': 1, 'stock': 17}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801117765903, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801117765903 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 59/279: {'disposal': 0, 'midCode': '017', 'midName': '시리얼', 'order_cnt': 0, 'productCode': '8801037095876', 'productName': '동서)오곡코코볼바33g', 'purchase': 0, 'sales': 3, 'stock': 3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801037095876, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801037095876 with sales 3.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 60/279: {'disposal': 0, 'midCode': '019', 'midName': '초콜릿', 'order_cnt': 0, 'productCode': '6914973603189', 'productName': '마즈)엠앤엠밀크초콜릿37g', 'purchase': 0, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 6914973603189, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 6914973603189 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 61/279: {'disposal': 0, 'midCode': '019', 'midName': '초콜릿', 'order_cnt': 0, 'productCode': '0000080974482', 'productName': '매일)킨더초콜릿조이보이', 'purchase': 0, 'sales': 1, 'stock': 16}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 0000080974482, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 0000080974482 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 62/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801043068178', 'productName': '농심)멘토스사워파인애플', 'purchase': 0, 'sales': 2, 'stock': 2}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801043068178, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801043068178 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 63/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801043013918', 'productName': '농심)후르트텔라요거트', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801043013918, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801043013918 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 64/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801062885404', 'productName': '롯데)핵짱셔요후르츠', 'purchase': 0, 'sales': 1, 'stock': 11}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801062885404, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801062885404 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 65/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809682781007', 'productName': '스마일)젤리바운스큐브', 'purchase': 0, 'sales': 2, 'stock': 3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809682781007, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809682781007 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 66/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '7610700607046', 'productName': '일신)리콜라허브레몬', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 7610700607046, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 7610700607046 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 67/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '4037400715889', 'productName': '일신)캇예스사우어구미', 'purchase': 0, 'sales': 2, 'stock': 3}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 4037400715889, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 4037400715889 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 68/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '6971162151623', 'productName': '코코)스웨디시과일젤리', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 6971162151623, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 6971162151623 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 69/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8801111188012', 'productName': '크라운)새콤달콤포도', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801111188012, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801111188012 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 70/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809971931250', 'productName': '피치)트위젤슬라이스구미', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809971931250, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809971931250 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 71/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809234907770', 'productName': '훼밀리)무케루구미복숭아', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809234907770, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809234907770 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 72/279: {'disposal': 0, 'midCode': '020', 'midName': '캔디', 'order_cnt': 0, 'productCode': '8809234907756', 'productName': '훼밀리)무케루구미포도', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809234907756, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809234907756 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 73/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361217', 'productName': '라라스윗)복숭아요거트바', 'purchase': 0, 'sales': 3, 'stock': 7}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809599361217, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809599361217 with sales 3.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 74/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361033', 'productName': '라라스윗)저당바닐라콘', 'purchase': 0, 'sales': 1, 'stock': 22}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809599361033, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809599361033 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 75/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361101', 'productName': '라라스윗)제로오렌지바', 'purchase': 0, 'sales': 1, 'stock': 16}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809599361101, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809599361101 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 76/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361125', 'productName': '라라스윗)제로포도바', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809599361125, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809599361125 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 77/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809599361187', 'productName': '라라스윗)쿨소다쭈쭈바', 'purchase': 0, 'sales': 1, 'stock': 16}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8809599361187, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8809599361187 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 78/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801062623488', 'productName': '롯데)더블비얀코', 'purchase': 0, 'sales': 2, 'stock': 7}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801062623488, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801062623488 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 79/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801118251313', 'productName': '롯데)빵빠레초코', 'purchase': 0, 'sales': 1, 'stock': 11}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801118251313, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801118251313 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 80/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801062874729', 'productName': '롯데)색고드름', 'purchase': 0, 'sales': 2, 'stock': 17}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801062874729, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801062874729 with sales 2.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 81/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8802259023357', 'productName': '롯데)저당설레임밀크', 'purchase': 0, 'sales': 1, 'stock': 11}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8802259023357, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8802259023357 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 82/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104123280', 'productName': '빙그레)메로나', 'purchase': 0, 'sales': 1, 'stock': 36}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801104123280, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801104123280 with sales 1.
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Processing record 83/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104307048', 'productName': '빙그레)부드러운빵또아', 'purchase': 0, 'sales': 1, 'stock': 17}
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Product: 8801104307048, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:15][utils.db_util][system][DEBUG] Inserted or updated record for 8801104307048 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 84/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104949019', 'productName': '빙그레)저당딥앤쫀득초코', 'purchase': 0, 'sales': 2, 'stock': 29}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801104949019, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801104949019 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 85/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8801104949033', 'productName': '빙그레)저당딥쫀득카라멜', 'purchase': 0, 'sales': 2, 'stock': 36}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801104949033, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801104949033 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 86/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809526501495', 'productName': '제로윗)당제로바닐라바', 'purchase': 0, 'sales': 3, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809526501495, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809526501495 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 87/279: {'disposal': 0, 'midCode': '021', 'midName': '일반아이스크림', 'order_cnt': 0, 'productCode': '8809526501488', 'productName': '제로윗)당제로초콜릿바', 'purchase': 0, 'sales': 3, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809526501488, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809526501488 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 88/279: {'disposal': 0, 'midCode': '022', 'midName': '마른안주류', 'order_cnt': 0, 'productCode': '8801207120599', 'productName': '한울)꿀고구마말랭이60g', 'purchase': 0, 'sales': 1, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801207120599, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801207120599 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 89/279: {'disposal': 0, 'midCode': '023', 'midName': '육가공류', 'order_cnt': 0, 'productCode': '8801392090530', 'productName': 'CJ)맥스봉매콤불고기핫바', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801392090530, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801392090530 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 90/279: {'disposal': 0, 'midCode': '023', 'midName': '육가공류', 'order_cnt': 0, 'productCode': '8801392090516', 'productName': 'CJ)맥스봉치즈후랑크65g', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801392090516, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801392090516 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 91/279: {'disposal': 0, 'midCode': '023', 'midName': '육가공류', 'order_cnt': 0, 'productCode': '8809216732130', 'productName': 'PBICK)닭가슴살득템', 'purchase': 0, 'sales': 7, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809216732130, Date: 2025-08-02, New Sales: 7, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809216732130 with sales 7.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 92/279: {'disposal': 0, 'midCode': '023', 'midName': '육가공류', 'order_cnt': 0, 'productCode': '8809216732147', 'productName': 'PBICK)닭가슴살득템페퍼', 'purchase': 0, 'sales': 2, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809216732147, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809216732147 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 93/279: {'disposal': 0, 'midCode': '023', 'midName': '육가공류', 'order_cnt': 2, 'productCode': '8804985433431', 'productName': 'PBICK)순살족발득템', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8804985433431, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8804985433431 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 94/279: {'disposal': 0, 'midCode': '023', 'midName': '육가공류', 'order_cnt': 0, 'productCode': '8801077285800', 'productName': '진주햄)천하장사50g', 'purchase': 0, 'sales': 1, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801077285800, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801077285800 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 95/279: {'disposal': 0, 'midCode': '028', 'midName': '축수산식재료', 'order_cnt': 3, 'productCode': '8801155737580', 'productName': '동원)덴마크피자치즈25g', 'purchase': 0, 'sales': 2, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801155737580, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801155737580 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 96/279: {'disposal': 0, 'midCode': '028', 'midName': '축수산식재료', 'order_cnt': 0, 'productCode': '8801066062979', 'productName': '사조)로얄크랩50g', 'purchase': 0, 'sales': 4, 'stock': -2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801066062979, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801066062979 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 97/279: {'disposal': 0, 'midCode': '028', 'midName': '축수산식재료', 'order_cnt': 1, 'productCode': '8801115691181', 'productName': '서울)체다치즈3매입', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115691181, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115691181 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 98/279: {'disposal': 0, 'midCode': '028', 'midName': '축수산식재료', 'order_cnt': 0, 'productCode': '8809136851096', 'productName': '제니코)치즈파티모짜렐라', 'purchase': 0, 'sales': 1, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809136851096, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809136851096 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 99/279: {'disposal': 0, 'midCode': '030', 'midName': '커피차류', 'order_cnt': 0, 'productCode': '8801037006919', 'productName': '동서)순보리차30T', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801037006919, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801037006919 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 100/279: {'disposal': 0, 'midCode': '030', 'midName': '커피차류', 'order_cnt': 0, 'productCode': '8801037049589', 'productName': '동서)카누마일드아메10T', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801037049589, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801037049589 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 101/279: {'disposal': 0, 'midCode': '031', 'midName': '반찬류', 'order_cnt': 0, 'productCode': '8801759001803', 'productName': '칠갑)냉면육수300g', 'purchase': 0, 'sales': 2, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801759001803, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801759001803 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 102/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801043015837', 'productName': '농심)너구리소컵', 'purchase': 0, 'sales': 1, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801043015837, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801043015837 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 103/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801043015714', 'productName': '농심)신라면소컵', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801043015714, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801043015714 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 104/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801043014731', 'productName': '농심)안성탕면', 'purchase': 0, 'sales': 1, 'stock': 21}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801043014731, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801043014731 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 105/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801043015653', 'productName': '농심)육개장사발면', 'purchase': 0, 'sales': 2, 'stock': 27}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801043015653, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801043015653 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 106/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 1, 'productCode': '8801073210363', 'productName': '삼양)불닭볶음면컵', 'purchase': 16, 'sales': 2, 'stock': 28}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801073210363, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801073210363 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 107/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801073210967', 'productName': '삼양)치즈불닭볶음면컵', 'purchase': 0, 'sales': 1, 'stock': 12}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801073210967, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801073210967 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 108/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801045551890', 'productName': '오뚜기)열라면소컵', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801045551890, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801045551890 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 109/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801045522678', 'productName': '오뚜기)진짬뽕', 'purchase': 0, 'sales': 4, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801045522678, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801045522678 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 110/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801045574585', 'productName': '오뚜기)진짬뽕컵', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801045574585, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801045574585 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 111/279: {'disposal': 0, 'midCode': '032', 'midName': '면류', 'order_cnt': 0, 'productCode': '8801045570419', 'productName': '오뚜기)참깨라면컵', 'purchase': 0, 'sales': 2, 'stock': 12}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801045570419, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801045570419 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 112/279: {'disposal': 0, 'midCode': '033', 'midName': '상온즉석식', 'order_cnt': 0, 'productCode': '8801007833620', 'productName': 'CJ)컵반참치마요덮밥', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801007833620, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801007833620 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 113/279: {'disposal': 0, 'midCode': '033', 'midName': '상온즉석식', 'order_cnt': 0, 'productCode': '8809054409034', 'productName': '요뽀끼)매콤달콤떡볶이', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809054409034, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809054409034 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 114/279: {'disposal': 0, 'midCode': '034', 'midName': '냉동즉석식', 'order_cnt': 3, 'productCode': '8809350321818', 'productName': 'HEYROO순살치킨득템매콤C', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809350321818, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809350321818 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 115/279: {'disposal': 0, 'midCode': '034', 'midName': '냉동즉석식', 'order_cnt': 0, 'productCode': '8801066063211', 'productName': 'PBICK)찐만두득템김치6입', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801066063211, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801066063211 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 116/279: {'disposal': 0, 'midCode': '035', 'midName': '냉장즉석식', 'order_cnt': 1, 'productCode': '8809015114663', 'productName': '디엔비)통통새우고로케', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809015114663, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809015114663 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 117/279: {'disposal': 0, 'midCode': '036', 'midName': '의약외품', 'order_cnt': 0, 'productCode': '8806011615408', 'productName': '동아)박카스F병120ml', 'purchase': 0, 'sales': 1, 'stock': 35}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806011615408, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806011615408 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 118/279: {'disposal': 0, 'midCode': '036', 'midName': '의약외품', 'order_cnt': 0, 'productCode': '8806129620004', 'productName': '메디폼)습윤드레싱1매', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806129620004, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806129620004 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 119/279: {'disposal': 0, 'midCode': '037', 'midName': '건강기능', 'order_cnt': 0, 'productCode': '8809097855324', 'productName': '종근)멀티비타부스터20ml', 'purchase': 0, 'sales': 4, 'stock': -1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809097855324, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809097855324 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 120/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8809125069983', 'productName': 'HEYROO블루레몬에이드P410', 'purchase': 0, 'sales': 1, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809125069983, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809125069983 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 121/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801056000332', 'productName': '롯데)델몬트감귤P1.5L', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056000332, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056000332 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 122/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801056022150', 'productName': '롯데)델몬트알로에P1.5L', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056022150, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056022150 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 123/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801056071226', 'productName': '롯데)델몬트오렌지P400ml', 'purchase': 0, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056071226, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056071226 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 124/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801115334095', 'productName': '서울)올데이프룻오렌250ml', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115334095, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115334095 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 125/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801115334101', 'productName': '서울)올데이프룻자두250ml', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115334101, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115334101 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 126/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801382150206', 'productName': '웅진)자연은말린복숭아500', 'purchase': 0, 'sales': 2, 'stock': 17}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801382150206, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801382150206 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 127/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801382137917', 'productName': '웅진)자연은제주감귤500ml', 'purchase': 0, 'sales': 1, 'stock': 11}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801382137917, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801382137917 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 128/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801382130314', 'productName': '웅진)자연은토마토P500ml', 'purchase': 0, 'sales': 1, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801382130314, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801382130314 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 129/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801128945288', 'productName': '팔도)뽀로로딸기맛P235ml', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801128945288, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801128945288 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 130/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801128945073', 'productName': '팔도)뽀로로밀크맛P235ml', 'purchase': 0, 'sales': 2, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801128945073, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801128945073 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 131/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8801128945462', 'productName': '팔도)뽀로로사과맛P235ml', 'purchase': 0, 'sales': 2, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801128945462, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801128945462 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 132/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8809695254222', 'productName': '팔도)뽀로로샤인맛P235ml', 'purchase': 0, 'sales': 2, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809695254222, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809695254222 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 133/279: {'disposal': 0, 'midCode': '039', 'midName': '과일야채음료', 'order_cnt': 0, 'productCode': '8806371309771', 'productName': '푸르밀)웰치포도에이드', 'purchase': 0, 'sales': 2, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806371309771, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806371309771 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 134/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8806002022185', 'productName': '광동)비타500제로병100ml', 'purchase': 0, 'sales': 3, 'stock': 30}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806002022185, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806002022185 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 135/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8802255808019', 'productName': '그래미)여명808캔140ml', 'purchase': 0, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8802255808019, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8802255808019 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 136/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 1, 'productCode': '8801056002701', 'productName': '롯데)2프로복숭아캔240ml', 'purchase': 6, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056002701, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056002701 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 137/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8801056249212', 'productName': '롯데)핫식스더킹애플캔355', 'purchase': 0, 'sales': 1, 'stock': 15}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056249212, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056249212 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 138/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8801056228255', 'productName': '롯데)핫식스더킹제로캔355', 'purchase': 0, 'sales': 2, 'stock': 16}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056228255, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056228255 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 139/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 2, 'productCode': '8801056098834', 'productName': '롯데)핫식스더킹파워캔355', 'purchase': 12, 'sales': 2, 'stock': 17}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056098834, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056098834 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 140/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8801056240998', 'productName': '롯데)핫식스더킹퍼플캔355', 'purchase': 0, 'sales': 1, 'stock': 19}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056240998, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056240998 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 141/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '4897036693339', 'productName': '코카)몬스터망고로코355ml', 'purchase': 0, 'sales': 1, 'stock': 13}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 4897036693339, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 4897036693339 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 142/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '4897036692424', 'productName': '코카)몬스터파이프캔355ml', 'purchase': 0, 'sales': 1, 'stock': 24}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 4897036692424, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 4897036692424 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 143/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8801094412371', 'productName': '코카)토레타제로P500ml', 'purchase': 0, 'sales': 2, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094412371, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094412371 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 144/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 0, 'productCode': '8801094602703', 'productName': '코카)파워스칼렛스톰600P', 'purchase': 0, 'sales': 2, 'stock': 16}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094602703, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094602703 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 145/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 1, 'productCode': '8801094362706', 'productName': '코카)파워에이드P600ml', 'purchase': 6, 'sales': 1, 'stock': 26}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094362706, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094362706 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 146/279: {'disposal': 0, 'midCode': '040', 'midName': '기능건강음료', 'order_cnt': 2, 'productCode': '8801094603700', 'productName': '코카)파워에이드퍼플P600', 'purchase': 12, 'sales': 2, 'stock': 27}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094603700, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094603700 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 147/279: {'disposal': 0, 'midCode': '041', 'midName': '생수', 'order_cnt': 0, 'productCode': '8801056169817', 'productName': 'HEYROO미네랄워터P500ml', 'purchase': 0, 'sales': 2, 'stock': 90}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056169817, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056169817 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 148/279: {'disposal': 0, 'midCode': '041', 'midName': '생수', 'order_cnt': 0, 'productCode': '8808244201014', 'productName': '광동)제주삼다수P500ml', 'purchase': 0, 'sales': 3, 'stock': 76}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8808244201014, Date: 2025-08-02, New Sales: 3, Existing Row: (3,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8808244201014 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 149/279: {'disposal': 0, 'midCode': '041', 'midName': '생수', 'order_cnt': 0, 'productCode': '8801117070007', 'productName': '오리온)제주용암수P530ml', 'purchase': 0, 'sales': 3, 'stock': 24}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801117070007, Date: 2025-08-02, New Sales: 3, Existing Row: (3,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801117070007 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 150/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 2, 'productCode': '8801115381754', 'productName': '동서)티오피마일드에스프', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115381754, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115381754 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 151/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801115381761', 'productName': '동서)티오피볼드에스프', 'purchase': 0, 'sales': 3, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115381761, Date: 2025-08-02, New Sales: 3, Existing Row: (3,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115381761 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 152/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801121031858', 'productName': '매일)바리스타라떼P475ml', 'purchase': 0, 'sales': 4, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801121031858, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801121031858 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 153/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801121768174', 'productName': '매일)바리스타블랙325ml', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801121768174, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801121768174 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 154/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801121031834', 'productName': '매일)바리스타아메P475ml', 'purchase': 0, 'sales': 2, 'stock': 4}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801121031834, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801121031834 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 155/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 1, 'productCode': '8801104944915', 'productName': '빙그레)아카페라벤티아메', 'purchase': 6, 'sales': 2, 'stock': 18}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801104944915, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801104944915 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 156/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801104944939', 'productName': '빙그레)아카페라벤티헤이', 'purchase': 0, 'sales': 2, 'stock': 17}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801104944939, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801104944939 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 157/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801115140023', 'productName': '서울)커피타운모카250ml', 'purchase': 0, 'sales': 3, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115140023, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115140023 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 158/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 1, 'productCode': '8801115140016', 'productName': '서울)커피타운바닐라250ml', 'purchase': 0, 'sales': 3, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115140016, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115140016 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 159/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 1, 'productCode': '8801037086942', 'productName': '스벅)카페라떼컵200ml', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801037086942, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801037086942 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 160/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801037086188', 'productName': '스벅)프라푸치노커피병281', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801037086188, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801037086188 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 161/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8809388463931', 'productName': '이디야)돌체콜드브루300ml', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809388463931, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809388463931 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 162/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8809388464464', 'productName': '이디야)바닐라라떼300ml', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809388464464, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809388464464 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 163/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8809388464471', 'productName': '이디야)쇼콜라모카300ml', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809388464471, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809388464471 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 164/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8808024031909', 'productName': '쟈뎅)로얄헤이즐넛P900ml', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8808024031909, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8808024031909 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 165/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801056051921', 'productName': '칸타타)카라멜캔275ml', 'purchase': 0, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056051921, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056051921 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 166/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 0, 'productCode': '8801094512668', 'productName': '코카)조지아라떼P470ml', 'purchase': 0, 'sales': 3, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094512668, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094512668 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 167/279: {'disposal': 0, 'midCode': '042', 'midName': '커피음료', 'order_cnt': 1, 'productCode': '8801094502669', 'productName': '코카)조지아블랙P470ml', 'purchase': 6, 'sales': 4, 'stock': 16}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094502669, Date: 2025-08-02, New Sales: 4, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094502669 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 168/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801069174020', 'productName': '남양)17차P500ml', 'purchase': 0, 'sales': 3, 'stock': 10}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801069174020, Date: 2025-08-02, New Sales: 3, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801069174020 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 169/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '4901085003800', 'productName': '농심)오이오차녹차P500', 'purchase': 0, 'sales': 1, 'stock': 10}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 4901085003800, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 4901085003800 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 170/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801047284499', 'productName': '동원)레몬제로아이스티500', 'purchase': 0, 'sales': 2, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801047284499, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801047284499 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 171/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801047284482', 'productName': '동원)복숭아제로아이스500', 'purchase': 0, 'sales': 2, 'stock': 22}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801047284482, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801047284482 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 172/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801056228927', 'productName': '롯데)솔의눈P500ml', 'purchase': 0, 'sales': 4, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056228927, Date: 2025-08-02, New Sales: 4, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056228927 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 173/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801104949941', 'productName': '신이어)유기농보리차P600', 'purchase': 0, 'sales': 2, 'stock': 20}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801104949941, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801104949941 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 174/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801382148500', 'productName': '웅진)티즐제로피치P500', 'purchase': 0, 'sales': 2, 'stock': 21}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801382148500, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801382148500 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 175/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8808024034276', 'productName': '쟈뎅)루이보스피치망고500', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8808024034276, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8808024034276 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 176/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8808024034269', 'productName': '쟈뎅)히비스애플오렌지500', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8808024034269, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8808024034269 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 177/279: {'disposal': 0, 'midCode': '043', 'midName': '차음료', 'order_cnt': 0, 'productCode': '8801001238391', 'productName': '하이트)보리누룽지P520', 'purchase': 0, 'sales': 2, 'stock': 15}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801001238391, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801001238391 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 178/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801056755010', 'productName': '롯데)밀키스P500ml', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056755010, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056755010 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 179/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801056192013', 'productName': '롯데)칠성사이다P500ml', 'purchase': 0, 'sales': 1, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056192013, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056192013 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 180/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801056175955', 'productName': '롯데)펩시제로라임P500ml', 'purchase': 0, 'sales': 4, 'stock': 31}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056175955, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056175955 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Proce[2025-08-02 16:35:16][bgf_automation][system][INFO] [dongyang] --- Returned from write_sales_data ---
+ductCode': '8801037098556', 'productName': '스벅)피지오쿨라임400ml', 'purchase': 0, 'sales': 1, 'stock': 31}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801037098556, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801037098556 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 182/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801037098563', 'productName': '스벅)피지오피치딸기400ml', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801037098563, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801037098563 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 183/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801223100261', 'productName': '일화)맥콜P500ml', 'purchase': 0, 'sales': 2, 'stock': 11}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801223100261, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801223100261 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 184/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801094962104', 'productName': '코카)스프라이트제로P500', 'purchase': 0, 'sales': 2, 'stock': 23}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094962104, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094962104 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 185/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801094017606', 'productName': '코카)코카콜라P500ml', 'purchase': 0, 'sales': 1, 'stock': 16}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094017606, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094017606 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 186/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801094083625', 'productName': '코카)코카콜라제로캔490ml', 'purchase': 0, 'sales': 1, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094083625, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094083625 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 187/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801094013004', 'productName': '코카)코카콜라캔250ml', 'purchase': 0, 'sales': 2, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094013004, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094013004 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 188/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8801094000394', 'productName': '코카)환타멜론P600ml', 'purchase': 0, 'sales': 2, 'stock': 22}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801094000394, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801094000394 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 189/279: {'disposal': 0, 'midCode': '044', 'midName': '탄산음료', 'order_cnt': 0, 'productCode': '8806004000945', 'productName': '현대)미에로화이스파클500', 'purchase': 0, 'sales': 2, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806004000945, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806004000945 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 190/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8802774003063', 'productName': '25del)레몬팝핑톡230ml', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8802774003063, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8802774003063 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 191/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8802774002851', 'productName': '25del)복숭아아이스티340', 'purchase': 0, 'sales': 1, 'stock': 15}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8802774002851, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8802774002851 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 192/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8800244141536', 'productName': '25del)블랙아메리카노500', 'purchase': 0, 'sales': 4, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8800244141536, Date: 2025-08-02, New Sales: 4, Existing Row: (3,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8800244141536 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 193/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8800244141598', 'productName': '25del)블루레몬에이드340', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8800244141598, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8800244141598 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 194/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8800244141550', 'productName': '25del)스위트아메리340', 'purchase': 0, 'sales': 2, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8800244141550, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8800244141550 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 195/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8800297740038', 'productName': '25del)제로헤이즐넛향500', 'purchase': 0, 'sales': 1, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8800297740038, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8800297740038 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 196/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8806002024486', 'productName': '광동)비타500이온플러스', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806002024486, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806002024486 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 197/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8801069408989', 'productName': '남양)초코에몽에이드230ml', 'purchase': 0, 'sales': 1, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801069408989, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801069408989 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 198/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8801056248536', 'productName': '롯데)레쓰비마일드230ml', 'purchase': 0, 'sales': 4, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056248536, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056248536 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 199/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8801056230111', 'productName': '롯데)칸타타블랙아메320ml', 'purchase': 0, 'sales': 1, 'stock': 12}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056230111, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056230111 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 200/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 1, 'productCode': '8801056083557', 'productName': '롯데)칸타타스윗아메리230', 'purchase': 10, 'sales': 8, 'stock': 16}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056083557, Date: 2025-08-02, New Sales: 8, Existing Row: (8,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056083557 with sales 8.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 201/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8801056083588', 'productName': '롯데)칸타타카라멜마끼230', 'purchase': 0, 'sales': 6, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056083588, Date: 2025-08-02, New Sales: 6, Existing Row: (3,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056083588 with sales 6.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 202/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8801056083571', 'productName': '롯데)칸타타헤이즐넛230ml', 'purchase': 0, 'sales': 4, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056083571, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056083571 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 203/279: {'disposal': 0, 'midCode': '045', 'midName': '아이스드링크', 'order_cnt': 0, 'productCode': '8801056233433', 'productName': '롯데)칸타타헤이즐넛320ml', 'purchase': 0, 'sales': 4, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801056233433, Date: 2025-08-02, New Sales: 4, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801056233433 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 204/279: {'disposal': 0, 'midCode': '046', 'midName': '요구르트', 'order_cnt': 0, 'productCode': '8801128308076', 'productName': 'hy)야쿠르트제로190ml', 'purchase': 0, 'sales': 2, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801128308076, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801128308076 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 205/279: {'disposal': 0, 'midCode': '046', 'midName': '요구르트', 'order_cnt': 0, 'productCode': '8801155744502', 'productName': '동원)하이요구르트280ml', 'purchase': 0, 'sales': 2, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801155744502, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801155744502 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 206/279: {'disposal': 0, 'midCode': '046', 'midName': '요구르트', 'order_cnt': 2, 'productCode': '8801115224143', 'productName': '서울)마이픽플레인쿠키링', 'purchase': 0, 'sales': 4, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115224143, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115224143 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 207/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 6, 'productCode': '8801069171067', 'productName': '남양)초코에몽드링크190ml', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801069171067, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801069171067 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 208/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 0, 'productCode': '8801155745394', 'productName': '동원)가나디딸기우유500ml', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801155745394, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801155745394 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 209/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 0, 'productCode': '8801155743772', 'productName': '동원)소화잘되는딸기190ml', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801155743772, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801155743772 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 210/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 3, 'productCode': '0000088002798', 'productName': '빙그레)바나나우유240ml', 'purchase': 0, 'sales': 4, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088002798, Date: 2025-08-02, New Sales: 4, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088002798 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 211/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 3, 'productCode': '8801115135708', 'productName': '서울)커피우유300ml', 'purchase': 0, 'sales': 1, 'stock': 7}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115135708, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115135708 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 212/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 2, 'productCode': '8801115114154', 'productName': '서울)흰우유1L', 'purchase': 0, 'sales': 2, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115114154, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115114154 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 213/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 0, 'productCode': '8801115114130', 'productName': '서울)흰우유500ml', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801115114130, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801115114130 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 214/279: {'disposal': 0, 'midCode': '047', 'midName': '우유', 'order_cnt': 0, 'productCode': '8801069422169', 'productName': '티니핑)하츄핑딸기우유', 'purchase': 0, 'sales': 1, 'stock': -1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801069422169, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801069422169 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 215/279: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 1, 'productCode': '8809197840336', 'productName': 'del)벤티컵얼음400g', 'purchase': 0, 'sales': 7, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809197840336, Date: 2025-08-02, New Sales: 7, Existing Row: (3,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809197840336 with sales 7.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 216/279: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 1, 'productCode': '8809197840107', 'productName': 'del)빅컵얼음230g', 'purchase': 36, 'sales': 24, 'stock': 34}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809197840107, Date: 2025-08-02, New Sales: 24, Existing Row: (13,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809197840107 with sales 24.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 217/279: {'disposal': 0, 'midCode': '048', 'midName': '얼음', 'order_cnt': 1, 'productCode': '8809197840091', 'productName': 'del)컵얼음180g', 'purchase': 15, 'sales': 23, 'stock': 12}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809197840091, Date: 2025-08-02, New Sales: 23, Existing Row: (17,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809197840091 with sales 23.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 218/279: {'disposal': 0, 'midCode': '049', 'midName': '맥주', 'order_cnt': 0, 'productCode': '8801021213217', 'productName': '버드와이저캔500ml', 'purchase': 0, 'sales': 4, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801021213217, Date: 2025-08-02, New Sales: 4, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801021213217 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 219/279: {'disposal': 0, 'midCode': '049', 'midName': '맥주', 'order_cnt': 0, 'productCode': '8801858011024', 'productName': '카스캔500ml', 'purchase': 0, 'sales': 1, 'stock': 155}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801858011024, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801858011024 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 220/279: {'disposal': 0, 'midCode': '049', 'midName': '맥주', 'order_cnt': 4, 'productCode': '8934822470135', 'productName': '하이네켄캔500ml', 'purchase': 16, 'sales': 4, 'stock': 24}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8934822470135, Date: 2025-08-02, New Sales: 4, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8934822470135 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 221/279: {'disposal': 0, 'midCode': '050', 'midName': '소주', 'order_cnt': 0, 'productCode': '8801048951017', 'productName': '신참이슬병360ml지함', 'purchase': 0, 'sales': 2, 'stock': 116}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801048951017, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801048951017 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 222/279: {'disposal': 0, 'midCode': '051', 'midName': '전통주', 'order_cnt': 0, 'productCode': '8809288981191', 'productName': '장수)월매쌀막걸리1L', 'purchase': 0, 'sales': 1, 'stock': 5}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809288981191, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809288981191 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 223/279: {'disposal': 0, 'midCode': '051', 'midName': '전통주', 'order_cnt': 0, 'productCode': '8809202631751', 'productName': '지평)생막걸리750ml', 'purchase': 0, 'sales': 5, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809202631751, Date: 2025-08-02, New Sales: 5, Existing Row: (5,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809202631751 with sales 5.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 224/279: {'disposal': 0, 'midCode': '055', 'midName': '화장품', 'order_cnt': 0, 'productCode': '8806322114263', 'productName': '니베아)히알루론립케어', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806322114263, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806322114263 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 225/279: {'disposal': 0, 'midCode': '056', 'midName': '목욕세면', 'order_cnt': 0, 'productCode': '8801038570303', 'productName': '아임유어)면도기세트', 'purchase': 0, 'sales': 2, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801038570303, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801038570303 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 226/279: {'disposal': 0, 'midCode': '057', 'midName': '위생용품', 'order_cnt': 0, 'productCode': '8809848530241', 'productName': 'HEYROO롤티슈득템24롤', 'purchase': 0, 'sales': 1, 'stock': 6}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809848530241, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809848530241 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 227/279: {'disposal': 0, 'midCode': '057', 'midName': '위생용품', 'order_cnt': 0, 'productCode': '8809848530272', 'productName': 'HEYROO미용티슈득템3입', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809848530272, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809848530272 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 228/279: {'disposal': 0, 'midCode': '057', 'midName': '위생용품', 'order_cnt': 0, 'productCode': '8801166234023', 'productName': '좋은)울날중18P', 'purchase': 0, 'sales': 2, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801166234023, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801166234023 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 229/279: {'disposal': 0, 'midCode': '060', 'midName': '홈/주방용품', 'order_cnt': 0, 'productCode': '8801328105420', 'productName': '에프킬라)모기기피제', 'purchase': 0, 'sales': 1, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801328105420, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801328105420 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 230/279: {'disposal': 0, 'midCode': '060', 'midName': '홈/주방용품', 'order_cnt': 0, 'productCode': '8801328106328', 'productName': '에프킬라)에어졸무향500ml', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801328106328, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801328106328 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 231/279: {'disposal': 0, 'midCode': '060', 'midName': '홈/주방용품', 'order_cnt': 0, 'productCode': '8806006509057', 'productName': '유한)락스1L', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8806006509057, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8806006509057 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 232/279: {'disposal': 0, 'midCode': '060', 'midName': '홈/주방용품', 'order_cnt': 0, 'productCode': '2200000079947', 'productName': '종량(가정)20L', 'purchase': 0, 'sales': 1, 'stock': -711}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 2200000079947, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 2200000079947 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 233/279: {'disposal': 0, 'midCode': '061', 'midName': '문구류', 'order_cnt': 0, 'productCode': '8801222700189', 'productName': '포유)테이팩스투명테이프', 'purchase': 0, 'sales': 1, 'stock': 2}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801222700189, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801222700189 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 234/279: {'disposal': 0, 'midCode': '062', 'midName': '전기연료', 'order_cnt': 1, 'productCode': '5000394123588', 'productName': '듀라셀)디럭스2A4입', 'purchase': 0, 'sales': 2, 'stock': 0}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 5000394123588, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 5000394123588 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 235/279: {'disposal': 0, 'midCode': '062', 'midName': '전기연료', 'order_cnt': 0, 'productCode': '5000394123618', 'productName': '듀라셀)디럭스3A4입', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 5000394123618, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 5000394123618 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 236/279: {'disposal': 0, 'midCode': '062', 'midName': '전기연료', 'order_cnt': 0, 'productCode': '8801604222223', 'productName': '로케트)건전지2A2입', 'purchase': 0, 'sales': 1, 'stock': 3}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801604222223, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801604222223 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 237/279: {'disposal': 0, 'midCode': '062', 'midName': '전기연료', 'order_cnt': 0, 'productCode': '8809783230367', 'productName': '몬스)무광토치라이터', 'purchase': 0, 'sales': 2, 'stock': 25}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809783230367, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809783230367 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 238/279: {'disposal': 0, 'midCode': '062', 'midName': '전기연료', 'order_cnt': 0, 'productCode': '8803651000045', 'productName': '에이스)일회용돌라이터', 'purchase': 0, 'sales': 1, 'stock': 56}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8803651000045, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8803651000045 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 239/279: {'disposal': 0, 'midCode': '068', 'midName': '입지특화상품', 'order_cnt': 0, 'productCode': '8801324209566', 'productName': '불스원)에탄올그린워셔', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801324209566, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801324209566 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 240/279: {'disposal': 0, 'midCode': '069', 'midName': '소형가전', 'order_cnt': 2, 'productCode': '8809471234981', 'productName': 'BNS)다회용배터리8핀', 'purchase': 0, 'sales': 1, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809471234981, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809471234981 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 241/279: {'disposal': 0, 'midCode': '071', 'midName': '편의상품', 'order_cnt': 0, 'productCode': '8809315147002', 'productName': '이즐)CU그린카드', 'purchase': 0, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8809315147002, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8809315147002 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 242/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 2, 'productCode': '0000088022680', 'productName': '던힐1mg', 'purchase': 20, 'sales': 2, 'stock': 47}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088022680, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088022680 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 243/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '0000088022666', 'productName': '던힐6mg', 'purchase': 10, 'sales': 6, 'stock': 38}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088022666, Date: 2025-08-02, New Sales: 6, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088022666 with sales 6.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 244/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088023977', 'productName': '던힐파인컷멜로우크러쉬N', 'purchase': 0, 'sales': 2, 'stock': 28}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088023977, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023977 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 245/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116005451', 'productName': '디스아프리카룰라5mg', 'purchase': 0, 'sales': 1, 'stock': 24}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116005451, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116005451 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 246/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116006403', 'productName': '디스아프리카몰라5mg', 'purchase': 0, 'sales': 1, 'stock': 34}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116006403, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116006403 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 247/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '0000088011189', 'productName': '레종블루3mg', 'purchase': 10, 'sales': 15, 'stock': 32}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088011189, Date: 2025-08-02, New Sales: 15, Existing Row: (15,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088011189 with sales 15.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 248/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116006830', 'productName': '레종프렌치블랙3mg', 'purchase': 0, 'sales': 1, 'stock': 34}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116006830, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116006830 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 249/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116019397', 'productName': '레종프렌치아이스블랑2mg', 'purchase': 0, 'sales': 2, 'stock': 17}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116019397, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116019397 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 250/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116007172', 'productName': '레종프렌치요고1㎎', 'purchase': 0, 'sales': 2, 'stock': 21}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116007172, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116007172 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 251/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088011721', 'productName': '말보로미디엄6mg', 'purchase': 0, 'sales': 1, 'stock': 18}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088011721, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088011721 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 252/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088023465', 'productName': '말보로비스타썸머스플래시', 'purchase': 0, 'sales': 1, 'stock': 12}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088023465, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023465 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 253/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088020785', 'productName': '메비우스LSS3㎎', 'purchase': 0, 'sales': 2, 'stock': 35}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088020785, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088020785 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 254/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088020747', 'productName': '메비우스스카이블루곽6㎎', 'purchase': 0, 'sales': 4, 'stock': 35}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088020747, Date: 2025-08-02, New Sales: 4, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088020747 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 255/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088011851', 'productName': '버지니아슬림골드5mg', 'purchase': 0, 'sales': 1, 'stock': 15}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088011851, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088011851 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 256/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116001293', 'productName': '보헴시가넘버6', 'purchase': 0, 'sales': 1, 'stock': 19}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116001293, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116001293 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 257/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8888075091336', 'productName': '뷰즈고루비스파크', 'purchase': 0, 'sales': 1, 'stock': 4}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8888075091336, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8888075091336 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 258/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116001712', 'productName': '에쎄수0.1mg', 'purchase': 0, 'sales': 1, 'stock': 45}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116001712, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116001712 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 259/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116002009', 'productName': '에쎄엣지1mg', 'purchase': 0, 'sales': 1, 'stock': 14}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116002009, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116002009 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 260/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116005314', 'productName': '에쎄체인지1mg', 'purchase': 0, 'sales': 2, 'stock': 37}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116005314, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116005314 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 261/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '8801116040360', 'productName': '에쎄체인지슈팅레드', 'purchase': 10, 'sales': 1, 'stock': 21}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116040360, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116040360 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 262/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '8801116007257', 'productName': '에쎄체인지업', 'purchase': 0, 'sales': 3, 'stock': 27}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116007257, Date: 2025-08-02, New Sales: 3, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116007257 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 263/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088011967', 'productName': '에쎄프라임4mg', 'purchase': 0, 'sales': 1, 'stock': 49}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088011967, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088011967 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 264/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088011981', 'productName': '클라우드나인5mg', 'purchase': 0, 'sales': 1, 'stock': 8}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088011981, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088011981 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 265/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 1, 'productCode': '0000088012063', 'productName': '타임미드3mg', 'purchase': 10, 'sales': 2, 'stock': 20}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088012063, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088012063 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 266/279: {'disposal': 0, 'midCode': '072', 'midName': '담배', 'order_cnt': 0, 'productCode': '0000088017624', 'productName': '팔리아멘트하이브리드5mg', 'purchase': 0, 'sales': 2, 'stock': 16}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088017624, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088017624 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 267/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116012176', 'productName': 'LIL액상카트리지', 'purchase': 0, 'sales': 8, 'stock': 126}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116012176, Date: 2025-08-02, New Sales: 8, Existing Row: (4,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116012176 with sales 8.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 268/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116013234', 'productName': 'MIIX아이스더블', 'purchase': 0, 'sales': 4, 'stock': 26}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116013234, Date: 2025-08-02, New Sales: 4, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116013234 with sales 4.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 269/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116015931', 'productName': 'MIIX아이스뱅', 'purchase': 0, 'sales': 1, 'stock': 33}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116015931, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116015931 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 270/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116042890', 'productName': 'MIIX오라썸', 'purchase': 0, 'sales': 2, 'stock': 30}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116042890, Date: 2025-08-02, New Sales: 2, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116042890 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 271/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8801116025671', 'productName': '그래뉼라아이스', 'purchase': 0, 'sales': 1, 'stock': 11}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8801116025671, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8801116025671 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 272/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '0000088024714', 'productName': '센티아클래식골드', 'purchase': 0, 'sales': 1, 'stock': 9}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088024714, Date: 2025-08-02, New Sales: 1, Existing Row: None
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088024714 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 273/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '0000088024189', 'productName': '테리아블랙루비', 'purchase': 0, 'sales': 1, 'stock': 11}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088024189, Date: 2025-08-02, New Sales: 1, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088024189 with sales 1.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 274/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '0000088023526', 'productName': '테리아블랙퍼플', 'purchase': 0, 'sales': 3, 'stock': 47}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088023526, Date: 2025-08-02, New Sales: 3, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023526 with sales 3.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 275/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 1, 'productCode': '0000088023052', 'productName': '테리아실버', 'purchase': 10, 'sales': 10, 'stock': 22}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088023052, Date: 2025-08-02, New Sales: 10, Existing Row: (10,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088023052 with sales 10.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 276/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 3, 'productCode': '0000088021492', 'productName': '테리아퍼플웨이브', 'purchase': 30, 'sales': 10, 'stock': 45}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 0000088021492, Date: 2025-08-02, New Sales: 10, Existing Row: (10,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 0000088021492 with sales 10.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 277/279: {'disposal': 0, 'midCode': '073', 'midName': '전자담배', 'order_cnt': 0, 'productCode': '8888075081405', 'productName': '하이퍼용네오프레스코', 'purchase': 0, 'sales': 2, 'stock': 24}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 8888075081405, Date: 2025-08-02, New Sales: 2, Existing Row: (2,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 8888075081405 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 278/279: {'disposal': 0, 'midCode': '900', 'midName': '소모품', 'order_cnt': 0, 'productCode': '2202000037309', 'productName': '친환경)배달전용봉투특대', 'purchase': 0, 'sales': 2, 'stock': 1}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 2202000037309, Date: 2025-08-02, New Sales: 2, Existing Row: (1,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 2202000037309 with sales 2.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Processing record 279/279: {'disposal': 0, 'midCode': '900', 'midName': '소모품', 'order_cnt': 0, 'productCode': '2201148653150', 'productName': '친환경봉투판매용', 'purchase': 0, 'sales': 12, 'stock': -540}
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Product: 2201148653150, Date: 2025-08-02, New Sales: 12, Existing Row: (5,)
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Inserted or updated record for 2201148653150 with sales 12.
+[2025-08-02 16:35:16][utils.db_util][system][INFO] DB: dongyang.db. Wrote/Updated 279 records. Skipped 0.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] Final weather update for 2025-08-02 completed.
+[2025-08-02 16:35:16][utils.db_util][system][INFO] Total rows in dongyang.db: 5519.
+[2025-08-02 16:35:16][utils.db_util][system][DEBUG] DB connection to dongyang.db closed.
+[2025-08-02 16:35:16][utils.db_util][system][INFO] [dongyang] 모든 카테고리 예측 시작...
