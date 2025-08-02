@@ -100,18 +100,20 @@ def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
 
 
 def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
+    log = get_logger("bgf_automation", level=logging.DEBUG, store_id=store_name)
+
     missing_past_dates = get_missing_past_dates(db_path)
     if missing_past_dates:
-        logger.info(
+        log.info(
             f"Missing past dates for {store_name}: {missing_past_dates}. Attempting to collect..."
         )
         for past in missing_past_dates:
             result = execute_collect_single_day_data(driver, past)
             data = result.get("data") if isinstance(result, dict) else None
             if data and isinstance(data, list) and data and isinstance(data[0], dict):
-                write_sales_data(data, db_path, target_date_str=past)
+                write_sales_data(data, db_path, target_date_str=past, store_id=store_name)
             else:
-                logger.warning(
+                log.warning(
                     f"No valid data collected for {past} at store {store_name}"
                 )
             time.sleep(0.1)
@@ -122,21 +124,21 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
 
     try:
         if collected and isinstance(collected, list) and collected and isinstance(collected[0], dict):
-            logger.info(
+            log.info(
                 f"[{store_name}] Successfully collected {len(collected)} records for {today_str}."
             )
-            logger.info(f"[{store_name}] Data to be written: {collected}")
-            logger.info(f"[{store_name}] --- Calling write_sales_data ---")
-            write_sales_data(collected, db_path)
-            logger.info(f"[{store_name}] --- Returned from write_sales_data ---")
-            for handler in logger.handlers:
+            log.info(f"[{store_name}] Data to be written: {collected}")
+            log.info(f"[{store_name}] --- Calling write_sales_data ---")
+            write_sales_data(collected, db_path, store_id=store_name)
+            log.info(f"[{store_name}] --- Returned from write_sales_data ---")
+            for handler in log.logger.handlers if hasattr(log, 'logger') else log.handlers:
                 handler.flush()
         else:
-            logger.warning(
+            log.warning(
                 f"No valid data collected for {today_str} at store {store_name}. Collected data: {collected}"
             )
     except Exception as e:
-        logger.error(
+        log.error(
             f"Error calling write_sales_data for store {store_name}: {e}",
             exc_info=True,
         )
