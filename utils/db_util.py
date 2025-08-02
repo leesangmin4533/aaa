@@ -45,11 +45,19 @@ def _get_value(record: dict[str, any], *keys: str):
     return None
 
 
-def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_str: str | None = None) -> int:
+def write_sales_data(
+    records: list[dict[str, any]],
+    db_path: Path,
+    target_date_str: str | None = None,
+    store_id: str | None = None,
+) -> int:
     """매출 데이터를 통합 DB에 저장합니다."""
-    log.info(f"DB: {db_path.name}. Received {len(records)} records to write for date: {target_date_str or 'today'}.")
+    logger = get_logger(__name__, level=logging.DEBUG, store_id=store_id)
+    logger.info(
+        f"DB: {db_path.name}. Received {len(records)} records to write for date: {target_date_str or 'today'}."
+    )
     if not records:
-        log.warning("Received an empty list of records. Nothing to write.")
+        logger.warning("Received an empty list of records. Nothing to write.")
         return 0
     
     processed_count = 0
@@ -58,7 +66,7 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
 
     try:
         conn = init_db(db_path)
-        log.debug(f"DB connection to {db_path.name} successful.")
+        logger.debug(f"DB connection to {db_path.name} successful.")
         cur = conn.cursor()
 
         if target_date_str:
@@ -87,20 +95,20 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
         rainfall = weather_df['rainfall'].iloc[0] if not weather_df.empty else 0.0
 
         for i, rec in enumerate(records):
-            log.debug(f"Processing record {i+1}/{len(records)}: {rec}")
+            logger.debug(f"Processing record {i+1}/{len(records)}: {rec}")
             try:
                 product_code = _get_value(rec, "productCode", "product_code")
                 sales_raw = _get_value(rec, "sales", "SALE_QTY")
                 
                 if product_code is None or sales_raw is None:
-                    log.warning(f"Record {i+1} is missing product_code or sales. Skipping. Record: {rec}")
+                    logger.warning(f"Record {i+1} is missing product_code or sales. Skipping. Record: {rec}")
                     skipped_count += 1
                     continue
                 
                 try:
                     sales = int(sales_raw)
                 except (ValueError, TypeError):
-                    log.warning(f"Record {i+1} has invalid sales value '{sales_raw}'. Skipping. Record: {rec}")
+                    logger.warning(f"Record {i+1} has invalid sales value '{sales_raw}'. Skipping. Record: {rec}")
                     skipped_count += 1
                     continue
 
@@ -118,20 +126,20 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
                 )
                 row = cur.fetchone()
                 
-                log.debug(f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Existing Row: {row}")
+                logger.debug(f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Existing Row: {row}")
 
                 cur.execute(
                     """INSERT OR REPLACE INTO mid_sales (collected_at, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                     (collected_at_val, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall)
                 )
                 processed_count += 1
-                log.debug(f"Inserted or updated record for {product_code} with sales {sales}.")
+                logger.debug(f"Inserted or updated record for {product_code} with sales {sales}.")
             except Exception as e:
-                log.error(f"Error processing record {i+1}: {rec}. Error: {e}", exc_info=True)
+                logger.error(f"Error processing record {i+1}: {rec}. Error: {e}", exc_info=True)
                 skipped_count += 1
 
         conn.commit()
-        log.info(f"DB: {db_path.name}. Wrote/Updated {processed_count} records. Skipped {skipped_count}.")
+        logger.info(f"DB: {db_path.name}. Wrote/Updated {processed_count} records. Skipped {skipped_count}.")
 
         # Final weather data update
         cur.execute(
@@ -139,23 +147,23 @@ def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_s
             (weekday, month, week_of_year, is_holiday, temperature, rainfall, current_date)
         )
         conn.commit()
-        log.debug(f"Final weather update for {current_date} completed.")
+        logger.debug(f"Final weather update for {current_date} completed.")
 
         cur.execute("SELECT COUNT(*) FROM mid_sales")
         count = cur.fetchone()[0]
-        log.info(f"Total rows in {db_path.name}: {count}.")
+        logger.info(f"Total rows in {db_path.name}: {count}.")
         return count
 
     except sqlite3.Error as e:
-        log.error(f"Database error in write_sales_data for {db_path.name}: {e}", exc_info=True)
+        logger.error(f"Database error in write_sales_data for {db_path.name}: {e}", exc_info=True)
         return 0 # Return 0 as no records were successfully written
     except Exception as e:
-        log.error(f"An unexpected error occurred in write_sales_data for {db_path.name}: {e}", exc_info=True)
+        logger.error(f"An unexpected error occurred in write_sales_data for {db_path.name}: {e}", exc_info=True)
         return 0
     finally:
         if conn:
             conn.close()
-            log.debug(f"DB connection to {db_path.name} closed.")
+            logger.debug(f"DB connection to {db_path.name} closed.")
 
 def update_past_holiday_data(db_path: Path):
     """
@@ -254,7 +262,8 @@ def run_all_category_predictions(sales_db_path: Path):
     prediction_db_path = sales_db_path.parent / f"category_predictions_{store_name}.db"
     init_prediction_db(prediction_db_path)
 
-    log.info(f"[{store_name}] 모든 카테고리 예측 시작...")
+    logger = get_logger(__name__, level=logging.DEBUG, store_id=store_name)
+    logger.info(f"[{store_name}] 모든 카테고리 예측 시작...")
 
     with sqlite3.connect(sales_db_path) as conn:
         mid_categories = pd.read_sql("SELECT DISTINCT mid_code, mid_name FROM mid_sales", conn)
@@ -295,7 +304,9 @@ def run_all_category_predictions(sales_db_path: Path):
                 cursor.executemany(item_insert_sql, items_to_insert)
         conn.commit()
     
-    log.info(f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료. DB 저장 위치: {prediction_db_path}")
+    logger.info(
+        f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료. DB 저장 위치: {prediction_db_path}"
+    )
 
     # 모델 성능 모니터링 실행
     update_performance_log(sales_db_path, prediction_db_path)

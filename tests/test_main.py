@@ -230,7 +230,7 @@ def test_main_writes_sales_data(tmp_path):
     ):
         main.main()
 
-    write_mock.assert_called_once_with(parsed, db_path)
+    write_mock.assert_called_once_with(parsed, db_path, store_id="test")
 
 
 def test_main_writes_integrated_db_when_needed(tmp_path):
@@ -265,7 +265,7 @@ def test_main_writes_integrated_db_when_needed(tmp_path):
         main.main()
 
     assert exec_mock.call_count == 2
-    write_mock.assert_called_once_with(parsed, db_path)
+    write_mock.assert_called_once_with(parsed, db_path, store_id="test")
 
 
 def test_cli_invokes_main(tmp_path):

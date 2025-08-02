@@ -64,6 +64,10 @@
   - `navigation`: 목표 페이지로 이동하는 스크립트입니다.
   - `date_changer.js`는 내부적으로 로드되어 날짜를 변경합니다.
 
+### JSON 구조화 로그
+
+프로젝트의 모든 로그는 JSON 형식으로 기록되며 `timestamp`, `level`, `message`, `store_id`, `logger`, `tag` 필드를 포함합니다. 로그 파일 경로는 환경 변수 `LOG_FILE` 또는 `config.json`의 `log_file` 값으로 지정할 수 있습니다. 점포별 로그를 남기려면 `get_logger("bgf_automation", store_id="hoban")`처럼 `store_id`를 전달합니다.
+
 ### 2. 로그인 정보
 
 로그인 정보는 `.env` 파일 또는 시스템 환경 변수를 통해 설정할 수 있습니다.

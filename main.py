@@ -43,12 +43,13 @@ logger = get_logger("bgf_automation", level=logging.DEBUG)
 
 
 def run_automation_for_store(store_name: str, store_config: Dict[str, Any], global_config: Dict[str, Any]) -> None:
-    logger.info(f"--- Starting automation for store: {store_name} ---")
+    log = get_logger("bgf_automation", level=logging.DEBUG, store_id=store_name)
+    log.info(f"--- Starting automation for store: {store_name} ---")
     driver = None
     try:
         driver = create_driver()
         if not login_bgf(driver, credential_keys=store_config["credentials_env"]):
-            logger.error(f"Login failed for store: {store_name}. Skipping.")
+            log.error(f"Login failed for store: {store_name}. Skipping.")
             return
 
         close_popups_after_delegate(driver)
@@ -59,7 +60,7 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
         run_script(driver, NAVIGATION_SCRIPT)
 
         if not wait_for_dataset_to_load(driver):
-            logger.error(f"Failed to load mix ratio page for {store_name}. Skipping.")
+            log.error(f"Failed to load mix ratio page for {store_name}. Skipping.")
             return
 
         db_path = SCRIPT_DIR / store_config["db_file"]
@@ -71,8 +72,8 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
     finally:
         if driver is not None:
             driver.quit()
-            logger.info(f"WebDriver quit for store: {store_name}.")
-    logger.info(f"--- Finished automation for store: {store_name} ---")
+            log.info(f"WebDriver quit for store: {store_name}.")
+    log.info(f"--- Finished automation for store: {store_name} ---")
 
 def main() -> None:
     logger = get_logger("bgf_automation", level=logging.DEBUG)
