@@ -26,14 +26,6 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-try:
-    from utils.popup_util import close_popups_after_delegate
-except Exception:  # pragma: no cover - fallback for tests
-
-    def close_popups_after_delegate(*_a, **_k):
-        return 0
-
-
 log = get_logger(__name__)
 
 
@@ -197,6 +189,13 @@ try {
             )
         )
         log.info("Login succeeded", extra={"tag": "login"})
+        try:
+            from utils.popup_util import close_popups_after_delegate
+            close_popups_after_delegate(driver)
+        except Exception:
+            log.warning(
+                "Failed to close popups after login", extra={"tag": "login"}
+            )
         return True
     except Exception:
         log.error("Login check timeout or failed", extra={"tag": "login"})
