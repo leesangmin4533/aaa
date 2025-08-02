@@ -82,10 +82,16 @@
 
 ## 사용법
 
-먼저 아래 명령어로 프로젝트 의존성을 설치한 뒤 자동화를 시작합니다.
+먼저 아래 명령어로 프로젝트 의존성을 설치합니다.
 
 ```bash
 pip install -r requirements.txt
+pip install pytest
+```
+
+이후 자동화를 시작합니다.
+
+```bash
 python -m aaa
 # 또는
 python main.py
@@ -111,6 +117,7 @@ python main.py
 
 ```bash
 pip install -r requirements.txt
+pip install pytest
 ```
 
 테스트는 `pytest`를 사용하여 실행합니다.
