@@ -2,11 +2,11 @@ import importlib.util
 import pathlib
 import sys
 import types
-from datetime import datetime
 from unittest.mock import Mock, patch
 import pytest
 import subprocess
 import os
+import json
 
 # Create minimal fake selenium package
 selenium_pkg = types.ModuleType("selenium")
@@ -101,8 +101,8 @@ _spec = importlib.util.spec_from_file_location(
 )
 main = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(main)
-import utils.config as config_mod
 import webdriver_utils
+import data_collector
 
 
 def test_run_script_reads_and_executes(tmp_path):
@@ -130,8 +130,8 @@ def test_wait_for_data_polls_parsed_data():
     driver = Mock()
     driver.execute_script.side_effect = [None, {"a": 1}]
 
-    with patch.object(main.time, "sleep"):
-        data = main.wait_for_data(driver, timeout=1)
+    with patch.object(data_collector.time, "sleep"):
+        data = data_collector.wait_for_data(driver, timeout=1)
 
     assert data == {"a": 1}
     assert driver.execute_script.call_args_list[0][0][0] == "return window.__parsedData__ || null"
@@ -147,15 +147,16 @@ def test_main_calls_navigation():
         patch.object(main, "create_driver", return_value=driver),
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
+        patch.object(main, "wait_for_dataset_to_load", return_value=True),
         patch.object(main, "run_script") as run_script_mock,
-        patch.object(main, "wait_for_data", return_value=None),
+        patch.object(data_collector, "wait_for_data", return_value=None),
+        patch.object(data_collector, "collect_and_save"),
+        patch("utils.db_util.run_all_category_predictions"),
     ):
         driver.execute_script.side_effect = [[], [], {}, None]
         main.main()
 
     run_script_mock.assert_any_call(driver, main.NAVIGATION_SCRIPT)
-    driver.get_log.assert_called_once_with("browser")
 
 
 def test_run_script_collects_data(tmp_path):
@@ -189,66 +190,46 @@ def test_run_script_collects_data(tmp_path):
 
     with (
         patch.object(webdriver_utils, "SCRIPT_DIR", tmp_path),
-        patch.object(main.time, "sleep"),
+        patch.object(data_collector.time, "sleep"),
     ):
         main.run_script(driver, "collect.js")
-        data = main.wait_for_data(driver, timeout=1)
+        data = data_collector.wait_for_data(driver, timeout=1)
 
     assert data == expected
 
 
+@pytest.mark.skip("mid category log printing removed")
 def test_main_prints_mid_category_logs(capsys):
-    driver = Mock()
-    driver.get_log = Mock(return_value=[])
-
-    def exec_script(arg):
-        if arg == "return window.__midCategoryLogs__ || []":
-            return ["log1", "log2"]
-
-    driver.execute_script.side_effect = exec_script
-
-    with (
-        patch.object(main, "create_driver", return_value=driver),
-        patch.object(main, "login_bgf", return_value=True),
-        patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
-        patch.object(main, "run_script") as run_script_mock,
-        patch.object(main, "wait_for_data", return_value=None),
-    ):
-        main.main()
-
-    run_script_mock.assert_any_call(driver, main.NAVIGATION_SCRIPT)
-    driver.execute_script.assert_any_call("return window.__midCategoryLogs__ || []")
-    driver.get_log.assert_called_once_with("browser")
-    out = capsys.readouterr().out
-    assert "중분류 클릭 로그" in out
-    assert "['log1', 'log2']" in out
+    pass
 
 
 def test_main_writes_sales_data(tmp_path):
     driver = Mock()
     driver.get_log = Mock(return_value=[])
 
-    out_dir = tmp_path / "code_outputs"
     parsed = [{"x": 1}]
+    db_path = tmp_path / "store.db"
+    config = {
+        "stores": {"test": {"db_file": str(db_path), "credentials_env": {}}},
+        "scripts": {"default": "sample.js"},
+    }
+    (tmp_path / "config.json").write_text(json.dumps(config), encoding="utf-8")
 
     with (
-        patch.object(main, "CODE_OUTPUT_DIR", out_dir),
-        patch.object(config_mod, "DB_FILE", str(out_dir / "integrated.db")),
+        patch.object(main, "SCRIPT_DIR", tmp_path),
         patch.object(main, "create_driver", return_value=driver),
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
+        patch.object(main, "wait_for_dataset_to_load", return_value=True),
         patch.object(main, "run_script"),
-        patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "is_past_data_available", return_value=True),
-        patch.object(main.time, "sleep"),
-        patch.object(main, "write_sales_data") as write_mock,
+        patch.object(data_collector, "get_missing_past_dates", return_value=[]),
+        patch.object(data_collector, "execute_collect_single_day_data", return_value={"success": True, "data": parsed}),
+        patch.object(data_collector, "write_sales_data") as write_mock,
+        patch.object(data_collector.time, "sleep"),
+        patch("utils.db_util.run_all_category_predictions"),
     ):
-        driver.execute_script.side_effect = [[], [], parsed, None]
         main.main()
 
-    db_path = out_dir / f"{datetime.now():%Y%m%d}.db"
     write_mock.assert_called_once_with(parsed, db_path)
 
 
@@ -256,28 +237,35 @@ def test_main_writes_integrated_db_when_needed(tmp_path):
     driver = Mock()
     driver.get_log = Mock(return_value=[])
 
-    out_dir = tmp_path / "code_outputs"
     parsed = [{"x": 1}]
+    db_path = tmp_path / "store.db"
+    config = {
+        "stores": {"test": {"db_file": str(db_path), "credentials_env": {}}},
+        "scripts": {"default": "sample.js"},
+    }
+    (tmp_path / "config.json").write_text(json.dumps(config), encoding="utf-8")
 
     with (
-        patch.object(main, "CODE_OUTPUT_DIR", out_dir),
+        patch.object(main, "SCRIPT_DIR", tmp_path),
         patch.object(main, "create_driver", return_value=driver),
         patch.object(main, "login_bgf", return_value=True),
         patch.object(main, "close_popups_after_delegate"),
-        patch.object(main, "wait_for_mix_ratio_page", return_value=True),
+        patch.object(main, "wait_for_dataset_to_load", return_value=True),
         patch.object(main, "run_script"),
-        patch.object(main, "execute_collect_single_day_data", return_value={"success": True, "data": []}),
-        patch.object(main, "get_past_dates", return_value=["20240101"]),
-        patch.object(main, "wait_for_data", return_value=None),
-        patch.object(main, "is_past_data_available", return_value=False),
-        patch.object(main.time, "sleep"),
-        patch.object(main, "write_sales_data") as write_mock,
+        patch.object(data_collector, "get_missing_past_dates", return_value=["20240101"]),
+        patch.object(
+            data_collector,
+            "execute_collect_single_day_data",
+            side_effect=[{"success": True, "data": []}, {"success": True, "data": parsed}],
+        ) as exec_mock,
+        patch.object(data_collector, "write_sales_data") as write_mock,
+        patch.object(data_collector.time, "sleep"),
+        patch("utils.db_util.run_all_category_predictions"),
     ):
-        driver.execute_script.side_effect = [[], [], parsed, None]
         main.main()
 
-    expected = pathlib.Path(config_mod.DB_FILE)
-    write_mock.assert_called_once_with(parsed, expected)
+    assert exec_mock.call_count == 2
+    write_mock.assert_called_once_with(parsed, db_path)
 
 
 def test_cli_invokes_main(tmp_path):
@@ -318,10 +306,10 @@ def test_wait_for_mix_ratio_page_logs_console_on_failure():
     wait_mock.until.side_effect = Exception("boom")
 
     with (
-        patch.object(main, "WebDriverWait", return_value=wait_mock),
-        patch.object(main, "logger") as logger,
+        patch.object(webdriver_utils, "WebDriverWait", return_value=wait_mock),
+        patch.object(webdriver_utils, "logger") as logger,
     ):
-        ok = main.wait_for_mix_ratio_page(driver, timeout=1)
+        ok = webdriver_utils.wait_for_page_elements(driver, timeout=1)
 
     assert not ok
     driver.get_log.assert_called_once_with("browser")
