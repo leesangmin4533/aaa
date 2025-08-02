@@ -86,7 +86,7 @@ def _setup_logger(name: str, level: int = logging.INFO, default_tag: str = "syst
         log_path.parent.mkdir(parents=True, exist_ok=True)
         # 모드 "w"는 기존 로그 파일을 매번 덮어쓰므로 로그가 사라질 수 있다.
         # 실행 기록을 누적하려면 append 모드("a")로 열어야 한다.
-        file_handler = logging.FileHandler(log_path, mode="a", encoding="utf-8")
+        file_handler = logging.FileHandler(log_path, mode="w", encoding="utf-8")
         file_handler.setFormatter(fmt)
         file_handler.addFilter(tag_filter)
         file_handler.setLevel(logging.DEBUG) # 파일에는 DEBUG 레벨 이상 모두 기록
