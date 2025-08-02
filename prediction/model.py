@@ -59,13 +59,13 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
         except requests.exceptions.Timeout:
             log.error(f"{date} 날씨 데이터 요청 중 타임아웃 발생. 기본값으로 대체합니다.", exc_info=True)
-            weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
+            weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
         except requests.exceptions.RequestException as e:
             log.error(f"{date} 날씨 데이터 요청 중 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
-            weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
+            weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
         except Exception as e:
             log.error(f"{dt} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
-            weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
+            weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
 
     return pd.DataFrame(weather_data)
 
