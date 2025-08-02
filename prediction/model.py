@@ -123,10 +123,8 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
 
 def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
     """
-    예측된 총 판매량을 기반으로 인기 상품과 데이터 부족 상품을 조합하여 추천합니다.
-    - 정수 부: 가장 인기 있는 상품으로 추천
-    - 소수 부: 판매 데이터가 적은 상품을 추천하여 데이터 수집을 유도
-    - 잔여 수량: 추천된 상품들의 판매량 비율에 따라 잔여 수량을 배분
+    예측된 총 판매량을 기반으로 상품 판매 비율에 따라 추천 수량을 배분하고,
+    소수점 이하가 있을 경우 데이터 부족 상품을 추가로 추천합니다.
     """
     if not db_path.exists():
         log.warning(f"Database not found at {db_path}. Cannot generate recommendations.")
@@ -151,75 +149,94 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
 
     df = df.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
 
-    insufficient_data_threshold = 10
-    popular_products_df = df[df['total_sales'] >= insufficient_data_threshold]
-    unpopular_products_df = df[df['total_sales'] < insufficient_data_threshold]
-
-    recommendations = []
-    base_recommendations = []
-    num_popular_to_recommend = int(predicted_sales)
-    has_fractional_part = (predicted_sales - num_popular_to_recommend) > 0.01
-
-    actual_popular_to_recommend = min(num_popular_to_recommend, len(popular_products_df))
-    if actual_popular_to_recommend > 0:
-        top_popular_df = popular_products_df.head(actual_popular_to_recommend)
-        for _, row in top_popular_df.iterrows():
-            base_recommendations.append(row.to_dict())
-
-    if has_fractional_part:
-        unpopular_products_to_choose_from = unpopular_products_df[
-            ~unpopular_products_df['product_code'].isin([rec['product_code'] for rec in base_recommendations])
-        ]
-        if not unpopular_products_to_choose_from.empty:
-            chosen_unpopular = unpopular_products_to_choose_from.sample(n=1)
-            base_recommendations.append(chosen_unpopular.iloc[0].to_dict())
-        else:
-            remaining_popular_products = popular_products_df[
-                ~popular_products_df['product_code'].isin([rec['product_code'] for rec in base_recommendations])
-            ]
-            if not remaining_popular_products.empty:
-                next_popular = remaining_popular_products.head(1)
-                base_recommendations.append(next_popular.iloc[0].to_dict())
-
-    if not base_recommendations:
-        log.warning(f"[{mid_code}] Could not form a base recommendation list.")
-        return []
-
-    recommended_df = pd.DataFrame(base_recommendations)
-    total_sales_of_recommended = recommended_df['total_sales'].sum()
-
-    if total_sales_of_recommended == 0:
-        # 모든 추천 상품의 판매량이 0일 경우, 균등하게 배분
-        log.warning(f"[{mid_code}] Total sales of recommended items is zero. Distributing quantity evenly.")
-        recommended_df['ratio'] = 1 / len(recommended_df)
+    total_sales_sum = df['total_sales'].sum()
+    if total_sales_sum == 0:
+        log.warning(f"[{mid_code}] Total sales sum is zero. Cannot calculate ratios. Distributing evenly.")
+        df['ratio'] = 1 / len(df)
     else:
-        recommended_df['ratio'] = recommended_df['total_sales'] / total_sales_of_recommended
+        df['ratio'] = df['total_sales'] / total_sales_sum
 
-    # 각 상품에 기본 1개씩 할당하고 남은 잔여 수량 계산
-    initial_assigned_quantity = len(recommended_df)
-    remaining_quantity = predicted_sales - initial_assigned_quantity
+    recommendations_map = {} # product_code: {product_name, recommended_quantity}
 
-    # 최종 추천 목록 생성
-    for _, row in recommended_df.iterrows():
-        # 기본 1개 + 잔여 수량 배분
-        additional_quantity = round(remaining_quantity * row['ratio'])
-        final_quantity = 1 + additional_quantity
-        
-        recommendations.append({
-            "product_code": row["product_code"],
-            "product_name": row["product_name"],
-            "recommended_quantity": int(max(1, final_quantity)), # 최소 1개 보장
-            "reason": "popular_item" if row['total_sales'] >= insufficient_data_threshold else "data_gathering"
-        })
-
-    # 총 추천 수량이 예측 수량과 근사하도록 조정
-    total_recommended_quantity = sum(rec['recommended_quantity'] for rec in recommendations)
-    if total_recommended_quantity < int(predicted_sales):
-        # 예측 수량보다 적게 추천되었을 경우, 가장 인기있는 상품에 수량 추가
-        if recommendations:
-            recommendations[0]["recommended_quantity"] += int(predicted_sales) - total_recommended_quantity
-
-    log.info(f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(recommendations)} types of items with total quantity of {sum(r['recommended_quantity'] for r in recommendations)}.")
-    log.info(f"[{mid_code}] Recommendation details: {recommendations}")
+    # 1. 예측 수량의 정수 부분 배분
+    integer_part_to_distribute = int(predicted_sales)
     
-    return recommendations
+    # 각 상품에 할당될 기본 수량 계산
+    for _, row in df.iterrows():
+        product_code = row['product_code']
+        product_name = row['product_name']
+        # round() 함수를 사용하여 반올림
+        quantity = round(integer_part_to_distribute * row['ratio'])
+        if quantity > 0:
+            recommendations_map[product_code] = {'product_name': product_name, 'recommended_quantity': quantity}
+    
+    # 배분된 총 수량과 예측 수량의 정수 부분 비교 및 조정
+    current_distributed_sum = sum(item['recommended_quantity'] for item in recommendations_map.values())
+    difference = integer_part_to_distribute - current_distributed_sum
+
+    if difference != 0:
+        # 차이만큼 수량 조정 (가장 비율이 높은 상품부터)
+        sorted_products = sorted(recommendations_map.items(), key=lambda item: df[df['product_code'] == item[0]]['ratio'].iloc[0], reverse=True)
+        
+        for i in range(abs(difference)):
+            if difference > 0: # 더 추가해야 할 경우
+                if sorted_products:
+                    prod_code = sorted_products[i % len(sorted_products)][0]
+                    recommendations_map[prod_code]['recommended_quantity'] += 1
+            else: # 더 줄여야 할 경우
+                if sorted_products:
+                    prod_code = sorted_products[len(sorted_products) - 1 - (i % len(sorted_products))][0] # 가장 비율이 낮은 상품부터
+                    if recommendations_map[prod_code]['recommended_quantity'] > 1: # 최소 1개는 유지
+                        recommendations_map[prod_code]['recommended_quantity'] -= 1
+                    else: # 1개밖에 없으면 다른 상품에서 줄임
+                        # 이 경우는 복잡해지므로, 일단 1개 미만으로 줄이지 않도록 함.
+                        # 실제 운영에서는 이런 미세 조정이 필요할 수 있음.
+                        pass
+
+    # 2. 소수점 이하가 있을 경우 데이터 부족 상품 추가
+    has_fractional_part = (predicted_sales - integer_part_to_distribute) > 0.01 # 0.01은 부동소수점 오차 고려
+    if has_fractional_part:
+        unpopular_products_df = df[df['total_sales'] < 10]
+        
+        chosen_product = None
+        if not unpopular_products_df.empty:
+            # 이미 추천된 상품이 아닌 데이터 부족 상품 중에서 랜덤 선택
+            available_unpopular = unpopular_products_df[~unpopular_products_df['product_code'].isin(recommendations_map.keys())]
+            if not available_unpopular.empty:
+                chosen_product = available_unpopular.sample(n=1).iloc[0]
+            else: # 모든 데이터 부족 상품이 이미 추천된 경우, 그냥 데이터 부족 상품 중에서 랜덤 선택
+                chosen_product = unpopular_products_df.sample(n=1).iloc[0]
+        
+        if chosen_product is None and not df.empty: # 데이터 부족 상품이 없거나 선택할 수 없는 경우, 전체 상품 중에서 랜덤 선택
+            available_products = df[~df['product_code'].isin(recommendations_map.keys())]
+            if not available_products.empty:
+                chosen_product = available_products.sample(n=1).iloc[0]
+            else: # 모든 상품이 이미 추천된 경우, 그냥 전체 상품 중에서 랜덤 선택
+                chosen_product = df.sample(n=1).iloc[0]
+
+        if chosen_product:
+            prod_code = chosen_product['product_code']
+            prod_name = chosen_product['product_name']
+            if prod_code in recommendations_map:
+                recommendations_map[prod_code]['recommended_quantity'] += 1
+            else:
+                recommendations_map[prod_code] = {'product_name': prod_name, 'recommended_quantity': 1}
+            log.debug(f"[{mid_code}] Added 1 additional item ({prod_name}) due to fractional part.")
+
+    final_recommendations = []
+    for prod_code, data in recommendations_map.items():
+        # 최소 1개 추천 보장
+        final_quantity = max(1, data['recommended_quantity'])
+        final_recommendations.append({
+            "product_code": prod_code,
+            "product_name": data["product_name"],
+            "recommended_quantity": int(final_quantity),
+            "reason": "percentage_based" if df[df['product_code'] == prod_code]['total_sales'].iloc[0] >= 10 else "data_gathering_or_percentage_based"
+        })
+    
+    # 최종 추천 수량 합계 로깅
+    total_recommended_quantity = sum(rec['recommended_quantity'] for rec in final_recommendations)
+    log.info(f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(final_recommendations)} types of items with total quantity of {total_recommended_quantity}.")
+    log.info(f"[{mid_code}] Recommendation details: {final_recommendations}")
+    
+    return final_recommendations
