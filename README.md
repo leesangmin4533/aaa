@@ -111,20 +111,56 @@ python main.py
 - `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
 - 수집된 데이터는 점포별 DB에 저장됩니다.
 
-## 의존성 설치 및 테스트
+## 의존성 설치
 
-프로젝트에서 필요한 패키지는 `requirements.txt` 파일에 정의되어 있습니다. 다음 명령어로 설치할 수 있습니다.
-
-```bash
-pip install -r requirements.txt
-pip install pytest
-```
-
-테스트는 `pytest`를 사용하여 실행합니다.
+프로젝트에서 필요한 패키지는 `requirements.txt`와 `dev-requirements.txt`에 정의되어 있습니다. 다음 명령어로 설치합니다.
 
 ```bash
-pytest
+pip install -r requirements.txt -r dev-requirements.txt
 ```
+
+## 테스트 실행
+
+아래 단계에 따라 테스트를 실행할 수 있습니다.
+
+1. **의존성 설치**
+   ```bash
+   pip install -r requirements.txt -r dev-requirements.txt
+   ```
+2. **환경 변수 설정**
+   - 기상청 API를 사용하는 테스트를 위해 `KMA_API_KEY`를 설정해야 합니다.
+   - 예시
+     ```bash
+     # macOS/Linux
+     export KMA_API_KEY=your_api_key
+     # Windows PowerShell
+     set KMA_API_KEY=your_api_key
+     ```
+3. **테스트 실행**
+   ```bash
+   pytest
+   ```
+
+### 실행 예시
+
+- **로컬 실행**
+  ```bash
+  pip install -r requirements.txt -r dev-requirements.txt
+  export KMA_API_KEY=your_api_key
+  pytest
+  ```
+
+- **GitHub Actions**
+  ```yaml
+  - uses: actions/checkout@v4
+  - uses: actions/setup-python@v5
+    with:
+      python-version: "3.x"
+  - run: pip install -r requirements.txt -r dev-requirements.txt
+  - run: pytest
+    env:
+      KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
+  ```
 
 ## 데이터 포맷
 
