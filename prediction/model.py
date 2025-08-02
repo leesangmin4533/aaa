@@ -144,8 +144,10 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
         df = pd.read_sql(query, conn)
 
     if df.empty:
-        log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations.")
+        log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations. Returning empty list.")
         return []
+
+    final_recommendations = [] # Initialize final_recommendations here
 
     df = df.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
 
@@ -214,7 +216,7 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
             else: # 모든 상품이 이미 추천된 경우, 그냥 전체 상품 중에서 랜덤 선택
                 chosen_product = df.sample(n=1).iloc[0]
 
-        if chosen_product:
+        if chosen_product is not None and not chosen_product.empty:
             prod_code = chosen_product['product_code']
             prod_name = chosen_product['product_name']
             if prod_code in recommendations_map:
