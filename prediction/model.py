@@ -130,101 +130,101 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
 
 
 def _allocate_by_ratio(
-    df: pd.DataFrame,
+    sales_by_product: pd.DataFrame,
     ratio_map: dict[str, float],
-    integer_part_to_distribute: int,
+    predicted_base_qty: int,
 ) -> dict[str, dict[str, any]]:
     """비율에 따라 기본 추천 수량을 계산합니다."""
-    recommendations_map: dict[str, dict[str, any]] = {}
-    for _, row in df.iterrows():
+    allocated_qty: dict[str, dict[str, any]] = {}
+    for _, row in sales_by_product.iterrows():
         product_code = row['product_code']
         product_name = row['product_name']
         ratio = ratio_map.get(product_code, 0)
-        quantity = round(integer_part_to_distribute * ratio)
+        quantity = round(predicted_base_qty * ratio)
         if quantity > 0:
-            recommendations_map[product_code] = {
+            allocated_qty[product_code] = {
                 'product_name': product_name,
                 'recommended_quantity': quantity,
                 'ratio': ratio,
             }
-    return recommendations_map
+    return allocated_qty
 
 
 def _correct_rounding_errors(
-    recommendations_map: dict[str, dict[str, any]],
-    integer_part_to_distribute: int,
+    allocated_qty: dict[str, dict[str, any]],
+    predicted_base_qty: int,
 ) -> dict[str, dict[str, any]]:
     """반올림 오차로 인한 수량 차이를 보정합니다."""
     current_distributed_sum = sum(
-        item['recommended_quantity'] for item in recommendations_map.values()
+        item['recommended_quantity'] for item in allocated_qty.values()
     )
-    difference = integer_part_to_distribute - current_distributed_sum
+    difference = predicted_base_qty - current_distributed_sum
     if difference > 0:
-        max_heap = [(-data['ratio'], code) for code, data in recommendations_map.items()]
+        max_heap = [(-data['ratio'], code) for code, data in allocated_qty.items()]
         heapq.heapify(max_heap)
         for _ in range(difference):
             if not max_heap:
                 break
             ratio, prod_code = heapq.heappop(max_heap)
-            recommendations_map[prod_code]['recommended_quantity'] += 1
+            allocated_qty[prod_code]['recommended_quantity'] += 1
             heapq.heappush(max_heap, (ratio, prod_code))
         del max_heap
     elif difference < 0:
-        min_heap = [(data['ratio'], code) for code, data in recommendations_map.items()]
+        min_heap = [(data['ratio'], code) for code, data in allocated_qty.items()]
         heapq.heapify(min_heap)
         for _ in range(-difference):
             while min_heap:
                 ratio, prod_code = heapq.heappop(min_heap)
-                if recommendations_map[prod_code]['recommended_quantity'] > 1:
-                    recommendations_map[prod_code]['recommended_quantity'] -= 1
+                if allocated_qty[prod_code]['recommended_quantity'] > 1:
+                    allocated_qty[prod_code]['recommended_quantity'] -= 1
                     heapq.heappush(min_heap, (ratio, prod_code))
                     break
             else:
                 break
         del min_heap
-    return recommendations_map
+    return allocated_qty
 
 
 def _add_exploration_product(
-    df: pd.DataFrame,
+    sales_by_product: pd.DataFrame,
     ratio_map: dict[str, float],
-    recommendations_map: dict[str, dict[str, any]],
+    allocated_qty: dict[str, dict[str, any]],
     predicted_sales: float,
 ) -> dict[str, dict[str, any]]:
     """탐색을 위해 추가 상품을 선택합니다."""
-    integer_part_to_distribute = int(predicted_sales)
-    has_fractional_part = (predicted_sales - integer_part_to_distribute) > 0.01
+    predicted_base_qty = int(predicted_sales)
+    has_fractional_part = (predicted_sales - predicted_base_qty) > 0.01
     if not has_fractional_part:
-        return recommendations_map
+        return allocated_qty
 
-    unpopular_products_df = df[df['total_sales'] < 10]
+    unpopular_products_df = sales_by_product[sales_by_product['total_sales'] < 10]
 
     chosen_product = None
     if not unpopular_products_df.empty:
         available_unpopular = unpopular_products_df[
-            ~unpopular_products_df['product_code'].isin(recommendations_map.keys())
+            ~unpopular_products_df['product_code'].isin(allocated_qty.keys())
         ]
         if not available_unpopular.empty:
             chosen_product = available_unpopular.sample(n=1).iloc[0]
         else:
             chosen_product = unpopular_products_df.sample(n=1).iloc[0]
 
-    if chosen_product is None and not df.empty:
-        available_products = df[
-            ~df['product_code'].isin(recommendations_map.keys())
+    if chosen_product is None and not sales_by_product.empty:
+        available_products = sales_by_product[
+            ~sales_by_product['product_code'].isin(allocated_qty.keys())
         ]
         if not available_products.empty:
             chosen_product = available_products.sample(n=1).iloc[0]
         else:
-            chosen_product = df.sample(n=1).iloc[0]
+            chosen_product = sales_by_product.sample(n=1).iloc[0]
 
     if chosen_product is not None and not chosen_product.empty:
         prod_code = chosen_product['product_code']
         prod_name = chosen_product['product_name']
-        if prod_code in recommendations_map:
-            recommendations_map[prod_code]['recommended_quantity'] += 1
+        if prod_code in allocated_qty:
+            allocated_qty[prod_code]['recommended_quantity'] += 1
         else:
-            recommendations_map[prod_code] = {
+            allocated_qty[prod_code] = {
                 'product_name': prod_name,
                 'recommended_quantity': 1,
                 'ratio': ratio_map.get(prod_code, 0),
@@ -232,7 +232,7 @@ def _add_exploration_product(
         log.debug(
             f"Added exploration product {prod_name}"
         )
-    return recommendations_map
+    return allocated_qty
 
 def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
     """
@@ -254,49 +254,49 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
             GROUP BY product_code, product_name
             HAVING SUM(sales) > 0
         """
-        df = pd.read_sql(query, conn)
+        sales_by_product = pd.read_sql(query, conn)
 
-    if df.empty:
+    if sales_by_product.empty:
         log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations. Returning empty list.")
         return []
 
-    df = df.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
+    sales_by_product = sales_by_product.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
 
-    total_sales_sum = df['total_sales'].sum()
+    total_sales_sum = sales_by_product['total_sales'].sum()
     if total_sales_sum == 0:
         log.warning(f"[{mid_code}] Total sales sum is zero. Cannot calculate ratios. Distributing evenly.")
-        df['ratio'] = 1 / len(df)
+        sales_by_product['ratio'] = 1 / len(sales_by_product)
     else:
-        df['ratio'] = df['total_sales'] / total_sales_sum
+        sales_by_product['ratio'] = sales_by_product['total_sales'] / total_sales_sum
 
-    product_ratio_map = dict(zip(df['product_code'], df['ratio']))
+    product_ratio_map = dict(zip(sales_by_product['product_code'], sales_by_product['ratio']))
 
-    integer_part_to_distribute = int(predicted_sales)
-    recommendations_map = _allocate_by_ratio(
-        df, product_ratio_map, integer_part_to_distribute
+    predicted_base_qty = int(predicted_sales)
+    allocated_qty = _allocate_by_ratio(
+        sales_by_product, product_ratio_map, predicted_base_qty
     )
-    recommendations_map = _correct_rounding_errors(
-        recommendations_map, integer_part_to_distribute
+    allocated_qty = _correct_rounding_errors(
+        allocated_qty, predicted_base_qty
     )
-    recommendations_map = _add_exploration_product(
-        df, product_ratio_map, recommendations_map, predicted_sales
+    allocated_qty = _add_exploration_product(
+        sales_by_product, product_ratio_map, allocated_qty, predicted_sales
     )
     del product_ratio_map
 
     final_recommendations = []
-    for prod_code, data in recommendations_map.items():
+    for prod_code, data in allocated_qty.items():
         # 최소 1개 추천 보장
         final_quantity = max(1, data['recommended_quantity'])
         final_recommendations.append({
             "product_code": prod_code,
             "product_name": data["product_name"],
             "recommended_quantity": int(final_quantity),
-            "reason": "percentage_based" if df[df['product_code'] == prod_code]['total_sales'].iloc[0] >= 10 else "data_gathering_or_percentage_based"
+            "reason": "percentage_based" if sales_by_product[sales_by_product['product_code'] == prod_code]['total_sales'].iloc[0] >= 10 else "data_gathering_or_percentage_based"
         })
-    
+
     # 최종 추천 수량 합계 로깅
     total_recommended_quantity = sum(rec['recommended_quantity'] for rec in final_recommendations)
     log.info(f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(final_recommendations)} types of items with total quantity of {total_recommended_quantity}.")
     log.info(f"[{mid_code}] Recommendation details: {final_recommendations}")
-    
+
     return final_recommendations
