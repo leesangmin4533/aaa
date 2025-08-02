@@ -9,6 +9,7 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 import random
+import heapq
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -128,23 +129,28 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
     return prediction[0]
 
 
-def _allocate_by_ratio(df: pd.DataFrame, integer_part_to_distribute: int) -> dict[str, dict[str, any]]:
+def _allocate_by_ratio(
+    df: pd.DataFrame,
+    ratio_map: dict[str, float],
+    integer_part_to_distribute: int,
+) -> dict[str, dict[str, any]]:
     """비율에 따라 기본 추천 수량을 계산합니다."""
     recommendations_map: dict[str, dict[str, any]] = {}
     for _, row in df.iterrows():
         product_code = row['product_code']
         product_name = row['product_name']
-        quantity = round(integer_part_to_distribute * row['ratio'])
+        ratio = ratio_map.get(product_code, 0)
+        quantity = round(integer_part_to_distribute * ratio)
         if quantity > 0:
             recommendations_map[product_code] = {
                 'product_name': product_name,
                 'recommended_quantity': quantity,
+                'ratio': ratio,
             }
     return recommendations_map
 
 
 def _correct_rounding_errors(
-    df: pd.DataFrame,
     recommendations_map: dict[str, dict[str, any]],
     integer_part_to_distribute: int,
 ) -> dict[str, dict[str, any]]:
@@ -153,27 +159,35 @@ def _correct_rounding_errors(
         item['recommended_quantity'] for item in recommendations_map.values()
     )
     difference = integer_part_to_distribute - current_distributed_sum
-    if difference != 0:
-        sorted_products = sorted(
-            recommendations_map.items(),
-            key=lambda item: df[df['product_code'] == item[0]]['ratio'].iloc[0],
-            reverse=True,
-        )
-        for i in range(abs(difference)):
-            if difference > 0:
-                if sorted_products:
-                    prod_code = sorted_products[i % len(sorted_products)][0]
-                    recommendations_map[prod_code]['recommended_quantity'] += 1
+    if difference > 0:
+        max_heap = [(-data['ratio'], code) for code, data in recommendations_map.items()]
+        heapq.heapify(max_heap)
+        for _ in range(difference):
+            if not max_heap:
+                break
+            ratio, prod_code = heapq.heappop(max_heap)
+            recommendations_map[prod_code]['recommended_quantity'] += 1
+            heapq.heappush(max_heap, (ratio, prod_code))
+        del max_heap
+    elif difference < 0:
+        min_heap = [(data['ratio'], code) for code, data in recommendations_map.items()]
+        heapq.heapify(min_heap)
+        for _ in range(-difference):
+            while min_heap:
+                ratio, prod_code = heapq.heappop(min_heap)
+                if recommendations_map[prod_code]['recommended_quantity'] > 1:
+                    recommendations_map[prod_code]['recommended_quantity'] -= 1
+                    heapq.heappush(min_heap, (ratio, prod_code))
+                    break
             else:
-                if sorted_products:
-                    prod_code = sorted_products[len(sorted_products) - 1 - (i % len(sorted_products))][0]
-                    if recommendations_map[prod_code]['recommended_quantity'] > 1:
-                        recommendations_map[prod_code]['recommended_quantity'] -= 1
+                break
+        del min_heap
     return recommendations_map
 
 
 def _add_exploration_product(
     df: pd.DataFrame,
+    ratio_map: dict[str, float],
     recommendations_map: dict[str, dict[str, any]],
     predicted_sales: float,
 ) -> dict[str, dict[str, any]]:
@@ -213,6 +227,7 @@ def _add_exploration_product(
             recommendations_map[prod_code] = {
                 'product_name': prod_name,
                 'recommended_quantity': 1,
+                'ratio': ratio_map.get(prod_code, 0),
             }
         log.debug(
             f"Added exploration product {prod_name}"
@@ -254,14 +269,19 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
     else:
         df['ratio'] = df['total_sales'] / total_sales_sum
 
+    product_ratio_map = dict(zip(df['product_code'], df['ratio']))
+
     integer_part_to_distribute = int(predicted_sales)
-    recommendations_map = _allocate_by_ratio(df, integer_part_to_distribute)
+    recommendations_map = _allocate_by_ratio(
+        df, product_ratio_map, integer_part_to_distribute
+    )
     recommendations_map = _correct_rounding_errors(
-        df, recommendations_map, integer_part_to_distribute
+        recommendations_map, integer_part_to_distribute
     )
     recommendations_map = _add_exploration_product(
-        df, recommendations_map, predicted_sales
+        df, product_ratio_map, recommendations_map, predicted_sales
     )
+    del product_ratio_map
 
     final_recommendations = []
     for prod_code, data in recommendations_map.items():
