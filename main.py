@@ -24,7 +24,7 @@ from webdriver_utils import (
     wait_for_dataset_to_load,
     run_script,
 )
-from data_collector import collect_and_save
+from data_collector import collect_and_save, wait_for_data
 
 # -----------------------------------------------------------------------------
 # Constants
