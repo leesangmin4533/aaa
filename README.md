@@ -1,16 +1,18 @@
 # BGF Retail Automation (Nexacro-Optimized)
 
-이 저장소는 BGF 리테일 시스템의 "중분류별 매출 구성비" 페이지 데이터 수집을 자동화하는 프로젝트입니다. Nexacro API를 직접 활용하여 안정성과 속도를 높이는 데 중점을 두었습니다.
+이 저장소는 BGF 리테일 시스템의 "중분류별 매출 구성비" 페이지 데이터 수집을 자동화하는 프로젝트입니다. Nexacro API를 직접 활용하여 안정성과 속도를 높이는 데 중점을 두었으며, 여러 점포의 데이터를 순차적으로 처리합니다.
 
 ## 주요 기능
 
+- **여러 점포 자동화**: `config.json`에 정의된 각 점포(예: Hoban, Dongyang)에 대해 순차적으로 로그인하고 데이터를 수집합니다.
 - **안정적인 데이터 수집**: 화면의 HTML을 파싱하는 대신, Nexacro의 내부 데이터 저장소인 `Dataset`에 직접 접근하여 데이터를 빠르고 정확하게 수집합니다.
-- **지능적인 동기화**: `delay`를 사용한 무작정 대기 대신, 데이터 통신 완료 시점을 알려주는 트랜잭션 콜백(Callback)을 활용하여 불필요한 대기 시간을 제거하고 신뢰성을 높였습니다.
-- **날짜별 DB 관리**: 데이터는 날짜별로 독립된 DB 파일(예: `20250718.db`)에 저장됩니다. 날짜가 바뀌면 새로운 DB 파일이 생성됩니다.
-- **중복 방지 및 데이터 검증**: 
+- **지능적인 동기화**: `delay` 대신 트랜잭션 콜백을 활용하여 불필요한 대기 시간을 제거하고 신뢰성을 높였습니다.
+- **점포별 DB 관리**: 각 점포별로 단일 SQLite DB(`hoban.db`, `dongyang.db` 등)에 날짜별 데이터가 누적 저장됩니다.
+- **중복 방지 및 데이터 검증**:
   - 동일 날짜/상품 코드의 데이터는 sales 증가 시에만 저장
   - 수집 시각은 분 단위까지 정확히 기록 (YYYY-MM-DD HH:MM)
-- **자동 과거 데이터 수집**: `main.py` 실행 시, 최근 2일 중 누락된 날짜의 데이터를 자동으로 수집합니다.
+- **자동 과거 데이터 수집**: 최근 7일 중 누락된 날짜의 데이터를 자동으로 보충합니다.
+- **판매량 예측**: 수집한 데이터를 기반으로 중분류별 판매량을 예측하고 추천 상품 조합을 저장합니다.
 - **자동 로그인 및 팝업 처리**: 설정된 정보를 통해 자동으로 로그인하고, 과정에서 나타나는 팝업을 닫습니다.
 
 ## 설정
@@ -21,14 +23,29 @@
 
 ```json
 {
-    "db_file": "code_outputs/db/integrated_sales.db",
+    "stores": {
+        "hoban": {
+            "db_file": "code_outputs/db/hoban.db",
+            "credentials_env": {
+                "id": "BGF_HOBAN_ID",
+                "password": "BGF_HOBAN_PW"
+            }
+        },
+        "dongyang": {
+            "db_file": "code_outputs/db/dongyang.db",
+            "credentials_env": {
+                "id": "BGF_DONGYANG_ID",
+                "password": "BGF_DONGYANG_PW"
+            }
+        }
+    },
     "scripts": {
         "default": "nexacro_automation_library.js",
         "listener": "data_collect_listener.js",
         "navigation": "navigation.js"
     },
     "field_order": [
-        "midCode", "midName", "productCode", "productName", 
+        "midCode", "midName", "productCode", "productName",
         "sales", "order_cnt", "purchase", "disposal", "stock"
     ],
     "timeouts": {
@@ -40,12 +57,12 @@
 }
 ```
 
-- `db_file`: 모든 데이터가 저장될 통합 SQLite DB 파일 경로입니다.
+- `stores`: 수집 대상 점포와 각 점포의 DB 파일 및 환경 변수 키를 정의합니다.
 - `scripts`: 자동화에 사용될 JavaScript 파일 목록입니다.
   - `default`: 핵심 데이터 수집 로직이 담긴 Nexacro 최적화 라이브러리입니다.
   - `listener`: 실시간 DOM 변화를 감지하여 데이터를 수집하는 스크립트입니다.
-  - `date_changer`: 날짜를 변경하고 조회 버튼을 누르는 스크립트입니다.
   - `navigation`: 목표 페이지로 이동하는 스크립트입니다.
+  - `date_changer.js`는 내부적으로 로드되어 날짜를 변경합니다.
 
 ### 2. 로그인 정보
 
@@ -53,8 +70,10 @@
 
 - **`.env` 파일 (권장)**: 프로젝트 루트에 `.env` 파일을 만들고 아래와 같이 작성합니다.
   ```env
-  BGF_USER_ID=your_id
-  BGF_PASSWORD=your_password
+  BGF_HOBAN_ID=your_id
+  BGF_HOBAN_PW=your_password
+  BGF_DONGYANG_ID=other_id
+  BGF_DONGYANG_PW=other_password
   ```
 
 ## 사용법
@@ -68,19 +87,19 @@ python -m aaa
 python main.py
 ```
 
-`main.py`는 다음 순서로 작업을 수행합니다.
+`main.py`는 `config.json`에 정의된 모든 점포에 대해 아래 과정을 순차적으로 수행합니다.
 
-1.  **과거 데이터 확인**: 통합 DB에 최근 2일치 데이터 중 누락된 날짜가 있는지 확인합니다.
-2.  **과거 데이터 수집**: 누락된 날짜가 있다면, 가장 오래된 날짜부터 순서대로 해당 날짜의 데이터 수집 사이클을 실행합니다.
-3.  **현재 데이터 수집**: 과거 데이터 처리가 끝나면, 오늘 날짜의 데이터 수집 사이클을 실행합니다.
+1.  **과거 데이터 확인**: 점포별 DB에서 최근 7일 중 누락된 날짜를 확인합니다.
+2.  **과거 데이터 수집**: 누락된 날짜가 있다면, 가장 오래된 날짜부터 순서대로 해당 날짜의 데이터를 수집합니다.
+3.  **오늘 데이터 수집**: 현재 날짜의 데이터를 수집합니다.
+4.  **판매량 예측**: 중분류별 판매량을 예측하고 추천 상품 조합을 별도 DB에 저장합니다.
 
-각 수집 사이클(`_run_collection_cycle`)은 다음처럼 동작합니다.
+각 수집 사이클은 다음처럼 동작합니다.
 - Chrome 드라이버를 실행하고 로그인합니다.
-- `nexacro_automation_library.js`를 브라우저에 주입합니다.
-- `date_changer.js`를 로드해 날짜 변경 기능을 준비합니다.
+- `nexacro_automation_library.js`와 `date_changer.js`를 브라우저에 주입합니다.
 - `navigation.js`를 실행하여 목표 페이지로 이동합니다.
 - `window.automation.runCollectionForDate('YYYYMMDD')` 함수를 호출하여 데이터 수집을 시작합니다.
-- 수집된 데이터는 통합 DB에 저장됩니다.
+- 수집된 데이터는 점포별 DB에 저장됩니다.
 
 ## 의존성 설치 및 테스트
 
@@ -131,6 +150,12 @@ CREATE TABLE IF NOT EXISTS mid_sales (
     purchase INTEGER,        -- 매입액
     disposal INTEGER,        -- 폐기액
     stock INTEGER,           -- 재고액
+    weekday INTEGER,         -- 요일
+    month INTEGER,           -- 월
+    week_of_year INTEGER,    -- 주차
+    is_holiday INTEGER,      -- 공휴일/토요일 여부
+    temperature REAL,        -- 기온
+    rainfall REAL,           -- 강수량
     UNIQUE(collected_at, product_code) -- 이 조합은 고유해야 함
 );
 ```
@@ -145,4 +170,4 @@ CREATE TABLE IF NOT EXISTS mid_sales (
 ## 프로젝트 요약
 자세한 요약은 PROJECT_SUMMARY.txt 파일을 참조하세요.
 
-더 자세한 실행 흐름은 `BGF_Automation_Flow.md` 문서를 참고하세요.
+더 자세한 실행 흐름은 `BGF_Automation_Flow.md` 문서를 참고하세요. 정기 실행이 필요하다면 `python scheduler/scheduler.py`로 스케줄러를 실행할 수 있습니다.
