@@ -56,7 +56,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
                 elif category == 'RN1':
                     try: total_rainfall = float(obsr_value)
                     except (ValueError, TypeError): pass
-            weather_data.append({'date': dt, 'temperature': avg_temp, 'rainfall': total_rainfall})
+            weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
         except requests.exceptions.Timeout:
             log.error(f"{date} 날씨 데이터 요청 중 타임아웃 발생. 기본값으로 대체합니다.", exc_info=True)
             weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
