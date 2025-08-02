@@ -82,6 +82,7 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
     kr_holidays = holidays.KR()
     df['is_holiday'] = df['date'].apply(lambda x: x in kr_holidays).astype(int)
     
+    log.debug(f"[{mid_code}] get_training_data_for_category returned {len(df)} rows.")
     return df[['date', 'total_sales', 'weekday', 'month', 'week_of_year', 'is_holiday']]
 
 def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
