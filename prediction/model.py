@@ -127,6 +127,98 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
     log.info(f"[{mid_code}] 예측된 내일 판매량: {prediction[0]:.2f}개")
     return prediction[0]
 
+
+def _allocate_by_ratio(df: pd.DataFrame, integer_part_to_distribute: int) -> dict[str, dict[str, any]]:
+    """비율에 따라 기본 추천 수량을 계산합니다."""
+    recommendations_map: dict[str, dict[str, any]] = {}
+    for _, row in df.iterrows():
+        product_code = row['product_code']
+        product_name = row['product_name']
+        quantity = round(integer_part_to_distribute * row['ratio'])
+        if quantity > 0:
+            recommendations_map[product_code] = {
+                'product_name': product_name,
+                'recommended_quantity': quantity,
+            }
+    return recommendations_map
+
+
+def _correct_rounding_errors(
+    df: pd.DataFrame,
+    recommendations_map: dict[str, dict[str, any]],
+    integer_part_to_distribute: int,
+) -> dict[str, dict[str, any]]:
+    """반올림 오차로 인한 수량 차이를 보정합니다."""
+    current_distributed_sum = sum(
+        item['recommended_quantity'] for item in recommendations_map.values()
+    )
+    difference = integer_part_to_distribute - current_distributed_sum
+    if difference != 0:
+        sorted_products = sorted(
+            recommendations_map.items(),
+            key=lambda item: df[df['product_code'] == item[0]]['ratio'].iloc[0],
+            reverse=True,
+        )
+        for i in range(abs(difference)):
+            if difference > 0:
+                if sorted_products:
+                    prod_code = sorted_products[i % len(sorted_products)][0]
+                    recommendations_map[prod_code]['recommended_quantity'] += 1
+            else:
+                if sorted_products:
+                    prod_code = sorted_products[len(sorted_products) - 1 - (i % len(sorted_products))][0]
+                    if recommendations_map[prod_code]['recommended_quantity'] > 1:
+                        recommendations_map[prod_code]['recommended_quantity'] -= 1
+    return recommendations_map
+
+
+def _add_exploration_product(
+    df: pd.DataFrame,
+    recommendations_map: dict[str, dict[str, any]],
+    predicted_sales: float,
+) -> dict[str, dict[str, any]]:
+    """탐색을 위해 추가 상품을 선택합니다."""
+    integer_part_to_distribute = int(predicted_sales)
+    has_fractional_part = (predicted_sales - integer_part_to_distribute) > 0.01
+    if not has_fractional_part:
+        return recommendations_map
+
+    unpopular_products_df = df[df['total_sales'] < 10]
+
+    chosen_product = None
+    if not unpopular_products_df.empty:
+        available_unpopular = unpopular_products_df[
+            ~unpopular_products_df['product_code'].isin(recommendations_map.keys())
+        ]
+        if not available_unpopular.empty:
+            chosen_product = available_unpopular.sample(n=1).iloc[0]
+        else:
+            chosen_product = unpopular_products_df.sample(n=1).iloc[0]
+
+    if chosen_product is None and not df.empty:
+        available_products = df[
+            ~df['product_code'].isin(recommendations_map.keys())
+        ]
+        if not available_products.empty:
+            chosen_product = available_products.sample(n=1).iloc[0]
+        else:
+            chosen_product = df.sample(n=1).iloc[0]
+
+    if chosen_product is not None and not chosen_product.empty:
+        prod_code = chosen_product['product_code']
+        prod_name = chosen_product['product_name']
+        if prod_code in recommendations_map:
+            recommendations_map[prod_code]['recommended_quantity'] += 1
+        else:
+            recommendations_map[prod_code] = {
+                'product_name': prod_name,
+                'recommended_quantity': 1,
+            }
+        log.debug(
+            f"Added exploration product {prod_name}"
+        )
+    return recommendations_map
+
 def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
     """
     예측된 총 판매량을 기반으로 상품 판매 비율에 따라 추천 수량을 배분하고,
@@ -153,8 +245,6 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
         log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations. Returning empty list.")
         return []
 
-    final_recommendations = [] # Initialize final_recommendations here
-
     df = df.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
 
     total_sales_sum = df['total_sales'].sum()
@@ -164,72 +254,14 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
     else:
         df['ratio'] = df['total_sales'] / total_sales_sum
 
-    recommendations_map = {} # product_code: {product_name, recommended_quantity}
-
-    # 1. 예측 수량의 정수 부분 배분
     integer_part_to_distribute = int(predicted_sales)
-    
-    # 각 상품에 할당될 기본 수량 계산
-    for _, row in df.iterrows():
-        product_code = row['product_code']
-        product_name = row['product_name']
-        # round() 함수를 사용하여 반올림
-        quantity = round(integer_part_to_distribute * row['ratio'])
-        if quantity > 0:
-            recommendations_map[product_code] = {'product_name': product_name, 'recommended_quantity': quantity}
-    
-    # 배분된 총 수량과 예측 수량의 정수 부분 비교 및 조정
-    current_distributed_sum = sum(item['recommended_quantity'] for item in recommendations_map.values())
-    difference = integer_part_to_distribute - current_distributed_sum
-
-    if difference != 0:
-        # 차이만큼 수량 조정 (가장 비율이 높은 상품부터)
-        sorted_products = sorted(recommendations_map.items(), key=lambda item: df[df['product_code'] == item[0]]['ratio'].iloc[0], reverse=True)
-        
-        for i in range(abs(difference)):
-            if difference > 0: # 더 추가해야 할 경우
-                if sorted_products:
-                    prod_code = sorted_products[i % len(sorted_products)][0]
-                    recommendations_map[prod_code]['recommended_quantity'] += 1
-            else: # 더 줄여야 할 경우
-                if sorted_products:
-                    prod_code = sorted_products[len(sorted_products) - 1 - (i % len(sorted_products))][0] # 가장 비율이 낮은 상품부터
-                    if recommendations_map[prod_code]['recommended_quantity'] > 1: # 최소 1개는 유지
-                        recommendations_map[prod_code]['recommended_quantity'] -= 1
-                    else: # 1개밖에 없으면 다른 상품에서 줄임
-                        # 이 경우는 복잡해지므로, 일단 1개 미만으로 줄이지 않도록 함.
-                        # 실제 운영에서는 이런 미세 조정이 필요할 수 있음.
-                        pass
-
-    # 2. 소수점 이하가 있을 경우 데이터 부족 상품 추가
-    has_fractional_part = (predicted_sales - integer_part_to_distribute) > 0.01 # 0.01은 부동소수점 오차 고려
-    if has_fractional_part:
-        unpopular_products_df = df[df['total_sales'] < 10]
-        
-        chosen_product = None
-        if not unpopular_products_df.empty:
-            # 이미 추천된 상품이 아닌 데이터 부족 상품 중에서 랜덤 선택
-            available_unpopular = unpopular_products_df[~unpopular_products_df['product_code'].isin(recommendations_map.keys())]
-            if not available_unpopular.empty:
-                chosen_product = available_unpopular.sample(n=1).iloc[0]
-            else: # 모든 데이터 부족 상품이 이미 추천된 경우, 그냥 데이터 부족 상품 중에서 랜덤 선택
-                chosen_product = unpopular_products_df.sample(n=1).iloc[0]
-        
-        if chosen_product is None and not df.empty: # 데이터 부족 상품이 없거나 선택할 수 없는 경우, 전체 상품 중에서 랜덤 선택
-            available_products = df[~df['product_code'].isin(recommendations_map.keys())]
-            if not available_products.empty:
-                chosen_product = available_products.sample(n=1).iloc[0]
-            else: # 모든 상품이 이미 추천된 경우, 그냥 전체 상품 중에서 랜덤 선택
-                chosen_product = df.sample(n=1).iloc[0]
-
-        if chosen_product is not None and not chosen_product.empty:
-            prod_code = chosen_product['product_code']
-            prod_name = chosen_product['product_name']
-            if prod_code in recommendations_map:
-                recommendations_map[prod_code]['recommended_quantity'] += 1
-            else:
-                recommendations_map[prod_code] = {'product_name': prod_name, 'recommended_quantity': 1}
-            log.debug(f"[{mid_code}] Added 1 additional item ({prod_name}) due to fractional part.")
+    recommendations_map = _allocate_by_ratio(df, integer_part_to_distribute)
+    recommendations_map = _correct_rounding_errors(
+        df, recommendations_map, integer_part_to_distribute
+    )
+    recommendations_map = _add_exploration_product(
+        df, recommendations_map, predicted_sales
+    )
 
     final_recommendations = []
     for prod_code, data in recommendations_map.items():
