@@ -36,7 +36,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
         url = f"https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
         
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=10) # Added timeout of 10 seconds
             response.raise_for_status() # HTTP 오류 (4xx, 5xx) 발생 시 예외 처리
             data = response.json()
             log.debug(f"Weather API raw response for {date}: {json.dumps(data, indent=2)}")
@@ -56,10 +56,16 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
                 elif category == 'RN1':
                     try: total_rainfall = float(obsr_value)
                     except (ValueError, TypeError): pass
-            weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
+            weather_data.append({'date': dt, 'temperature': avg_temp, 'rainfall': total_rainfall})
+        except requests.exceptions.Timeout:
+            log.error(f"{date} 날씨 데이터 요청 중 타임아웃 발생. 기본값으로 대체합니다.", exc_info=True)
+            weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
+        except requests.exceptions.RequestException as e:
+            log.error(f"{date} 날씨 데이터 요청 중 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
+            weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
         except Exception as e:
-            log.error(f"{date} 날씨 데이터 요청/파싱 중 오류: {e}", exc_info=True)
-            weather_data.append({'date': date, 'temperature': 0, 'rainfall': 0})
+            log.error(f"{dt} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
+            weather_data.append({'date': dt, 'temperature': 15, 'rainfall': 0}) # Fallback values
 
     return pd.DataFrame(weather_data)
 
