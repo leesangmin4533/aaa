@@ -14,7 +14,9 @@ if str(ROOT_DIR) not in sys.path:
 from prediction.model import get_training_data_for_category, train_and_predict, get_weather_data, recommend_product_mix
 from prediction.monitor import update_performance_log
 
-log = logging.getLogger(__name__)
+from utils.log_util import get_logger
+
+log = get_logger(__name__, level=logging.DEBUG)
 
 # --- 데이터베이스 관리 함수 ---
 
@@ -45,130 +47,158 @@ def _get_value(record: dict[str, any], *keys: str):
 
 def write_sales_data(records: list[dict[str, any]], db_path: Path, target_date_str: str | None = None) -> int:
     """매출 데이터를 통합 DB에 저장합니다."""
-    conn = init_db(db_path)
+    log.info(f"DB: {db_path.name}. Received {len(records)} records to write for date: {target_date_str or 'today'}.")
+    if not records:
+        log.warning("Received an empty list of records. Nothing to write.")
+        return 0
+    
+    processed_count = 0
+    skipped_count = 0
+    conn = None  # Initialize conn to None
 
-    if target_date_str:
-        current_date = f"{target_date_str[:4]}-{target_date_str[4:6]}-{target_date_str[6:]}"
-        collected_at_val = f"{current_date} 00:00:00"
-    else:
-        now = datetime.now()
-        collected_at_val = now.strftime("%Y-%m-%d %H:%M:%S")
-        current_date = now.strftime("%Y-%m-%d")
+    try:
+        conn = init_db(db_path)
+        log.debug(f"DB connection to {db_path.name} successful.")
+        cur = conn.cursor()
 
-    cur = conn.cursor()
-
-    insert_sql = """
-    INSERT INTO mid_sales (
-        collected_at, mid_code, mid_name, product_code, product_name,
-        sales, order_cnt, purchase, disposal, stock,
-        weekday, month, week_of_year, is_holiday, temperature, rainfall
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """
-
-    update_sql = """
-    UPDATE mid_sales SET
-        collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?,
-        sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?,
-        weekday = ?, month = ?, week_of_year = ?, is_holiday = ?, temperature = ?, rainfall = ?
-    WHERE product_code = ? AND SUBSTR(collected_at, 1, 10) = ?
-    """
-
-    current_date_dt = datetime.strptime(current_date, "%Y-%m-%d").date()
-    weekday = current_date_dt.weekday()
-    month = current_date_dt.month
-    week_of_year = current_date_dt.isocalendar()[1]
-    is_holiday = int(current_date_dt in holidays.KR())
-
-    weather_df = get_weather_data([current_date_dt])
-    temperature = weather_df['temperature'].iloc[0] if not weather_df.empty else 0.0
-    rainfall = weather_df['rainfall'].iloc[0] if not weather_df.empty else 0.0
-
-    for rec in records:
-        product_code = _get_value(rec, "productCode", "product_code")
-        sales_raw = _get_value(rec, "sales", "SALE_QTY")
-        if product_code is None or sales_raw is None:
-            continue
-        try:
-            sales = int(sales_raw)
-        except (ValueError, TypeError):
-            continue
-
-        mid_code = _get_value(rec, "midCode", "mid_code")
-        mid_name = _get_value(rec, "midName", "mid_name")
-        product_name = _get_value(rec, "productName", "product_name")
-        order_cnt = _get_value(rec, "order", "order_cnt", "ORD_QTY")
-        purchase = _get_value(rec, "purchase", "BUY_QTY")
-        disposal = _get_value(rec, "disposal", "DISUSE_QTY")
-        stock = _get_value(rec, "stock", "STOCK_QTY")
-
-        cur.execute(
-            "SELECT sales FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
-            (product_code, current_date),
-        )
-        row = cur.fetchone()
-        if row:
-            if sales > (row[0] or 0):
-                cur.execute(
-                    update_sql,
-                    (
-                        collected_at_val,
-                        mid_code,
-                        mid_name,
-                        product_name,
-                        sales,
-                        order_cnt,
-                        purchase,
-                        disposal,
-                        stock,
-                        weekday, month, week_of_year, is_holiday, temperature, rainfall,
-                        product_code,
-                        current_date,
-                    ),
-                )
+        if target_date_str:
+            current_date = f"{target_date_str[:4]}-{target_date_str[4:6]}-{target_date_str[6:]}"
+            collected_at_val = f"{current_date} 00:00:00"
         else:
-            cur.execute(
-                insert_sql,
-                (
-                    collected_at_val,
-                    mid_code,
-                    mid_name,
-                    product_code,
-                    product_name,
-                    sales,
-                    order_cnt,
-                    purchase,
-                    disposal,
-                    stock,
-                    weekday, month, week_of_year, is_holiday, temperature, rainfall,
-                ),
-            )
+            now = datetime.now()
+            collected_at_val = now.strftime("%Y-%m-%d %H:%M:%S")
+            current_date = now.strftime("%Y-%m-%d")
 
-    conn.commit()
+        current_date_dt = datetime.strptime(current_date, "%Y-%m-%d").date()
+        weekday = current_date_dt.weekday()
+        month = current_date_dt.month
+        week_of_year = current_date_dt.isocalendar()[1]
+        # Determine is_holiday based on new rules
+        is_holiday_val = 0 # Default to weekday
+        if current_date_dt in holidays.KR():
+            is_holiday_val = 1 # Public holiday
+        elif current_date_dt.weekday() == 5: # Saturday (Monday is 0, Sunday is 6)
+            is_holiday_val = 2 # Saturday
+        
+        is_holiday = is_holiday_val
 
-    # 모든 상품 레코드 처리가 끝난 후, 해당 날짜의 날씨 및 파생 특성을 일괄 업데이트
-    update_weather_sql = """
-    UPDATE mid_sales SET
-        weekday = ?,
-        month = ?,
-        week_of_year = ?,
-        is_holiday = ?,
-        temperature = ?,
-        rainfall = ?
-    WHERE SUBSTR(collected_at, 1, 10) = ?
+        weather_df = get_weather_data([current_date_dt])
+        temperature = weather_df['temperature'].iloc[0] if not weather_df.empty else 0.0
+        rainfall = weather_df['rainfall'].iloc[0] if not weather_df.empty else 0.0
+
+        for i, rec in enumerate(records):
+            log.debug(f"Processing record {i+1}/{len(records)}: {rec}")
+            try:
+                product_code = _get_value(rec, "productCode", "product_code")
+                sales_raw = _get_value(rec, "sales", "SALE_QTY")
+                
+                if product_code is None or sales_raw is None:
+                    log.warning(f"Record {i+1} is missing product_code or sales. Skipping. Record: {rec}")
+                    skipped_count += 1
+                    continue
+                
+                try:
+                    sales = int(sales_raw)
+                except (ValueError, TypeError):
+                    log.warning(f"Record {i+1} has invalid sales value '{sales_raw}'. Skipping. Record: {rec}")
+                    skipped_count += 1
+                    continue
+
+                mid_code = _get_value(rec, "midCode", "mid_code")
+                mid_name = _get_value(rec, "midName", "mid_name")
+                product_name = _get_value(rec, "productName", "product_name")
+                order_cnt = _get_value(rec, "order", "order_cnt", "ORD_QTY")
+                purchase = _get_value(rec, "purchase", "BUY_QTY")
+                disposal = _get_value(rec, "disposal", "DISUSE_QTY")
+                stock = _get_value(rec, "stock", "STOCK_QTY")
+
+                cur.execute(
+                    "SELECT sales FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
+                    (product_code, current_date),
+                )
+                row = cur.fetchone()
+                
+                log.debug(f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Existing Row: {row}")
+
+                cur.execute(
+                    """INSERT OR REPLACE INTO mid_sales (collected_at, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (collected_at_val, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall)
+                )
+                processed_count += 1
+                log.debug(f"Inserted or updated record for {product_code} with sales {sales}.")
+            except Exception as e:
+                log.error(f"Error processing record {i+1}: {rec}. Error: {e}", exc_info=True)
+                skipped_count += 1
+
+        conn.commit()
+        log.info(f"DB: {db_path.name}. Wrote/Updated {processed_count} records. Skipped {skipped_count}.")
+
+        # Final weather data update
+        cur.execute(
+            """UPDATE mid_sales SET weekday = ?, month = ?, week_of_year = ?, is_holiday = ?, temperature = ?, rainfall = ? WHERE SUBSTR(collected_at, 1, 10) = ?""",
+            (weekday, month, week_of_year, is_holiday, temperature, rainfall, current_date)
+        )
+        conn.commit()
+        log.debug(f"Final weather update for {current_date} completed.")
+
+        cur.execute("SELECT COUNT(*) FROM mid_sales")
+        count = cur.fetchone()[0]
+        log.info(f"Total rows in {db_path.name}: {count}.")
+        return count
+
+    except sqlite3.Error as e:
+        log.error(f"Database error in write_sales_data for {db_path.name}: {e}", exc_info=True)
+        return 0 # Return 0 as no records were successfully written
+    except Exception as e:
+        log.error(f"An unexpected error occurred in write_sales_data for {db_path.name}: {e}", exc_info=True)
+        return 0
+    finally:
+        if conn:
+            conn.close()
+            log.debug(f"DB connection to {db_path.name} closed.")
+
+def update_past_holiday_data(db_path: Path):
     """
-    cur.execute(
-        update_weather_sql,
-        (
-            weekday, month, week_of_year, is_holiday, temperature, rainfall,
-            current_date,
-        ),
-    )
-    conn.commit()
+    mid_sales 테이블의 과거 데이터에 대해 is_holiday 값을 새로운 규칙에 맞춰 업데이트합니다.
+    0: 평일, 1: 공휴일, 2: 토요일
+    """
+    log.info(f"Updating past holiday data for {db_path.name}...")
+    conn = None
+    try:
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM mid_sales")
-    count = cur.fetchone()[0]
-    conn.close()
-    return count
+        # 모든 고유한 날짜를 가져옵니다.
+        cur.execute("SELECT DISTINCT SUBSTR(collected_at, 1, 10) FROM mid_sales")
+        dates_in_db = [row[0] for row in cur.fetchall()]
+
+        updated_count = 0
+        for date_str in dates_in_db:
+            current_date_dt = datetime.strptime(date_str, "%Y-%m-%d").date()
+            
+            is_holiday_val = 0 # Default to weekday
+            if current_date_dt in holidays.KR():
+                is_holiday_val = 1 # Public holiday
+            elif current_date_dt.weekday() == 5: # Saturday (Monday is 0, Sunday is 6)
+                is_holiday_val = 2 # Saturday
+            
+            cur.execute(
+                """UPDATE mid_sales SET is_holiday = ? WHERE SUBSTR(collected_at, 1, 10) = ?""",
+                (is_holiday_val, date_str)
+            )
+            updated_count += cur.rowcount
+        
+        conn.commit()
+        log.info(f"Successfully updated {updated_count} records in {db_path.name} for is_holiday.")
+
+    except sqlite3.Error as e:
+        log.error(f"Database error in update_past_holiday_data for {db_path.name}: {e}", exc_info=True)
+    except Exception as e:
+        log.error(f"An unexpected error occurred in update_past_holiday_data for {db_path.name}: {e}", exc_info=True)
+    finally:
+        if conn:
+            conn.close()
+            log.debug(f"DB connection to {db_path.name} closed.")
 
 def check_dates_exist(db_path: Path, dates_to_check: list[str]) -> list[str]:
     """주어진 날짜 목록 중 DB에 데이터가 없는 날짜를 찾아 반환합니다."""
