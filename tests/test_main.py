@@ -102,6 +102,7 @@ _spec = importlib.util.spec_from_file_location(
 main = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(main)
 import utils.config as config_mod
+import webdriver_utils
 
 
 def test_run_script_reads_and_executes(tmp_path):
@@ -110,7 +111,7 @@ def test_run_script_reads_and_executes(tmp_path):
     script.write_text(js_text, encoding="utf-8")
 
     driver = Mock()
-    with patch.object(main, "SCRIPT_DIR", tmp_path):
+    with patch.object(webdriver_utils, "SCRIPT_DIR", tmp_path):
         main.run_script(driver, "sample.js")
 
     driver.execute_script.assert_called_once_with(js_text)
@@ -118,7 +119,7 @@ def test_run_script_reads_and_executes(tmp_path):
 
 def test_run_script_missing_file_raises(tmp_path):
     driver = Mock()
-    with patch.object(main, "SCRIPT_DIR", tmp_path):
+    with patch.object(webdriver_utils, "SCRIPT_DIR", tmp_path):
         with pytest.raises(FileNotFoundError):
             main.run_script(driver, "missing.js")
 
@@ -187,7 +188,7 @@ def test_run_script_collects_data(tmp_path):
     driver.execute_script.side_effect = exec_script
 
     with (
-        patch.object(main, "SCRIPT_DIR", tmp_path),
+        patch.object(webdriver_utils, "SCRIPT_DIR", tmp_path),
         patch.object(main.time, "sleep"),
     ):
         main.run_script(driver, "collect.js")
