@@ -65,7 +65,10 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             log.error(f"{date} 날씨 데이터 요청 중 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
             weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
         except Exception as e:
-            log.error(f"{dt} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
+            log.error(
+                f"{date} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.",
+                exc_info=True,
+            )
             weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
 
     return pd.DataFrame(weather_data)
@@ -76,8 +79,11 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
         return pd.DataFrame()
 
     with sqlite3.connect(db_path) as conn:
-        query = f"SELECT collected_at, SUM(sales) as total_sales FROM mid_sales WHERE mid_code = '{mid_code}' GROUP BY SUBSTR(collected_at, 1, 10)"
-        df = pd.read_sql(query, conn)
+        query = (
+            "SELECT collected_at, SUM(sales) as total_sales "
+            "FROM mid_sales WHERE mid_code = ? GROUP BY SUBSTR(collected_at, 1, 10)"
+        )
+        df = pd.read_sql(query, conn, params=(mid_code,))
 
     if df.empty:
         return pd.DataFrame()
