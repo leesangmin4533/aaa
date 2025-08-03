@@ -79,8 +79,11 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
         return pd.DataFrame()
 
     with sqlite3.connect(db_path) as conn:
-        query = f"SELECT collected_at, SUM(sales) as total_sales FROM mid_sales WHERE mid_code = '{mid_code}' GROUP BY SUBSTR(collected_at, 1, 10)"
-        df = pd.read_sql(query, conn)
+        query = (
+            "SELECT collected_at, SUM(sales) as total_sales "
+            "FROM mid_sales WHERE mid_code = ? GROUP BY SUBSTR(collected_at, 1, 10)"
+        )
+        df = pd.read_sql(query, conn, params=(mid_code,))
 
     if df.empty:
         return pd.DataFrame()
