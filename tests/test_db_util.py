@@ -42,8 +42,8 @@ def test_write_sales_data_inserts_records(tmp_path):
     ts, code, sales = rows[0]
     assert code == "111" and sales == 5
     # verify collected_at uses YYYY-MM-DD HH:MM format
-    parsed = datetime.strptime(ts, "%Y-%m-%d %H:%M")
-    assert parsed.strftime("%Y-%m-%d %H:%M") == ts
+    parsed = datetime.strptime(ts, "%Y-%m-%d %H:%M:%S")
+    assert parsed.strftime("%Y-%m-%d %H:%M:%S") == ts
     db_path.unlink()
     assert not db_path.exists()
 

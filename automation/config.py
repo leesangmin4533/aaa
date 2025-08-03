@@ -21,7 +21,8 @@ SCRIPT_DIR = Path(__file__).resolve().parents[1] / "scripts"
 CODE_OUTPUT_DIR = Path(__file__).resolve().parents[1] / "code_outputs"
 
 # DB files
-ALL_SALES_DB_FILE = config["db_file"]
+# ``db_file`` 키가 없을 때를 대비해 기본값을 사용합니다.
+ALL_SALES_DB_FILE = config.get("db_file", "")
 # 과거 데이터를 포함해 통합 저장될 SQLite 파일명
 INTEGRATED_SALES_DB_FILE = config.get("past7_db_file", "past_7days.db")
 

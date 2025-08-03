@@ -4,7 +4,7 @@ import argparse
 import logging
 from pathlib import Path
 
-from utils.db_util import run_all_category_predictions
+from .model import run_all_category_predictions
 
 log = logging.getLogger(__name__)
 

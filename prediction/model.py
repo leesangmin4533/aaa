@@ -11,6 +11,9 @@ from pathlib import Path
 import random
 import heapq
 
+from utils.log_util import get_logger
+from prediction.monitor import update_performance_log
+
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
@@ -306,3 +309,97 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
     log.info(f"[{mid_code}] Recommendation details: {final_recommendations}")
 
     return final_recommendations
+
+
+def init_prediction_db(db_path: Path):
+    """모든 카테고리의 예측 결과를 저장할 DB와 테이블을 초기화합니다."""
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    with sqlite3.connect(db_path) as conn:
+        conn.execute(
+            """
+        CREATE TABLE IF NOT EXISTS category_predictions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            prediction_date TEXT, -- 예측을 수행한 날짜
+            target_date TEXT,     -- 예측 대상 날짜
+            mid_code TEXT,        -- 중분류 코드
+            mid_name TEXT,        -- 중분류명
+            predicted_sales REAL, -- 예측된 판매량
+            UNIQUE(target_date, mid_code)
+        )
+        """
+        )
+        conn.execute(
+            """
+        CREATE TABLE IF NOT EXISTS category_prediction_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            prediction_id INTEGER, -- category_predictions 테이블의 id 참조
+            product_code TEXT,
+            product_name TEXT,
+            recommended_quantity INTEGER,
+            FOREIGN KEY (prediction_id) REFERENCES category_predictions (id)
+        )
+        """
+        )
+        conn.commit()
+
+
+def run_all_category_predictions(sales_db_path: Path):
+    """모든 중분류에 대해 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
+    store_name = sales_db_path.stem
+    prediction_db_path = sales_db_path.parent / f"category_predictions_{store_name}.db"
+    init_prediction_db(prediction_db_path)
+
+    logger = get_logger(__name__, level=logging.DEBUG, store_id=store_name)
+    logger.info(f"[{store_name}] 모든 카테고리 예측 시작...")
+
+    with sqlite3.connect(sales_db_path) as conn:
+        mid_categories = pd.read_sql("SELECT DISTINCT mid_code, mid_name FROM mid_sales", conn)
+
+    predictions_to_save = []
+    prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    target_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+
+    with sqlite3.connect(prediction_db_path) as conn:
+        cursor = conn.cursor()
+        for index, row in mid_categories.iterrows():
+            mid_code = row['mid_code']
+            mid_name = row['mid_name']
+
+            training_data = get_training_data_for_category(sales_db_path, mid_code)
+            predicted_sales = train_and_predict(mid_code, training_data)
+
+            cursor.execute(
+                """
+            INSERT OR REPLACE INTO category_predictions
+            (prediction_date, target_date, mid_code, mid_name, predicted_sales)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+                (prediction_date, target_date, mid_code, mid_name, predicted_sales),
+            )
+            prediction_id = cursor.lastrowid
+
+            recommended_mix = recommend_product_mix(sales_db_path, mid_code, predicted_sales)
+            if recommended_mix:
+                item_insert_sql = """
+                INSERT INTO category_prediction_items
+                (prediction_id, product_code, product_name, recommended_quantity)
+                VALUES (?, ?, ?, ?)
+                """
+                items_to_insert = [
+                    (
+                        prediction_id,
+                        item['product_code'],
+                        item['product_name'],
+                        item['recommended_quantity'],
+                    )
+                    for item in recommended_mix
+                ]
+                cursor.executemany(item_insert_sql, items_to_insert)
+        conn.commit()
+
+    logger.info(
+        f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료. DB 저장 위치: {prediction_db_path}"
+    )
+
+    update_performance_log(sales_db_path, prediction_db_path)
+
