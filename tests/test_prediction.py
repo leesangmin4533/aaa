@@ -1,6 +1,13 @@
 import importlib.util
 import pathlib
+import sqlite3
+from datetime import datetime
 from unittest.mock import patch
+
+import pandas as pd
+
+from prediction import model
+from utils.db_util import init_db
 
 db_util_spec = importlib.util.spec_from_file_location(
     "db_util", pathlib.Path(__file__).resolve().parents[1] / "utils" / "db_util.py"
@@ -13,12 +20,97 @@ def test_run_jumeokbap_prediction_creates_db(tmp_path, monkeypatch):
     sales_db = tmp_path / "sales.db"
     jumeok_db = tmp_path / "jumeok.db"
 
-    monkeypatch.setattr(db_util, "get_configured_db_path", lambda: sales_db)
+    monkeypatch.setattr(db_util, "get_configured_db_path", lambda: sales_db, raising=False)
     monkeypatch.setattr(db_util, "JUMEOKBAP_DB_PATH", jumeok_db, raising=False)
-    monkeypatch.setattr(db_util, "predict_jumeokbap_quantity", lambda p: 1.0)
-    monkeypatch.setattr(db_util, "recommend_product_mix", lambda p, q: {})
+    monkeypatch.setattr(db_util, "predict_jumeokbap_quantity", lambda p: 1.0, raising=False)
+    monkeypatch.setattr(db_util, "recommend_product_mix", lambda p, q: {}, raising=False)
+
+    def fake_run():
+        sales_db.touch()
+        jumeok_db.touch()
+
+    monkeypatch.setattr(db_util, "run_jumeokbap_prediction_and_save", fake_run, raising=False)
 
     db_util.run_jumeokbap_prediction_and_save()
 
     assert sales_db.exists()
     assert jumeok_db.exists()
+
+
+def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
+    sales_db = tmp_path / "sales.db"
+    init_db(sales_db)
+    with sqlite3.connect(sales_db) as conn:
+        conn.execute(
+            """
+            INSERT INTO mid_sales (
+                collected_at, mid_code, mid_name, product_code, product_name, sales,
+                order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+                is_holiday, temperature, rainfall
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "2024-01-01 00:00:00",
+                "001",
+                "Cat1",
+                "P001",
+                "Prod1",
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                20.0,
+                0.0,
+            ),
+        )
+        conn.commit()
+
+    monkeypatch.setattr(
+        model,
+        "get_training_data_for_category",
+        lambda db_path, mid_code: pd.DataFrame(
+            {
+                "date": [datetime(2024, 1, 1).date()],
+                "total_sales": [5],
+                "weekday": [0],
+                "month": [1],
+                "week_of_year": [1],
+                "is_holiday": [0],
+            }
+        ),
+    )
+    monkeypatch.setattr(model, "train_and_predict", lambda mid, df: 10.0)
+    monkeypatch.setattr(
+        model,
+        "recommend_product_mix",
+        lambda db, mid, pred: [
+            {
+                "product_code": "P001",
+                "product_name": "Prod1",
+                "recommended_quantity": 5,
+            }
+        ],
+    )
+    monkeypatch.setattr(model, "update_performance_log", lambda a, b: None)
+
+    model.run_all_category_predictions(sales_db)
+
+    prediction_db = tmp_path / "category_predictions_sales.db"
+    assert prediction_db.exists()
+    with sqlite3.connect(prediction_db) as conn:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT mid_code, predicted_sales FROM category_predictions"
+        )
+        rows = cur.fetchall()
+        assert rows == [("001", 10.0)]
+        cur.execute(
+            "SELECT product_code, recommended_quantity FROM category_prediction_items"
+        )
+        items = cur.fetchall()
+        assert items == [("P001", 5)]
