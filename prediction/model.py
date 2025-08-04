@@ -43,9 +43,15 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
             continue
 
-        base_date_str = date.strftime('%Y%m%d')
-        now = datetime.now()
-        base_time_str = now.strftime('%H00')
+        request_time = datetime.now() - timedelta(hours=2)
+        if date == today:
+            # API 데이터 생성을 고려해 현재 시간에서 2시간을 뺀 시간을 기준으로 조회
+            base_date_str = request_time.strftime('%Y%m%d')
+            base_time_str = request_time.strftime('%H00')
+        else:
+            # 다른 날짜는 정오(12:00)를 기준으로 조회
+            base_date_str = date.strftime('%Y%m%d')
+            base_time_str = '1200'
 
         url = (
             "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000"
