@@ -61,6 +61,8 @@ def write_sales_data(
     
     processed_count = 0
     skipped_count = 0
+    insert_count = 0
+    update_count = 0
     conn = None  # Initialize conn to None
 
     try:
@@ -120,33 +122,75 @@ def write_sales_data(
                 stock = _get_value(rec, "stock", "STOCK_QTY")
 
                 cur.execute(
-                    "SELECT sales FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
+                    "SELECT 1 FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
                     (product_code, current_date),
                 )
                 row = cur.fetchone()
-                
-                logger.debug(f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Existing Row: {row}")
 
-                cur.execute(
-                    """INSERT OR REPLACE INTO mid_sales (collected_at, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                    (collected_at_val, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall)
+                logger.debug(
+                    f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Existing Row: {row}"
                 )
+
+                if row:
+                    cur.execute(
+                        """UPDATE mid_sales SET collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?, sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?, weekday = ?, month = ?, week_of_year = ?, is_holiday = ? WHERE product_code = ? AND SUBSTR(collected_at,1,10) = ?""",
+                        (
+                            collected_at_val,
+                            mid_code,
+                            mid_name,
+                            product_name,
+                            sales,
+                            order_cnt,
+                            purchase,
+                            disposal,
+                            stock,
+                            weekday,
+                            month,
+                            week_of_year,
+                            is_holiday,
+                            product_code,
+                            current_date,
+                        ),
+                    )
+                    update_count += 1
+                    logger.debug(
+                        f"Updated existing record for {product_code}; preserved weather data."
+                    )
+                else:
+                    cur.execute(
+                        """INSERT INTO mid_sales (collected_at, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                        (
+                            collected_at_val,
+                            mid_code,
+                            mid_name,
+                            product_code,
+                            product_name,
+                            sales,
+                            order_cnt,
+                            purchase,
+                            disposal,
+                            stock,
+                            weekday,
+                            month,
+                            week_of_year,
+                            is_holiday,
+                            temperature,
+                            rainfall,
+                        ),
+                    )
+                    insert_count += 1
+                    logger.debug(
+                        f"Inserted new record for {product_code} with weather data."
+                    )
                 processed_count += 1
-                logger.debug(f"Inserted or updated record for {product_code} with sales {sales}.")
             except Exception as e:
                 logger.error(f"Error processing record {i+1}: {rec}. Error: {e}", exc_info=True)
                 skipped_count += 1
 
         conn.commit()
-        logger.info(f"DB: {db_path.name}. Wrote/Updated {processed_count} records. Skipped {skipped_count}.")
-
-        # Final weather data update
-        cur.execute(
-            """UPDATE mid_sales SET weekday = ?, month = ?, week_of_year = ?, is_holiday = ?, temperature = ?, rainfall = ? WHERE SUBSTR(collected_at, 1, 10) = ?""",
-            (weekday, month, week_of_year, is_holiday, temperature, rainfall, current_date)
+        logger.info(
+            f"DB: {db_path.name}. Inserted {insert_count} records, updated {update_count} records. Skipped {skipped_count}."
         )
-        conn.commit()
-        logger.debug(f"Final weather update for {current_date} completed.")
 
         cur.execute("SELECT COUNT(*) FROM mid_sales")
         count = cur.fetchone()[0]
