@@ -18,7 +18,10 @@ log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
 def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
-    """기상청 API를 통해 과거 날씨 데이터를 가져옵니다."""
+    """기상청 API를 통해 최근 날씨 데이터를 가져옵니다.
+
+    현재 시점 기준으로 ±1일 이내의 날짜만 API에 요청하며, 그 외 날짜는 기본값(0)으로 처리합니다.
+    """
     api_key = os.environ.get("KMA_API_KEY")
     if not api_key:
         log.warning("기상청 API 키가 설정되지 않았습니다. 임의의 날씨 데이터로 대체합니다.")
@@ -30,24 +33,42 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
         return pd.DataFrame(weather_data)
 
     weather_data = []
-    nx, ny = 60, 127 
+    nx, ny = 60, 127
+    today = datetime.now().date()
 
     for date in dates:
+        # API 제한에 따라 현재 기준 ±1일만 요청
+        if abs((today - date).days) > 1:
+            log.warning(f"{date} 는 API 제한 범위를 벗어나 기본값으로 처리됩니다.")
+            weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
+            continue
+
         base_date_str = date.strftime('%Y%m%d')
         now = datetime.now()
         base_time_str = now.strftime('%H00')
 
-        url = f"https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
-        
+        url = (
+            "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000"
+            f"&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
+        )
+
         try:
-            response = requests.get(url, timeout=10) # Added timeout of 10 seconds
-            response.raise_for_status() # HTTP 오류 (4xx, 5xx) 발생 시 예외 처리
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
             data = response.json()
             log.debug(f"Weather API raw response for {date}: {json.dumps(data, indent=2)}")
-            
+
+            result_code = (
+                data.get('response', {}).get('header', {}).get('resultCode')
+            )
+            if result_code != '00':
+                log.warning(f"{date} 날씨 API resultCode {result_code}. 기본값으로 저장합니다.")
+                weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
+                continue
+
             avg_temp = 0.0
             total_rainfall = 0.0
-            
+
             items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
             log.debug(f"Weather API parsed items for {date}: {items}")
 
@@ -55,24 +76,29 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
                 category = item.get('category')
                 obsr_value = item.get('obsrValue')
                 if category == 'T1H':
-                    try: avg_temp = float(obsr_value)
-                    except (ValueError, TypeError): pass
+                    try:
+                        avg_temp = float(obsr_value)
+                    except (ValueError, TypeError):
+                        pass
                 elif category == 'RN1':
-                    try: total_rainfall = float(obsr_value)
-                    except (ValueError, TypeError): pass
+                    try:
+                        total_rainfall = float(obsr_value)
+                    except (ValueError, TypeError):
+                        pass
+
             weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
         except requests.exceptions.Timeout:
             log.error(f"{date} 날씨 데이터 요청 중 타임아웃 발생. 기본값으로 대체합니다.", exc_info=True)
-            weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
+            weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
         except requests.exceptions.RequestException as e:
             log.error(f"{date} 날씨 데이터 요청 중 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
-            weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
+            weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
         except Exception as e:
             log.error(
                 f"{date} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.",
                 exc_info=True,
             )
-            weather_data.append({'date': date, 'temperature': 15, 'rainfall': 0}) # Fallback values
+            weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
 
     return pd.DataFrame(weather_data)
 
