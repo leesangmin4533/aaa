@@ -73,9 +73,11 @@ def write_sales_data(
 
         if target_date_str:
             current_date = f"{target_date_str[:4]}-{target_date_str[4:6]}-{target_date_str[6:]}"
+            collected_at_val = f"{current_date} 00:00:00" # 과거 날짜는 시간을 00:00:00으로 설정
         else:
-            current_date = datetime.now().strftime("%Y-%m-%d")
-        collected_at_val = f"{current_date} 00:00:00"
+            now = datetime.now()
+            current_date = now.strftime("%Y-%m-%d")
+            collected_at_val = now.strftime("%Y-%m-%d %H:%M:%S") # 현재 날짜는 실제 시간으로 설정
 
         current_date_dt = datetime.strptime(current_date, "%Y-%m-%d").date()
         weekday = current_date_dt.weekday()
@@ -133,17 +135,9 @@ def write_sales_data(
                 purchase = _get_value(rec, "purchase", "BUY_QTY")
                 disposal = _get_value(rec, "disposal", "DISUSE_QTY")
                 stock = _get_value(rec, "stock", "STOCK_QTY")
-                soldout_raw = _get_value(rec, "soldout", "SOLDOUT_QTY", "soldout_qty")
-                try:
-                    soldout = int(soldout_raw) if soldout_raw is not None else 0
-                except (ValueError, TypeError):
-                    logger.warning(
-                        "Record %s has invalid soldout value '%s'. Defaulting to 0.",
-                        i + 1,
-                        soldout_raw,
-                        extra={"tag": "db"},
-                    )
-                    soldout = 0
+
+                # 품절 상태 결정: 재고가 0이고 판매가 1 이상일 때 품절로 간주
+                soldout = 1 if stock is not None and int(stock) == 0 and sales > 0 else 0
 
                 cur.execute(
                     "SELECT 1 FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
