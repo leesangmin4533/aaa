@@ -3,7 +3,6 @@ import time
 import subprocess
 import sys
 from pathlib import Path
-import json
 
 # Add the project root to the Python path
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -14,22 +13,35 @@ from utils.log_util import get_logger
 
 log = get_logger(__name__)
 
-def job():
+def run_main_job():
     """Runs the main automation script for all configured stores."""
-    log.info("Scheduler triggered. Starting automation for all stores.")
+    log.info("Scheduler triggered for main data collection. Starting automation.")
     try:
-        # Execute main.py which will handle all stores sequentially
         subprocess.run([sys.executable, str(ROOT_DIR / 'main.py')], check=True)
-        log.info("Scheduled job finished successfully for all stores.")
+        log.info("Main data collection job finished successfully.")
     except subprocess.CalledProcessError as e:
-        log.error(f"Scheduled job failed with exit code {e.returncode}")
+        log.error(f"Main data collection job failed with exit code {e.returncode}")
     except Exception as e:
-        log.error(f"An unexpected error occurred during the scheduled job: {e}")
+        log.error(f"An unexpected error occurred during the main job: {e}")
 
-# Schedule the job to run at the start of every hour
-schedule.every().hour.at(":00").do(job)
+def run_forecast_job():
+    """Runs the forecast fetching script."""
+    log.info("Scheduler triggered for forecast fetching.")
+    try:
+        subprocess.run([sys.executable, str(ROOT_DIR / 'scripts' / 'fetch_forecast.py')], check=True)
+        log.info("Forecast fetching job finished successfully.")
+    except subprocess.CalledProcessError as e:
+        log.error(f"Forecast fetching job failed with exit code {e.returncode}")
+    except Exception as e:
+        log.error(f"An unexpected error occurred during the forecast job: {e}")
 
-log.info("Scheduler started. Waiting for the next scheduled run...")
+# Schedule the main data collection to run at the start of every hour
+schedule.every().hour.at(":00").do(run_main_job)
+
+# Schedule the forecast fetching to run once daily at 3 AM
+schedule.every().day.at("03:00").do(run_forecast_job)
+
+log.info("Scheduler started with hourly data collection and daily forecast jobs.")
 
 while True:
     schedule.run_pending()
