@@ -97,3 +97,34 @@ def update_performance_log(sales_db_path: Path, prediction_db_path: Path):
 
     except Exception as e:
         log.error(f"[{store_name}] 모델 성능 모니터링 중 오류 발생: {e}", exc_info=True)
+
+
+def load_recent_performance(
+    prediction_db_path: Path, mid_code: str, days: int = 7
+) -> pd.DataFrame:
+    """특정 중분류에 대한 최근 ``days``일간 예측 오차율을 조회합니다.
+
+    Args:
+        prediction_db_path: 예측 성능 DB 경로.
+        mid_code: 조회할 중분류 코드.
+        days: 조회할 기간(일 단위).
+
+    Returns:
+        ``prediction_performance`` 테이블에서 조회한 ``pandas.DataFrame``.
+        해당 기간의 데이터가 없으면 빈 ``DataFrame``을 반환합니다.
+    """
+
+    start_date = datetime.now().date() - timedelta(days=days)
+    start_date_str = start_date.strftime("%Y-%m-%d")
+
+    query = """
+        SELECT target_date, mid_code, predicted_sales, actual_sales, error_rate_percent
+        FROM prediction_performance
+        WHERE mid_code = ? AND date(target_date) >= ?
+        ORDER BY target_date
+    """
+
+    with sqlite3.connect(prediction_db_path) as conn:
+        df = pd.read_sql(query, conn, params=(mid_code, start_date_str))
+
+    return df if not df.empty else pd.DataFrame()
