@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from prediction import model
+from prediction import xgboost as model
 from prediction.xgboost import recommend_product_mix
 from utils.db_util import init_db
 
@@ -87,7 +87,7 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
             }
         ),
     )
-    monkeypatch.setattr(model, "train_and_predict", lambda mid, df: 10.0)
+    monkeypatch.setattr(model, "train_and_predict", lambda mid, df, model_dir=None: 10.0)
     monkeypatch.setattr(
         model,
         "recommend_product_mix",
