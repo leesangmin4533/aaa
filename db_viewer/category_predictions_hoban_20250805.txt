@@ -1,0 +1,3747 @@
+Database: c:\Users\kanur\OneDrive\문서\GitHub\aaa\code_outputs\db\category_predictions_hoban.db
+
+--- Category: 도시락 | Predicted Sales: 2.49 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 주먹밥 | Predicted Sales: 11.11 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 김밥 | Predicted Sales: 3.58 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 샌드위치류 | Predicted Sales: 1.88 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 햄버거류 | Predicted Sales: 1.35 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 빵 | Predicted Sales: 9.72 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)포켓몬파이리핫소스 | 1
+삼립)포켓몬피카치즈케익 | 1
+삼립)포켓몬로켓초코롤 | 1
+삼립)찰옥수수이야기 | 1
+삼립)흑임자이야기 | 1
+
+--- Category: 떡 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)제주쑥대박찹쌀떡 | 1
+
+--- Category: 디저트 | Predicted Sales: 3.96 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 비스켓/쿠키 | Predicted Sales: 12.78 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 스낵류 | Predicted Sales: 35.18 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)포테토칩60g | 1
+롯데)도리토스나쵸치즈 | 1
+오리온)포카칩오리지널66g | 1
+
+--- Category: 시리얼 | Predicted Sales: 3.20 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 껌 | Predicted Sales: 2.32 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 초콜릿 | Predicted Sales: 6.74 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 캔디 | Predicted Sales: 13.46 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+스위트)트롤리미니버거10g | 1
+농심)츄파춥스12g | 1
+
+--- Category: 일반아이스크림 | Predicted Sales: 26.43 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)월드콘 | 3
+빙그레)메로나 | 2
+서주)400바초코 | 1
+서주)400바멜론 | 1
+라라스윗)생우유빵샌드 | 1
+라라스윗)초콜릿초코바 | 1
+라라스윗)쿠앤크초코바 | 1
+라라스윗)딸기요거트바 | 1
+라라스윗)복숭아요거트바 | 1
+라라스윗)넛티초코바닐라 | 1
+라라스윗)넛티초코초콜릿 | 2
+
+--- Category: 마른안주류 | Predicted Sales: 5.45 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 육가공류 | Predicted Sales: 12.68 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+진주햄)천하장사빅70g | 1
+하림)마늘후랑크70g | 1
+
+--- Category: 과일/채소 | Predicted Sales: 1.03 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 농산식재료 | Predicted Sales: 1.99 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 축수산식재료 | Predicted Sales: 4.73 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)덴마크스트링치즈 | 1
+
+--- Category: 조미료류 | Predicted Sales: 2.01 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 커피차류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 반찬류 | Predicted Sales: 2.20 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 면류 | Predicted Sales: 32.94 ---
+Recommended Products (7 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)신라면 | 1
+농심)육개장사발면 | 1
+오뚜기)열라면 | 1
+오뚜기)스파게티컵 | 1
+삼양)불닭볶음면 | 1
+삼양)불닭볶음면컵 | 1
+삼양)까르보불닭큰컵 | 2
+
+--- Category: 상온즉석식 | Predicted Sales: 10.31 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)햇반210g | 1
+
+--- Category: 냉동즉석식 | Predicted Sales: 2.88 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 냉장즉석식 | Predicted Sales: 3.37 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 의약외품 | Predicted Sales: 7.84 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+동아)박카스F병120ml | 2
+동화)부채표까스활병75ml | 2
+
+--- Category: 과일야채음료 | Predicted Sales: 14.17 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+매일)피크닉사과240ml | 1
+팔도)뽀로로딸기맛P235ml | 1
+곽철이)청포도제로190ml | 1
+
+--- Category: 기능건강음료 | Predicted Sales: 15.72 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)파워오투오렌지P500 | 1
+롯데)게토레이레몬600ml | 1
+동아)오로나민C병120ml | 1
+
+--- Category: 생수 | Predicted Sales: 15.47 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO미네랄워터P2L | 1
+HEYROO미네랄워터P1L | 1
+HEYROO미네랄워터P500ml | 3
+청정)몽베스트P500ml | 3
+광동)제주삼다수P500ml | 1
+광동)제주삼다수P2L | 1
+
+--- Category: 커피음료 | Predicted Sales: 17.98 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+스벅)카페라떼컵200ml | 1
+매일)바리스타에스프250ml | 1
+매일)바리스타로슈거250ml | 1
+할리스)바닐라딜라이트 | 1
+이디야)돌체콜드브루300ml | 1
+
+--- Category: 차음료 | Predicted Sales: 8.52 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)복숭아제로아이스500 | 1
+
+--- Category: 탄산음료 | Predicted Sales: 37.75 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+하이트)하이트논알콜캔500 | 1
+롯데)펩시제로라임P500ml | 4
+롯데)칠성사이다제로P500 | 1
+롯데)펩시제로모히토P500 | 1
+코카)코카콜라P500ml | 1
+코카)코카콜라제로P1.5L | 1
+코카)코카콜라제로P500ml | 4
+코카)스프라이트P500ml | 2
+
+--- Category: 아이스드링크 | Predicted Sales: 5.35 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)칸타타스윗아메리230 | 1
+롯데)칸타타헤이즐넛230ml | 1
+
+--- Category: 요구르트 | Predicted Sales: 8.56 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+빙그레)쥬시쿨자두180ml | 1
+빙그레)쥬시쿨복숭아180ml | 1
+매일)엔요280ml | 3
+
+--- Category: 우유 | Predicted Sales: 20.45 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+빙그레)바나나우유240ml | 3
+남양)초코에몽드링크190ml | 1
+서울)흰우유1L | 1
+서울)딸기우유300ml | 1
+
+--- Category: 얼음 | Predicted Sales: 16.22 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+del)컵얼음180g | 5
+del)빅컵얼음230g | 4
+del)벤티컵얼음400g | 2
+동양)아이스웰얼음2.5kg | 1
+del)빅컵얼음230g | 1
+
+--- Category: 맥주 | Predicted Sales: 53.81 ---
+Recommended Products (15 items):
+Product Name | Recommended Quantity
+------------------------------------
+버드와이저캔740ml | 1
+아사히생맥주캔340ml | 5
+아사히생맥주캔485ml | 3
+삿포로캔500ml | 1
+오리온맥주캔500ml | 1
+호가든캔500ml | 1
+스텔라캔740ml | 1
+켈리캔500ml | 2
+테라캔500ml | 2
+카스캔355ml | 1
+카스캔500ml | 9
+카스라이트캔355ml | 1
+카스P1L | 1
+카스아이스캔464ml | 1
+생마차라거500ml캔 | 1
+
+--- Category: 소주 | Predicted Sales: 21.60 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+처음처럼새로P400ml | 1
+진로이즈백P640ml | 1
+신참이슬병360ml지함 | 4
+참이슬P640ml | 6
+처음처럼P500ml | 1
+처음처럼새로병360ml | 1
+처음처럼새로P640ml | 2
+처음처럼P640ml | 1
+
+--- Category: 전통주 | Predicted Sales: 5.80 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)신청하300ml | 1
+보해)신복분자주375ml | 1
+장수)생막걸리영등포750ml | 1
+
+--- Category: 위생용품 | Predicted Sales: 7.03 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 의류용품 | Predicted Sales: 1.36 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 홈/주방용품 | Predicted Sales: 14.94 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+종량(가정)10L | 1
+종량(가정)20L | 12
+
+--- Category: 전기연료 | Predicted Sales: 2.84 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+에이스)일회용돌라이터 | 1
+
+--- Category: 소형가전 | Predicted Sales: 1.74 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+CU프렌즈)C타입고속충전기 | 1
+
+--- Category: 편의상품 | Predicted Sales: 1.16 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+이즐)CU그린카드 | 1
+
+--- Category: 담배 | Predicted Sales: 29.60 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+레종블루3mg | 1
+말보로미디엄6mg | 1
+에쎄프라임4mg | 2
+더원블루1mg | 1
+심플에이스1mg | 1
+보헴시가리브레5㎎ | 1
+
+--- Category: 전자담배 | Predicted Sales: 67.01 ---
+Recommended Products (12 items):
+Product Name | Recommended Quantity
+------------------------------------
+테리아퍼플웨이브 | 9
+테리아블루 | 2
+테리아블랙퍼플 | 4
+테리아오아시스펄 | 1
+테리아블랙루비 | 2
+핏체인지 | 1
+LIL액상카트리지 | 23
+MIIX믹스 | 5
+MIIX아이스더블 | 5
+MIIX아이스뱅 | 3
+MIIX콤보 | 1
+MIIX오라썸 | 2
+
+--- Category: 안전상비의약품 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: RI아이스크림 | Predicted Sales: 1.93 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 기타주류 | Predicted Sales: 5.87 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 소모품 | Predicted Sales: 5.79 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+친환경봉투판매용 | 5
+
+--- Category: 제조음료 | Predicted Sales: 1.39 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+25뉴get아이스아메XL | 1
+
+--- Category: 애완용품 | Predicted Sales: 1.89 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+하림펫)밥이보약양갱면역 | 1
+
+--- Category: 와인 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 문구류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 건강기능 | Predicted Sales: 3.34 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 목욕세면 | Predicted Sales: 1.22 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 완구류 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+티니핑)롤스티커 | 1
+
+--- Category: 액세서리 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+원니즈)접이식눈썹면도기 | 1
+
+--- Category: 도시락 | Predicted Sales: 11.40 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+도)한끼만족뉴함박치킨1 | 6
+도)압도적두툼돈까스정식1 | 2
+도)한끼만족최애11첩1 | 1
+도)한끼만족함박앤치킨1 | 1
+도)한끼만족매콤제육1 | 1
+도)사천식유니짜장덮밥1 | 1
+
+--- Category: 주먹밥 | Predicted Sales: 96.93 ---
+Recommended Products (21 items):
+Product Name | Recommended Quantity
+------------------------------------
+주)계란버터간장삼각1 | 11
+주)압도적리치스팸마요1 | 11
+주)치즈닭갈비볶음밥맛1 | 10
+주)뉴3XL동원고추참치1 | 9
+주)청양참치마요삼각1 | 9
+주)3XL베이컨햄마요김치1 | 8
+주)3XL쟌슨빌부대삼각1 | 8
+주)3XL리챔청양마요삼각1 | 7
+주)3XL매콤돈까스삼각1 | 4
+주)더뉴치킨마요삼각1 | 3
+주)참치마요김치제육더블1 | 2
+주)3XL베이컨참치마요1 | 2
+주)3XL바싹제육불고기1 | 2
+주)오일컷담백참치삼각1 | 2
+주)감자탕볶음밥맛삼각1 | 2
+주)리치치킨마요삼각1 | 2
+주)화끈불제육삼각1 | 1
+주)떡볶이맛볶음밥1 | 1
+주)리치햄에그마요삼각1 | 1
+주)백종원스페셜우삼겹1 | 1
+주)3XLXO비빔삼각1 | 1
+
+--- Category: 김밥 | Predicted Sales: 12.17 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+김)창녕마늘돼지갈비김밥1 | 5
+김)압도적뉴참치마요1 | 1
+김)고들빼기낙지젓갈김밥1 | 1
+김)압도적제육김밥1 | 1
+김)촉촉두툼계란초밥김밥1 | 1
+김)압도적치즈불고기김밥1 | 1
+김)압도적치즈제육김밥1 | 1
+김)집밥진미채김밥1 | 1
+김)화끈불제육김밥1 | 1
+
+--- Category: 샌드위치류 | Predicted Sales: 2.58 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+샌)쑥쑥팥호두샌드1 | 1
+
+--- Category: 햄버거류 | Predicted Sales: 1.35 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+햄)바삭소보로숯불갈비1 | 1
+
+--- Category: 빵 | Predicted Sales: 33.63 ---
+Recommended Products (13 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)포켓몬파이리핫소스 | 7
+삼립)포켓몬로켓초코롤 | 7
+삼립)찰옥수수이야기 | 6
+삼립)흑임자이야기 | 3
+삼립)포켓몬피카치즈케익 | 2
+삼립)촉촉치즈후레쉬팡 | 2
+삼립)신선가득꿀호떡 | 1
+롯데)미니딸기크림샌드5입 | 1
+삼립)보름달정통 | 1
+405)스위트페스트리 | 1
+삼립)미각카이막치즈케익 | 1
+삼립)잼있는딸기쿠키 | 1
+삼립)끼리벨기에와플 | 1
+
+--- Category: 떡 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)제주쑥대박찹쌀떡 | 1
+
+--- Category: 디저트 | Predicted Sales: 29.31 ---
+Recommended Products (16 items):
+Product Name | Recommended Quantity
+------------------------------------
+연세)야쿠르트크림롤케익 | 7
+당과점)베리벽돌케이크 | 7
+대산)엄마랑도나쓰 | 3
+연세)레드벨벳생크림빵 | 1
+연세)초코생크림빵 | 1
+연세)야쿠르트생크림빵 | 1
+당과점)초코칩찰떡꼬치 | 1
+베어스)망곰초콜릿푸딩 | 1
+대두)한입초코찰떡 | 1
+연세)메론생크림빵 | 1
+MDS)젤리블리애플샤인 | 1
+연세)크림맘모스 | 1
+롯데)바닐라푸딩 | 1
+연세)레드벨벳롤케익 | 1
+대두)한입우유찰떡 | 1
+라라스윗)옥수수소금빵 | 1
+
+--- Category: 비스켓/쿠키 | Predicted Sales: 9.56 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)제크오리지널 | 5
+오리온)통크 | 4
+해태)초코홈런볼46g | 1
+
+--- Category: 스낵류 | Predicted Sales: 28.74 ---
+Recommended Products (19 items):
+Product Name | Recommended Quantity
+------------------------------------
+해태)자가비짭짤한맛 | 2
+오리온)포카칩오리지널66g | 2
+롯데)도리토스나쵸치즈 | 2
+농심)포테토칩60g | 2
+SA)로열티니핑컬러팝콘45g | 2
+오리온)태양의맛썬80g | 2
+HEYROO감자칩득템어니언 | 2
+크라운)콘초 | 2
+오리온)포카칩어니언66g | 2
+롯데)꼬깔콘군옥수수맛 | 2
+롯데)도리토스양념갈비 | 1
+해태)허니버터칩60g | 1
+농심)닭다리너겟130g | 1
+농심)매운새우깡90g | 1
+농심)감자깡75g | 1
+해태)오사쯔60g | 1
+크라운)죠리퐁 | 1
+훼밀리)에낙라면치킨30g | 1
+미찌)곰표팝콘오리지널맛 | 1
+
+--- Category: 시리얼 | Predicted Sales: 2.80 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+오츠카)소이조이블루베리 | 1
+켈로그)크런치넛에너지바 | 1
+오츠카)소이조이초코 | 1
+
+--- Category: 껌 | Predicted Sales: 11.35 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)와우소다풍선껌 | 8
+오리온)와우블랙레몬 | 1
+오리온)와우레인보우 | 1
+롯데)왓따복숭아풍선껌 | 1
+롯데)왓따청포도맛껌 | 1
+
+--- Category: 초콜릿 | Predicted Sales: 7.25 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+크라운)키커바 | 1
+
+--- Category: 캔디 | Predicted Sales: 125.66 ---
+Recommended Products (33 items):
+Product Name | Recommended Quantity
+------------------------------------
+대진)요거트향츄잉캔디12g | 26
+나투)아모스망고구미 | 19
+농심)츄파춥스12g | 14
+오리온)왕꿈틀이젤리67g | 8
+스위트)트롤리미니버거10g | 7
+동아)박카스젤리 | 7
+스위트)트롤리지구젤리 | 7
+농심)츄파춥스게코젤리 | 4
+앰지)홀스자몽 | 2
+오리온)포도알맹이67g | 2
+매크로)라무네포도당캔디 | 2
+피치)바나나모양스프레이 | 2
+오리온)마이구미포도66g | 2
+일신)쥬시드랍팝캔디 | 2
+앰지)홀스XS멘토립터스 | 2
+크라운)새콤달콤딸기 | 2
+몽뜨)아폴로 | 2
+삼경)하리보해피콜라사워 | 1
+매크로)하이츄복숭아맛 | 1
+크라운)새콤달콤포도 | 1
+롯데)밀크카라멜50g | 1
+마즈)스키틀즈사워캔디 | 1
+삼경)푸쵸스틱캔디망고 | 1
+투데이)드럼스틱버블검 | 1
+삼경)하리보프루티부시 | 1
+스위트)트롤리버거XXL | 1
+농심)멘토스레인보우 | 1
+동아)박카스사워젤리 | 1
+오리온)패션후르츠알맹이 | 1
+마즈)이클립스배비파 | 1
+스위트)트롤리키스 | 1
+마즈)스키틀즈젤리후르츠 | 1
+마즈)이클립스피치캔디 | 1
+
+--- Category: 일반아이스크림 | Predicted Sales: 69.21 ---
+Recommended Products (21 items):
+Product Name | Recommended Quantity
+------------------------------------
+라라스윗)딸기요거트바 | 14
+라라스윗)말차초코바 | 11
+롯데)월드콘 | 5
+라라스윗)넛티초코초콜릿 | 4
+빙그레)메로나 | 4
+서주)400바멜론 | 3
+라라스윗)넛티초코바닐라 | 3
+롯데)빠삐코 | 3
+라라스윗)복숭아요거트바 | 3
+서주)400바초코 | 3
+해태)부라보콘바닐라 | 3
+라라스윗)생우유빵샌드 | 2
+라라스윗)쿠앤크초코바 | 2
+라라스윗)초콜릿초코바 | 2
+롯데)빵빠레바닐라 | 2
+해태)폴라포포도 | 1
+라라스윗)저당바닐라콘 | 1
+라라스윗)바닐라초코바 | 1
+라라스윗)저당멜론바 | 1
+라라스윗)꿀고구마빵샌드 | 1
+라라스윗)저당초코모나카 | 1
+
+--- Category: 마른안주류 | Predicted Sales: 6.35 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+샘표)질러블랙페퍼육포30g | 3
+동원)상상육포안심30g | 3
+한양)빅숏다리40g | 1
+
+--- Category: 육가공류 | Predicted Sales: 26.16 ---
+Recommended Products (15 items):
+Product Name | Recommended Quantity
+------------------------------------
+흥생)구운계란2입 | 6
+PBICK)순살족발득템 | 4
+진주햄)천하장사빅70g | 3
+하림)마늘후랑크70g | 2
+CJ)맥스봉치즈후랑크65g | 2
+PBICK)닭가슴살득템페퍼 | 1
+진주햄)천하장사50g | 1
+PBICK)닭가슴살득템 | 1
+흥생)반숙계란2입 | 1
+진주햄)천하매콤후랑크70g | 1
+CJ)맥스봉직화꼬치바90g | 1
+롯데)의성매콤땡초바65g | 1
+티니핑)오로라핑구운란2입 | 1
+하림)매콤후랑크70g | 1
+삼립)그릴후랑크70g | 1
+
+--- Category: 과일/채소 | Predicted Sales: 9.06 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+스미)반값바나나 | 8
+풀무원)콩나물220g | 2
+
+--- Category: 농산식재료 | Predicted Sales: 1.99 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+강릉초당)초당두부550g | 1
+
+--- Category: 축수산식재료 | Predicted Sales: 4.22 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)덴마크스트링치즈 | 1
+PBICK)계란득템15입 | 1
+제니코)본가드마블잭스틱 | 1
+PBICK)크랩득템142g | 1
+동원)체다치즈5매입 | 1
+
+--- Category: 조미료류 | Predicted Sales: 1.94 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼양)불닭소스200g | 1
+
+--- Category: 커피차류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 반찬류 | Predicted Sales: 2.90 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO김득템20봉 | 2
+한울)꼬마단무지120g | 1
+
+--- Category: 면류 | Predicted Sales: 272.00 ---
+Recommended Products (68 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)신라면 | 60
+삼양)불닭볶음면 | 31
+농심)짜파게티 | 29
+농심)육개장사발면 | 14
+삼양)까르보불닭큰컵 | 11
+농심)짜파게티큰사발컵 | 10
+오뚜기)진라면매운컵 | 8
+농심)신라면큰사발컵 | 7
+오뚜기)열라면 | 7
+삼양)불닭볶음탕면컵 | 7
+농심)김치사발면 | 5
+삼양)불닭볶음면컵 | 4
+삼양)로제불닭볶음면컵 | 4
+오뚜기)스파게티컵 | 4
+농심)김치큰사발컵 | 3
+농심)안성탕면 | 3
+농심)신라면소컵 | 3
+농심)신라면툼바봉지 | 3
+오뚜기)베트남쌀국수소컵 | 2
+오뚜기)참깨라면컵 | 2
+농심)짜파게티더블랙사발 | 2
+팔도)팔도비빔면 | 2
+오뚜기)진라면순한맛 | 2
+팔도)도시락 | 2
+오뚜기)짜슐랭 | 2
+삼양)불닭볶음면소컵 | 2
+농심)튀김우동큰사발컵 | 2
+농심)새우탕소컵 | 1
+오뚜기)진짬뽕 | 1
+오뚜기)진라면순한소컵 | 1
+오뚜기)치즈볶이컵 | 1
+오뚜기)진라면순한컵 | 1
+농심)신라면더레드봉지 | 1
+삼양)치즈불닭볶음면컵 | 1
+팔도)팔도비빔면컵 | 1
+농심)육개장큰사발컵 | 1
+농심)사리곰탕소컵 | 1
+농심)오징어짬뽕소컵 | 1
+팔도)킹뚜껑 | 1
+농심)너구리얼큰 | 1
+농심)신라면툼바큰사발면 | 1
+농심)너구리큰사발컵 | 1
+농심)생생우동왕컵 | 1
+팔도)김치왕뚜껑왕컵 | 1
+농심)앵그리짜파구리컵 | 1
+오뚜기)라면볶이컵 | 1
+오뚜기)열려라참깨라면컵 | 1
+하림)푸디버디하양라면80g | 1
+삼양)불닭볶음탕면 | 1
+농심)튀김우동소컵 | 1
+농심)너구리소컵 | 1
+농심)사리곰탕큰사발컵 | 1
+하츄핑라면얼큰소고기맛 | 1
+삼양)삼양라면 | 1
+롯데)까르보나라스파게티 | 1
+농심)새우탕큰사발컵 | 1
+농심)짜파게티범벅소컵 | 1
+오뚜기)크림진짬뽕컵 | 1
+오뚜기)진짬뽕컵 | 1
+농심)마라짜파게티큰사발 | 1
+오뚜기)중앙해장라면컵 | 1
+오뚜기)분식집계란라면컵 | 1
+농심)마라샹구리큰사발면 | 1
+오뚜기)육개장사발면 | 1
+오뚜기)참깨라면소컵 | 1
+오뚜기)열튀김우동컵 | 1
+삼양)짜짜로니 | 1
+삼양)푸팟퐁커리불닭컵 | 1
+
+--- Category: 상온즉석식 | Predicted Sales: 12.41 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)햇반210g | 3
+오뚜기)맛있는밥210g | 2
+CJ)햇반잡곡밥210g | 2
+CJ)햇반흑미밥210g | 2
+CJ)햇반발아현미작은공기 | 1
+CJ)큰햇반300g | 1
+오뚜기)맛있는밥150g | 1
+리뉴)한손한끼피스타치오  | 1
+
+--- Category: 냉동즉석식 | Predicted Sales: 2.30 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+PBICK)찐만두득템김치6입 | 1
+
+--- Category: 냉장즉석식 | Predicted Sales: 12.37 ---
+Recommended Products (7 items):
+Product Name | Recommended Quantity
+------------------------------------
+금미옥)불떡볶이컵 | 6
+금미옥)쌀떡볶이컵 | 2
+디엔비)통통새우고로케 | 1
+MDS)베이컨크림파스타N | 1
+팔도한끼)전복버터볶음밥 | 1
+베어스)망곰이치즈피자 | 1
+팔도한끼)섞어돼지국밥 | 1
+
+--- Category: 의약외품 | Predicted Sales: 39.37 ---
+Recommended Products (7 items):
+Product Name | Recommended Quantity
+------------------------------------
+동아)박카스F병120ml | 21
+동화)부채표까스활병75ml | 13
+종근당)속청쿨75ml | 2
+크리오)대일밴드NEW | 1
+루트비)원큐임신테스트기 | 1
+해태)영진구론산병150ml | 1
+메디폼)FLEX중형10매 | 1
+
+--- Category: 과일야채음료 | Predicted Sales: 64.63 ---
+Recommended Products (22 items):
+Product Name | Recommended Quantity
+------------------------------------
+곽철이)청포도제로190ml | 14
+곽철이)사과제로190ml | 13
+매일)피크닉사과240ml | 10
+팔도)뽀로로딸기맛P235ml | 4
+팔도)뽀로로샤인맛P235ml | 3
+팔도)뽀로로밀크맛P235ml | 2
+롯데)오가닉포도당근주스 | 2
+롯데)오가닉사과당근주스 | 2
+모구)복숭아젤리P320ml | 2
+롯데)콜드오렌지250ml | 1
+웅진)티니핑딸기P200ml | 1
+웅진)티니핑밀크P200ml | 1
+동원)쿨피스에이드복숭아 | 1
+웅진)자연은말린자몽P500 | 1
+매일)피크닉청포도240ml | 1
+롯데)델몬트포도P1.5L | 1
+BR)레인보우샤베트워터500 | 1
+롯데)콜드포도250ml | 1
+모구)풍선껌젤리P320ml | 1
+모구)솜사탕젤리P320ml | 1
+푸르밀)웰치포도에이드 | 1
+코카)미닛오렌지P1.5L | 1
+
+--- Category: 기능건강음료 | Predicted Sales: 129.36 ---
+Recommended Products (32 items):
+Product Name | Recommended Quantity
+------------------------------------
+코카)몬스터에너지캔355ml | 23
+HK)컨디션헛개병100ml | 10
+링티)제로레몬라임500ml | 10
+농심)파워오투오렌지P500 | 9
+코카)파워에이드P600ml | 8
+동아)오로나민C병120ml | 6
+코카)몬스터파이프캔355ml | 5
+HK)컨디션탄산제로병100ml | 5
+광동)비타500로열병 | 5
+롯데)게토레이레몬600ml | 5
+롯데)핫식스더킹애플캔355 | 4
+코카)파워스칼렛스톰600P | 4
+링티)제로레몬라이트P500 | 4
+롯데)게토레이블루P600ml | 4
+코카)파워에이드퍼플P600 | 3
+코카)토레타제로P500ml | 3
+동아)포카리스웨트P620ml | 3
+코카)파워라임제로P600 | 2
+연세)검은콩고칼슘두유 | 2
+롯데)핫식스더킹퍼플캔355 | 2
+동아)포카리스웨트P1.5L | 2
+링티)제로복숭아P500ml | 1
+동화)배러푸룬P120g | 1
+롯데)2프로복숭아P500ml | 1
+코카)파워에이드캔240ml | 1
+코카)몬스터울트라캔355ml | 1
+동아)포카리스웨트캔240ml | 1
+동화)하루한병아르긴병100 | 1
+롯데)2프로복숭아캔240ml | 1
+롯데)핫식스더킹파워캔355 | 1
+코카)토레타P500ml | 1
+HK)컨디션레이디병100ml | 1
+
+--- Category: 생수 | Predicted Sales: 25.07 ---
+Recommended Products (10 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO미네랄워터P500ml | 6
+청정)몽베스트P500ml | 5
+롯데)에비앙P500ml | 4
+HEYROO미네랄워터P1L | 2
+광동)제주삼다수P2L | 2
+광동)제주삼다수P500ml | 2
+HEYROO미네랄워터P2L | 2
+롯데)아이시스8.0P500ml | 1
+롯데)트레비라임P500ml | 1
+롯데)아이시스8.0P2L | 1
+
+--- Category: 커피음료 | Predicted Sales: 105.52 ---
+Recommended Products (32 items):
+Product Name | Recommended Quantity
+------------------------------------
+매일)바리스타블랙325ml | 19
+박대리)출근커피바닐라300 | 17
+브리티시)블랙아메P500ml | 15
+박대리)맛점커피바나나300 | 8
+매일)바리스타로슈거250ml | 5
+할리스)바닐라딜라이트 | 4
+매일)바리스타에스프250ml | 3
+이디야)돌체콜드브루300ml | 3
+스벅)카페라떼컵200ml | 3
+이디야)카페라떼300ml | 2
+스벅)바닐라라떼컵200ml | 2
+스벅)카페라떼컵320ml | 2
+티오피)마스터라떼캔380ml | 2
+매일)바리스타바닐라325ml | 2
+이디야)바닐라라떼300ml | 2
+빙그레)오늘의커피바닐라 | 1
+레쓰비)그란데헤이즐넛500 | 1
+레쓰비)라떼캔240ml | 1
+이디야)토피넛라떼300ml | 1
+스벅)바닐라라떼320ml | 1
+조지아)맥스캔240ml | 1
+레쓰비)캔200ml | 1
+스벅)셀렉트카페라떼300ml | 1
+이디야)쇼콜라모카300ml | 1
+티오피)스모키블랙캔275ml | 1
+티오피)더블랙캔200ml | 1
+마스터)블랙P500ml | 1
+스벅)카페라떼컵270ml | 1
+빙그레)오늘의커피라떼 | 1
+서울)커피타운모카250ml | 1
+티오피)더블랙캔380ml | 1
+스벅)더블샷바닐라캔200ml | 1
+
+--- Category: 차음료 | Predicted Sales: 12.42 ---
+Recommended Products (10 items):
+Product Name | Recommended Quantity
+------------------------------------
+코코몽)하늘보리P200ml | 3
+동원)복숭아제로아이스500 | 2
+웅진)유기농하늘보리P500 | 1
+롯데)립톤복숭아제로P500 | 1
+웅진)오곡누룽지P500ml | 1
+웅진)티즐제로피치P500 | 1
+동원)사과제로아이스티500 | 1
+하이트)블랙보리라이트520 | 1
+광동)옥수수수염P500ml | 1
+동원)샤인제로아이스티500 | 1
+
+--- Category: 탄산음료 | Predicted Sales: 72.90 ---
+Recommended Products (33 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)펩시제로라임P500ml | 9
+코카)코카콜라제로캔350ml | 8
+코카)환타멜론P600ml | 8
+코카)코카콜라제로P500ml | 8
+코카)스프라이트P500ml | 3
+농심)웰치제로체리P600 | 3
+롯데)칠성사이다제로P500 | 3
+코카)코카콜라제로P1.5L | 3
+코카)코카콜라P500ml | 2
+롯데)펩시제로모히토P500 | 2
+하이트)하이트논알콜캔500 | 2
+롯데)밀키스P500ml | 1
+롯데)펩시콜라P600ml | 1
+코카)코카콜라P1.5L | 1
+롯데)칠성사이다캔250ml | 1
+하이트)하이트논알콜캔350 | 1
+코카)코카콜라캔350ml | 1
+하이트)토닉워터제로300ml | 1
+롯데)칠성사이다P500ml | 1
+코카)코카콜라캔250ml | 1
+팔도)뽀로로멜론톡P335ml | 1
+코카)환타파인제로캔350ml | 1
+코카)코카제로레몬P500ml | 1
+일화)레몬애사비소다캔250 | 1
+코카)환타오렌지P600ml | 1
+롯데)마운틴듀제로캔355ml | 1
+롯데)밀키스캔250ml | 1
+롯데)펩시콜라캔355ml | 1
+코카)스프라이트제로P500 | 1
+일화)맥콜캔250ml | 1
+팔도)뽀로로밀크톡P335ml | 1
+롯데)밀키스캔340ml | 1
+코카)환타파인애플캔250ml | 1
+
+--- Category: 아이스드링크 | Predicted Sales: 12.45 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+25del)스위트아메리340 | 4
+롯데)칸타타헤이즐넛230ml | 3
+롯데)칸타타스윗아메리230 | 3
+롯데)칸타타블랙아메320ml | 1
+25del)블루레몬에이드340 | 1
+남양)초코에몽에이드230ml | 1
+
+--- Category: 요구르트 | Predicted Sales: 72.18 ---
+Recommended Products (12 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)그릭플레인150g | 15
+매일)엔요280ml | 13
+빙그레)쥬시쿨복숭아180ml | 12
+동원)얼라이브청포도250ml | 7
+빙그레)쥬시쿨자두180ml | 7
+동원)얼라이브오렌지250ml | 7
+동원)얼라이브망고250ml | 7
+동원)얼라이브자몽250ml | 2
+서울)비요뜨초코링 | 1
+hy)야쿠르트750ml | 1
+서울)마이픽딸기초코링 | 1
+서울)비요뜨링크 | 1
+
+--- Category: 우유 | Predicted Sales: 129.18 ---
+Recommended Products (32 items):
+Product Name | Recommended Quantity
+------------------------------------
+남양)초코에몽드링크190ml | 20
+서울)내안의진짜초코280ml | 20
+서울)흰우유1L | 18
+빙그레)바나나우유240ml | 14
+티니핑)빤짝핑바나나우유 | 7
+서울)초코우유300ml | 7
+서울)딸기우유300ml | 6
+남양)초코에몽250ml | 6
+티니핑)하츄핑딸기우유 | 3
+서울)멸균우유200ml | 2
+서울)흰우유200ml | 2
+서울FB)뽀로로딸기우유 | 2
+매일)아몬드브리오리지널 | 2
+서울)커피우유300ml | 2
+서울)내안의진짜딸기280ml | 2
+빙그레)딸기맛우유240ml | 1
+동원)가나디초코우유500ml | 1
+매일)셀렉스프로핏모카250 | 1
+동원)가나디딸기우유500ml | 1
+동원)소화잘되는초코190ml | 1
+서울)후레쉬우유900ml | 1
+남양)딸기에몽드링크190ml | 1
+서울FB)뽀로로바나나우유 | 1
+남양)아몬드데이오리지널 | 1
+남양)아몬드데이언스위트 | 1
+PBICK)우유득템1.8L | 1
+짱구)액션가면프로틴초코 | 1
+서울)A2플러스우유710ml | 1
+빙그레)바나나우유무가당 | 1
+서울FB)뽀로로초코우유 | 1
+매일)허쉬초코드링크235ml | 1
+매일)허쉬초코쿠앤크235ml | 1
+
+--- Category: 얼음 | Predicted Sales: 22.88 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+del)컵얼음180g | 8
+del)빅컵얼음230g | 7
+del)벤티컵얼음400g | 3
+del)빅컵얼음230g | 1
+동양)아이스웰얼음1kg | 1
+동양)아이스웰얼음2.5kg | 1
+풀무원)돌얼음2.5kg | 1
+del)빅볼컵얼음160g | 1
+
+--- Category: 맥주 | Predicted Sales: 83.02 ---
+Recommended Products (32 items):
+Product Name | Recommended Quantity
+------------------------------------
+테라캔500ml | 14
+카스캔500ml | 13
+아사히생맥주캔340ml | 9
+카스아이스캔464ml | 6
+아사히생맥주캔485ml | 5
+켈리캔500ml | 3
+필라이트후레쉬P1.6L | 3
+스텔라캔740ml | 2
+카스캔355ml | 2
+호가든캔500ml | 2
+삿포로캔500ml | 2
+카스라이트캔355ml | 2
+버드와이저캔740ml | 2
+오리온맥주캔500ml | 1
+카스P1L | 1
+생마차라거500ml캔 | 1
+에델바이스캔500ml | 1
+필라이트후레쉬캔500ml | 1
+타이거캔500ml | 1
+롯데)크러시캔500ml | 1
+크로넨버그1664블랑캔500 | 1
+칭따오캔500ml | 1
+기네스콜드브루캔440ml | 1
+아사히캔500ml | 1
+카스P1.6L | 1
+카스레몬스퀴즈7.0캔500ml | 1
+기린당류제로캔500ml | 1
+하이네켄캔500ml | 1
+롯데)크러시캔355ml | 1
+코젤다크캔500ml | 1
+코젤라거캔500ml | 1
+부루)생레몬맥주캔500ml | 1
+
+--- Category: 소주 | Predicted Sales: 20.29 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+신참이슬병360ml지함 | 7
+참이슬P640ml | 5
+처음처럼새로P640ml | 2
+처음처럼새로P400ml | 2
+처음처럼P640ml | 1
+처음처럼P500ml | 1
+진로이즈백P640ml | 1
+처음처럼새로병360ml | 1
+롯데)새로다래병360ml | 1
+
+--- Category: 전통주 | Predicted Sales: 6.76 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+장수)생막걸리영등포750ml | 3
+롯데)신청하300ml | 1
+보해)신복분자주375ml | 1
+지평)생막걸리750ml | 1
+국순당)쌀막걸리750ml | 1
+
+--- Category: 위생용품 | Predicted Sales: 5.96 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+템포)순면롱라이너18P | 2
+템포)탐폰레귤라10P | 2
+순수한면)유기농순면대14P | 1
+크리)카카오물티슈20매 | 1
+
+--- Category: 의류용품 | Predicted Sales: 1.18 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+이중스포츠&스포티양말 | 1
+
+--- Category: 홈/주방용품 | Predicted Sales: 9.61 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+종량(가정)20L | 8
+종량(가정)10L | 1
+종량(가정)75L | 1
+
+--- Category: 전기연료 | Predicted Sales: 2.74 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+에이스)일회용돌라이터 | 2
+세안)썬부탄가스 | 1
+
+--- Category: 소형가전 | Predicted Sales: 1.74 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+CU프렌즈)C타입고속충전기 | 1
+미디어)NFC알뜰폰후불유심 | 1
+
+--- Category: 편의상품 | Predicted Sales: 2.67 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+이즐)CU그린카드 | 3
+
+--- Category: 담배 | Predicted Sales: 186.23 ---
+Recommended Products (54 items):
+Product Name | Recommended Quantity
+------------------------------------
+켄트스위치1mg신 | 19
+에쎄체인지린1mg | 15
+에쎄수0.1mg | 11
+에쎄체인지W1mg | 11
+더원블루1mg | 10
+에쎄프라임4mg | 9
+에쎄히말라야1mg | 8
+말보로미디엄6mg | 7
+에쎄체인지업 | 7
+말보로비스타트로피컬 | 7
+에쎄이츠딥브라운1mg | 6
+레종블루3mg | 5
+심플에이스1mg | 5
+에쎄체인지프로즌 | 4
+보헴시가리브레5㎎ | 4
+비스타수퍼슬림트로피컬 | 4
+레종프렌치블랙3mg | 3
+말보로비스타썸머스플래시 | 3
+디스플러스5mg | 3
+보헴시가슬림핏브라운1mg | 3
+레종휘바3mg | 3
+몽스버블몬빅배몽4.8ml | 3
+던힐1mg | 2
+더원화이트0.1mg | 2
+메비우스스카이블루팩6㎎ | 2
+라일락6mg | 2
+말보로화이트후레쉬6mg | 2
+메비우스LBS아이스피즈SS | 2
+레종프렌치요고1㎎ | 2
+메비우스스카이블루곽6㎎ | 2
+팔리아멘트아쿠아3mg | 1
+에쎄원1mg | 1
+메비우스LSS3㎎ | 1
+에쎄체인지1mg | 1
+팔리아멘트아쿠아5mg | 1
+팔리아멘트하이브리드5mg | 1
+레종프렌치썸3mg | 1
+디스아프리카몰라5mg | 1
+말보로레드8mg | 1
+팔리아멘트아쿠아1mg | 1
+말보로골드6mg | 1
+에쎄수0.5mg | 1
+말보로아이스원1mg | 1
+에쎄느와르1mg | 1
+보헴시가카리브4mg | 1
+에쎄히말라야윈터 | 1
+에쎄체인지빙1mg | 1
+디스아프리카룰라5mg | 1
+던힐스위치원신 | 1
+던힐프로스트1mg | 1
+에쎄체인지4mg | 1
+레종블랙1mg | 1
+메비우스LBS옐로우3mg | 1
+던힐파리에디션 | 1
+
+--- Category: 전자담배 | Predicted Sales: 291.08 ---
+Recommended Products (24 items):
+Product Name | Recommended Quantity
+------------------------------------
+LIL액상카트리지 | 119
+하이퍼용네오다크토바코 | 61
+MIIX믹스 | 23
+테리아퍼플웨이브 | 20
+MIIX아이스더블 | 11
+테리아블랙퍼플 | 11
+MIIX아이스뱅 | 7
+테리아블루 | 5
+테리아블랙루비 | 5
+MIIX오라썸 | 5
+테리아오아시스펄 | 4
+핏체인지 | 4
+테리아엠버 | 3
+MIIX콤보 | 2
+테리아실버 | 2
+그래뉼라아이스 | 2
+테리아그린 | 2
+네오맥스부스트 | 1
+MIIX프렌치 | 1
+그래뉼라트와이스 | 1
+하이퍼용네오퍼플부스트 | 1
+센티아클래식실버 | 1
+MIIX블루썸 | 1
+테리아그린징 | 1
+
+--- Category: 안전상비의약품 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: RI아이스크림 | Predicted Sales: 11.20 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+빙그레)투게더홈 | 7
+하겐)초코미니컵 | 2
+라라스윗)초콜릿파인트 | 2
+하겐)마카다미아파인트 | 1
+
+--- Category: 기타주류 | Predicted Sales: 4.17 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+피마원블랙하이볼캔500ml | 4
+생감귤하이볼캔500ml | 1
+
+--- Category: 소모품 | Predicted Sales: 42.32 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+친환경봉투판매용 | 43
+
+--- Category: 제조음료 | Predicted Sales: 1.68 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+25뉴get아이스아메XL | 1
+25뉴get핫아메리카노L | 1
+
+--- Category: 애완용품 | Predicted Sales: 2.23 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+하림펫)밥이보약양갱면역 | 2
+애니펫)먼치껌치킨육포 | 1
+
+--- Category: 와인 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+레드)와인360 | 1
+
+--- Category: 문구류 | Predicted Sales: 12.88 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+모나미)예감적중트윈펜 | 8
+포유)테이팩스절연테이프 | 4
+모나미)부드러운풀25g | 1
+3M)스카치매직테이프 | 1
+
+--- Category: 건강기능 | Predicted Sales: 2.58 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+HK)컨디션환3g | 1
+
+--- Category: 목욕세면 | Predicted Sales: 1.74 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+2080)슈퍼클린초극세모 | 1
+크리오)치약칫솔세트 | 1
+
+--- Category: 완구류 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+티니핑)롤스티커 | 1
+
+--- Category: 액세서리 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+원니즈)접이식눈썹면도기 | 1
+
+--- Category: 도시락 | Predicted Sales: 4.72 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+도)한끼만족뉴함박치킨1 | 2
+도)한끼만족최애11첩1 | 1
+도)압도적두툼돈까스정식1 | 1
+도)급식대가대패제육정식1 | 1
+
+--- Category: 주먹밥 | Predicted Sales: 42.20 ---
+Recommended Products (19 items):
+Product Name | Recommended Quantity
+------------------------------------
+주)계란버터간장삼각1 | 6
+주)뉴3XL동원고추참치1 | 4
+주)치즈닭갈비볶음밥맛1 | 4
+주)압도적리치스팸마요1 | 4
+주)청양참치마요삼각1 | 3
+주)3XL쟌슨빌부대삼각1 | 3
+주)3XL베이컨햄마요김치1 | 3
+주)3XL리챔청양마요삼각1 | 3
+주)3XL매콤돈까스삼각1 | 2
+주)3XL바싹제육불고기1 | 2
+주)3XL베이컨참치마요1 | 1
+주)오일컷담백참치삼각1 | 1
+주)더뉴치킨마요삼각1 | 1
+주)리치햄에그마요삼각1 | 1
+주)참치마요전주비빔더블1 | 1
+주)참치마요김치제육더블1 | 1
+주)리치치킨마요삼각1 | 1
+주)감자탕볶음밥맛삼각1 | 1
+주)게딱지장삼각1 | 1
+
+--- Category: 김밥 | Predicted Sales: 5.94 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+김)창녕마늘돼지갈비김밥1 | 3
+김)촉촉두툼계란초밥김밥1 | 1
+김)압도적치즈불고기김밥1 | 1
+김)압도적치즈제육김밥1 | 1
+
+--- Category: 샌드위치류 | Predicted Sales: 1.66 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+샌)더뉴대만식연유1 | 1
+
+--- Category: 햄버거류 | Predicted Sales: 3.48 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+햄)압도적뉴더블비프버거1 | 1
+햄)뉴더블UP빅불고기1 | 1
+햄)바삭소보로매콤칠리1 | 1
+햄)3단맥스숯불바베큐1 | 1
+
+--- Category: 빵 | Predicted Sales: 22.52 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)포켓몬로켓초코롤 | 5
+삼립)포켓몬파이리핫소스 | 4
+삼립)찰옥수수이야기 | 4
+삼립)흑임자이야기 | 2
+삼립)포켓몬피카치즈케익 | 2
+삼립)촉촉치즈후레쉬팡 | 1
+삼립)미각카이막치즈케익 | 1
+삼립)신선가득꿀호떡 | 1
+삼립)보름달정통 | 1
+롯데)찰옥수수미니샌드5입 | 1
+KH)뉴욕베이글블루베리 | 1
+
+--- Category: 떡 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)제주쑥대박찹쌀떡 | 1
+
+--- Category: 디저트 | Predicted Sales: 16.79 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+연세)야쿠르트크림롤케익 | 4
+당과점)베리벽돌케이크 | 3
+대산)엄마랑도나쓰 | 2
+MDS)젤리블리애플샤인 | 1
+MDS)젤리블리애플망고 | 1
+대두)한입초코찰떡 | 1
+MDS)젤리블리제로피치플럼 | 1
+연세)레드벨벳생크림빵 | 1
+연세)초코생크림빵 | 1
+연세)야쿠르트생크림빵 | 1
+당과점)황치즈뚱쿠키샌드 | 1
+
+--- Category: 비스켓/쿠키 | Predicted Sales: 15.96 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)제크오리지널 | 8
+미성)허쉬미니쿠키 | 1
+롯데)빼빼로초코필드 | 1
+오리온)통크 | 1
+롯데)야채크래커 | 1
+해태)초코홈런볼46g | 1
+롯데)엄마손파이고메갈릭 | 1
+롯데)빠다코코낫 | 1
+청우)참깨스틱85g | 1
+
+--- Category: 스낵류 | Predicted Sales: 41.53 ---
+Recommended Products (30 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)포카칩오리지널66g | 11
+해태)자가비짭짤한맛 | 2
+롯데)도리토스나쵸치즈 | 2
+바프)카라멜치즈팝콘80g | 1
+농심)포테토칩60g | 1
+농심)오징어집78g | 1
+SA)로열티니핑컬러팝콘45g | 1
+대산)전통뻥튀기180g | 1
+해태)허니버터칩60g | 1
+농심)양파링80g | 1
+롯데)도리토스양념갈비 | 1
+롯데)꼬깔콘군옥수수맛 | 1
+크라운)콘치크림치즈 | 1
+농심)포스틱84g | 1
+크라운)못말리는신짱 | 1
+오리온)포카칩어니언66g | 1
+오리온)태양의맛썬80g | 1
+오리온)꼬북칩카라멜팝콘 | 1
+크라운)콘초 | 1
+HEYROO감자칩득템어니언 | 1
+농심)매운새우깡90g | 1
+농심)닭다리너겟130g | 1
+농심)감자깡75g | 1
+크라운)죠리퐁 | 1
+훼밀리)에낙라면치킨30g | 1
+PBICK)타코야끼볼 | 1
+해태)오사쯔60g | 1
+농심)바나나킥75g | 1
+SA)하츄핑의미니별초코맛 | 1
+농심)자갈치90g | 1
+
+--- Category: 시리얼 | Predicted Sales: 2.84 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)닥터유에너지바 | 1
+
+--- Category: 껌 | Predicted Sales: 6.83 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)와우소다풍선껌 | 6
+롯데)코팅자일리톨빅팩껌 | 1
+
+--- Category: 초콜릿 | Predicted Sales: 10.66 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+매일)킨더초콜릿조이보이 | 6
+앰지)밀카스트로베리 | 1
+나무)도라에몽초코컵 | 1
+크라운)키커바 | 1
+매일)킨더초콜릿조이걸 | 1
+미성)허쉬다크베리38g | 1
+
+--- Category: 캔디 | Predicted Sales: 64.24 ---
+Recommended Products (22 items):
+Product Name | Recommended Quantity
+------------------------------------
+대진)요거트향츄잉캔디12g | 24
+나투)아모스망고구미 | 8
+농심)츄파춥스12g | 5
+동아)박카스젤리 | 4
+오리온)왕꿈틀이젤리67g | 3
+스위트)트롤리미니버거10g | 3
+스위트)트롤리지구젤리 | 2
+피치)바나나모양스프레이 | 2
+농심)츄파춥스게코젤리 | 1
+롯데)밀크카라멜50g | 1
+농심)멘토스사워파인애플 | 1
+동아)박카스사워젤리 | 1
+일신)바주카푸쉬팝플립팝 | 1
+나무)심쿵리치젤리 | 1
+마이)제로젤리사워베어 | 1
+오리온)마이구미포도66g | 1
+오리온)포도알맹이67g | 1
+마이)제로젤리제로베어 | 1
+크라운)새콤달콤딸기 | 1
+앰지)홀스자몽 | 1
+매크로)라무네포도당캔디 | 1
+삼경)하리보해피콜라 | 1
+
+--- Category: 일반아이스크림 | Predicted Sales: 40.33 ---
+Recommended Products (20 items):
+Product Name | Recommended Quantity
+------------------------------------
+라라스윗)딸기요거트바 | 9
+라라스윗)말차초코바 | 6
+해태)폴라포포도 | 3
+롯데)월드콘 | 3
+빙그레)메로나 | 2
+라라스윗)넛티초코초콜릿 | 2
+롯데)빠삐코 | 2
+서주)400바멜론 | 2
+해태)부라보콘바닐라 | 1
+라라스윗)복숭아요거트바 | 1
+라라스윗)넛티초코바닐라 | 1
+서주)400바초코 | 1
+롯데)빵빠레바닐라 | 1
+라라스윗)생우유빵샌드 | 1
+라라스윗)초콜릿초코바 | 1
+라라스윗)쿠앤크초코바 | 1
+로로)아이스브륄레바닐라 | 1
+라라스윗)바닐라초코바 | 1
+라라스윗)저당바닐라콘 | 1
+라라스윗)저당초코모나카 | 1
+
+--- Category: 마른안주류 | Predicted Sales: 7.32 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+한양)빅숏다리40g | 5
+동원)상상육포안심30g | 1
+벤토)타이스파이시XL | 1
+코주부)맛다리20g | 1
+
+--- Category: 육가공류 | Predicted Sales: 15.96 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+흥생)구운계란2입 | 6
+진주햄)천하장사빅70g | 2
+PBICK)순살족발득템 | 2
+하림)마늘후랑크70g | 1
+CJ)맥스봉치즈후랑크65g | 1
+PBICK)닭가슴살득템페퍼 | 1
+PBICK)닭가슴살득템 | 1
+진주햄)천하장사50g | 1
+행복)메추리알쏙쏙5입 | 1
+
+--- Category: 과일/채소 | Predicted Sales: 4.66 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+스미)반값바나나 | 4
+풀무원)콩나물220g | 1
+
+--- Category: 농산식재료 | Predicted Sales: 7.96 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)소가부침두부290g | 6
+풀무원)소가찌개두부290g | 1
+CJ)백설밀가루1kg | 1
+
+--- Category: 축수산식재료 | Predicted Sales: 4.80 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)덴마크스트링치즈 | 2
+고래사)크랩말이90g | 1
+PBICK)크랩득템142g | 1
+제니코)본가드마블잭스틱 | 1
+
+--- Category: 조미료류 | Predicted Sales: 1.40 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)백설돈까스소스255g | 1
+
+--- Category: 커피차류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 반찬류 | Predicted Sales: 4.56 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO김득템20봉 | 2
+풀무원)밀떡볶이떡550g | 1
+샘표)밥도둑땡초장조림 | 1
+오뚜기)가벼운황도 | 1
+
+--- Category: 면류 | Predicted Sales: 128.17 ---
+Recommended Products (44 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)신라면 | 30
+삼양)불닭볶음면 | 13
+농심)짜파게티 | 12
+농심)육개장사발면 | 6
+오뚜기)짜슐랭 | 6
+삼양)까르보불닭큰컵 | 5
+농심)짜파게티큰사발컵 | 4
+농심)김치사발면 | 3
+오뚜기)진라면매운컵 | 3
+삼양)불닭볶음탕면컵 | 3
+농심)신라면큰사발컵 | 3
+삼양)로제불닭볶음면컵 | 3
+팔도)도시락 | 2
+오뚜기)열라면 | 2
+오뚜기)진짬뽕 | 2
+삼양)불닭볶음면컵 | 2
+오뚜기)스파게티컵 | 2
+농심)신라면블랙컵 | 2
+농심)김치큰사발컵 | 1
+팔도)팔도비빔면 | 1
+농심)안성탕면 | 1
+농심)신라면소컵 | 1
+농심)신라면툼바봉지 | 1
+농심)튀김우동소컵 | 1
+오뚜기)참깨라면컵 | 1
+오뚜기)진라면순한맛 | 1
+오뚜기)베트남쌀국수소컵 | 1
+농심)짜파게티더블랙사발 | 1
+농심)신라면툼바큰사발면 | 1
+농심)새우탕큰사발컵 | 1
+농심)튀김우동큰사발컵 | 1
+삼양)불닭볶음면소컵 | 1
+팔도)볼케이노까르보나라 | 1
+농심)신라면더레드봉지 | 1
+농심)사리곰탕소컵 | 1
+오뚜기)진라면순한소컵 | 1
+삼양)삼양라면 | 1
+삼양)치즈불닭볶음면컵 | 1
+팔도)팔도비빔면컵 | 1
+오뚜기)진라면순한컵 | 1
+오뚜기)치즈볶이컵 | 1
+농심)새우탕소컵 | 1
+농심)육개장큰사발컵 | 1
+팔도)짬뽕왕뚜껑 | 1
+
+--- Category: 상온즉석식 | Predicted Sales: 11.30 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)햇반210g | 5
+오뚜기)현미쇠고기죽 | 1
+오뚜기)새송이쇠고기죽 | 1
+CJ)햇반흑미밥210g | 1
+CJ)큰햇반300g | 1
+CJ)햇반잡곡밥210g | 1
+오뚜기)맛있는밥210g | 1
+CJ)컵반치킨마요덮밥 | 1
+
+--- Category: 냉동즉석식 | Predicted Sales: 4.19 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)소바바양념치킨240g | 2
+HEYROO순살치킨득템매콤C | 1
+HEYROO순살치킨득템C | 1
+PBICK)찐만두득템김치6입 | 1
+
+--- Category: 냉장즉석식 | Predicted Sales: 6.76 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+금미옥)불떡볶이컵 | 5
+디엔비)통통새우고로케 | 1
+금미옥)쌀떡볶이컵 | 1
+
+--- Category: 의약외품 | Predicted Sales: 17.96 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+동아)박카스F병120ml | 10
+동화)부채표까스활병75ml | 5
+종근당)속청쿨75ml | 1
+크리오)대일밴드NEW | 1
+팩트체크)임신테스트기 | 1
+
+--- Category: 과일야채음료 | Predicted Sales: 37.77 ---
+Recommended Products (17 items):
+Product Name | Recommended Quantity
+------------------------------------
+곽철이)청포도제로190ml | 8
+곽철이)사과제로190ml | 7
+매일)피크닉사과240ml | 6
+팔도)뽀로로밀크맛P235ml | 3
+팔도)뽀로로딸기맛P235ml | 2
+팔도)뽀로로샤인맛P235ml | 1
+롯데)오가닉포도당근주스 | 1
+모구)복숭아젤리P320ml | 1
+롯데)오가닉사과당근주스 | 1
+매일)썬업오렌지750ml | 1
+롯데)콜드오렌지250ml | 1
+웅진)티니핑딸기P200ml | 1
+웅진)티니핑밀크P200ml | 1
+동원)쿨피스에이드복숭아 | 1
+웅진)자연은말린자몽P500 | 1
+롯데)콜드포도250ml | 1
+모구)솜사탕젤리P320ml | 1
+
+--- Category: 기능건강음료 | Predicted Sales: 67.86 ---
+Recommended Products (25 items):
+Product Name | Recommended Quantity
+------------------------------------
+코카)몬스터에너지캔355ml | 15
+농심)파워오투오렌지P500 | 5
+HK)컨디션헛개병100ml | 5
+링티)제로레몬라임500ml | 5
+코카)파워에이드P600ml | 4
+링티)제로레몬라이트P500 | 3
+롯데)게토레이레몬600ml | 3
+동아)오로나민C병120ml | 3
+HK)컨디션탄산제로병100ml | 2
+코카)몬스터파이프캔355ml | 2
+광동)비타500로열병 | 2
+롯데)게토레이블루P600ml | 2
+링티)제로복숭아P500ml | 2
+코카)파워스칼렛스톰600P | 2
+동아)포카리스웨트P620ml | 2
+롯데)핫식스더킹애플캔355 | 2
+코카)파워에이드퍼플P600 | 1
+코카)토레타제로P500ml | 1
+연세)검은콩고칼슘두유 | 1
+롯데)핫식스더킹퍼플캔355 | 1
+동아)포카리스웨트P1.5L | 1
+코카)토레타P500ml | 1
+코카)파워라임제로P600 | 1
+롯데)2프로복숭아P500ml | 1
+롯데)핫식스더킹파워캔355 | 1
+
+--- Category: 생수 | Predicted Sales: 22.96 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO미네랄워터P500ml | 5
+청정)몽베스트P500ml | 4
+롯데)에비앙P500ml | 3
+롯데)트레비라임P500ml | 2
+광동)제주삼다수P2L | 2
+HEYROO미네랄워터P1L | 2
+HEYROO미네랄워터P2L | 1
+광동)제주삼다수P500ml | 1
+롯데)트레비레몬P500ml | 1
+롯데)아이시스8.0P500ml | 1
+롯데)아이시스2LP4입 | 1
+
+--- Category: 커피음료 | Predicted Sales: 47.64 ---
+Recommended Products (24 items):
+Product Name | Recommended Quantity
+------------------------------------
+매일)바리스타블랙325ml | 10
+박대리)출근커피바닐라300 | 7
+브리티시)블랙아메P500ml | 6
+박대리)맛점커피바나나300 | 3
+매일)바리스타로슈거250ml | 2
+할리스)바닐라딜라이트 | 2
+매일)바리스타에스프250ml | 1
+이디야)돌체콜드브루300ml | 1
+스벅)카페라떼컵200ml | 1
+이디야)카페라떼300ml | 1
+마스터)블랙P500ml | 1
+티오피)스모키라떼캔275ml | 1
+스벅)카페라떼컵320ml | 1
+스벅)바닐라라떼컵200ml | 1
+레쓰비)라떼캔240ml | 1
+이디야)바닐라라떼300ml | 1
+스벅)바닐라라떼320ml | 1
+매일)바리스타바닐라325ml | 1
+티오피)마스터라떼캔380ml | 1
+이디야)토피넛라떼300ml | 1
+레쓰비)그란데헤이즐넛500 | 1
+빙그레)오늘의커피바닐라 | 1
+마스터)라떼P500ml | 1
+티오피)스모키블랙캔275ml | 1
+
+--- Category: 차음료 | Predicted Sales: 16.01 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)오이오차녹차P500 | 4
+코코몽)하늘보리P200ml | 3
+동원)복숭아제로아이스500 | 2
+하이트)블랙보리라이트520 | 1
+웅진)유기농하늘보리P500 | 1
+롯데)립톤복숭아제로P500 | 1
+웅진)오곡누룽지P500ml | 1
+웅진)티즐제로피치P500 | 1
+동원)사과제로아이스티500 | 1
+광동)옥수수수염P500ml | 1
+하이트)티도씨체리P500ml | 1
+
+--- Category: 탄산음료 | Predicted Sales: 43.95 ---
+Recommended Products (25 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)펩시제로라임P500ml | 9
+코카)코카콜라제로캔350ml | 4
+코카)환타멜론P600ml | 3
+코카)코카콜라제로P500ml | 3
+코카)스프라이트P500ml | 2
+코카)코카콜라캔350ml | 2
+농심)웰치제로체리P600 | 2
+하이트)하이트논알콜캔350 | 2
+롯데)칠성사이다제로P500 | 1
+롯데)펩시콜라P600ml | 1
+코카)코카콜라제로P1.5L | 1
+코카)코카콜라P500ml | 1
+하이트)하이트논알콜캔500 | 1
+롯데)펩시제로모히토P500 | 1
+롯데)칠성사이다P500ml | 1
+코카)스프라이트제로P500 | 1
+코카)코카콜라캔250ml | 1
+코카)코카콜라P1.5L | 1
+롯데)밀키스P500ml | 1
+롯데)칠성사이다P1.5L | 1
+하이트)진로토닉워터600ml | 1
+코카)코카콜라제로캔490ml | 1
+하이트)토닉워터제로300ml | 1
+롯데)칠성사이다캔250ml | 1
+코카)닥터페퍼제로캔350ml | 1
+
+--- Category: 아이스드링크 | Predicted Sales: 6.18 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+25del)스위트아메리340 | 3
+롯데)칸타타헤이즐넛230ml | 1
+롯데)칸타타스윗아메리230 | 1
+롯데)칸타타블랙아메320ml | 1
+25del)복숭아아이스티340 | 1
+
+--- Category: 요구르트 | Predicted Sales: 32.57 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)그릭플레인150g | 10
+매일)엔요280ml | 5
+빙그레)쥬시쿨복숭아180ml | 4
+동원)얼라이브청포도250ml | 3
+빙그레)쥬시쿨자두180ml | 3
+동원)얼라이브망고250ml | 2
+동원)얼라이브오렌지250ml | 2
+동원)얼라이브자몽250ml | 1
+hy)야쿠르트750ml | 1
+풀무원)그릭딸기베리150g | 1
+서울)비요뜨초코링 | 1
+
+--- Category: 우유 | Predicted Sales: 63.71 ---
+Recommended Products (25 items):
+Product Name | Recommended Quantity
+------------------------------------
+남양)초코에몽드링크190ml | 11
+서울)흰우유1L | 9
+서울)내안의진짜초코280ml | 8
+빙그레)바나나우유240ml | 7
+서울)초코우유300ml | 3
+서울)딸기우유300ml | 3
+티니핑)빤짝핑바나나우유 | 3
+남양)초코에몽250ml | 2
+서울)프로틴에너지초코 | 2
+서울)흰우유200ml | 1
+티니핑)하츄핑딸기우유 | 1
+서울)커피우유300ml | 1
+서울FB)뽀로로딸기우유 | 1
+서울)멸균우유200ml | 1
+PBICK)우유득템1.8L | 1
+매일)아몬드브리오리지널 | 1
+서울)내안의진짜딸기280ml | 1
+동원)가나디초코우유500ml | 1
+서울)흰우유300ml | 1
+서울)A2플러스우유710ml | 1
+매일)셀렉스프로핏모카250 | 1
+동원)가나디딸기우유500ml | 1
+동원)소화잘되는초코190ml | 1
+빙그레)딸기맛우유240ml | 1
+서울FB)뽀로로초코우유 | 1
+
+--- Category: 얼음 | Predicted Sales: 17.51 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+del)컵얼음180g | 6
+del)빅컵얼음230g | 5
+del)벤티컵얼음400g | 2
+del)빅컵얼음230g | 1
+동양)아이스웰얼음1kg | 1
+동양)아이스웰얼음2.5kg | 1
+풀무원)돌얼음2.5kg | 1
+del)빅볼컵얼음160g | 1
+
+--- Category: 맥주 | Predicted Sales: 75.37 ---
+Recommended Products (30 items):
+Product Name | Recommended Quantity
+------------------------------------
+카스캔500ml | 17
+테라캔500ml | 10
+아사히생맥주캔340ml | 7
+오리온맥주캔500ml | 5
+카스아이스캔464ml | 5
+아사히생맥주캔485ml | 3
+필라이트후레쉬P1.6L | 3
+켈리캔500ml | 2
+삿포로캔500ml | 2
+카스캔355ml | 2
+스텔라캔740ml | 1
+카스라이트캔355ml | 1
+아사히캔500ml | 1
+호가든캔500ml | 1
+기린당류제로캔500ml | 1
+생마차라거500ml캔 | 1
+기네스캔440ml | 1
+롯데)크러시캔500ml | 1
+버드와이저캔740ml | 1
+카스P1L | 1
+아사히쇼쿠사이캔340ml | 1
+에델바이스캔500ml | 1
+필라이트후레쉬캔500ml | 1
+카스P1.6L | 1
+타이거캔500ml | 1
+카스라이트캔500ml | 1
+크로넨버그1664블랑캔500 | 1
+기네스콜드브루캔440ml | 1
+칭따오캔500ml | 1
+신)스텔라캔500ml | 1
+
+--- Category: 소주 | Predicted Sales: 26.47 ---
+Recommended Products (10 items):
+Product Name | Recommended Quantity
+------------------------------------
+신참이슬병360ml지함 | 9
+참이슬P640ml | 7
+처음처럼새로P640ml | 3
+처음처럼P500ml | 2
+처음처럼P640ml | 1
+처음처럼새로P400ml | 1
+진로이즈백P640ml | 1
+처음처럼새로병360ml | 1
+롯데)새로살구병360ml | 1
+한라산소주P640ml | 1
+
+--- Category: 전통주 | Predicted Sales: 8.94 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+장수)생막걸리영등포750ml | 3
+롯데)신청하300ml | 2
+지평)생막걸리750ml | 2
+보해)신복분자주375ml | 1
+국순당)쌀막걸리750ml | 1
+
+--- Category: 위생용품 | Predicted Sales: 5.10 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+좋은)유기농탐폰슈퍼8P | 4
+쏘피)슈퍼롱와이드10P | 1
+쏘피)내몸에순한면중4P | 1
+
+--- Category: 의류용품 | Predicted Sales: 6.49 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+이중스포츠&스포티양말 | 3
+여성중목양말 | 1
+여성발목양말 | 1
+남성발목양말 | 1
+여성용덧신 | 1
+
+--- Category: 홈/주방용품 | Predicted Sales: 30.98 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+종량(가정)20L | 25
+종량(가정)10L | 2
+종량(가정)75L | 1
+종량(가정)50L | 1
+크린랩)위생장갑 | 1
+홈키파)에어졸제로500ml | 1
+
+--- Category: 전기연료 | Predicted Sales: 2.15 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+듀라셀)디럭스2A4입 | 1
+에이스)일회용돌라이터 | 1
+포유)힙합터보라이터 | 1
+
+--- Category: 소형가전 | Predicted Sales: 1.22 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+CU프렌즈)C타입고속충전기 | 1
+미디어)NFC알뜰폰후불유심 | 1
+
+--- Category: 편의상품 | Predicted Sales: 2.42 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+이즐)CU그린카드 | 3
+
+--- Category: 담배 | Predicted Sales: 90.12 ---
+Recommended Products (40 items):
+Product Name | Recommended Quantity
+------------------------------------
+켄트스위치1mg신 | 11
+에쎄체인지린1mg | 6
+에쎄수0.1mg | 5
+에쎄체인지W1mg | 5
+더원블루1mg | 5
+에쎄수0.5mg | 4
+에쎄히말라야1mg | 4
+에쎄프라임4mg | 4
+레종블루3mg | 3
+말보로미디엄6mg | 3
+에쎄체인지업 | 3
+말보로비스타트로피컬 | 3
+메비우스LBS아이스피즈SS | 2
+비스타수퍼슬림트로피컬 | 2
+에쎄이츠딥브라운1mg | 2
+에쎄체인지프로즌 | 2
+레종프렌치블랙3mg | 2
+보헴시가리브레5㎎ | 2
+심플에이스1mg | 2
+레종프렌치요고1㎎ | 1
+몽스버블몬빅배몽4.8ml | 1
+메비우스LSS3㎎ | 1
+에쎄체인지1mg | 1
+던힐1mg | 1
+말보로비스타썸머스플래시 | 1
+팔리아멘트아쿠아3mg | 1
+메비우스스카이블루팩6㎎ | 1
+보헴시가슬림핏브라운1mg | 1
+팔리아멘트하이브리드5mg | 1
+레종휘바3mg | 1
+디스플러스5mg | 1
+더원화이트0.1mg | 1
+던힐파리에디션 | 1
+팔리아멘트아쿠아5mg | 1
+에쎄체인지4mg | 1
+말보로화이트후레쉬6mg | 1
+라일락6mg | 1
+디스아프리카몰라5mg | 1
+메비우스스카이블루곽6㎎ | 1
+호그스헤드10mg | 1
+
+--- Category: 전자담배 | Predicted Sales: 142.40 ---
+Recommended Products (21 items):
+Product Name | Recommended Quantity
+------------------------------------
+LIL액상카트리지 | 57
+하이퍼용네오다크토바코 | 26
+MIIX믹스 | 10
+테리아퍼플웨이브 | 8
+테리아블랙퍼플 | 6
+MIIX아이스더블 | 5
+MIIX아이스뱅 | 4
+하이퍼용네오샤인부스트 | 4
+그래뉼라트와이스 | 4
+테리아블랙루비 | 3
+테리아블루 | 2
+테리아엠버 | 2
+MIIX오라썸 | 2
+테리아오아시스펄 | 2
+핏체인지 | 2
+그래뉼라아이스 | 1
+테리아실버 | 1
+MIIX콤보 | 1
+MIIX아이스모아 | 1
+테리아그린 | 1
+센티아클래식실버 | 1
+
+--- Category: 안전상비의약품 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: RI아이스크림 | Predicted Sales: 5.73 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+빙그레)투게더홈 | 2
+라라스윗)초콜릿파인트 | 1
+하겐)마카다미아파인트 | 1
+하겐)딸기파인트 | 1
+하겐)커피파인트 | 1
+
+--- Category: 기타주류 | Predicted Sales: 5.87 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+짐빔하이볼자몽350ml | 3
+피마원블랙하이볼캔500ml | 1
+짐빔하이볼레몬350ml | 1
+생자몽하이볼캔500ml | 1
+
+--- Category: 소모품 | Predicted Sales: 20.41 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+친환경봉투판매용 | 20
+친환경)배달전용봉투특대 | 1
+
+--- Category: 제조음료 | Predicted Sales: 2.17 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+25뉴get아이스아메XL | 2
+25뉴get핫아메리카노L | 1
+
+--- Category: 애완용품 | Predicted Sales: 1.52 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+하림펫)밥이보약양갱면역 | 1
+애니펫)먼치껌치킨육포 | 1
+
+--- Category: 와인 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+레드)와인360 | 1
+
+--- Category: 문구류 | Predicted Sales: 8.80 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+모나미)예감적중트윈펜 | 6
+포유)테이팩스절연테이프 | 2
+모나미)부드러운풀25g | 1
+
+--- Category: 건강기능 | Predicted Sales: 2.12 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+HK)컨디션환3g | 2
+HK)컨디션스틱자두18g | 1
+
+--- Category: 목욕세면 | Predicted Sales: 1.22 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+2080)슈퍼클린초극세모 | 1
+크리오)치약칫솔세트 | 1
+
+--- Category: 완구류 | Predicted Sales: 4.70 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+포켓몬)열풍의아레나 | 2
+포켓몬)로켓단의영광 | 2
+티니핑)롤스티커 | 1
+
+--- Category: 액세서리 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+원니즈)접이식눈썹면도기 | 1
+
+--- Category: 온라인주류 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+APP)맥캘란셰리오크12년 | 1
+
+--- Category: 도시락 | Predicted Sales: 4.51 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+도)한끼만족뉴함박치킨1 | 2
+도)한끼만족최애11첩1 | 1
+도)압도적두툼돈까스정식1 | 1
+도)사천식유니짜장덮밥1 | 1
+
+--- Category: 주먹밥 | Predicted Sales: 28.46 ---
+Recommended Products (16 items):
+Product Name | Recommended Quantity
+------------------------------------
+주)뉴3XL동원고추참치1 | 6
+주)계란버터간장삼각1 | 3
+주)치즈닭갈비볶음밥맛1 | 2
+주)압도적리치스팸마요1 | 2
+주)3XL베이컨햄마요김치1 | 2
+주)청양참치마요삼각1 | 2
+주)3XL쟌슨빌부대삼각1 | 2
+주)3XL리챔청양마요삼각1 | 2
+주)3XL매콤돈까스삼각1 | 1
+주)3XL바싹제육불고기1 | 1
+주)참치마요김치제육더블1 | 1
+주)3XL베이컨참치마요1 | 1
+주)오일컷담백참치삼각1 | 1
+주)더뉴치킨마요삼각1 | 1
+주)리치햄에그마요삼각1 | 1
+주)리치치킨마요삼각1 | 1
+
+--- Category: 김밥 | Predicted Sales: 3.29 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+김)창녕마늘돼지갈비김밥1 | 3
+김)맛초킹치킨김밥1 | 1
+
+--- Category: 샌드위치류 | Predicted Sales: 3.34 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+샌)더뉴대만식연유1 | 3
+샌)크랩마요샌드1 | 1
+
+--- Category: 햄버거류 | Predicted Sales: 5.05 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+햄)3단맥스숯불바베큐1 | 2
+햄)압도적뉴더블비프버거1 | 1
+햄)뉴더블UP빅불고기1 | 1
+햄)바삭소보로매콤칠리1 | 1
+햄)바삭소보로숯불갈비1 | 1
+
+--- Category: 빵 | Predicted Sales: 45.69 ---
+Recommended Products (17 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)포켓몬파이리핫소스 | 10
+삼립)찰옥수수이야기 | 7
+삼립)포켓몬로켓초코롤 | 5
+삼립)신선가득꿀호떡 | 3
+삼립)흑임자이야기 | 3
+롯데)미니딸기크림샌드5입 | 3
+삼립)촉촉치즈후레쉬팡 | 2
+삼립)순백우유식빵 | 2
+삼립)포켓몬피카치즈케익 | 2
+삼립)끼리벨기에와플 | 2
+405)스위트페스트리 | 1
+수키도키)카라멜초코쿠키 | 1
+삼립)미각카이막치즈케익 | 1
+삼립)보름달정통 | 1
+롯데)찰옥수수미니샌드5입 | 1
+삼립)시그니처카스테라 | 1
+삼립)끼리미니파운드 | 1
+
+--- Category: 떡 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)제주쑥대박찹쌀떡 | 1
+
+--- Category: 디저트 | Predicted Sales: 20.48 ---
+Recommended Products (13 items):
+Product Name | Recommended Quantity
+------------------------------------
+당과점)베리벽돌케이크 | 3
+연세)야쿠르트크림롤케익 | 4
+연세)메론생크림빵 | 2
+대산)엄마랑도나쓰 | 2
+연세)피넛초코생크림빵 | 2
+MDS)젤리블리애플샤인 | 1
+MDS)젤리블리애플망고 | 1
+대두)한입초코찰떡 | 1
+MDS)젤리블리제로피치플럼 | 1
+연세)초코생크림빵 | 1
+연세)레드벨벳생크림빵 | 1
+연세)야쿠르트생크림빵 | 1
+당과점)초코칩찰떡꼬치 | 1
+
+--- Category: 비스켓/쿠키 | Predicted Sales: 17.06 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)제크오리지널 | 8
+해태)초코홈런볼46g | 1
+해태)딸기웨하스 | 1
+미성)허쉬미니쿠키 | 1
+롯데)빼빼로초코필드 | 1
+오리온)통크 | 1
+롯데)야채크래커 | 1
+청우)자색군고구마스틱80g | 1
+롯데)엄마손파이고메갈릭 | 1
+롯데)빠다코코낫 | 1
+베어스)망곰허니갈릭볼 | 1
+
+--- Category: 스낵류 | Predicted Sales: 53.92 ---
+Recommended Products (32 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)태양의맛썬80g | 17
+크라운)콘초 | 2
+해태)허니버터칩60g | 2
+농심)양파링80g | 2
+오리온)포카칩오리지널66g | 2
+해태)자가비짭짤한맛 | 2
+롯데)도리토스나쵸치즈 | 2
+농심)매운새우깡90g | 1
+바프)카라멜치즈팝콘80g | 1
+대산)전통뻥튀기180g | 1
+농심)포테토칩60g | 1
+농심)오징어집78g | 1
+농심)비29 | 1
+SA)로열티니핑컬러팝콘45g | 1
+롯데)도리토스양념갈비 | 1
+HEYROO감자칩득템어니언 | 1
+롯데)꼬깔콘군옥수수맛 | 1
+농심)포스틱84g | 1
+오뚜기)뿌셔뿌셔불고기맛 | 1
+크라운)콘치크림치즈 | 1
+오리온)꼬북칩카라멜팝콘 | 1
+오리온)포카칩어니언66g | 1
+크라운)못말리는신짱 | 1
+농심)감자깡75g | 1
+농심)닭다리너겟130g | 1
+PBICK)타코야끼볼 | 1
+해태)오사쯔60g | 1
+크라운)죠리퐁 | 1
+훼밀리)에낙라면치킨30g | 1
+SA)하츄핑의미니별초코맛 | 1
+농심)바나나킥75g | 1
+이삭)피자앤치즈베이글칩 | 1
+
+--- Category: 시리얼 | Predicted Sales: 2.84 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+동서)오레오오즈컵30g | 1
+
+--- Category: 껌 | Predicted Sales: 7.07 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)와우소다풍선껌 | 5
+오리온)와우블랙레몬 | 2
+롯데)왓따복숭아풍선껌 | 1
+
+--- Category: 초콜릿 | Predicted Sales: 16.18 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)크런키초콜릿34g | 7
+네슬레)킷캣청키초콜릿 | 2
+롯데)ABC밀크초콜릿72g | 2
+선우)피스마니에딸기 | 1
+나무)도라에몽초코컵 | 1
+매일)킨더초콜릿조이보이 | 1
+크라운)키커바 | 1
+앰지)밀카스트로베리 | 1
+해태)자유시간들 | 1
+
+--- Category: 캔디 | Predicted Sales: 78.96 ---
+Recommended Products (28 items):
+Product Name | Recommended Quantity
+------------------------------------
+대진)요거트향츄잉캔디12g | 23
+나투)아모스망고구미 | 8
+농심)츄파춥스12g | 6
+스위트)트롤리미니버거10g | 5
+동아)박카스젤리 | 4
+오리온)왕꿈틀이젤리67g | 3
+스위트)트롤리지구젤리 | 3
+코코)과일먹은마시멜로 | 2
+스위트)트롤리버거XXL | 2
+삼경)하리보골드바렌100g | 2
+삼경)하리보스타믹스 | 2
+롯데)말랑카우소프트79g | 2
+피치)바나나모양스프레이 | 2
+농심)츄파춥스게코젤리 | 1
+마이)제로젤리제로베어 | 1
+롯데)밀크카라멜50g | 1
+농심)멘토스사워파인애플 | 1
+동아)박카스사워젤리 | 1
+코코)단짝캔디46g | 1
+일신)바주카푸쉬팝플립팝 | 1
+크라운)새콤달콤딸기 | 1
+나무)심쿵리치젤리 | 1
+오리온)마이구미포도66g | 1
+마이)제로젤리사워베어 | 1
+앰지)홀스자몽 | 1
+오리온)포도알맹이67g | 1
+매크로)라무네포도당캔디 | 1
+선우)신타사워어소티드 | 1
+
+--- Category: 일반아이스크림 | Predicted Sales: 22.34 ---
+Recommended Products (17 items):
+Product Name | Recommended Quantity
+------------------------------------
+라라스윗)딸기요거트바 | 4
+라라스윗)말차초코바 | 3
+해태)폴라포포도 | 2
+롯데)월드콘 | 1
+빙그레)메로나 | 1
+라라스윗)복숭아요거트바 | 1
+라라스윗)넛티초코초콜릿 | 1
+롯데)빠삐코 | 1
+서주)400바멜론 | 1
+해태)부라보콘바닐라 | 1
+라라스윗)넛티초코바닐라 | 1
+서주)400바초코 | 1
+롯데)빵빠레바닐라 | 1
+라라스윗)생우유빵샌드 | 1
+라라스윗)초콜릿초코바 | 1
+라라스윗)쿠앤크초코바 | 1
+서주)크림브륄레뚱카롱 | 1
+
+--- Category: 마른안주류 | Predicted Sales: 9.29 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+바프)허니버터아몬드130g | 5
+한양)빅숏다리40g | 1
+동원)상상육포안심30g | 1
+벤토)타이스파이시XL | 1
+경진)꾸이맨매콤30g | 1
+정화)훈연오징어진공50g | 1
+
+--- Category: 육가공류 | Predicted Sales: 23.49 ---
+Recommended Products (15 items):
+Product Name | Recommended Quantity
+------------------------------------
+흥생)구운계란2입 | 7
+진주햄)천하장사빅70g | 2
+PBICK)순살족발득템 | 2
+동원)친친콘치즈봉70g | 2
+동원)친친오리지널봉70g | 1
+하림)마늘후랑크70g | 1
+CJ)맥스봉치즈후랑크65g | 1
+PBICK)닭가슴살득템페퍼 | 1
+PBICK)핫바득템치즈 | 1
+PBICK)뽀득비엔나득템140g | 1
+진주햄)천하장사50g | 1
+PBICK)닭가슴살득템 | 1
+CJ)맥스봉직화꼬치바90g | 1
+흥생)반숙계란2입 | 1
+PBICK)쫀득편육득템 | 1
+
+--- Category: 과일/채소 | Predicted Sales: 4.66 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+스미)반값바나나 | 4
+풀무원)콩나물220g | 1
+
+--- Category: 농산식재료 | Predicted Sales: 7.96 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)소가부침두부290g | 6
+풀무원)소가찌개두부290g | 1
+강릉초당)초당두부550g | 1
+
+--- Category: 축수산식재료 | Predicted Sales: 3.24 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)덴마크스트링치즈 | 1
+고래사)크랩말이90g | 1
+PBICK)크랩득템142g | 1
+한성)크래미90g | 1
+
+--- Category: 조미료류 | Predicted Sales: 1.40 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+오뚜기)사과식초360ml | 1
+
+--- Category: 커피차류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 반찬류 | Predicted Sales: 8.78 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)김치찌개참치150g | 2
+사조)살코기참치150g | 1
+HEYROO김득템20봉 | 1
+샘표)밥도둑땡초장조림 | 1
+풀무원)밀떡볶이떡550g | 1
+대상)종가집볶음김치80g | 1
+CJ)비비고소고기장조림 | 1
+한울)꼬마단무지120g | 1
+
+--- Category: 면류 | Predicted Sales: 134.20 ---
+Recommended Products (49 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)신라면 | 28
+농심)짜파게티 | 12
+삼양)불닭볶음면 | 12
+농심)육개장사발면 | 6
+오뚜기)짜슐랭 | 5
+농심)신라면큰사발컵 | 5
+삼양)까르보불닭큰컵 | 4
+농심)짜파게티큰사발컵 | 4
+농심)김치사발면 | 4
+농심)신라면블랙컵 | 3
+오뚜기)진라면매운컵 | 3
+삼양)불닭볶음탕면컵 | 3
+삼양)로제불닭볶음면컵 | 2
+오뚜기)열라면 | 2
+삼양)불닭볶음면컵 | 2
+팔도)도시락 | 2
+오뚜기)진짬뽕 | 2
+오뚜기)컵누들매콤소컵 | 2
+농심)사천짜파게티 | 2
+오뚜기)스파게티컵 | 2
+농심)새우탕큰사발컵 | 2
+농심)새우탕소컵 | 1
+농심)김치큰사발컵 | 1
+농심)짜파게티범벅소컵 | 1
+농심)안성탕면 | 1
+오뚜기)컵누들로제소컵 | 1
+팔도)팔도비빔면 | 1
+농심)신라면소컵 | 1
+오뚜기)참깨라면컵 | 1
+농심)튀김우동소컵 | 1
+농심)신라면툼바봉지 | 1
+삼양)불닭볶음면소컵 | 1
+농심)짜파게티더블랙사발 | 1
+오뚜기)진라면순한맛 | 1
+오뚜기)참깨라면소컵 | 1
+오뚜기)베트남쌀국수소컵 | 1
+농심)신라면툼바큰사발면 | 1
+농심)신라면더레드봉지 | 1
+농심)튀김우동큰사발컵 | 1
+팔도)볼케이노까르보나라 | 1
+삼양)삼양라면 | 1
+오뚜기)진라면순한소컵 | 1
+오뚜기)진라면순한컵 | 1
+오뚜기)치즈볶이컵 | 1
+농심)사리곰탕소컵 | 1
+농심)육개장큰사발컵 | 1
+팔도)팔도비빔면컵 | 1
+삼양)치즈불닭볶음면컵 | 1
+오뚜기)크림진짬뽕컵 | 1
+
+--- Category: 상온즉석식 | Predicted Sales: 10.28 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)햇반210g | 6
+오뚜기)현미쇠고기죽 | 1
+오뚜기)새송이쇠고기죽 | 1
+CJ)햇반흑미밥210g | 1
+CJ)큰햇반300g | 1
+오뚜기)맛있는밥210g | 1
+
+--- Category: 냉동즉석식 | Predicted Sales: 4.77 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)소바바양념치킨240g | 1
+PBICK)찐만두득템고기6입 | 1
+HEYROO순살치킨득템매콤C | 1
+HEYROO순살치킨득템C | 1
+PBICK)피자득템포테이토C | 1
+
+--- Category: 냉장즉석식 | Predicted Sales: 6.43 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+금미옥)불떡볶이컵 | 5
+디엔비)통통새우고로케 | 1
+팔도한끼)대파나주곰탕&밥 | 1
+
+--- Category: 의약외품 | Predicted Sales: 13.73 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+동아)박카스F병120ml | 7
+동화)부채표까스활병75ml | 4
+종근당)속청쿨75ml | 1
+크리오)대일밴드NEW | 1
+굿뉴스)얼리임신테스트기 | 1
+
+--- Category: 과일야채음료 | Predicted Sales: 28.40 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+곽철이)청포도제로190ml | 8
+곽철이)사과제로190ml | 5
+매일)피크닉사과240ml | 4
+팔도)뽀로로밀크맛P235ml | 3
+팔도)뽀로로딸기맛P235ml | 2
+동원)쿨피스에이드복숭아 | 2
+팔도)뽀로로샤인맛P235ml | 1
+롯데)오가닉포도당근주스 | 1
+모구)복숭아젤리P320ml | 1
+롯데)오가닉사과당근주스 | 1
+매일)피크닉청포도240ml | 1
+
+--- Category: 기능건강음료 | Predicted Sales: 70.99 ---
+Recommended Products (26 items):
+Product Name | Recommended Quantity
+------------------------------------
+코카)몬스터에너지캔355ml | 14
+농심)파워오투오렌지P500 | 5
+HK)컨디션헛개병100ml | 4
+링티)제로레몬라임500ml | 4
+코카)파워에이드P600ml | 4
+링티)제로레몬라이트P500 | 3
+롯데)게토레이레몬600ml | 3
+코카)토레타P500ml | 3
+동아)오로나민C병120ml | 3
+롯데)핫식스더킹애플캔355 | 3
+연세)검은콩고칼슘두유 | 2
+코카)몬스터파이프캔355ml | 2
+코카)몬스터울트라캔355ml | 2
+HK)컨디션탄산제로병100ml | 2
+광동)비타500로열병 | 2
+롯데)게토레이블루P600ml | 2
+동아)포카리스웨트P620ml | 2
+링티)제로복숭아P500ml | 2
+코카)파워스칼렛스톰600P | 2
+코카)토레타제로P500ml | 1
+코카)파워에이드퍼플P600 | 1
+롯데)핫식스더킹퍼플캔355 | 1
+동아)포카리스웨트P1.5L | 1
+코카)파워라임제로P600 | 1
+롯데)2프로복숭아P500ml | 1
+코카)파워에이드P1.5L | 1
+
+--- Category: 생수 | Predicted Sales: 25.02 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO미네랄워터P500ml | 6
+광동)제주삼다수P2L | 5
+청정)몽베스트P500ml | 3
+롯데)에비앙P500ml | 3
+HEYROO미네랄워터P1L | 2
+롯데)트레비라임P500ml | 2
+HEYROO미네랄워터P2L | 1
+광동)제주삼다수P500ml | 1
+롯데)트레비레몬P500ml | 1
+롯데)아이시스8.0P500ml | 1
+롯데)아이시스8.0P2L | 1
+
+--- Category: 커피음료 | Predicted Sales: 39.17 ---
+Recommended Products (22 items):
+Product Name | Recommended Quantity
+------------------------------------
+매일)바리스타블랙325ml | 10
+박대리)출근커피바닐라300 | 5
+브리티시)블랙아메P500ml | 4
+박대리)맛점커피바나나300 | 2
+매일)바리스타바닐라325ml | 2
+매일)바리스타로슈거250ml | 1
+매일)바리스드립라떼325ml | 1
+할리스)바닐라딜라이트 | 1
+매일)바리스타디카페325ml | 1
+매일)바리스타에스프250ml | 1
+스벅)카페라떼컵200ml | 1
+이디야)돌체콜드브루300ml | 1
+이디야)카페라떼300ml | 1
+스벅)카페라떼컵320ml | 1
+티오피)스모키라떼캔275ml | 1
+마스터)블랙P500ml | 1
+스벅)바닐라라떼컵200ml | 1
+이디야)바닐라라떼300ml | 1
+스벅)바닐라라떼320ml | 1
+레쓰비)라떼캔240ml | 1
+티오피)마스터라떼캔380ml | 1
+레쓰비)그란데헤이즐넛500 | 1
+
+--- Category: 차음료 | Predicted Sales: 15.21 ---
+Recommended Products (11 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)오이오차녹차P500 | 3
+코코몽)하늘보리P200ml | 2
+광동)옥수수수염P500ml | 2
+동원)복숭아제로아이스500 | 2
+하이트)블랙보리라이트520 | 1
+롯데)립톤복숭아제로P500 | 1
+웅진)유기농하늘보리P500 | 1
+웅진)오곡누룽지P500ml | 1
+동원)사과제로아이스티500 | 1
+웅진)티즐제로피치P500 | 1
+광동)진한헛개차P1.5L | 1
+
+--- Category: 탄산음료 | Predicted Sales: 30.71 ---
+Recommended Products (19 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)펩시제로라임P500ml | 8
+코카)코카콜라제로캔350ml | 2
+코카)환타멜론P600ml | 2
+코카)코카콜라제로P500ml | 2
+롯데)마운틴듀제로캔355ml | 2
+코카)스프라이트P500ml | 2
+코카)코카콜라캔350ml | 1
+농심)웰치제로체리P600 | 1
+하이트)하이트논알콜캔350 | 1
+롯데)펩시콜라P600ml | 1
+롯데)칠성사이다제로P500 | 1
+코카)코카콜라제로P1.5L | 1
+코카)코카콜라P500ml | 1
+하이트)하이트논알콜캔500 | 1
+롯데)펩시제로모히토P500 | 1
+롯데)칠성사이다P500ml | 1
+코카)코카콜라캔250ml | 1
+코카)스프라이트제로P500 | 1
+코카)환타오렌지P600ml | 1
+
+--- Category: 아이스드링크 | Predicted Sales: 11.57 ---
+Recommended Products (7 items):
+Product Name | Recommended Quantity
+------------------------------------
+25del)블루레몬에이드340 | 4
+25del)스위트아메리340 | 2
+남양)초코에몽에이드230ml | 2
+롯데)칸타타헤이즐넛230ml | 1
+롯데)칸타타스윗아메리230 | 1
+롯데)칸타타블랙아메320ml | 1
+24del)레드석류블렌디드 | 1
+
+--- Category: 요구르트 | Predicted Sales: 18.28 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)그릭플레인150g | 5
+빙그레)쥬시쿨복숭아180ml | 3
+매일)엔요280ml | 3
+동원)얼라이브청포도250ml | 2
+빙그레)쥬시쿨자두180ml | 2
+동원)얼라이브망고250ml | 1
+동원)얼라이브오렌지250ml | 1
+동원)얼라이브자몽250ml | 1
+동원)쿨피스파인450ml | 1
+
+--- Category: 우유 | Predicted Sales: 45.75 ---
+Recommended Products (19 items):
+Product Name | Recommended Quantity
+------------------------------------
+남양)초코에몽드링크190ml | 10
+서울)흰우유1L | 6
+서울)내안의진짜초코280ml | 5
+빙그레)바나나우유240ml | 5
+서울)딸기우유300ml | 3
+서울)초코우유300ml | 2
+티니핑)빤짝핑바나나우유 | 2
+남양)초코에몽250ml | 2
+서울)프로틴에너지초코 | 1
+매일)허쉬초코드링크235ml | 1
+서울)후레쉬우유900ml | 1
+서울)흰우유200ml | 1
+서울)커피우유300ml | 1
+서울FB)뽀로로딸기우유 | 1
+티니핑)하츄핑딸기우유 | 1
+서울)멸균우유200ml | 1
+PBICK)우유득템1.8L | 1
+매일)아몬드브리오리지널 | 1
+남양)아몬드데이언스위트 | 1
+
+--- Category: 얼음 | Predicted Sales: 29.21 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+del)빅컵얼음230g | 13
+del)컵얼음180g | 8
+del)벤티컵얼음400g | 3
+del)빅컵얼음230g | 2
+동양)아이스웰얼음2.5kg | 1
+동양)아이스웰얼음1kg | 1
+풀무원)돌얼음2.5kg | 1
+del)빅볼컵얼음160g | 1
+
+--- Category: 맥주 | Predicted Sales: 88.36 ---
+Recommended Products (31 items):
+Product Name | Recommended Quantity
+------------------------------------
+카스캔500ml | 19
+테라캔500ml | 10
+아사히생맥주캔485ml | 9
+아사히생맥주캔340ml | 7
+오리온맥주캔500ml | 5
+카스레몬스퀴즈7.0캔500ml | 5
+카스아이스캔464ml | 5
+필라이트후레쉬P1.6L | 3
+켈리캔500ml | 2
+삿포로캔500ml | 2
+카스캔355ml | 2
+스텔라캔740ml | 1
+카스라이트캔355ml | 1
+아사히캔500ml | 1
+호가든캔500ml | 1
+기린당류제로캔500ml | 1
+생마차라거500ml캔 | 1
+기네스캔440ml | 1
+카스P1L | 1
+롯데)크러시캔500ml | 1
+버드와이저캔740ml | 1
+아사히쇼쿠사이캔340ml | 1
+에델바이스캔500ml | 1
+카스P1.6L | 1
+필라이트후레쉬캔500ml | 1
+타이거캔500ml | 1
+카스라이트캔500ml | 1
+기네스콜드브루캔440ml | 1
+칭따오캔500ml | 1
+크로넨버그1664블랑캔500 | 1
+신카프리병330ml | 1
+
+--- Category: 소주 | Predicted Sales: 23.30 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+신참이슬병360ml지함 | 8
+참이슬P640ml | 6
+처음처럼새로P640ml | 4
+처음처럼P500ml | 1
+처음처럼P640ml | 1
+처음처럼새로P400ml | 1
+진로이즈백P640ml | 1
+처음처럼새로병360ml | 1
+진로골드P550ml | 1
+
+--- Category: 전통주 | Predicted Sales: 10.64 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+장수)생막걸리영등포750ml | 5
+롯데)신청하300ml | 2
+지평)생막걸리750ml | 2
+보해)신복분자주375ml | 1
+배상면)느린마을증류주330 | 1
+
+--- Category: 위생용품 | Predicted Sales: 3.08 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+리앤웰)비말흰색대형7P | 1
+
+--- Category: 의류용품 | Predicted Sales: 6.49 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+이중스포츠&스포티양말 | 3
+여성중목양말 | 1
+여성발목양말 | 1
+남성발목양말 | 1
+여성용덧신 | 1
+
+--- Category: 홈/주방용품 | Predicted Sales: 21.68 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+종량(가정)20L | 18
+종량(가정)10L | 1
+종량(가정)75L | 1
+종량(가정)50L | 1
+퐁퐁)친환경주방세제1.2L | 1
+
+--- Category: 전기연료 | Predicted Sales: 4.08 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+포유)힙합터보라이터 | 2
+듀라셀)디럭스2A4입 | 1
+에이스)일회용돌라이터 | 1
+듀라셀)디럭스2A2입 | 1
+
+--- Category: 소형가전 | Predicted Sales: 1.22 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+CU프렌즈)C타입고속충전기 | 1
+미디어)NFC알뜰폰후불유심 | 1
+
+--- Category: 편의상품 | Predicted Sales: 2.42 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+이즐)CU그린카드 | 3
+
+--- Category: 담배 | Predicted Sales: 99.64 ---
+Recommended Products (44 items):
+Product Name | Recommended Quantity
+------------------------------------
+켄트스위치1mg신 | 13
+에쎄체인지린1mg | 6
+에쎄수0.1mg | 5
+에쎄체인지W1mg | 5
+더원블루1mg | 4
+에쎄프라임4mg | 4
+에쎄히말라야1mg | 4
+에쎄수0.5mg | 4
+레종블루3mg | 3
+말보로미디엄6mg | 3
+에쎄체인지업 | 3
+말보로비스타트로피컬 | 2
+레종프렌치블랙3mg | 2
+메비우스스카이블루곽6㎎ | 2
+몽스버블몬빅배몽4.8ml | 2
+비스타수퍼슬림트로피컬 | 2
+메비우스LBS아이스스톰 | 2
+에쎄이츠딥브라운1mg | 2
+더원화이트0.1mg | 2
+메비우스LBS아이스피즈SS | 2
+라일락6mg | 2
+에쎄체인지프로즌 | 2
+심플에이스1mg | 2
+보헴시가리브레5㎎ | 2
+에쎄체인지4mg | 1
+레종프렌치요고1㎎ | 1
+에쎄체인지1mg | 1
+메비우스LSS3㎎ | 1
+말보로아이스원1mg | 1
+팔리아멘트아쿠아3mg | 1
+메비우스스카이블루팩6㎎ | 1
+던힐1mg | 1
+말보로비스타썸머스플래시 | 1
+디스플러스5mg | 1
+팔리아멘트하이브리드5mg | 1
+보헴시가슬림핏브라운1mg | 1
+레종휘바3mg | 1
+레종프렌치아이스블랑2mg | 1
+레종이오니아아일랜드핑크 | 1
+던힐파리에디션 | 1
+팔리아멘트아쿠아5mg | 1
+디스아프리카몰라5mg | 1
+말보로화이트후레쉬6mg | 1
+디스아프리카룰라5mg | 1
+
+--- Category: 전자담배 | Predicted Sales: 95.72 ---
+Recommended Products (20 items):
+Product Name | Recommended Quantity
+------------------------------------
+LIL액상카트리지 | 37
+하이퍼용네오다크토바코 | 17
+MIIX믹스 | 7
+테리아퍼플웨이브 | 5
+테리아블랙퍼플 | 4
+MIIX아이스더블 | 3
+MIIX아이스뱅 | 3
+하이퍼용네오샤인부스트 | 3
+그래뉼라트와이스 | 3
+테리아오아시스펄 | 2
+테리아블랙루비 | 2
+테리아블루 | 2
+테리아엠버 | 1
+MIIX오라썸 | 1
+핏체인지 | 1
+네오퍼플부스트 | 1
+그래뉼라아이스 | 1
+MIIX콤보 | 1
+테리아실버 | 1
+네오맥스부스트 | 1
+
+--- Category: 안전상비의약품 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: RI아이스크림 | Predicted Sales: 2.77 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+빙그레)투게더홈 | 2
+해태)누가바이트미니 | 1
+
+--- Category: 기타주류 | Predicted Sales: 5.58 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+짐빔하이볼자몽350ml | 3
+피마원블랙하이볼캔500ml | 1
+짐빔하이볼레몬350ml | 1
+취화채하이볼캔500ml | 1
+
+--- Category: 소모품 | Predicted Sales: 28.79 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+친환경봉투판매용 | 28
+친환경)배달전용봉투특대 | 1
+
+--- Category: 제조음료 | Predicted Sales: 9.12 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+25뉴get아이스아메XL | 6
+25뉴get핫아메리카노L | 4
+
+--- Category: 애완용품 | Predicted Sales: 1.52 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+하림펫)밥이보약양갱면역 | 1
+애니펫)먼치껌치킨육포 | 1
+
+--- Category: 와인 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+레드)와인360 | 1
+
+--- Category: 문구류 | Predicted Sales: 8.80 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+모나미)예감적중트윈펜 | 6
+포유)테이팩스절연테이프 | 2
+모나미)부드러운풀25g | 1
+
+--- Category: 건강기능 | Predicted Sales: 2.12 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+HK)컨디션환3g | 2
+HK)컨디션스틱18g | 1
+
+--- Category: 목욕세면 | Predicted Sales: 1.22 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+2080)슈퍼클린초극세모 | 1
+크리오)치약칫솔세트 | 1
+
+--- Category: 완구류 | Predicted Sales: 4.70 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+포켓몬)열풍의아레나 | 2
+포켓몬)로켓단의영광 | 2
+티니핑)롤스티커 | 1
+
+--- Category: 액세서리 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+원니즈)접이식눈썹면도기 | 1
+
+--- Category: 온라인주류 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+APP)맥캘란셰리오크12년 | 1
+
+--- Category: 우천용상품 | Predicted Sales: 7.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+글로벌)CU퍼플비닐우산55 | 7
+
+--- Category: 도시락 | Predicted Sales: 5.00 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+도)한끼만족간장불백1 | 3
+도)사천식유니짜장덮밥1 | 2
+
+--- Category: 주먹밥 | Predicted Sales: 6.00 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+주)계란버터간장삼각1 | 3
+주)압도적리치스팸마요1 | 1
+주)3XL베이컨햄마요김치1 | 1
+주)참치마요김치제육더블1 | 1
+
+--- Category: 김밥 | Predicted Sales: 2.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+김)집밥진미채김밥1 | 2
+
+--- Category: 샌드위치류 | Predicted Sales: 3.00 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+샌)포테이토갈릭크림1 | 2
+샌)쑥쑥팥호두샌드1 | 1
+
+--- Category: 햄버거류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 빵 | Predicted Sales: 13.95 ---
+Recommended Products (7 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)포켓몬파이리핫소스 | 3
+삼립)찰옥수수이야기 | 4
+삼립)포켓몬로켓초코롤 | 3
+삼립)흑임자이야기 | 1
+삼립)끼리벨기에와플 | 1
+수키도키)카라멜초코쿠키 | 1
+수키도키)초코아몬드쿠키 | 1
+
+--- Category: 떡 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+삼립)제주쑥대박찹쌀떡 | 1
+
+--- Category: 디저트 | Predicted Sales: 5.03 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+당과점)베리벽돌케이크 | 3
+연세)메론생크림빵 | 1
+대산)엄마랑도나쓰 | 1
+MDS)젤리블리애플샤인 | 1
+
+--- Category: 비스켓/쿠키 | Predicted Sales: 4.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 스낵류 | Predicted Sales: 33.09 ---
+Recommended Products (22 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)태양의맛썬80g | 13
+크라운)콘초 | 1
+해태)허니버터칩60g | 1
+농심)양파링80g | 1
+오리온)포카칩오리지널66g | 1
+해태)자가비짭짤한맛 | 1
+롯데)도리토스나쵸치즈 | 1
+농심)포테토칩60g | 1
+대산)전통뻥튀기180g | 1
+SA)로열티니핑컬러팝콘45g | 1
+농심)오징어집78g | 1
+농심)매운새우깡90g | 1
+바프)카라멜치즈팝콘80g | 1
+롯데)도리토스양념갈비 | 1
+농심)비29 | 1
+HEYROO감자칩득템어니언 | 1
+롯데)꼬깔콘군옥수수맛 | 1
+오뚜기)뿌셔뿌셔불고기맛 | 1
+농심)바나나킥75g | 1
+농심)포스틱84g | 1
+오리온)포카칩어니언66g | 1
+큐피트)옥수수브이콘50g | 1
+
+--- Category: 시리얼 | Predicted Sales: 3.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+켈로그)콘푸로스트 | 3
+
+--- Category: 껌 | Predicted Sales: 2.85 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+오리온)와우소다풍선껌 | 2
+오리온)와우레인보우 | 1
+
+--- Category: 초콜릿 | Predicted Sales: 46.00 ---
+Recommended Products (20 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)크런키초콜릿34g | 12
+롯데)ABC밀크초콜릿72g | 6
+네슬레)킷캣청키초콜릿 | 6
+매일)킨더초콜릿조이보이 | 2
+매일)킨더초콜릿조이걸 | 2
+선우)피스마니에딸기 | 2
+크라운)키커바 | 2
+나무)도라에몽초코컵 | 2
+마즈)몰티져스밀크싱글37g | 1
+롯데)더블크런치쿠앤크 | 1
+미성)허쉬다크석류38g | 1
+대산)딸기쏙요거트초코 | 1
+롯데)가나밀크초콜릿70g | 1
+해태)자유시간들 | 1
+파머스)피스터블크런치 | 1
+선우)카라멜프레첼초콜릿 | 1
+선우)푸투안말차 | 1
+마즈)엠앤엠블록밀크 | 1
+미성)허쉬다크베리38g | 1
+매일)로쉐바밀크90g | 1
+
+--- Category: 캔디 | Predicted Sales: 49.47 ---
+Recommended Products (20 items):
+Product Name | Recommended Quantity
+------------------------------------
+대진)요거트향츄잉캔디12g | 18
+나투)아모스망고구미 | 5
+농심)츄파춥스12g | 4
+스위트)트롤리미니버거10g | 3
+동아)박카스젤리 | 2
+스위트)트롤리지구젤리 | 2
+오리온)왕꿈틀이젤리67g | 2
+코코)과일먹은마시멜로 | 2
+스위트)트롤리버거XXL | 1
+삼경)하리보골드바렌100g | 1
+롯데)말랑카우소프트79g | 1
+삼경)하리보스타믹스 | 1
+피치)바나나모양스프레이 | 1
+농심)츄파춥스게코젤리 | 1
+일신)바주카푸쉬팝플립팝 | 1
+농심)멘토스사워파인애플 | 1
+롯데)밀크카라멜50g | 1
+코코)단짝캔디46g | 1
+동아)박카스사워젤리 | 1
+삼경)하리보그레이프 | 1
+
+--- Category: 일반아이스크림 | Predicted Sales: 7.13 ---
+Recommended Products (4 items):
+Product Name | Recommended Quantity
+------------------------------------
+라라스윗)딸기요거트바 | 5
+해태)폴라포포도 | 1
+롯데)월드콘 | 1
+라라스윗)저당딸기초코바 | 1
+
+--- Category: 마른안주류 | Predicted Sales: 2.25 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)상상육포안심30g | 1
+
+--- Category: 육가공류 | Predicted Sales: 9.00 ---
+Recommended Products (6 items):
+Product Name | Recommended Quantity
+------------------------------------
+흥생)구운계란2입 | 4
+진주햄)천하장사빅70g | 1
+PBICK)순살족발득템 | 1
+동원)친친콘치즈봉70g | 1
+동원)친친오리지널봉70g | 1
+하림)마늘후랑크70g | 1
+
+--- Category: 과일/채소 | Predicted Sales: 2.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)콩나물220g | 2
+
+--- Category: 농산식재료 | Predicted Sales: 4.00 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)소가부침두부290g | 3
+풀무원)소가찌개두부290g | 1
+
+--- Category: 축수산식재료 | Predicted Sales: 2.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+동원)덴마크스트링치즈 | 2
+
+--- Category: 조미료류 | Predicted Sales: 2.10 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+오뚜기)토마토케챂300g | 2
+오뚜기)사과식초360ml | 1
+
+--- Category: 커피차류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 반찬류 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 면류 | Predicted Sales: 24.83 ---
+Recommended Products (10 items):
+Product Name | Recommended Quantity
+------------------------------------
+농심)신라면 | 14
+농심)짜파게티 | 2
+삼양)불닭볶음면 | 2
+농심)육개장사발면 | 1
+오뚜기)짜슐랭 | 1
+농심)신라면큰사발컵 | 1
+삼양)까르보불닭큰컵 | 1
+농심)짜파게티큰사발컵 | 1
+농심)김치사발면 | 1
+농심)누들핏카구리맛 | 1
+
+--- Category: 상온즉석식 | Predicted Sales: 3.34 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+CJ)햇반210g | 3
+CJ)큰햇반300g | 1
+
+--- Category: 냉동즉석식 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 냉장즉석식 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 의약외품 | Predicted Sales: 2.00 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+동아)박카스F병120ml | 1
+동화)부채표까스활병75ml | 1
+
+--- Category: 과일야채음료 | Predicted Sales: 10.24 ---
+Recommended Products (7 items):
+Product Name | Recommended Quantity
+------------------------------------
+곽철이)청포도제로190ml | 4
+곽철이)사과제로190ml | 2
+매일)피크닉사과240ml | 1
+팔도)뽀로로밀크맛P235ml | 1
+동원)쿨피스에이드복숭아 | 1
+팔도)뽀로로딸기맛P235ml | 1
+매일)피크닉청포도240ml | 1
+
+--- Category: 기능건강음료 | Predicted Sales: 16.00 ---
+Recommended Products (14 items):
+Product Name | Recommended Quantity
+------------------------------------
+코카)몬스터에너지캔355ml | 3
+농심)파워오투오렌지P500 | 1
+HK)컨디션헛개병100ml | 1
+코카)파워에이드P600ml | 1
+링티)제로레몬라임500ml | 1
+링티)제로레몬라이트P500 | 1
+롯데)게토레이레몬600ml | 1
+동아)오로나민C병120ml | 1
+롯데)핫식스더킹애플캔355 | 1
+연세)검은콩고칼슘두유 | 1
+롯데)게토레이블루P600ml | 1
+동아)포카리스웨트P620ml | 1
+코카)몬스터울트라캔355ml | 1
+코카)몬스터파이프캔355ml | 1
+
+--- Category: 생수 | Predicted Sales: 4.00 ---
+Recommended Products (3 items):
+Product Name | Recommended Quantity
+------------------------------------
+HEYROO미네랄워터P500ml | 2
+청정)몽베스트P500ml | 1
+롯데)에비앙P500ml | 1
+
+--- Category: 커피음료 | Predicted Sales: 15.51 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+매일)바리스타블랙325ml | 7
+박대리)출근커피바닐라300 | 2
+브리티시)블랙아메P500ml | 2
+박대리)맛점커피바나나300 | 1
+매일)바리스타바닐라325ml | 1
+매일)바리스타로슈거250ml | 1
+매일)바리스드립라떼325ml | 1
+레쓰비)캔200ml | 1
+
+--- Category: 차음료 | Predicted Sales: 3.99 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+광동)옥수수수염P500ml | 3
+광동)진한헛개차P1.5L | 1
+
+--- Category: 탄산음료 | Predicted Sales: 36.06 ---
+Recommended Products (22 items):
+Product Name | Recommended Quantity
+------------------------------------
+롯데)펩시제로라임P500ml | 7
+코카)코카콜라제로캔350ml | 3
+코카)코카콜라제로P500ml | 3
+코카)환타멜론P600ml | 3
+코카)스프라이트P500ml | 2
+롯데)마운틴듀제로캔355ml | 2
+코카)코카콜라캔350ml | 2
+농심)웰치제로체리P600 | 1
+하이트)하이트논알콜캔350 | 1
+롯데)칠성사이다제로P500 | 1
+롯데)펩시콜라P600ml | 1
+코카)코카콜라제로P1.5L | 1
+코카)코카콜라P500ml | 1
+코카)코카콜라캔250ml | 1
+롯데)펩시제로모히토P500 | 1
+하이트)하이트논알콜캔500 | 1
+코카)스프라이트제로P500 | 1
+롯데)칠성사이다P500ml | 1
+롯데)밀키스P500ml | 1
+코카)코카콜라P1.5L | 1
+롯데)칠성사이다P1.5L | 1
+코카)스프라이트P1.5L | 1
+
+--- Category: 아이스드링크 | Predicted Sales: 3.83 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+25del)디카페인아메340ml | 1
+
+--- Category: 요구르트 | Predicted Sales: 8.17 ---
+Recommended Products (8 items):
+Product Name | Recommended Quantity
+------------------------------------
+풀무원)그릭플레인150g | 2
+빙그레)쥬시쿨복숭아180ml | 1
+매일)엔요280ml | 1
+동원)얼라이브청포도250ml | 1
+빙그레)쥬시쿨자두180ml | 1
+동원)얼라이브망고250ml | 1
+동원)얼라이브오렌지250ml | 1
+코오롱)리얼아미노워터230 | 1
+
+--- Category: 우유 | Predicted Sales: 24.40 ---
+Recommended Products (13 items):
+Product Name | Recommended Quantity
+------------------------------------
+남양)초코에몽드링크190ml | 7
+서울)흰우유1L | 3
+서울)내안의진짜초코280ml | 3
+빙그레)바나나우유240ml | 3
+서울)딸기우유300ml | 1
+서울)초코우유300ml | 1
+티니핑)빤짝핑바나나우유 | 1
+남양)초코에몽250ml | 1
+매일)허쉬초코드링크235ml | 1
+서울)흰우유200ml | 1
+서울)후레쉬우유900ml | 1
+서울)커피우유300ml | 1
+짱구)액션가면프로틴커피 | 1
+
+--- Category: 얼음 | Predicted Sales: 7.93 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+del)빅컵얼음230g | 3
+del)컵얼음180g | 2
+del)벤티컵얼음400g | 1
+del)빅컵얼음230g | 1
+del)빅볼컵얼음160g | 1
+
+--- Category: 맥주 | Predicted Sales: 33.24 ---
+Recommended Products (16 items):
+Product Name | Recommended Quantity
+------------------------------------
+카스캔500ml | 9
+테라캔500ml | 4
+아사히생맥주캔485ml | 3
+아사히생맥주캔340ml | 3
+오리온맥주캔500ml | 2
+카스레몬스퀴즈7.0캔500ml | 2
+카스아이스캔464ml | 2
+필라이트후레쉬P1.6L | 1
+켈리캔500ml | 1
+카스캔355ml | 1
+삿포로캔500ml | 1
+스텔라캔740ml | 1
+아사히캔500ml | 1
+카스라이트캔355ml | 1
+호가든캔500ml | 1
+켈리캔355ml | 1
+
+--- Category: 소주 | Predicted Sales: 17.25 ---
+Recommended Products (9 items):
+Product Name | Recommended Quantity
+------------------------------------
+신참이슬병360ml지함 | 6
+참이슬P640ml | 4
+처음처럼새로P640ml | 2
+처음처럼P500ml | 1
+처음처럼P640ml | 1
+처음처럼새로P400ml | 1
+진로이즈백P640ml | 1
+처음처럼새로병360ml | 1
+진로이즈백병360ml | 1
+
+--- Category: 전통주 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 위생용품 | Predicted Sales: 2.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 의류용품 | Predicted Sales: 10.00 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+이중스포츠&스포티양말 | 4
+여성중목양말 | 2
+여성발목양말 | 2
+남성발목양말 | 1
+여성용덧신 | 1
+
+--- Category: 홈/주방용품 | Predicted Sales: 5.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+종량(가정)20L | 5
+
+--- Category: 전기연료 | Predicted Sales: 2.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+세안)썬부탄가스 | 1
+
+--- Category: 소형가전 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+미디어)NFC알뜰폰후불유심 | 1
+
+--- Category: 편의상품 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+이즐)CU그린카드 | 1
+
+--- Category: 담배 | Predicted Sales: 19.39 ---
+Recommended Products (12 items):
+Product Name | Recommended Quantity
+------------------------------------
+켄트스위치1mg신 | 9
+에쎄수0.1mg | 1
+에쎄체인지린1mg | 1
+더원블루1mg | 1
+에쎄체인지W1mg | 1
+에쎄프라임4mg | 1
+에쎄히말라야1mg | 1
+에쎄수0.5mg | 1
+레종블루3mg | 1
+레종프렌치블랙3mg | 1
+에쎄체인지업 | 1
+한라산4mg | 1
+
+--- Category: 전자담배 | Predicted Sales: 36.69 ---
+Recommended Products (14 items):
+Product Name | Recommended Quantity
+------------------------------------
+LIL액상카트리지 | 15
+하이퍼용네오다크토바코 | 6
+MIIX믹스 | 3
+테리아퍼플웨이브 | 2
+테리아블랙퍼플 | 2
+MIIX아이스더블 | 1
+MIIX아이스뱅 | 1
+그래뉼라트와이스 | 1
+테리아오아시스펄 | 1
+핏체인지 | 1
+테리아블랙루비 | 1
+테리아블루 | 1
+테리아엠버 | 1
+센티아클래식실버 | 1
+
+--- Category: 안전상비의약품 | Predicted Sales: 1.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: RI아이스크림 | Predicted Sales: 11.00 ---
+Recommended Products (5 items):
+Product Name | Recommended Quantity
+------------------------------------
+라라스윗)초콜릿파인트 | 2
+하겐)딸기파인트 | 5
+하겐)마카다미아파인트 | 2
+하겐)초코미니컵 | 1
+하겐)스트로베리크림바 | 1
+
+--- Category: 기타주류 | Predicted Sales: 4.00 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 소모품 | Predicted Sales: 3.63 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+친환경봉투판매용 | 3
+친환경)배달전용봉투특대 | 1
+
+--- Category: 제조음료 | Predicted Sales: 2.42 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+25뉴get아이스아메XL | 1
+25뉴get핫아메리카노L | 2
+
+--- Category: 애완용품 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+하림펫)밥이보약양갱면역 | 1
+
+--- Category: 와인 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+레드)와인360 | 1
+
+--- Category: 문구류 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+모나미)예감적중트윈펜 | 1
+
+--- Category: 건강기능 | Predicted Sales: 2.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+HK)컨디션환3g | 2
+
+--- Category: 목욕세면 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+2080)슈퍼클린초극세모 | 1
+
+--- Category: 완구류 | Predicted Sales: 3.00 ---
+Recommended Products (2 items):
+Product Name | Recommended Quantity
+------------------------------------
+포켓몬)열풍의아레나 | 2
+포켓몬)로켓단의영광 | 1
+
+--- Category: 액세서리 | Predicted Sales: 1.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+원니즈)접이식눈썹면도기 | 1
+
+--- Category: 온라인주류 | Predicted Sales: 46.53 ---
+Recommended Products (0 items):
+Product Name | Recommended Quantity
+------------------------------------
+(No recommended products with quantity > 0)
+
+--- Category: 우천용상품 | Predicted Sales: 7.00 ---
+Recommended Products (1 items):
+Product Name | Recommended Quantity
+------------------------------------
+글로벌)CU퍼플비닐우산55 | 7
+
