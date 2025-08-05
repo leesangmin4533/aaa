@@ -18,6 +18,9 @@ from prediction.monitor import update_performance_log
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
+# 중분류별 기본 유통기한(일) 매핑. 필요 시 값 추가 가능.
+SHELF_LIFE_DAYS: dict[str, int] = {}
+
 def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     """기상청 API를 통해 최근 날씨 데이터를 가져옵니다.
 
@@ -126,6 +129,8 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
         query = (
             "SELECT collected_at, "
             "SUM(sales) as total_sales, "
+            "SUM(purchase) as total_purchase, "
+            "SUM(disposal) as total_disposal, "
             "SUM(soldout) as total_soldout, "
             "SUM(stock) as total_stock "
             "FROM mid_sales WHERE mid_code = ? GROUP BY SUBSTR(collected_at, 1, 10)"
@@ -142,9 +147,33 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
     kr_holidays = holidays.KR()
     df['is_holiday'] = df['date'].apply(lambda x: x in kr_holidays).astype(int)
     df['is_stockout'] = (df['total_stock'] == 0).astype(int)
-    
+
+    # 파생 피처 계산
+    df['true_demand'] = df['total_sales'] + df['total_disposal']
+    df['disposal_ratio'] = df['total_disposal'] / (df['true_demand'] + 1e-6)
+    df['demand_gap'] = df['total_purchase'] - df['total_sales']
+    df['shelf_life_days'] = SHELF_LIFE_DAYS.get(mid_code, 0)
+
     log.debug(f"[{mid_code}] get_training_data_for_category returned {len(df)} rows.")
-    return df[['date', 'total_sales', 'total_soldout', 'total_stock', 'is_stockout', 'weekday', 'month', 'week_of_year', 'is_holiday']]
+    return df[
+        [
+            'date',
+            'total_sales',
+            'total_purchase',
+            'total_disposal',
+            'total_soldout',
+            'total_stock',
+            'is_stockout',
+            'weekday',
+            'month',
+            'week_of_year',
+            'is_holiday',
+            'true_demand',
+            'disposal_ratio',
+            'demand_gap',
+            'shelf_life_days',
+        ]
+    ]
 
 
 def load_or_default_model(mid_code: str, model_dir: Path):
@@ -174,6 +203,11 @@ def train_and_predict(
         'rainfall',
         'total_stock',
         'total_soldout',
+        'total_purchase',
+        'total_disposal',
+        'disposal_ratio',
+        'demand_gap',
+        'shelf_life_days',
     ]
 
     model = None
@@ -202,7 +236,7 @@ def train_and_predict(
         weather_df = get_weather_data(training_df['date'].tolist())
         df = pd.merge(training_df, weather_df, on='date')
 
-        target = 'total_sales'
+        target = 'true_demand'
         X = df[features].astype('float32')
         y = df[target].astype('float32')
 
@@ -226,6 +260,11 @@ def train_and_predict(
         'rainfall': tomorrow_weather['rainfall'].iloc[0],
         'total_stock': current_stock,
         'total_soldout': 0,
+        'total_purchase': 0,
+        'total_disposal': 0,
+        'disposal_ratio': 0,
+        'demand_gap': 0,
+        'shelf_life_days': SHELF_LIFE_DAYS.get(mid_code, 0),
     }
     tomorrow_df = pd.DataFrame([tomorrow_features])
 

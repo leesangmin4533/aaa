@@ -79,6 +79,8 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
             {
                 "date": [datetime(2024, 1, 1).date()],
                 "total_sales": [5],
+                "total_purchase": [5],
+                "total_disposal": [0],
                 "total_soldout": [0],
                 "total_stock": [20],
                 "is_stockout": [0],
@@ -86,6 +88,10 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
                 "month": [1],
                 "week_of_year": [1],
                 "is_holiday": [0],
+                "true_demand": [5],
+                "disposal_ratio": [0.0],
+                "demand_gap": [0],
+                "shelf_life_days": [0],
             }
         ),
     )
@@ -188,6 +194,8 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
             {
                 "date": [datetime(2024, 1, 1).date()],
                 "total_sales": [1],
+                "total_purchase": [1],
+                "total_disposal": [0],
                 "total_soldout": [0],
                 "total_stock": [10],
                 "is_stockout": [0],
@@ -195,6 +203,10 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
                 "month": [1],
                 "week_of_year": [1],
                 "is_holiday": [0],
+                "true_demand": [1],
+                "disposal_ratio": [0.0],
+                "demand_gap": [0],
+                "shelf_life_days": [0],
             }
         )
 
