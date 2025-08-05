@@ -46,9 +46,9 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
             """
             INSERT INTO mid_sales (
                 collected_at, mid_code, mid_name, product_code, product_name, sales,
-                order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+                order_cnt, purchase, disposal, stock, soldout, weekday, month, week_of_year,
                 is_holiday, temperature, rainfall
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 "2024-01-01 00:00:00",
@@ -57,6 +57,7 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
                 "P001",
                 "Prod1",
                 5,
+                0,
                 0,
                 0,
                 0,
@@ -78,6 +79,7 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
             {
                 "date": [datetime(2024, 1, 1).date()],
                 "total_sales": [5],
+                "total_soldout": [0],
                 "weekday": [0],
                 "month": [1],
                 "week_of_year": [1],
@@ -125,9 +127,9 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
             """
             INSERT INTO mid_sales (
                 collected_at, mid_code, mid_name, product_code, product_name, sales,
-                order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+                order_cnt, purchase, disposal, stock, soldout, weekday, month, week_of_year,
                 is_holiday, temperature, rainfall
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 "2024-01-01 00:00:00",
@@ -136,6 +138,7 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
                 "P001",
                 "Prod1",
                 5,
+                0,
                 0,
                 0,
                 0,
@@ -152,9 +155,9 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
             """
             INSERT INTO mid_sales (
                 collected_at, mid_code, mid_name, product_code, product_name, sales,
-                order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+                order_cnt, purchase, disposal, stock, soldout, weekday, month, week_of_year,
                 is_holiday, temperature, rainfall
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 "2024-01-01 00:00:00",
@@ -163,6 +166,7 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
                 "P002",
                 "Prod2",
                 3,
+                0,
                 0,
                 0,
                 0,
@@ -182,6 +186,7 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
             {
                 "date": [datetime(2024, 1, 1).date()],
                 "total_sales": [1],
+                "total_soldout": [0],
                 "weekday": [0],
                 "month": [1],
                 "week_of_year": [1],
@@ -238,6 +243,7 @@ def test_recommend_product_mix_filters_stockouts(tmp_path):
             0,
             0,
             0,
+            0,
             date.weekday(),
             date.month,
             date.isocalendar()[1],
@@ -259,9 +265,9 @@ def test_recommend_product_mix_filters_stockouts(tmp_path):
     insert_sql = """
         INSERT INTO mid_sales (
             collected_at, mid_code, mid_name, product_code, product_name, sales,
-            order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+            order_cnt, purchase, disposal, stock, soldout, weekday, month, week_of_year,
             is_holiday, temperature, rainfall
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
     with sqlite3.connect(db_path) as conn:
         conn.executemany(insert_sql, rows)
