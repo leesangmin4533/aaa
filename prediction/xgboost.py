@@ -22,100 +22,113 @@ log.setLevel(logging.DEBUG)
 SHELF_LIFE_DAYS: dict[str, int] = {}
 
 def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
-    """기상청 API를 통해 최근 날씨 데이터를 가져옵니다.
+    """기상청 API 또는 저장된 예보 파일을 통해 날씨 데이터를 가져옵니다.
 
-    현재 시점 기준으로 ±1일 이내의 날짜만 API에 요청하며, 그 외 날짜는 기본값(0)으로 처리합니다.
+    - 내일 예보: forecast.json 파일에서 읽어옴
+    - 오늘 또는 과거 날씨: 초단기실황 API 사용
+    - 그 외: 기본값(0)으로 처리
     """
     api_key = os.environ.get("KMA_API_KEY")
-    if not api_key:
-        log.warning("기상청 API 키가 설정되지 않았습니다. 임의의 날씨 데이터로 대체합니다.")
-        weather_data = []
-        for date in dates:
-            temp = random.uniform(5, 25)
-            rainfall = random.uniform(0, 20) if random.random() > 0.7 else 0
-            weather_data.append({'date': date, 'temperature': temp, 'rainfall': rainfall})
-        return pd.DataFrame(weather_data)
-
     weather_data = []
     nx, ny = 60, 127
     today = datetime.now().date()
+    forecast_file = Path(__file__).resolve().parent.parent / 'code_outputs' / 'forecast.json'
 
     for date in dates:
-        # API 제한에 따라 현재 기준 ±1일만 요청
-        if abs((today - date).days) > 1:
-            log.warning(f"{date} 는 API 제한 범위를 벗어나 기본값으로 처리됩니다.")
-            weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
+        is_tomorrow = date == (today + timedelta(days=1))
+
+        if is_tomorrow:
+            if forecast_file.exists():
+                try:
+                    with open(forecast_file, 'r', encoding='utf-8') as f:
+                        forecast_data = json.load(f)
+                    if forecast_data.get('target_date') == date.strftime('%Y-%m-%d'):
+                        weather_data.append({
+                            'date': date, 
+                            'temperature': forecast_data.get('temperature', 0.0),
+                            'rainfall': forecast_data.get('rainfall', 0.0)
+                        })
+                        log.info(f"Loaded tomorrow's forecast from {forecast_file}")
+                        continue
+                    else:
+                        log.warning("Forecast file is outdated. Falling back to API.")
+                except (json.JSONDecodeError, IOError) as e:
+                    log.error(f"Error reading forecast file: {e}. Falling back to API.")
+            else:
+                log.warning("Forecast file not found. Falling back to API for tomorrow's data.")
+
+        # Fallback to API if forecast file is not available or outdated for tomorrow
+        if not api_key:
+            log.warning("기상청 API 키가 없어 임의의 날씨 데이터로 대체합니다.")
+            temp = random.uniform(5, 25)
+            rainfall = random.uniform(0, 20) if random.random() > 0.7 else 0
+            weather_data.append({'date': date, 'temperature': temp, 'rainfall': rainfall})
             continue
 
-        request_time = datetime.now() - timedelta(hours=2)
-        if date == today:
-            # API 데이터 생성을 고려해 현재 시간에서 2시간을 뺀 시간을 기준으로 조회
+        # API URL 결정 (오늘/과거 vs 내일)
+        if is_tomorrow: # 단기예보
+            base_date_str = today.strftime('%Y%m%d')
+            base_time_str = '0200' # 새벽 2시 예보
+            url = (
+                "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getVilageFcst"
+                f"?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}"
+                f"&nx={nx}&ny={ny}&authKey={api_key}"
+            )
+        elif date == today: # 초단기실황
+            request_time = datetime.now() - timedelta(hours=1)
             base_date_str = request_time.strftime('%Y%m%d')
             base_time_str = request_time.strftime('%H00')
-        else:
-            # 다른 날짜는 정오(12:00)를 기준으로 조회
-            base_date_str = date.strftime('%Y%m%d')
-            base_time_str = '1200'
-
-        url = (
-            "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=1000"
-            f"&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}&nx={nx}&ny={ny}&authKey={api_key}"
-        )
+            url = (
+                "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst"
+                f"?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}"
+                f"&nx={nx}&ny={ny}&authKey={api_key}"
+            )
+        else: # 과거 데이터 (지원 안함)
+             log.warning(f"{date} 는 API 조회 지원 날짜(오늘, 내일)가 아니므로 기본값으로 처리됩니다.")
+             weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
+             continue
 
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
             data = response.json()
-            log.debug(
-                "Weather API raw response for %s: %s",
-                date,
-                json.dumps(data, ensure_ascii=False),
-            )
+            log.debug("Weather API raw response for %s: %s", date, json.dumps(data, ensure_ascii=False))
 
-            result_code = (
-                data.get('response', {}).get('header', {}).get('resultCode')
-            )
+            result_code = data.get('response', {}).get('header', {}).get('resultCode')
             if result_code != '00':
                 log.warning(f"{date} 날씨 API resultCode {result_code}. 기본값으로 저장합니다.")
                 weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
                 continue
 
-            avg_temp = 0.0
-            total_rainfall = 0.0
-
             items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
-            log.debug(
-                "Weather API parsed items for %s: %s",
-                date,
-                json.dumps(items, ensure_ascii=False),
-            )
-
-            for item in items:
-                category = item.get('category')
-                obsr_value = item.get('obsrValue')
-                if category == 'T1H':
-                    try:
-                        avg_temp = float(obsr_value)
-                    except (ValueError, TypeError):
-                        pass
-                elif category == 'RN1':
-                    try:
-                        total_rainfall = float(obsr_value)
-                    except (ValueError, TypeError):
-                        pass
+            
+            if is_tomorrow:
+                temps = [float(item['fcstValue']) for item in items if item['category'] == 'TMP' and item['fcstDate'] == date.strftime('%Y%m%d')]
+                rains = []
+                for item in items:
+                    if item['category'] == 'PCP' and item['fcstDate'] == date.strftime('%Y%m%d'):
+                        value = item['fcstValue']
+                        if '강수없음' in str(value):
+                            rains.append(0.0)
+                        else:
+                            try:
+                                numeric_value = float(str(value).lower().replace('mm', '').replace('cm', ''))
+                                rains.append(numeric_value)
+                            except (ValueError, TypeError):
+                                rains.append(0.0)
+                avg_temp = sum(temps) / len(temps) if temps else 0.0
+                total_rainfall = sum(rains) if rains else 0.0
+            else: # 오늘 실황
+                avg_temp = float(next((item['obsrValue'] for item in items if item['category'] == 'T1H'), 0.0))
+                total_rainfall = float(next((item['obsrValue'] for item in items if item['category'] == 'RN1'), 0.0))
 
             weather_data.append({'date': date, 'temperature': avg_temp, 'rainfall': total_rainfall})
-        except requests.exceptions.Timeout:
-            log.error(f"{date} 날씨 데이터 요청 중 타임아웃 발생. 기본값으로 대체합니다.", exc_info=True)
-            weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
+
         except requests.exceptions.RequestException as e:
             log.error(f"{date} 날씨 데이터 요청 중 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
             weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
         except Exception as e:
-            log.error(
-                f"{date} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.",
-                exc_info=True,
-            )
+            log.error(f"{date} 날씨 데이터 파싱 중 예상치 못한 오류: {e}. 기본값으로 대체합니다.", exc_info=True)
             weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
 
     return pd.DataFrame(weather_data)
