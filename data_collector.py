@@ -16,7 +16,7 @@ except ImportError as exc:  # pragma: no cover - dependency missing
     )
     WebDriverWait = None  # type: ignore
 
-from utils.db_util import write_sales_data, check_dates_exist
+from utils.db_util import write_sales_data, check_dates_exist, init_db
 from utils.log_util import get_logger
 
 logger = get_logger("bgf_automation", level=logging.DEBUG)
@@ -155,12 +155,32 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> bool:
                 handler.flush()
             saved_today = True
         else:
-            log.warning(
-                "No valid data collected for %s at store %s. Collected data: %s",
-                today_str,
-                store_name,
-                json.dumps(collected, ensure_ascii=False),
-            )
+            # Ensure the database and mid_sales table exist even if there's no data
+            initialized = True
+            try:
+                init_db(db_path)
+            except Exception as e:  # pragma: no cover - init failures
+                initialized = False
+                log.error(
+                    "Failed to initialize DB for store %s: %s",
+                    store_name,
+                    e,
+                    exc_info=True,
+                )
+            if initialized:
+                log.warning(
+                    "[%s] mid_sales table initialized but no data collected for %s. Collected data: %s",
+                    store_name,
+                    today_str,
+                    json.dumps(collected, ensure_ascii=False),
+                )
+            else:
+                log.warning(
+                    "No valid data collected for %s at store %s. Collected data: %s",
+                    today_str,
+                    store_name,
+                    json.dumps(collected, ensure_ascii=False),
+                )
     except Exception as e:
         log.error(
             f"Error calling write_sales_data for store {store_name}: {e}",
