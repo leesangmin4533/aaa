@@ -2,6 +2,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 import logging
+import json
 import pandas as pd
 import holidays
 
@@ -94,20 +95,34 @@ def write_sales_data(
         rainfall = weather_df['rainfall'].iloc[0] if not weather_df.empty else 0.0
 
         for i, rec in enumerate(records):
-            logger.debug(f"Processing record {i+1}/{len(records)}: {rec}")
+            logger.debug(
+                "Processing record %s/%s: %s",
+                i + 1,
+                len(records),
+                json.dumps(rec, ensure_ascii=False),
+            )
             try:
                 product_code = _get_value(rec, "productCode", "product_code")
                 sales_raw = _get_value(rec, "sales", "SALE_QTY")
                 
                 if product_code is None or sales_raw is None:
-                    logger.warning(f"Record {i+1} is missing product_code or sales. Skipping. Record: {rec}")
+                    logger.warning(
+                        "Record %s is missing product_code or sales. Skipping. Record: %s",
+                        i + 1,
+                        json.dumps(rec, ensure_ascii=False),
+                    )
                     skipped_count += 1
                     continue
                 
                 try:
                     sales = int(sales_raw)
                 except (ValueError, TypeError):
-                    logger.warning(f"Record {i+1} has invalid sales value '{sales_raw}'. Skipping. Record: {rec}")
+                    logger.warning(
+                        "Record %s has invalid sales value '%s'. Skipping. Record: %s",
+                        i + 1,
+                        sales_raw,
+                        json.dumps(rec, ensure_ascii=False),
+                    )
                     skipped_count += 1
                     continue
 
@@ -182,7 +197,13 @@ def write_sales_data(
                     )
                 processed_count += 1
             except Exception as e:
-                logger.error(f"Error processing record {i+1}: {rec}. Error: {e}", exc_info=True)
+                logger.error(
+                    "Error processing record %s: %s. Error: %s",
+                    i + 1,
+                    json.dumps(rec, ensure_ascii=False),
+                    e,
+                    exc_info=True,
+                )
                 skipped_count += 1
 
         conn.commit()
