@@ -27,8 +27,8 @@ def init_db(path: Path) -> sqlite3.Connection:
     CREATE TABLE IF NOT EXISTS mid_sales (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         collected_at TEXT, mid_code TEXT, mid_name TEXT, product_code TEXT, 
-        product_name TEXT, sales INTEGER, order_cnt INTEGER, purchase INTEGER, 
-        disposal INTEGER, stock INTEGER,
+        product_name TEXT, sales INTEGER, order_cnt INTEGER, purchase INTEGER,
+        disposal INTEGER, stock INTEGER, soldout INTEGER,
         weekday INTEGER, month INTEGER, week_of_year INTEGER, is_holiday INTEGER,
         temperature REAL, rainfall REAL,
         UNIQUE(collected_at, product_code)
@@ -133,6 +133,17 @@ def write_sales_data(
                 purchase = _get_value(rec, "purchase", "BUY_QTY")
                 disposal = _get_value(rec, "disposal", "DISUSE_QTY")
                 stock = _get_value(rec, "stock", "STOCK_QTY")
+                soldout_raw = _get_value(rec, "soldout", "SOLDOUT_QTY", "soldout_qty")
+                try:
+                    soldout = int(soldout_raw) if soldout_raw is not None else 0
+                except (ValueError, TypeError):
+                    logger.warning(
+                        "Record %s has invalid soldout value '%s'. Defaulting to 0.",
+                        i + 1,
+                        soldout_raw,
+                        extra={"tag": "db"},
+                    )
+                    soldout = 0
 
                 cur.execute(
                     "SELECT 1 FROM mid_sales WHERE product_code=? AND SUBSTR(collected_at,1,10)=?",
@@ -141,12 +152,12 @@ def write_sales_data(
                 row = cur.fetchone()
 
                 logger.debug(
-                    f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Existing Row: {row}"
+                    f"Product: {product_code}, Date: {current_date}, New Sales: {sales}, Soldout: {soldout}, Existing Row: {row}"
                 )
 
                 if row:
                     cur.execute(
-                        """UPDATE mid_sales SET collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?, sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?, weekday = ?, month = ?, week_of_year = ?, is_holiday = ? WHERE product_code = ? AND SUBSTR(collected_at,1,10) = ?""",
+                        """UPDATE mid_sales SET collected_at = ?, mid_code = ?, mid_name = ?, product_name = ?, sales = ?, order_cnt = ?, purchase = ?, disposal = ?, stock = ?, soldout = ?, weekday = ?, month = ?, week_of_year = ?, is_holiday = ? WHERE product_code = ? AND SUBSTR(collected_at,1,10) = ?""",
                         (
                             collected_at_val,
                             mid_code,
@@ -157,6 +168,7 @@ def write_sales_data(
                             purchase,
                             disposal,
                             stock,
+                            soldout,
                             weekday,
                             month,
                             week_of_year,
@@ -167,11 +179,11 @@ def write_sales_data(
                     )
                     update_count += 1
                     logger.debug(
-                        f"Updated existing record for {product_code}; preserved weather data."
+                        f"Updated existing record for {product_code} with soldout {soldout}; preserved weather data."
                     )
                 else:
                     cur.execute(
-                        """INSERT INTO mid_sales (collected_at, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, weekday, month, week_of_year, is_holiday, temperature, rainfall) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                        """INSERT INTO mid_sales (collected_at, mid_code, mid_name, product_code, product_name, sales, order_cnt, purchase, disposal, stock, soldout, weekday, month, week_of_year, is_holiday, temperature, rainfall) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                         (
                             collected_at_val,
                             mid_code,
@@ -183,6 +195,7 @@ def write_sales_data(
                             purchase,
                             disposal,
                             stock,
+                            soldout,
                             weekday,
                             month,
                             week_of_year,
@@ -193,7 +206,7 @@ def write_sales_data(
                     )
                     insert_count += 1
                     logger.debug(
-                        f"Inserted new record for {product_code} with weather data."
+                        f"Inserted new record for {product_code} with weather data and soldout {soldout}."
                     )
                 processed_count += 1
             except Exception as e:

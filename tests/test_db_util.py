@@ -136,3 +136,27 @@ def test_write_sales_data_creates_directory(tmp_path):
     assert not nested.exists()
     db_util.write_sales_data(records, db_path)
     assert nested.exists()
+
+
+def test_write_sales_data_handles_soldout(tmp_path):
+    db_path = tmp_path / "sales.db"
+    records = [
+        {"productCode": "111", "sales": 3, "soldout": 1},
+        {"productCode": "222", "sales": 4},
+    ]
+    db_util.write_sales_data(records, db_path)
+
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+    cur.execute("SELECT product_code, soldout FROM mid_sales ORDER BY product_code")
+    rows = cur.fetchall()
+    conn.close()
+    assert rows == [("111", 1), ("222", 0)]
+
+    db_util.write_sales_data([{"productCode": "111", "sales": 5, "soldout": 2}], db_path)
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+    cur.execute("SELECT soldout FROM mid_sales WHERE product_code='111'")
+    updated = cur.fetchone()[0]
+    conn.close()
+    assert updated == 2
