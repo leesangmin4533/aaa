@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .model import (
+from .xgboost import (
     get_training_data_for_category,
     get_weather_data,
     run_all_category_predictions,

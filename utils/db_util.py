@@ -6,13 +6,13 @@ import json
 import pandas as pd
 import holidays
 
-# prediction.model 모듈을 임포트하기 위해 경로 추가
+# prediction.xgboost 모듈을 임포트하기 위해 경로 추가
 import sys
 ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from prediction.model import get_weather_data
+from prediction.xgboost import get_weather_data
 
 from utils.log_util import get_logger
 

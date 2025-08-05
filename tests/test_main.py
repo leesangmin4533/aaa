@@ -151,7 +151,7 @@ def test_main_calls_navigation():
         patch.object(main, "run_script") as run_script_mock,
         patch.object(data_collector, "wait_for_data", return_value=None),
         patch.object(data_collector, "collect_and_save"),
-        patch("prediction.model.run_all_category_predictions"),
+        patch("prediction.xgboost.run_all_category_predictions"),
     ):
         driver.execute_script.side_effect = [[], [], {}, None]
         main.main()
@@ -226,7 +226,7 @@ def test_main_writes_sales_data(tmp_path):
         patch.object(data_collector, "execute_collect_single_day_data", return_value={"success": True, "data": parsed}),
         patch.object(data_collector, "write_sales_data") as write_mock,
         patch.object(data_collector.time, "sleep"),
-        patch("prediction.model.run_all_category_predictions"),
+        patch("prediction.xgboost.run_all_category_predictions"),
     ):
         main.main()
 
@@ -260,7 +260,7 @@ def test_main_writes_integrated_db_when_needed(tmp_path):
         ) as exec_mock,
         patch.object(data_collector, "write_sales_data") as write_mock,
         patch.object(data_collector.time, "sleep"),
-        patch("prediction.model.run_all_category_predictions"),
+        patch("prediction.xgboost.run_all_category_predictions"),
     ):
         main.main()
 

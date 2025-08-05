@@ -66,7 +66,7 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
         db_path = SCRIPT_DIR / store_config["db_file"]
         collect_and_save(driver, db_path, store_name)
 
-        from prediction.model import run_all_category_predictions
+        from prediction.xgboost import run_all_category_predictions
         run_all_category_predictions(db_path)
 
     finally:

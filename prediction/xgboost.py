@@ -220,8 +220,9 @@ def train_and_predict(
     tomorrow_df = pd.DataFrame([tomorrow_features])
 
     prediction = model.predict(tomorrow_df[features])
-    log.info(f"[{mid_code}] 예측된 내일 판매량: {prediction[0]:.2f}개")
-    return prediction[0]
+    predicted = max(0, float(prediction[0]))
+    log.info(f"[{mid_code}] 예측된 내일 판매량: {predicted:.2f}개")
+    return predicted
 
 
 def _allocate_by_ratio(
@@ -340,17 +341,17 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
         return []
 
     with sqlite3.connect(db_path) as conn:
-        query = f"""
+        query = """
             SELECT
                 product_code,
                 product_name,
                 SUM(sales) as total_sales
             FROM mid_sales
-            WHERE mid_code = '{mid_code}'
+            WHERE mid_code = ?
             GROUP BY product_code, product_name
             HAVING SUM(sales) > 0
         """
-        sales_by_product = pd.read_sql(query, conn)
+        sales_by_product = pd.read_sql(query, conn, params=(mid_code,))
 
         # 최근 품절 이력 조회
         lookback_days = 7
@@ -493,7 +494,6 @@ def run_all_category_predictions(sales_db_path: Path):
     with sqlite3.connect(sales_db_path) as conn:
         mid_categories = pd.read_sql("SELECT DISTINCT mid_code, mid_name FROM mid_sales", conn)
 
-    predictions_to_save = []
     prediction_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     target_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
