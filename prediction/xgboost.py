@@ -32,7 +32,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
     weather_data = []
     nx, ny = 60, 127
     today = datetime.now().date()
-        forecast_file = Path(__file__).resolve().parent.parent / 'code_outputs' / 'forecast.json'
+    forecast_file = Path(__file__).resolve().parent.parent / 'code_outputs' / 'forecast.json'
 
     for date in dates:
         is_tomorrow = date == (today + timedelta(days=1))
@@ -604,4 +604,3 @@ def run_all_category_predictions(sales_db_path: Path):
     )
 
     update_performance_log(sales_db_path, prediction_db_path)
-
