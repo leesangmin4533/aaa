@@ -12,6 +12,7 @@ from .model import (
     get_weather_data,
     run_all_category_predictions,
 )
+from . import monitor
 
 try:  # pragma: no cover - optuna/xgboost가 없을 경우를 대비
     from .optuna_tuner import tune_model
@@ -40,6 +41,26 @@ def tune_all_models(
 
     for mid_code in mid_codes:
         try:
+            try:
+                recent_perf = monitor.load_recent_performance(
+                    prediction_db_path, mid_code
+                )
+            except Exception as e:  # pragma: no cover - 조회 실패 시 로깅
+                log.debug("[%s] 최근 성능을 불러오지 못했습니다: %s", mid_code, e)
+                recent_perf = pd.DataFrame()
+
+            should_retrain = True
+            if not recent_perf.empty:
+                mean_error = recent_perf["error_rate_percent"].mean()
+                log.info("[%s] 최근 평균 오차율: %.2f%%", mid_code, mean_error)
+                should_retrain = mean_error >= error_threshold
+            if not should_retrain:
+                log.info(
+                    "[%s] 최근 오차율이 임계값 미만으로 튜닝을 건너뜁니다.",
+                    mid_code,
+                )
+                continue
+
             training_df = get_training_data_for_category(db_path, mid_code)
             if training_df.empty:
                 log.warning("[%s] 학습 데이터가 없어 튜닝을 건너뜁니다.", mid_code)
@@ -53,9 +74,24 @@ def tune_all_models(
 
 
 def run_for_db_paths(
-    db_paths: list[Path], tune: bool = False, model_dir: Path | None = None
+    db_paths: list[Path],
+    tune: bool = False,
+    model_dir: Path | None = None,
+    error_threshold: float = 10.0,
 ) -> None:
-    """주어진 DB 경로들에 대해 순차적으로 예측을 실행합니다."""
+    """주어진 DB 경로들에 대해 순차적으로 예측을 실행합니다.
+
+    Parameters
+    ----------
+    db_paths : list[Path]
+        판매 데이터가 저장된 DB 경로 목록.
+    tune : bool, optional
+        튜닝 여부.
+    model_dir : Path | None, optional
+        튜닝된 모델이 저장될 디렉터리.
+    error_threshold : float, optional
+        최근 평균 오차율이 이 값 이상일 때만 재학습을 수행합니다.
+    """
     if model_dir is None:
         model_dir = Path("prediction") / "tuned_models"
 
@@ -69,7 +105,11 @@ def run_for_db_paths(
 
             if tune:
                 log.info("[%s] 모델 튜닝 단계 시작", db_path)
-                tune_all_models(db_path, model_dir / db_path.stem)
+                tune_all_models(
+                    db_path,
+                    model_dir / db_path.stem,
+                    error_threshold=error_threshold,
+                )
 
             run_all_category_predictions(db_path)
             log.info("[%s] 예측 및 추천 실행 완료", db_path)
@@ -94,6 +134,12 @@ def main() -> None:
         default=Path("prediction") / "tuned_models",
         help="튜닝된 모델이 저장될 디렉터리",
     )
+    parser.add_argument(
+        "--error-threshold",
+        type=float,
+        default=10.0,
+        help="재학습을 위한 최근 평균 오차율 임계값(%)",
+    )
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -105,6 +151,7 @@ def main() -> None:
         [Path(p) for p in args.db_paths],
         tune=args.tune,
         model_dir=Path(args.model_dir),
+        error_threshold=args.error_threshold,
     )
     log.info("카테고리 예측 스크립트 종료")
 
