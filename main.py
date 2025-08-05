@@ -64,10 +64,21 @@ def run_automation_for_store(store_name: str, store_config: Dict[str, Any], glob
             return
 
         db_path = SCRIPT_DIR / store_config["db_file"]
-        collect_and_save(driver, db_path, store_name)
+        saved = collect_and_save(driver, db_path, store_name)
 
-        from prediction.xgboost import run_all_category_predictions
-        run_all_category_predictions(db_path)
+        if not saved:
+            log.warning(
+                "Data collection failed for %s. Skipping prediction stage.", store_name
+            )
+        else:
+            from prediction.xgboost import run_all_category_predictions
+
+            try:
+                run_all_category_predictions(db_path)
+            except Exception as e:
+                log.error(
+                    "Prediction step failed for store %s: %s", store_name, e, exc_info=True
+                )
 
     finally:
         if driver is not None:

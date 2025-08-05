@@ -103,7 +103,16 @@ def wait_for_data(driver: Any, timeout: int = 10) -> Any | None:
     return None
 
 
-def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
+def collect_and_save(driver: Any, db_path: Path, store_name: str) -> bool:
+    """Collect sales data and persist it.
+
+    Returns
+    -------
+    bool
+        ``True`` if today's data was successfully written to the database,
+        otherwise ``False``.
+    """
+
     log = get_logger("bgf_automation", level=logging.DEBUG, store_id=store_name)
 
     missing_past_dates = get_missing_past_dates(db_path)
@@ -127,6 +136,7 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
     today_str = datetime.now().strftime("%Y%m%d")
     result = execute_collect_single_day_data(driver, today_str)
     collected = result.get("data") if isinstance(result, dict) else None
+    saved_today = False
 
     try:
         if collected and isinstance(collected, list) and collected and isinstance(collected[0], dict):
@@ -143,6 +153,7 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
             log.info(f"[{store_name}] --- Returned from write_sales_data ---")
             for handler in log.logger.handlers if hasattr(log, 'logger') else log.handlers:
                 handler.flush()
+            saved_today = True
         else:
             log.warning(
                 "No valid data collected for %s at store %s. Collected data: %s",
@@ -155,3 +166,5 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
             f"Error calling write_sales_data for store {store_name}: {e}",
             exc_info=True,
         )
+
+    return saved_today
