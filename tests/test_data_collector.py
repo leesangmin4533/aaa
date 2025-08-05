@@ -31,3 +31,33 @@ def test_collect_and_save_init_db_when_no_data(tmp_path):
     assert "mid_sales table initialized but no data collected" in logs
 
     test_logger.removeHandler(handler)
+
+
+def test_collect_and_save_saved_today_false_when_write_returns_zero(tmp_path):
+    db_path = tmp_path / "test.db"
+    driver = object()
+
+    stream = io.StringIO()
+    test_logger = logging.getLogger("test_logger_write_zero")
+    test_logger.setLevel(logging.DEBUG)
+    handler = logging.StreamHandler(stream)
+    test_logger.addHandler(handler)
+
+    sample_data = [{}]
+
+    with patch(
+        "data_collector.execute_collect_single_day_data",
+        return_value={"success": True, "data": sample_data},
+    ), patch("data_collector.get_missing_past_dates", return_value=[]), patch(
+        "data_collector.write_sales_data", return_value=0
+    ) as mock_write, patch(
+        "data_collector.get_logger", return_value=test_logger
+    ):
+        result = collect_and_save(driver, db_path, "test_store")
+
+    mock_write.assert_called_once()
+    assert result is False
+    logs = stream.getvalue()
+    assert "write_sales_data returned 0" in logs
+
+    test_logger.removeHandler(handler)

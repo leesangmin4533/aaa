@@ -149,11 +149,18 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> bool:
                 json.dumps(collected, ensure_ascii=False),
             )
             log.info(f"[{store_name}] --- Calling write_sales_data ---")
-            write_sales_data(collected, db_path, store_id=store_name)
-            log.info(f"[{store_name}] --- Returned from write_sales_data ---")
+            records_written = write_sales_data(collected, db_path, store_id=store_name)
+            log.info(
+                f"[{store_name}] --- Returned from write_sales_data (records_written={records_written}) ---"
+            )
             for handler in log.logger.handlers if hasattr(log, 'logger') else log.handlers:
                 handler.flush()
-            saved_today = True
+            if records_written > 0:
+                saved_today = True
+            else:
+                log.warning(
+                    f"[{store_name}] write_sales_data returned 0; no data saved for {today_str}"
+                )
         else:
             # Ensure the database and mid_sales table exist even if there's no data
             initialized = True
