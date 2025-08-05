@@ -114,3 +114,105 @@ def test_run_all_category_predictions_creates_db(tmp_path, monkeypatch):
         )
         items = cur.fetchall()
         assert items == [("P001", 5)]
+
+
+def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
+    sales_db = tmp_path / "sales.db"
+    init_db(sales_db)
+    with sqlite3.connect(sales_db) as conn:
+        conn.execute(
+            """
+            INSERT INTO mid_sales (
+                collected_at, mid_code, mid_name, product_code, product_name, sales,
+                order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+                is_holiday, temperature, rainfall
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "2024-01-01 00:00:00",
+                "001",
+                "Cat1",
+                "P001",
+                "Prod1",
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                20.0,
+                0.0,
+            ),
+        )
+        conn.execute(
+            """
+            INSERT INTO mid_sales (
+                collected_at, mid_code, mid_name, product_code, product_name, sales,
+                order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+                is_holiday, temperature, rainfall
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "2024-01-01 00:00:00",
+                "002",
+                "Cat2",
+                "P002",
+                "Prod2",
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                20.0,
+                0.0,
+            ),
+        )
+        conn.commit()
+
+    def fake_get_training_data_for_category(db, mid):
+        return pd.DataFrame(
+            {
+                "date": [datetime(2024, 1, 1).date()],
+                "total_sales": [1],
+                "weekday": [0],
+                "month": [1],
+                "week_of_year": [1],
+                "is_holiday": [0],
+            }
+        )
+
+    def fake_get_weather_data(dates):
+        return pd.DataFrame(
+            {
+                "date": [datetime(2024, 1, 1).date()],
+                "temperature": [20.0],
+                "rainfall": [0.0],
+            }
+        )
+
+    call_order = []
+
+    def fake_tune_model(mid, df, output_dir):
+        call_order.append(mid)
+        if mid == "002":
+            raise ValueError("fail")
+
+    monkeypatch.setattr(model, "update_performance_log", lambda a, b: None)
+    import prediction.main as pred_main
+
+    monkeypatch.setattr(
+        pred_main, "get_training_data_for_category", fake_get_training_data_for_category
+    )
+    monkeypatch.setattr(pred_main, "get_weather_data", fake_get_weather_data)
+    monkeypatch.setattr(pred_main, "tune_model", fake_tune_model)
+    monkeypatch.setattr(pred_main, "run_all_category_predictions", lambda db: None)
+    pred_main.run_for_db_paths([sales_db], tune=True, model_dir=tmp_path)
+
+    assert call_order == ["001", "002"]
