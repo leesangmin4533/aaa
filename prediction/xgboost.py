@@ -330,6 +330,7 @@ def _add_exploration_product(
 def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
     """
     예측된 총 판매량을 기반으로 상품 판매 비율에 따라 추천 수량을 배분하고,
+    최근 품절 이력을 고려해 품절 제품을 제외하거나 우선순위를 낮춥니다.
     소수점 이하가 있을 경우 데이터 부족 상품을 추가로 추천합니다.
     """
     if not db_path.exists():
@@ -338,31 +339,63 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
 
     with sqlite3.connect(db_path) as conn:
         query = f"""
-            SELECT 
-                product_code, 
-                product_name, 
+            SELECT
+                product_code,
+                product_name,
                 SUM(sales) as total_sales
-            FROM mid_sales 
-            WHERE mid_code = '{mid_code}' 
+            FROM mid_sales
+            WHERE mid_code = '{mid_code}'
             GROUP BY product_code, product_name
             HAVING SUM(sales) > 0
         """
         sales_by_product = pd.read_sql(query, conn)
 
+        # 최근 품절 이력 조회
+        lookback_days = 7
+        start_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
+        stockout_query = """
+            SELECT
+                product_code,
+                SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) AS stockout_count,
+                COUNT(*) AS total_days
+            FROM mid_sales
+            WHERE mid_code = ?
+              AND DATE(collected_at) >= ?
+            GROUP BY product_code
+        """
+        stockout_df = pd.read_sql(stockout_query, conn, params=(mid_code, start_date))
+
     if sales_by_product.empty:
         log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations. Returning empty list.")
         return []
 
-    sales_by_product = sales_by_product.sort_values(by='total_sales', ascending=False).reset_index(drop=True)
+    # 품절률 계산 및 필터링
+    sales_by_product = sales_by_product.merge(stockout_df, on="product_code", how="left")
+    sales_by_product[["stockout_count", "total_days"]] = sales_by_product[["stockout_count", "total_days"]].fillna(0)
+    sales_by_product["stockout_rate"] = sales_by_product.apply(
+        lambda r: r["stockout_count"] / r["total_days"] if r["total_days"] > 0 else 0,
+        axis=1,
+    )
+    stockout_threshold = 0.5
+    sales_by_product = sales_by_product[sales_by_product["stockout_rate"] < stockout_threshold]
+    if sales_by_product.empty:
+        log.warning(f"[{mid_code}] All products filtered out due to high stockout rates. Returning empty list.")
+        return []
 
-    total_sales_sum = sales_by_product['total_sales'].sum()
+    sales_by_product = sales_by_product.sort_values(by="total_sales", ascending=False).reset_index(drop=True)
+
+    total_sales_sum = sales_by_product["total_sales"].sum()
     if total_sales_sum == 0:
         log.warning(f"[{mid_code}] Total sales sum is zero. Cannot calculate ratios. Distributing evenly.")
-        sales_by_product['ratio'] = 1 / len(sales_by_product)
+        sales_by_product["ratio"] = 1 / len(sales_by_product)
     else:
-        sales_by_product['ratio'] = sales_by_product['total_sales'] / total_sales_sum
+        sales_by_product["ratio"] = sales_by_product["total_sales"] / total_sales_sum
 
-    product_ratio_map = dict(zip(sales_by_product['product_code'], sales_by_product['ratio']))
+    # 품절률을 반영한 비율 조정
+    sales_by_product["ratio"] = sales_by_product["ratio"] * (1 - sales_by_product["stockout_rate"])
+    sales_by_product["ratio"] = sales_by_product["ratio"] / sales_by_product["ratio"].sum()
+
+    product_ratio_map = dict(zip(sales_by_product["product_code"], sales_by_product["ratio"]))
 
     predicted_base_qty = int(predicted_sales)
     allocated_qty = _allocate_by_ratio(
@@ -378,14 +411,25 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
 
     final_recommendations = []
     for prod_code, data in allocated_qty.items():
+        row = sales_by_product[sales_by_product["product_code"] == prod_code].iloc[0]
         # 최소 1개 추천 보장
-        final_quantity = max(1, data['recommended_quantity'])
-        final_recommendations.append({
-            "product_code": prod_code,
-            "product_name": data["product_name"],
-            "recommended_quantity": int(final_quantity),
-            "reason": "percentage_based" if sales_by_product[sales_by_product['product_code'] == prod_code]['total_sales'].iloc[0] >= 10 else "data_gathering_or_percentage_based"
-        })
+        final_quantity = max(1, data["recommended_quantity"])
+        reason = (
+            "percentage_based"
+            if row["total_sales"] >= 10
+            else "data_gathering_or_percentage_based"
+        )
+        if row["stockout_rate"] > 0:
+            reason = "stockout_adjusted"
+        final_recommendations.append(
+            {
+                "product_code": prod_code,
+                "product_name": data["product_name"],
+                "recommended_quantity": int(final_quantity),
+                "stockout_rate": float(row["stockout_rate"]),
+                "reason": reason,
+            }
+        )
 
     # 최종 추천 수량 합계 로깅
     total_recommended_quantity = sum(rec['recommended_quantity'] for rec in final_recommendations)
