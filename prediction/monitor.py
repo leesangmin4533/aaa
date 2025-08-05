@@ -128,3 +128,24 @@ def load_recent_performance(
         df = pd.read_sql(query, conn, params=(mid_code, start_date_str))
 
     return df if not df.empty else pd.DataFrame()
+
+
+def log_prediction_vs_actual(
+    predicted: float, actual: float, stockout_flag: bool, logger: logging.Logger | None = None
+) -> dict[str, float | bool]:
+    """예측값과 실제값을 비교하여 로그로 남깁니다."""
+    logger = logger or log
+    diff = actual - predicted
+    logger.info(
+        "Prediction vs Actual - predicted: %.2f, actual: %.2f, diff: %.2f, stockout: %s",
+        predicted,
+        actual,
+        diff,
+        stockout_flag,
+    )
+    return {
+        'predicted': predicted,
+        'actual': actual,
+        'diff': diff,
+        'stockout_flag': stockout_flag,
+    }
