@@ -124,7 +124,10 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
 
     with sqlite3.connect(db_path) as conn:
         query = (
-            "SELECT collected_at, SUM(sales) as total_sales, SUM(soldout) as total_soldout "
+            "SELECT collected_at, "
+            "SUM(sales) as total_sales, "
+            "SUM(soldout) as total_soldout, "
+            "SUM(stock) as total_stock "
             "FROM mid_sales WHERE mid_code = ? GROUP BY SUBSTR(collected_at, 1, 10)"
         )
         df = pd.read_sql(query, conn, params=(mid_code,))
@@ -138,9 +141,10 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
     df['week_of_year'] = df['date'].apply(lambda x: x.isocalendar()[1])
     kr_holidays = holidays.KR()
     df['is_holiday'] = df['date'].apply(lambda x: x in kr_holidays).astype(int)
+    df['is_stockout'] = (df['total_stock'] == 0).astype(int)
     
     log.debug(f"[{mid_code}] get_training_data_for_category returned {len(df)} rows.")
-    return df[['date', 'total_sales', 'total_soldout', 'weekday', 'month', 'week_of_year', 'is_holiday']]
+    return df[['date', 'total_sales', 'total_soldout', 'total_stock', 'is_stockout', 'weekday', 'month', 'week_of_year', 'is_holiday']]
 
 
 def load_or_default_model(mid_code: str, model_dir: Path):
@@ -168,6 +172,7 @@ def train_and_predict(
         'is_holiday',
         'temperature',
         'rainfall',
+        'total_stock',
         'total_soldout',
     ]
 
@@ -181,6 +186,8 @@ def train_and_predict(
             )
 
     if model is None:
+        training_df = training_df[training_df['is_stockout'] == 0]
+
         if training_df.empty:
             log.warning(
                 f"[{mid_code}] 학습 데이터가 없어 기본 예측(Random)을 수행합니다."
@@ -206,6 +213,8 @@ def train_and_predict(
         )
         model.fit(X, y)
 
+    current_stock = float(training_df['total_stock'].iloc[-1]) if not training_df.empty else 0.0
+
     tomorrow = datetime.now().date() + timedelta(days=1)
     tomorrow_weather = get_weather_data([tomorrow])
     tomorrow_features = {
@@ -215,6 +224,7 @@ def train_and_predict(
         'is_holiday': int(tomorrow in holidays.KR()),
         'temperature': tomorrow_weather['temperature'].iloc[0],
         'rainfall': tomorrow_weather['rainfall'].iloc[0],
+        'total_stock': current_stock,
         'total_soldout': 0,
     }
     tomorrow_df = pd.DataFrame([tomorrow_features])
