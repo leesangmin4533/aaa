@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 import logging
+import json
 
 try:
     from selenium.webdriver.support.ui import WebDriverWait
@@ -66,7 +67,10 @@ def execute_collect_single_day_data(driver: Any, date_str: str) -> dict:
         time.sleep(0.5)
 
     success = isinstance(parsed, list) and len(parsed) > 0
-    logger.info(f"[execute_collect_single_day_data] Raw data from JS: {parsed}")
+    logger.info(
+        "[execute_collect_single_day_data] Raw data from JS: %s",
+        json.dumps(parsed, ensure_ascii=False),
+    )
     return {"success": bool(success), "data": parsed if success else None}
 
 
@@ -105,7 +109,9 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
     missing_past_dates = get_missing_past_dates(db_path)
     if missing_past_dates:
         log.info(
-            f"Missing past dates for {store_name}: {missing_past_dates}. Attempting to collect..."
+            "Missing past dates for %s: %s. Attempting to collect...",
+            store_name,
+            json.dumps(missing_past_dates, ensure_ascii=False),
         )
         for past in missing_past_dates:
             result = execute_collect_single_day_data(driver, past)
@@ -127,7 +133,11 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
             log.info(
                 f"[{store_name}] Successfully collected {len(collected)} records for {today_str}."
             )
-            log.info(f"[{store_name}] Data to be written: {collected}")
+            log.info(
+                "[%s] Data to be written: %s",
+                store_name,
+                json.dumps(collected, ensure_ascii=False),
+            )
             log.info(f"[{store_name}] --- Calling write_sales_data ---")
             write_sales_data(collected, db_path, store_id=store_name)
             log.info(f"[{store_name}] --- Returned from write_sales_data ---")
@@ -135,7 +145,10 @@ def collect_and_save(driver: Any, db_path: Path, store_name: str) -> None:
                 handler.flush()
         else:
             log.warning(
-                f"No valid data collected for {today_str} at store {store_name}. Collected data: {collected}"
+                "No valid data collected for %s at store %s. Collected data: %s",
+                today_str,
+                store_name,
+                json.dumps(collected, ensure_ascii=False),
             )
     except Exception as e:
         log.error(
