@@ -21,7 +21,9 @@ except Exception:  # pragma: no cover - 라이브러리 미설치 시
 log = logging.getLogger(__name__)
 
 
-def tune_all_models(db_path: Path, output_dir: Path) -> None:
+def tune_all_models(
+    db_path: Path, output_dir: Path, error_threshold: float = 10.0
+) -> None:
     """주어진 DB에서 중분류별 모델을 튜닝합니다."""
     if tune_model is None:
         log.error("tune_model 함수를 불러올 수 없습니다. Optuna가 설치되어 있는지 확인하세요.")
@@ -34,6 +36,8 @@ def tune_all_models(db_path: Path, output_dir: Path) -> None:
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    prediction_db_path = db_path.parent / f"category_predictions_{db_path.stem}.db"
+
     for mid_code in mid_codes:
         try:
             training_df = get_training_data_for_category(db_path, mid_code)
@@ -42,7 +46,7 @@ def tune_all_models(db_path: Path, output_dir: Path) -> None:
                 continue
             weather_df = get_weather_data(training_df["date"].tolist())
             df = pd.merge(training_df, weather_df, on="date").drop(columns=["date"])
-            tune_model(mid_code, df, output_dir)
+            tune_model(mid_code, df, output_dir, prediction_db_path, error_threshold)
             log.info("[%s] 모델 튜닝 성공", mid_code)
         except Exception:  # pragma: no cover - 실제 실행 시에만 호출
             log.exception("[%s] 모델 튜닝 실패", mid_code)
