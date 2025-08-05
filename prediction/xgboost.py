@@ -260,6 +260,13 @@ def train_and_predict(
         )
         model.fit(X, y)
 
+        if model_dir is not None:
+            model_dir.mkdir(parents=True, exist_ok=True)
+            model_path = model_dir / f"model_{mid_code}.pkl"
+            with open(model_path, "wb") as f:
+                pickle.dump(model, f)
+            log.info(f"[{mid_code}] 모델을 {model_path}에 저장했습니다.")
+
     current_stock = float(training_df['total_stock'].iloc[-1]) if not training_df.empty else 0.0
 
     tomorrow = datetime.now().date() + timedelta(days=1)
@@ -441,8 +448,8 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
         lambda r: r["stockout_count"] / r["total_days"] if r["total_days"] > 0 else 0,
         axis=1,
     )
-    stockout_threshold = 0.5
-    sales_by_product = sales_by_product[sales_by_product["stockout_rate"] < stockout_threshold]
+    # stockout_threshold = 0.5 # 품절률 기반 필터링 로직 제거
+    # sales_by_product = sales_by_product[sales_by_product["stockout_rate"] < stockout_threshold] # 품절률 기반 필터링 로직 제거
     if sales_by_product.empty:
         log.warning(f"[{mid_code}] All products filtered out due to high stockout rates. Returning empty list.")
         return []
@@ -456,8 +463,8 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
     else:
         sales_by_product["ratio"] = sales_by_product["total_sales"] / total_sales_sum
 
-    # 품절률을 반영한 비율 조정
-    sales_by_product["ratio"] = sales_by_product["ratio"] * (1 - sales_by_product["stockout_rate"])
+    # 품절률을 반영한 비율 조정 (품절률이 높을수록 가중치 부여)
+    sales_by_product["ratio"] = sales_by_product["ratio"] * (1 + sales_by_product["stockout_rate"])
     sales_by_product["ratio"] = sales_by_product["ratio"] / sales_by_product["ratio"].sum()
 
     product_ratio_map = dict(zip(sales_by_product["product_code"], sales_by_product["ratio"]))
