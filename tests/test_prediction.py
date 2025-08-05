@@ -1,12 +1,13 @@
 import importlib.util
 import pathlib
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 from unittest.mock import patch
 
 import pandas as pd
 
 from prediction import model
+from prediction.xgboost import recommend_product_mix
 from utils.db_util import init_db
 
 db_util_spec = importlib.util.spec_from_file_location(
@@ -216,3 +217,58 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
     pred_main.run_for_db_paths([sales_db], tune=True, model_dir=tmp_path)
 
     assert call_order == ["001", "002"]
+
+
+def test_recommend_product_mix_filters_stockouts(tmp_path):
+    db_path = tmp_path / "sales.db"
+    init_db(db_path)
+
+    today = datetime.now().date()
+    rows = []
+    for i in range(7):
+        date = today - timedelta(days=6 - i)
+        base = [
+            f"{date} 00:00:00",
+            "001",
+            "Cat1",
+            "",
+            "",
+            1,
+            0,
+            0,
+            0,
+            0,
+            date.weekday(),
+            date.month,
+            date.isocalendar()[1],
+            0,
+            20.0,
+            0.0,
+        ]
+        p1 = base.copy()
+        p1[3] = "P001"
+        p1[4] = "Prod1"
+        p1[9] = 0 if i < 5 else 10
+        rows.append(tuple(p1))
+        p2 = base.copy()
+        p2[3] = "P002"
+        p2[4] = "Prod2"
+        p2[9] = 10
+        rows.append(tuple(p2))
+
+    insert_sql = """
+        INSERT INTO mid_sales (
+            collected_at, mid_code, mid_name, product_code, product_name, sales,
+            order_cnt, purchase, disposal, stock, weekday, month, week_of_year,
+            is_holiday, temperature, rainfall
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+    with sqlite3.connect(db_path) as conn:
+        conn.executemany(insert_sql, rows)
+        conn.commit()
+
+    recs = recommend_product_mix(db_path, "001", 10)
+    codes = [r["product_code"] for r in recs]
+    assert "P001" not in codes
+    assert "P002" in codes
+    assert all("stockout_rate" in r for r in recs)
