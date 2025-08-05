@@ -72,11 +72,9 @@ def write_sales_data(
 
         if target_date_str:
             current_date = f"{target_date_str[:4]}-{target_date_str[4:6]}-{target_date_str[6:]}"
-            collected_at_val = f"{current_date} 00:00:00"
         else:
-            now = datetime.now()
-            collected_at_val = now.strftime("%Y-%m-%d %H:%M:%S")
-            current_date = now.strftime("%Y-%m-%d")
+            current_date = datetime.now().strftime("%Y-%m-%d")
+        collected_at_val = f"{current_date} 00:00:00"
 
         current_date_dt = datetime.strptime(current_date, "%Y-%m-%d").date()
         weekday = current_date_dt.weekday()
