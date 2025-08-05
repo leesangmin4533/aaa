@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import random
 import heapq
+import pickle
 
 from utils.log_util import get_logger
 from prediction.monitor import update_performance_log
@@ -141,29 +142,68 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
     log.debug(f"[{mid_code}] get_training_data_for_category returned {len(df)} rows.")
     return df[['date', 'total_sales', 'weekday', 'month', 'week_of_year', 'is_holiday']]
 
-def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
-    """주어진 학습 데이터로 모델을 훈련하고 내일의 판매량을 예측합니다."""
-    if training_df.empty:
-        log.warning(f"[{mid_code}] 학습 데이터가 없어 기본 예측(Random)을 수행합니다.")
-        return random.uniform(10.0, 50.0) # 카테고리별 기본 예측값
 
-    if len(training_df) < 7:
-        log.warning(f"[{mid_code}] 학습 데이터가 7일 미만입니다. 예측 정확도가 낮을 수 있습니다.")
+def load_or_default_model(mid_code: str, model_dir: Path):
+    """주어진 디렉터리에서 사전 학습된 모델을 로드합니다.
 
-    weather_df = get_weather_data(training_df['date'].tolist())
-    df = pd.merge(training_df, weather_df, on='date')
+    모델 파일이 존재하지 않으면 ``FileNotFoundError`` 를 발생시킵니다.
+    """
+    model_path = model_dir / f"model_{mid_code}.pkl"
+    if not model_path.exists():
+        raise FileNotFoundError(model_path)
+    with open(model_path, "rb") as f:
+        return pickle.load(f)
 
-    features = ['weekday', 'month', 'week_of_year', 'is_holiday', 'temperature', 'rainfall']
-    target = 'total_sales'
-    X = df[features].astype('float32')
-    y = df[target].astype('float32')
 
-    model = xgboost.XGBRegressor(
-        n_estimators=100,
-        random_state=42,
-        objective="reg:squarederror",
-    )
-    model.fit(X, y)
+def train_and_predict(
+    mid_code: str,
+    training_df: pd.DataFrame,
+    model_dir: Path | None = None,
+) -> float:
+    """모델을 로드하거나 필요 시 학습하여 내일의 판매량을 예측합니다."""
+    features = [
+        'weekday',
+        'month',
+        'week_of_year',
+        'is_holiday',
+        'temperature',
+        'rainfall',
+    ]
+
+    model = None
+    if model_dir is not None:
+        try:
+            model = load_or_default_model(mid_code, model_dir)
+        except FileNotFoundError:
+            log.warning(
+                f"[{mid_code}] 모델 파일이 없어 기본 모델을 학습합니다."
+            )
+
+    if model is None:
+        if training_df.empty:
+            log.warning(
+                f"[{mid_code}] 학습 데이터가 없어 기본 예측(Random)을 수행합니다."
+            )
+            return random.uniform(10.0, 50.0)  # 카테고리별 기본 예측값
+
+        if len(training_df) < 7:
+            log.warning(
+                f"[{mid_code}] 학습 데이터가 7일 미만입니다. 예측 정확도가 낮을 수 있습니다."
+            )
+
+        weather_df = get_weather_data(training_df['date'].tolist())
+        df = pd.merge(training_df, weather_df, on='date')
+
+        target = 'total_sales'
+        X = df[features].astype('float32')
+        y = df[target].astype('float32')
+
+        model = xgboost.XGBRegressor(
+            n_estimators=100,
+            random_state=42,
+            objective="reg:squarederror",
+        )
+        model.fit(X, y)
 
     tomorrow = datetime.now().date() + timedelta(days=1)
     tomorrow_weather = get_weather_data([tomorrow])
@@ -173,10 +213,10 @@ def train_and_predict(mid_code: str, training_df: pd.DataFrame) -> float:
         'week_of_year': tomorrow.isocalendar()[1],
         'is_holiday': int(tomorrow in holidays.KR()),
         'temperature': tomorrow_weather['temperature'].iloc[0],
-        'rainfall': tomorrow_weather['rainfall'].iloc[0]
+        'rainfall': tomorrow_weather['rainfall'].iloc[0],
     }
     tomorrow_df = pd.DataFrame([tomorrow_features])
-    
+
     prediction = model.predict(tomorrow_df[features])
     log.info(f"[{mid_code}] 예측된 내일 판매량: {prediction[0]:.2f}개")
     return prediction[0]
@@ -399,6 +439,8 @@ def run_all_category_predictions(sales_db_path: Path):
     prediction_db_path = sales_db_path.parent / f"category_predictions_{store_name}.db"
     init_prediction_db(prediction_db_path)
 
+    model_dir = Path(__file__).resolve().parent / "tuned_models"
+
     logger = get_logger(__name__, level=logging.DEBUG, store_id=store_name)
     logger.info(f"[{store_name}] 모든 카테고리 예측 시작...")
 
@@ -416,7 +458,9 @@ def run_all_category_predictions(sales_db_path: Path):
             mid_name = row['mid_name']
 
             training_data = get_training_data_for_category(sales_db_path, mid_code)
-            predicted_sales = train_and_predict(mid_code, training_data)
+            predicted_sales = train_and_predict(
+                mid_code, training_data, model_dir=model_dir
+            )
 
             cursor.execute(
                 """
