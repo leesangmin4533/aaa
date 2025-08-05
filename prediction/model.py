@@ -62,7 +62,11 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
             data = response.json()
-            log.debug(f"Weather API raw response for {date}: {json.dumps(data, indent=2)}")
+            log.debug(
+                "Weather API raw response for %s: %s",
+                date,
+                json.dumps(data, ensure_ascii=False),
+            )
 
             result_code = (
                 data.get('response', {}).get('header', {}).get('resultCode')
@@ -76,7 +80,11 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             total_rainfall = 0.0
 
             items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
-            log.debug(f"Weather API parsed items for {date}: {items}")
+            log.debug(
+                "Weather API parsed items for %s: %s",
+                date,
+                json.dumps(items, ensure_ascii=False),
+            )
 
             for item in items:
                 category = item.get('category')
@@ -337,8 +345,14 @@ def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) 
 
     # 최종 추천 수량 합계 로깅
     total_recommended_quantity = sum(rec['recommended_quantity'] for rec in final_recommendations)
-    log.info(f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(final_recommendations)} types of items with total quantity of {total_recommended_quantity}.")
-    log.info(f"[{mid_code}] Recommendation details: {final_recommendations}")
+    log.info(
+        f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(final_recommendations)} types of items with total quantity of {total_recommended_quantity}."
+    )
+    log.info(
+        "[%s] Recommendation details: %s",
+        mid_code,
+        json.dumps(final_recommendations, ensure_ascii=False),
+    )
 
     return final_recommendations
 
