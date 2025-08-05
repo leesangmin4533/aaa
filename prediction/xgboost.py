@@ -124,7 +124,7 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
 
     with sqlite3.connect(db_path) as conn:
         query = (
-            "SELECT collected_at, SUM(sales) as total_sales "
+            "SELECT collected_at, SUM(sales) as total_sales, SUM(soldout) as total_soldout "
             "FROM mid_sales WHERE mid_code = ? GROUP BY SUBSTR(collected_at, 1, 10)"
         )
         df = pd.read_sql(query, conn, params=(mid_code,))
@@ -140,7 +140,7 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
     df['is_holiday'] = df['date'].apply(lambda x: x in kr_holidays).astype(int)
     
     log.debug(f"[{mid_code}] get_training_data_for_category returned {len(df)} rows.")
-    return df[['date', 'total_sales', 'weekday', 'month', 'week_of_year', 'is_holiday']]
+    return df[['date', 'total_sales', 'total_soldout', 'weekday', 'month', 'week_of_year', 'is_holiday']]
 
 
 def load_or_default_model(mid_code: str, model_dir: Path):
@@ -168,6 +168,7 @@ def train_and_predict(
         'is_holiday',
         'temperature',
         'rainfall',
+        'total_soldout',
     ]
 
     model = None
@@ -214,6 +215,7 @@ def train_and_predict(
         'is_holiday': int(tomorrow in holidays.KR()),
         'temperature': tomorrow_weather['temperature'].iloc[0],
         'rainfall': tomorrow_weather['rainfall'].iloc[0],
+        'total_soldout': 0,
     }
     tomorrow_df = pd.DataFrame([tomorrow_features])
 

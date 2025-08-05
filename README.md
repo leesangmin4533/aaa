@@ -177,6 +177,7 @@ JavaScript 스크립트에서 수집한 각 상품 데이터는 다음과 같은
 | `purchase`     | 매입액           |
 | `disposal`     | 폐기액           |
 | `stock`        | 재고액           |
+| `soldout`      | 품절 수량        |
 
 `write_sales_data` 함수는 위 필드명 외에도 `snake_case` 형태(`mid_code` 등)나 기존 텍스트 파일 포맷(`order`, `discard`)을 허용합니다.
 
@@ -197,6 +198,7 @@ CREATE TABLE IF NOT EXISTS mid_sales (
     purchase INTEGER,        -- 매입액
     disposal INTEGER,        -- 폐기액
     stock INTEGER,           -- 재고액
+    soldout INTEGER,         -- 품절 수량
     weekday INTEGER,         -- 요일
     month INTEGER,           -- 월
     week_of_year INTEGER,    -- 주차
@@ -205,6 +207,14 @@ CREATE TABLE IF NOT EXISTS mid_sales (
     rainfall REAL,           -- 강수량
     UNIQUE(collected_at, product_code) -- 이 조합은 고유해야 함
 );
+```
+
+## DB 마이그레이션
+
+기존 데이터베이스에 `soldout` 컬럼이 없다면 아래 스크립트를 실행하여 컬럼을 추가하고 공휴일 정보를 최신 규칙으로 갱신하세요.
+
+```bash
+python update_db_script.py
 ```
 
 ## 자동화 스크립트 상세 (`nexacro_automation_library.js`)

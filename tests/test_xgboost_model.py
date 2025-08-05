@@ -1,6 +1,5 @@
-import pickle
-
 import pandas as pd
+import pickle
 
 from prediction import xgboost
 
