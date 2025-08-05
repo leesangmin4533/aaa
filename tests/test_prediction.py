@@ -199,7 +199,7 @@ def test_run_for_db_paths_with_tuning(tmp_path, monkeypatch):
 
     call_order = []
 
-    def fake_tune_model(mid, df, output_dir):
+    def fake_tune_model(mid, df, output_dir, prediction_db_path, error_threshold):
         call_order.append(mid)
         if mid == "002":
             raise ValueError("fail")
