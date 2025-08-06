@@ -1,3 +1,4 @@
+from typing import Union
 import logging
 import os
 import json
@@ -116,7 +117,7 @@ def get_logger(
     *,
     level: int = logging.INFO,
     default_tag: str = "system",
-    store_id: str | None = None,
+    store_id: Union[str, None] = None,
 ) -> logging.Logger:
     """로거를 생성하거나 가져옵니다."""
 
@@ -132,4 +133,3 @@ def get_logger(
     )
 
     return adapter
-
