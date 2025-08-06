@@ -26,4 +26,4 @@ ENV PYTHONPATH=/app
 
 # Command to run the application with Gunicorn
 # The PORT environment variable is automatically provided by Cloud Run
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/sh"]
