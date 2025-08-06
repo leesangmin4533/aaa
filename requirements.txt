@@ -7,3 +7,5 @@ webdriver-manager
 selenium
 schedule
 xgboost
+flask
+gunicorn
