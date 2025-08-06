@@ -1,3 +1,4 @@
+from typing import Union
 import sqlite3
 import pandas as pd
 import xgboost
@@ -204,7 +205,7 @@ def load_or_default_model(mid_code: str, model_dir: Path):
 def train_and_predict(
     mid_code: str,
     training_df: pd.DataFrame,
-    model_dir: Path | None = None,
+    model_dir: Union[Path, None] = None,
 ) -> float:
     """모델을 로드하거나 필요 시 학습하여 내일의 판매량을 예측합니다."""
     features = [

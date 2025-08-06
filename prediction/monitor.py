@@ -1,3 +1,4 @@
+from typing import Union
 import sqlite3
 import pandas as pd
 from datetime import datetime, timedelta
@@ -131,7 +132,7 @@ def load_recent_performance(
 
 
 def log_prediction_vs_actual(
-    predicted: float, actual: float, stockout_flag: bool, logger: logging.Logger | None = None
+    predicted: float, actual: float, stockout_flag: bool, logger: Union[logging.Logger, None] = None
 ) -> dict[str, Union[float, bool]]:
     """예측값과 실제값을 비교하여 로그로 남깁니다."""
     logger = logger or log

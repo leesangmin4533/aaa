@@ -1,3 +1,4 @@
+from typing import Union
 import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -48,8 +49,8 @@ def _get_value(record: dict[str, any], *keys: str):
 def write_sales_data(
     records: list[dict[str, any]],
     db_path: Path,
-    target_date_str: str | None = None,
-    store_id: str | None = None,
+    target_date_str: Union[str, None] = None,
+    store_id: Union[str, None] = None,
 ) -> int:
     """매출 데이터를 통합 DB에 저장합니다."""
     logger = get_logger(__name__, level=logging.DEBUG, store_id=store_id)
