@@ -33,7 +33,6 @@ def create_driver() -> Any:
     options = Options()
     options.add_argument("--headless")  # GUI 없이 백그라운드에서 실행
     options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-setuid-sandbox") # 추가
     options.add_argument("--disable-extensions") # 추가
     options.add_argument("--disable-gpu") # GPU 사용 비활성화 (Cloud Run에 GPU 없음)
