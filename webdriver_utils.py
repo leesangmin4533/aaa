@@ -9,7 +9,7 @@ try:
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.chrome.options import Options
     from selenium.webdriver.chrome.service import Service
-    from webdriver_manager.chrome import ChromeDriverManager
+    # from webdriver_manager.chrome import ChromeDriverManager # 이 줄은 제거
     from selenium import webdriver
 except ImportError as exc:  # pragma: no cover - dependency missing
     logging.getLogger(__name__).warning(
@@ -26,11 +26,16 @@ logger = get_logger(__name__, level=logging.DEBUG)
 
 def create_driver() -> Any:
     """Create and return a Selenium WebDriver instance."""
-    service = Service(ChromeDriverManager().install())
-    options = Options()
+    # service = Service(ChromeDriverManager().install()) # 이 줄은 제거
+    # Cloud Run 환경에 맞게 chromedriver 경로를 직접 지정
+    service = Service("/usr/local/bin/chromedriver") # /usr/bin/chromedriver는 Dockerfile에서 설치한 chromium-driver의 경로
 
+    options = Options()
+    options.add_argument("--headless")  # GUI 없이 백그라운드에서 실행
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu") # GPU 사용 비활성화 (Cloud Run에 GPU 없음)
+    options.add_argument("--window-size=1920,1080") # 창 크기 설정 (headless 모드에서 중요)
 
     driver = webdriver.Chrome(service=service, options=options)
     return driver
@@ -118,4 +123,3 @@ def run_script(driver: Any, name: str) -> Any:
         raise FileNotFoundError(f"JavaScript file not found: {script_path}")
     script_text = script_path.read_text(encoding="utf-8")
     return driver.execute_script(script_text)
-
