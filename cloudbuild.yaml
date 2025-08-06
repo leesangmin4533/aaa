@@ -1,0 +1,29 @@
+steps:
+# Docker 이미지를 빌드합니다.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/automation-app', '.']
+# 빌드된 이미지를 Google Container Registry에 푸시합니다.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/automation-app']
+# Cloud Run 서비스에 배포합니다.
+# --allow-unauthenticated: 외부에서 인증 없이 접근 가능하게 합니다. (Cloud Scheduler에서 호출하기 위함)
+# --region: Cloud Run 서비스를 배포할 리전을 지정합니다. (예: asia-east1, us-central1)
+# --platform managed: Cloud Run 관리형 환경을 사용합니다.
+# --port: 컨테이너가 리스닝할 포트를 지정합니다. Dockerfile의 EXPOSE 또는 CMD에 설정된 포트와 일치해야 합니다.
+# --set-env-vars: 환경 변수를 설정합니다. (필요시 추가)
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'automation-app' # Cloud Run 서비스 이름
+  - '--image'
+  - 'gcr.io/$PROJECT_ID/automation-app'
+  - '--region'
+  - 'asia-east1' # 이 부분을 원하는 리전으로 변경하세요 (예: us-central1, asia-northeast3 등)
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
+  - '--port'
+  - '8080' # app.py에서 설정한 포트와 일치해야 합니다.
+images:
+- 'gcr.io/$PROJECT_ID/automation-app'
