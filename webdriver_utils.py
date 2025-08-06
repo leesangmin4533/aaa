@@ -34,8 +34,11 @@ def create_driver() -> Any:
     options.add_argument("--headless")  # GUI 없이 백그라운드에서 실행
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-setuid-sandbox") # 추가
+    options.add_argument("--disable-extensions") # 추가
     options.add_argument("--disable-gpu") # GPU 사용 비활성화 (Cloud Run에 GPU 없음)
     options.add_argument("--window-size=1920,1080") # 창 크기 설정 (headless 모드에서 중요)
+    options.add_argument("--single-process") # 단일 프로세스 모드
 
     driver = webdriver.Chrome(service=service, options=options)
     return driver
