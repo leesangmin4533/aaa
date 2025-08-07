@@ -2,6 +2,7 @@
     "stores": {
         "hoban": {
             "db_file": "code_outputs/db/hoban.db",
+            "store_code": "HOBAN",
             "credentials_env": {
                 "id": "BGF_HOBAN_ID",
                 "password": "BGF_HOBAN_PW"
@@ -9,6 +10,7 @@
         },
         "dongyang": {
             "db_file": "code_outputs/db/dongyang.db",
+            "store_code": "DONGYANG",
             "credentials_env": {
                 "id": "BGF_DONGYANG_ID",
                 "password": "BGF_DONGYANG_PW"
