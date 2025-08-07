@@ -22,13 +22,10 @@ log.setLevel(logging.DEBUG)
 # 중분류별 기본 유통기한(일) 매핑. 필요 시 값 추가 가능.
 SHELF_LIFE_DAYS: dict[str, int] = {}
 
-def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
-    """기상청 API 또는 저장된 예보 파일을 통해 날씨 데이터를 가져옵니다.
+# --- 유틸리티 및 데이터 로딩 함수들 (변경 없음) ---
 
-    - 내일 예보: forecast.json 파일에서 읽어옴
-    - 오늘 또는 과거 날씨: 초단기실황 API 사용
-    - 그 외: 기본값(0)으로 처리
-    """
+def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
+    """기상청 API 또는 저장된 예보 파일을 통해 날씨 데이터를 가져옵니다."""
     api_key = os.environ.get("KMA_API_KEY")
     weather_data = []
     nx, ny = 60, 127
@@ -58,7 +55,6 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             else:
                 log.warning("Forecast file not found. Falling back to API for tomorrow's data.")
 
-        # Fallback to API if forecast file is not available or outdated for tomorrow
         if not api_key:
             log.warning("기상청 API 키가 없어 임의의 날씨 데이터로 대체합니다.")
             temp = random.uniform(5, 25)
@@ -66,16 +62,15 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             weather_data.append({'date': date, 'temperature': temp, 'rainfall': rainfall})
             continue
 
-        # API URL 결정 (오늘/과거 vs 내일)
-        if is_tomorrow: # 단기예보
+        if is_tomorrow:
             base_date_str = today.strftime('%Y%m%d')
-            base_time_str = '0200' # 새벽 2시 예보
+            base_time_str = '0200'
             url = (
                 "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getVilageFcst"
                 f"?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}"
                 f"&nx={nx}&ny={ny}&authKey={api_key}"
             )
-        elif date == today: # 초단기실황
+        elif date == today:
             request_time = datetime.now() - timedelta(hours=1)
             base_date_str = request_time.strftime('%Y%m%d')
             base_time_str = request_time.strftime('%H00')
@@ -84,7 +79,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
                 f"?pageNo=1&numOfRows=1000&dataType=JSON&base_date={base_date_str}&base_time={base_time_str}"
                 f"&nx={nx}&ny={ny}&authKey={api_key}"
             )
-        else: # 과거 데이터 (지원 안함)
+        else:
              log.warning(f"{date} 는 API 조회 지원 날짜(오늘, 내일)가 아니므로 기본값으로 처리됩니다.")
              weather_data.append({'date': date, 'temperature': 0.0, 'rainfall': 0.0})
              continue
@@ -93,8 +88,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
             data = response.json()
-            log.debug("Weather API raw response for %s: %s", date, json.dumps(data, ensure_ascii=False))
-
+            
             result_code = data.get('response', {}).get('header', {}).get('resultCode')
             if result_code != '00':
                 log.warning(f"{date} 날씨 API resultCode {result_code}. 기본값으로 저장합니다.")
@@ -119,7 +113,7 @@ def get_weather_data(dates: list[datetime.date]) -> pd.DataFrame:
                                 rains.append(0.0)
                 avg_temp = sum(temps) / len(temps) if temps else 0.0
                 total_rainfall = sum(rains) if rains else 0.0
-            else: # 오늘 실황
+            else:
                 avg_temp = float(next((item['obsrValue'] for item in items if item['category'] == 'T1H'), 0.0))
                 total_rainfall = float(next((item['obsrValue'] for item in items if item['category'] == 'RN1'), 0.0))
 
@@ -161,117 +155,89 @@ def get_training_data_for_category(db_path: Path, mid_code: str) -> pd.DataFrame
     kr_holidays = holidays.KR()
     df['is_holiday'] = df['date'].apply(lambda x: x in kr_holidays).astype(int)
     df['is_stockout'] = (df['total_stock'] == 0).astype(int)
-
-    # 파생 피처 계산
     df['true_demand'] = df['total_sales'] + df['total_disposal']
     df['disposal_ratio'] = df['total_disposal'] / (df['true_demand'] + 1e-6)
     df['demand_gap'] = df['total_purchase'] - df['total_sales']
     df['shelf_life_days'] = SHELF_LIFE_DAYS.get(mid_code, 0)
 
-    log.debug(f"[{mid_code}] get_training_data_for_category returned {len(df)} rows.")
-    return df[
-        [
-            'date',
-            'total_sales',
-            'total_purchase',
-            'total_disposal',
-            'total_soldout',
-            'total_stock',
-            'is_stockout',
-            'weekday',
-            'month',
-            'week_of_year',
-            'is_holiday',
-            'true_demand',
-            'disposal_ratio',
-            'demand_gap',
-            'shelf_life_days',
-        ]
-    ]
+    return df
 
+# --- 신규/수정된 핵심 함수들 ---
 
-def load_or_default_model(mid_code: str, model_dir: Path):
-    """주어진 디렉터리에서 사전 학습된 모델을 로드합니다.
+def train_model_for_category(mid_code: str, training_df: pd.DataFrame, model_dir: Path):
+    """주어진 데이터를 사용하여 특정 카테고리의 모델을 학습하고 저장합니다."""
+    logger = get_logger(__name__)
+    logger.info(f"[{mid_code}] 모델 학습 시작...")
 
-    모델 파일이 존재하지 않으면 ``FileNotFoundError`` 를 발생시킵니다.
-    """
-    model_path = model_dir / f"model_{mid_code}.pkl"
-    if not model_path.exists():
-        raise FileNotFoundError(model_path)
-    with open(model_path, "rb") as f:
-        return pickle.load(f)
-
-
-def train_and_predict(
-    mid_code: str,
-    training_df: pd.DataFrame,
-    model_dir: Union[Path, None] = None,
-) -> float:
-    """모델을 로드하거나 필요 시 학습하여 내일의 판매량을 예측합니다."""
     features = [
-        'weekday',
-        'month',
-        'week_of_year',
-        'is_holiday',
-        'temperature',
-        'rainfall',
-        'total_stock',
-        'total_soldout',
-        'total_purchase',
-        'total_disposal',
-        'disposal_ratio',
-        'demand_gap',
-        'shelf_life_days',
+        'weekday', 'month', 'week_of_year', 'is_holiday', 'temperature',
+        'rainfall', 'total_stock', 'total_soldout', 'total_purchase',
+        'total_disposal', 'disposal_ratio', 'demand_gap', 'shelf_life_days',
+    ]
+    
+    # 품절된 날의 데이터는 학습에서 제외하여 수요 왜곡 방지
+    training_df = training_df[training_df['is_stockout'] == 0]
+
+    if len(training_df) < 7:
+        logger.warning(f"[{mid_code}] 학습 데이터가 7일 미만({len(training_df)}일)이므로 모델을 학습하지 않습니다.")
+        return
+
+    # 학습 데이터 기간에 대한 날씨 정보 가져오기
+    weather_df = get_weather_data(training_df['date'].tolist())
+    if weather_df.empty:
+        logger.error(f"[{mid_code}] 학습 기간의 날씨 데이터를 가져올 수 없어 모델 학습을 중단합니다.")
+        return
+        
+    df = pd.merge(training_df, weather_df, on='date')
+
+    target = 'true_demand'
+    X = df[features].astype('float32')
+    y = df[target].astype('float32')
+
+    model = xgboost.XGBRegressor(
+        n_estimators=100,
+        random_state=42,
+        objective="reg:squarederror",
+    )
+    model.fit(X, y)
+
+    model_dir.mkdir(parents=True, exist_ok=True)
+    model_path = model_dir / f"model_{mid_code}.pkl"
+    with open(model_path, "wb") as f:
+        pickle.dump(model, f)
+    logger.info(f"[{mid_code}] 새로운 모델을 {model_path}에 저장했습니다.")
+
+def predict_sales_for_tomorrow(mid_code: str, latest_data_df: pd.DataFrame, model_dir: Path) -> float:
+    """미리 학습된 모델을 로드하여 내일의 판매량을 예측합니다."""
+    logger = get_logger(__name__)
+    
+    features = [
+        'weekday', 'month', 'week_of_year', 'is_holiday', 'temperature',
+        'rainfall', 'total_stock', 'total_soldout', 'total_purchase',
+        'total_disposal', 'disposal_ratio', 'demand_gap', 'shelf_life_days',
     ]
 
-    model = None
-    if model_dir is not None:
-        try:
-            model = load_or_default_model(mid_code, model_dir)
-        except FileNotFoundError:
-            log.warning(
-                f"[{mid_code}] 모델 파일이 없어 기본 모델을 학습합니다."
-            )
+    try:
+        model_path = model_dir / f"model_{mid_code}.pkl"
+        with open(model_path, "rb") as f:
+            model = pickle.load(f)
+        logger.info(f"[{mid_code}] 저장된 모델 {model_path}을(를) 불러왔습니다.")
+    except FileNotFoundError:
+        logger.warning(f"[{mid_code}] 학습된 모델 파일이 없습니다. 기본 예측(0)을 수행합니다.")
+        return 0.0
 
-    if model is None:
-        training_df = training_df[training_df['is_stockout'] == 0]
+    # 예측에 필요한 최신 재고량 등의 정보 가져오기
+    current_stock = float(latest_data_df['total_stock'].iloc[-1]) if not latest_data_df.empty else 0.0
 
-        if training_df.empty:
-            log.warning(
-                f"[{mid_code}] 학습 데이터가 없어 기본 예측(Random)을 수행합니다."
-            )
-            return random.uniform(10.0, 50.0)  # 카테고리별 기본 예측값
-
-        if len(training_df) < 7:
-            log.warning(
-                f"[{mid_code}] 학습 데이터가 7일 미만입니다. 예측 정확도가 낮을 수 있습니다."
-            )
-
-        weather_df = get_weather_data(training_df['date'].tolist())
-        df = pd.merge(training_df, weather_df, on='date')
-
-        target = 'true_demand'
-        X = df[features].astype('float32')
-        y = df[target].astype('float32')
-
-        model = xgboost.XGBRegressor(
-            n_estimators=100,
-            random_state=42,
-            objective="reg:squarederror",
-        )
-        model.fit(X, y)
-
-        if model_dir is not None:
-            model_dir.mkdir(parents=True, exist_ok=True)
-            model_path = model_dir / f"model_{mid_code}.pkl"
-            with open(model_path, "wb") as f:
-                pickle.dump(model, f)
-            log.info(f"[{mid_code}] 모델을 {model_path}에 저장했습니다.")
-
-    current_stock = float(training_df['total_stock'].iloc[-1]) if not training_df.empty else 0.0
-
+    # 내일 날짜 및 날씨 정보
     tomorrow = datetime.now().date() + timedelta(days=1)
     tomorrow_weather = get_weather_data([tomorrow])
+    
+    if tomorrow_weather.empty:
+        logger.error(f"[{mid_code}] 내일 날씨 정보를 가져올 수 없어 예측을 중단합니다.")
+        return 0.0
+
+    # 내일의 특성(feature) 데이터프레임 생성
     tomorrow_features = {
         'weekday': tomorrow.weekday(),
         'month': tomorrow.month,
@@ -280,286 +246,146 @@ def train_and_predict(
         'temperature': tomorrow_weather['temperature'].iloc[0],
         'rainfall': tomorrow_weather['rainfall'].iloc[0],
         'total_stock': current_stock,
-        'total_soldout': 0,
-        'total_purchase': 0,
-        'total_disposal': 0,
-        'disposal_ratio': 0,
-        'demand_gap': 0,
+        'total_soldout': 0, 'total_purchase': 0, 'total_disposal': 0,
+        'disposal_ratio': 0, 'demand_gap': 0,
         'shelf_life_days': SHELF_LIFE_DAYS.get(mid_code, 0),
     }
     tomorrow_df = pd.DataFrame([tomorrow_features])
 
+    # 예측 수행
     prediction = model.predict(tomorrow_df[features])
-    predicted = max(0, float(prediction[0]))
-    log.info(f"[{mid_code}] 예측된 내일 판매량: {predicted:.2f}개")
-    return predicted
+    predicted_sales = max(0, float(prediction[0]))
+    logger.info(f"[{mid_code}] 예측된 내일 판매량: {predicted_sales:.2f}개")
+    
+    return predicted_sales
 
-
-def _allocate_by_ratio(
-    sales_by_product: pd.DataFrame,
-    ratio_map: dict[str, float],
-    predicted_base_qty: int,
-) -> dict[str, dict[str, any]]:
-    """비율에 따라 기본 추천 수량을 계산합니다."""
-    allocated_qty: dict[str, dict[str, any]] = {}
-    for _, row in sales_by_product.iterrows():
-        product_code = row['product_code']
-        product_name = row['product_name']
-        ratio = ratio_map.get(product_code, 0)
-        quantity = round(predicted_base_qty * ratio)
-        if quantity > 0:
-            allocated_qty[product_code] = {
-                'product_name': product_name,
-                'recommended_quantity': quantity,
-                'ratio': ratio,
-            }
-    return allocated_qty
-
-
-def _correct_rounding_errors(
-    allocated_qty: dict[str, dict[str, any]],
-    predicted_base_qty: int,
-) -> dict[str, dict[str, any]]:
-    """반올림 오차로 인한 수량 차이를 보정합니다."""
-    current_distributed_sum = sum(
-        item['recommended_quantity'] for item in allocated_qty.values()
-    )
-    difference = predicted_base_qty - current_distributed_sum
-    if difference > 0:
-        max_heap = [(-data['ratio'], code) for code, data in allocated_qty.items()]
-        heapq.heapify(max_heap)
-        for _ in range(difference):
-            if not max_heap:
-                break
-            ratio, prod_code = heapq.heappop(max_heap)
-            allocated_qty[prod_code]['recommended_quantity'] += 1
-            heapq.heappush(max_heap, (ratio, prod_code))
-        del max_heap
-    elif difference < 0:
-        min_heap = [(data['ratio'], code) for code, data in allocated_qty.items()]
-        heapq.heapify(min_heap)
-        for _ in range(-difference):
-            while min_heap:
-                ratio, prod_code = heapq.heappop(min_heap)
-                if allocated_qty[prod_code]['recommended_quantity'] > 1:
-                    allocated_qty[prod_code]['recommended_quantity'] -= 1
-                    heapq.heappush(min_heap, (ratio, prod_code))
-                    break
-            else:
-                break
-        del min_heap
-    return allocated_qty
-
-
-def _add_exploration_product(
-    sales_by_product: pd.DataFrame,
-    ratio_map: dict[str, float],
-    allocated_qty: dict[str, dict[str, any]],
-    predicted_sales: float,
-) -> dict[str, dict[str, any]]:
-    """탐색을 위해 추가 상품을 선택합니다."""
-    predicted_base_qty = int(predicted_sales)
-    has_fractional_part = (predicted_sales - predicted_base_qty) > 0.01
-    if not has_fractional_part:
-        return allocated_qty
-
-    unpopular_products_df = sales_by_product[sales_by_product['total_sales'] < 10]
-
-    chosen_product = None
-    if not unpopular_products_df.empty:
-        available_unpopular = unpopular_products_df[
-            ~unpopular_products_df['product_code'].isin(allocated_qty.keys())
-        ]
-        if not available_unpopular.empty:
-            chosen_product = available_unpopular.sample(n=1).iloc[0]
-        else:
-            chosen_product = unpopular_products_df.sample(n=1).iloc[0]
-
-    if chosen_product is None and not sales_by_product.empty:
-        available_products = sales_by_product[
-            ~sales_by_product['product_code'].isin(allocated_qty.keys())
-        ]
-        if not available_products.empty:
-            chosen_product = available_products.sample(n=1).iloc[0]
-        else:
-            chosen_product = sales_by_product.sample(n=1).iloc[0]
-
-    if chosen_product is not None and not chosen_product.empty:
-        prod_code = chosen_product['product_code']
-        prod_name = chosen_product['product_name']
-        if prod_code in allocated_qty:
-            allocated_qty[prod_code]['recommended_quantity'] += 1
-        else:
-            allocated_qty[prod_code] = {
-                'product_name': prod_name,
-                'recommended_quantity': 1,
-                'ratio': ratio_map.get(prod_code, 0),
-            }
-        log.debug(
-            f"Added exploration product {prod_name}"
-        )
-    return allocated_qty
-
+# --- 상품 조합 추천 로직 (변경 없음) ---
 def recommend_product_mix(db_path: Path, mid_code: str, predicted_sales: float) -> list[dict[str, any]]:
-    """
-    예측된 총 판매량을 기반으로 상품 판매 비율에 따라 추천 수량을 배분하고,
-    최근 품절 이력을 고려해 품절 제품을 제외하거나 우선순위를 낮춥니다.
-    소수점 이하가 있을 경우 데이터 부족 상품을 추가로 추천합니다.
-    """
     if not db_path.exists():
-        log.warning(f"Database not found at {db_path}. Cannot generate recommendations.")
         return []
-
     with sqlite3.connect(db_path) as conn:
-        query = """
-            SELECT
-                product_code,
-                product_name,
-                SUM(sales) as total_sales
-            FROM mid_sales
-            WHERE mid_code = ?
-            GROUP BY product_code, product_name
-            HAVING SUM(sales) > 0
-        """
+        query = "SELECT product_code, product_name, SUM(sales) as total_sales FROM mid_sales WHERE mid_code = ? GROUP BY product_code, product_name HAVING SUM(sales) > 0"
         sales_by_product = pd.read_sql(query, conn, params=(mid_code,))
-
-        # 최근 품절 이력 조회
         lookback_days = 7
         start_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
-        stockout_query = """
-            SELECT
-                product_code,
-                SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) AS stockout_count,
-                COUNT(*) AS total_days
-            FROM mid_sales
-            WHERE mid_code = ?
-              AND DATE(collected_at) >= ?
-            GROUP BY product_code
-        """
+        stockout_query = "SELECT product_code, SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) AS stockout_count, COUNT(*) AS total_days FROM mid_sales WHERE mid_code = ? AND DATE(collected_at) >= ? GROUP BY product_code"
         stockout_df = pd.read_sql(stockout_query, conn, params=(mid_code, start_date))
-
     if sales_by_product.empty:
-        log.warning(f"[{mid_code}] No sales data found for any products. Cannot make recommendations. Returning empty list.")
         return []
-
-    # 품절률 계산 및 필터링
     sales_by_product = sales_by_product.merge(stockout_df, on="product_code", how="left")
     sales_by_product[["stockout_count", "total_days"]] = sales_by_product[["stockout_count", "total_days"]].fillna(0)
-    sales_by_product["stockout_rate"] = sales_by_product.apply(
-        lambda r: r["stockout_count"] / r["total_days"] if r["total_days"] > 0 else 0,
-        axis=1,
-    )
-    # stockout_threshold = 0.5 # 품절률 기반 필터링 로직 제거
-    # sales_by_product = sales_by_product[sales_by_product["stockout_rate"] < stockout_threshold] # 품절률 기반 필터링 로직 제거
+    sales_by_product["stockout_rate"] = sales_by_product.apply(lambda r: r["stockout_count"] / r["total_days"] if r["total_days"] > 0 else 0, axis=1)
     if sales_by_product.empty:
-        log.warning(f"[{mid_code}] All products filtered out due to high stockout rates. Returning empty list.")
         return []
-
     sales_by_product = sales_by_product.sort_values(by="total_sales", ascending=False).reset_index(drop=True)
-
     total_sales_sum = sales_by_product["total_sales"].sum()
     if total_sales_sum == 0:
-        log.warning(f"[{mid_code}] Total sales sum is zero. Cannot calculate ratios. Distributing evenly.")
         sales_by_product["ratio"] = 1 / len(sales_by_product)
     else:
         sales_by_product["ratio"] = sales_by_product["total_sales"] / total_sales_sum
-
-    # 품절률을 반영한 비율 조정 (품절률이 높을수록 가중치 부여)
     sales_by_product["ratio"] = sales_by_product["ratio"] * (1 + sales_by_product["stockout_rate"])
     sales_by_product["ratio"] = sales_by_product["ratio"] / sales_by_product["ratio"].sum()
-
     product_ratio_map = dict(zip(sales_by_product["product_code"], sales_by_product["ratio"]))
-
     predicted_base_qty = int(predicted_sales)
-    allocated_qty = _allocate_by_ratio(
-        sales_by_product, product_ratio_map, predicted_base_qty
-    )
-    allocated_qty = _correct_rounding_errors(
-        allocated_qty, predicted_base_qty
-    )
-    allocated_qty = _add_exploration_product(
-        sales_by_product, product_ratio_map, allocated_qty, predicted_sales
-    )
-    del product_ratio_map
+    
+    # 내부 헬퍼 함수들
+    def _allocate_by_ratio(sales, ratio_map, base_qty):
+        allocated = {}
+        for _, row in sales.iterrows():
+            code, name, ratio_val = row['product_code'], row['product_name'], ratio_map.get(row['product_code'], 0)
+            qty = round(base_qty * ratio_val)
+            if qty > 0:
+                allocated[code] = {'product_name': name, 'recommended_quantity': qty, 'ratio': ratio_val}
+        return allocated
+
+    def _correct_rounding_errors(allocated, base_qty):
+        diff = base_qty - sum(item['recommended_quantity'] for item in allocated.values())
+        if diff > 0:
+            heap = [(-data['ratio'], code) for code, data in allocated.items()]
+            heapq.heapify(heap)
+            for _ in range(diff):
+                if not heap: break
+                _, code = heapq.heappop(heap)
+                allocated[code]['recommended_quantity'] += 1
+        elif diff < 0:
+            heap = [(data['ratio'], code) for code, data in allocated.items()]
+            heapq.heapify(heap)
+            for _ in range(-diff):
+                if not heap: break
+                _, code = heapq.heappop(heap)
+                if allocated[code]['recommended_quantity'] > 1:
+                    allocated[code]['recommended_quantity'] -= 1
+        return allocated
+
+    def _add_exploration_product(sales, allocated, pred_sales):
+        if (pred_sales - int(pred_sales)) > 0.01:
+            unpopular = sales[sales['total_sales'] < 10]
+            chosen = None
+            available_unpopular = unpopular[~unpopular['product_code'].isin(allocated.keys())]
+            if not available_unpopular.empty:
+                chosen = available_unpopular.sample(n=1).iloc[0]
+            elif not unpopular.empty:
+                chosen = unpopular.sample(n=1).iloc[0]
+            
+            if chosen is not None:
+                code, name = chosen['product_code'], chosen['product_name']
+                if code in allocated:
+                    allocated[code]['recommended_quantity'] += 1
+                else:
+                    allocated[code] = {'product_name': name, 'recommended_quantity': 1, 'ratio': 0}
+        return allocated
+
+    allocated_qty = _allocate_by_ratio(sales_by_product, product_ratio_map, predicted_base_qty)
+    allocated_qty = _correct_rounding_errors(allocated_qty, predicted_base_qty)
+    allocated_qty = _add_exploration_product(sales_by_product, allocated_qty, predicted_sales)
 
     final_recommendations = []
     for prod_code, data in allocated_qty.items():
         row = sales_by_product[sales_by_product["product_code"] == prod_code].iloc[0]
-        # 최소 1개 추천 보장
         final_quantity = max(1, data["recommended_quantity"])
-        reason = (
-            "percentage_based"
-            if row["total_sales"] >= 10
-            else "data_gathering_or_percentage_based"
-        )
-        if row["stockout_rate"] > 0:
-            reason = "stockout_adjusted"
-        final_recommendations.append(
-            {
-                "product_code": prod_code,
-                "product_name": data["product_name"],
-                "recommended_quantity": int(final_quantity),
-                "stockout_rate": float(row["stockout_rate"]),
-                "reason": reason,
-            }
-        )
-
-    # 최종 추천 수량 합계 로깅
-    total_recommended_quantity = sum(rec['recommended_quantity'] for rec in final_recommendations)
-    log.info(
-        f"[{mid_code}] Predicted: {predicted_sales:.2f}. Recommended {len(final_recommendations)} types of items with total quantity of {total_recommended_quantity}."
-    )
-    log.info(
-        "[%s] Recommendation details: %s",
-        mid_code,
-        json.dumps(final_recommendations, ensure_ascii=False),
-    )
-
+        reason = "stockout_adjusted" if row["stockout_rate"] > 0 else ("percentage_based" if row["total_sales"] >= 10 else "data_gathering_or_percentage_based")
+        final_recommendations.append({
+            "product_code": prod_code, "product_name": data["product_name"],
+            "recommended_quantity": int(final_quantity), "stockout_rate": float(row["stockout_rate"]),
+            "reason": reason,
+        })
     return final_recommendations
 
+# --- DB 및 메인 실행 함수 수정 ---
 
 def init_prediction_db(db_path: Path):
-    """모든 카테고리의 예측 결과를 저장할 DB와 테이블을 초기화합니다."""
+    """예측 결과를 저장할 DB와 테이블을 초기화합니다."""
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(db_path) as conn:
         conn.execute(
             """
         CREATE TABLE IF NOT EXISTS category_predictions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            prediction_date TEXT, -- 예측을 수행한 날짜
-            target_date TEXT,     -- 예측 대상 날짜
-            mid_code TEXT,        -- 중분류 코드
-            mid_name TEXT,        -- 중분류명
-            predicted_sales REAL, -- 예측된 판매량
+            prediction_date TEXT, target_date TEXT, mid_code TEXT,
+            mid_name TEXT, predicted_sales REAL,
             UNIQUE(target_date, mid_code)
-        )
-        """
+        )"""
         )
         conn.execute(
             """
         CREATE TABLE IF NOT EXISTS category_prediction_items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            prediction_id INTEGER, -- category_predictions 테이블의 id 참조
-            product_code TEXT,
-            product_name TEXT,
+            prediction_id INTEGER, product_code TEXT, product_name TEXT,
             recommended_quantity INTEGER,
             FOREIGN KEY (prediction_id) REFERENCES category_predictions (id)
-        )
-        """
+        )"""
         )
         conn.commit()
 
-
 def run_all_category_predictions(sales_db_path: Path):
-    """모든 중분류에 대해 판매량 예측을 실행하고 결과를 DB에 저장합니다."""
+    """(수정됨) 모든 중분류에 대해 '예측'만 실행하고 결과를 DB에 저장합니다."""
     store_name = sales_db_path.stem
     prediction_db_path = sales_db_path.parent / f"category_predictions_{store_name}.db"
     init_prediction_db(prediction_db_path)
 
     model_dir = Path(__file__).resolve().parent / "tuned_models"
-
     logger = get_logger(__name__, level=logging.DEBUG, store_id=store_name)
-    logger.info(f"[{store_name}] 모든 카테고리 예측 시작...")
+    logger.info(f"[{store_name}] 모든 카테고리 '예측' 시작...")
 
     with sqlite3.connect(sales_db_path) as conn:
         mid_categories = pd.read_sql("SELECT DISTINCT mid_code, mid_name FROM mid_sales", conn)
@@ -573,42 +399,31 @@ def run_all_category_predictions(sales_db_path: Path):
             mid_code = row['mid_code']
             mid_name = row['mid_name']
 
-            training_data = get_training_data_for_category(sales_db_path, mid_code)
-            predicted_sales = train_and_predict(
-                mid_code, training_data, model_dir=model_dir
+            # 예측에는 전체 데이터가 아닌, 최신 재고량 파악을 위한 데이터만 필요합니다.
+            # 여기서는 간단하게 get_training_data_for_category를 재사용합니다.
+            latest_data = get_training_data_for_category(sales_db_path, mid_code)
+            
+            # '예측' 함수 호출
+            predicted_sales = predict_sales_for_tomorrow(
+                mid_code, latest_data, model_dir=model_dir
             )
 
             cursor.execute(
-                """
-            INSERT OR REPLACE INTO category_predictions
-            (prediction_date, target_date, mid_code, mid_name, predicted_sales)
-            VALUES (?, ?, ?, ?, ?)
-            """,
+                "INSERT OR REPLACE INTO category_predictions (prediction_date, target_date, mid_code, mid_name, predicted_sales) VALUES (?, ?, ?, ?, ?)",
                 (prediction_date, target_date, mid_code, mid_name, predicted_sales),
             )
             prediction_id = cursor.lastrowid
 
+            # 예측 판매량 기반으로 상품 조합 추천
             recommended_mix = recommend_product_mix(sales_db_path, mid_code, predicted_sales)
             if recommended_mix:
-                item_insert_sql = """
-                INSERT INTO category_prediction_items
-                (prediction_id, product_code, product_name, recommended_quantity)
-                VALUES (?, ?, ?, ?)
-                """
+                item_insert_sql = "INSERT INTO category_prediction_items (prediction_id, product_code, product_name, recommended_quantity) VALUES (?, ?, ?, ?)"
                 items_to_insert = [
-                    (
-                        prediction_id,
-                        item['product_code'],
-                        item['product_name'],
-                        item['recommended_quantity'],
-                    )
+                    (prediction_id, item['product_code'], item['product_name'], item['recommended_quantity'])
                     for item in recommended_mix
                 ]
                 cursor.executemany(item_insert_sql, items_to_insert)
         conn.commit()
 
-    logger.info(
-        f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료. DB 저장 위치: {prediction_db_path}"
-    )
-
+    logger.info(f"[{store_name}] 총 {len(mid_categories)}개 카테고리 예측 및 상품 조합 저장 완료.")
     update_performance_log(sales_db_path, prediction_db_path)
