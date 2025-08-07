@@ -1,2 +1,7 @@
 .env
 *.pkl
+__pycache__/
+*.pyc
+*.db
+logs/
+code_outputs/

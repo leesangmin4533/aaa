@@ -40,6 +40,9 @@ def create_driver() -> Any:
     options.add_argument("--single-process") # 단일 프로세스 모드
 
     driver = webdriver.Chrome(service=service, options=options)
+    driver.command_executor.set_timeout(300)  # 명령어 실행 타임아웃을 300초로 설정
+    driver.set_page_load_timeout(300)  # 페이지 로드 타임아웃을 300초로 설정
+    driver.set_script_timeout(300)   # 스크립트 실행 타임아웃을 300초로 설정
     return driver
 
 
