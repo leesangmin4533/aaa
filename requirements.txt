@@ -8,3 +8,4 @@ schedule
 xgboost
 flask
 gunicorn
+google-cloud-storage
