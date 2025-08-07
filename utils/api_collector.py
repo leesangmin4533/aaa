@@ -36,8 +36,9 @@ def fetch_sales_data(session: requests.Session, store_code: str, date_str: str) 
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         "User-Agent": "Mozilla/5.0",
     }
+    # Correctly formatted f-string with double curly braces for literal JSON braces
     payload = {
-        '_dataSet_': f"{{\"_id_\":\"ds_cond\",\"_state_\":1,\"_rowidx_\":0,\"_rows_\":[{{\"_state_\":2,\"send_date\":\"{date_str}\",\"store_code\":\"{store_code}\"}}]}"
+        '_dataSet_': f'{{ "_id_":"ds_cond", "_state_":1, "_rowidx_":0, "_rows_":[{{ "_state_":2, "send_date":"{date_str}", "store_code":"{store_code}" }}] }}'
     }
 
     try:
